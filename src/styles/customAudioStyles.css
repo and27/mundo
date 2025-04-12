@@ -1,0 +1,27 @@
+.rhap_container {
+  background-color: var(--color-sky);
+  border-radius: 1rem;
+  padding: 0.5rem 1rem;
+  box-shadow: var(--shadow-soft);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+.rhap_main-controls-button {
+  color: var(--color-gold);
+}
+
+.rhap_progress-bar-show-download {
+  background-color: var(--color-magic);
+}
+
+.rhap_progress-filled {
+  background-color: var(--color-gold);
+}
+
+.rhap_time {
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 10px;
+  color: var(--foreground);
+}
