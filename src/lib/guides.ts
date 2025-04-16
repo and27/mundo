@@ -6,7 +6,7 @@ export const guides = [
     phrase: "En tu calma vive toda tu fuerza.",
     description:
       "Yachay te ayudará a encontrar foco, valentía y conexión con tu fuerza interna.",
-    image: "/guides/puma.png",
+    image: "/guides/babyPuma.png",
     imageTransparent: "/guides/puma-transparent.png",
   },
   {
@@ -16,7 +16,7 @@ export const guides = [
     phrase: "Tómate distancia. Todo se ve distinto desde arriba.",
     description:
       "Kuntur te acompaña a elevar tu mirada y encontrar esperanza en los momentos difíciles.",
-    image: "/guides/kuntur.png",
+    image: "/guides/babyKuntur.png",
     imageTransparent: "/guides/kuntur-transparent.png",
   },
   {
@@ -36,7 +36,7 @@ export const guides = [
     phrase: "Todo lo que es real se cultiva con paciencia.",
     description:
       "Hatun Tortuga te enseña a detenerte, confiar en el proceso y encontrar sabiduría en la lentitud.",
-    image: "/guides/hatun.png",
+    image: "/guides/babyHatun.png",
     imageTransparent: "/guides/hatun-transparent.png",
   },
   {
@@ -46,7 +46,7 @@ export const guides = [
     phrase: "Tu autenticidad es medicina.",
     description:
       "Pájaro Brujo te anima a expresar lo que sientes, recordándote que tu voz es parte del equilibrio del mundo.",
-    image: "/guides/mago.png",
+    image: "/guides/babyMago.png",
     imageTransparent: "/guides/mago-transparent.png",
   },
 ];

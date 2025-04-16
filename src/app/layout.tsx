@@ -3,6 +3,7 @@ import { Chakra_Petch, Quicksand } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import Image from "next/image";
+import AvatarButton from "@/components/common/AvatarButton";
 
 const chakra = Chakra_Petch({
   variable: "--font-chakra",
@@ -45,17 +46,19 @@ export default function RootLayout({
             <span className="text-xs mt-1">Perfil</span>
           </Link>
         </nav> */}
-        <div className="bg-black/30 backdrop-blur-xs">
-          <Link href="/">
-            <Image
-              src="/images/logo-mundo.png"
-              alt="Description"
-              className="mx-auto pt-10"
-              width={120}
-              height={10}
-            />
-          </Link>
-
+        <div className="bg-black/60 backdrop-blur-xs">
+          <div className="flex justify-between items-center px-10 py-5">
+            <Link href="/">
+              <Image
+                src="/images/logo-mundo.png"
+                alt="Description"
+                className="mx-auto"
+                width={120}
+                height={10}
+              />
+            </Link>
+            <AvatarButton name="Andy" />
+          </div>
           {children}
         </div>
       </body>

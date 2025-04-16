@@ -25,14 +25,18 @@ const GuideCard: FC<GuideCardProps> = ({
       }`}
       onClick={onSelect}
     >
-      <div className="relative w-full h-[400px] mb-3 overflow-hidden shadow-sm rounded">
+      <div className="relative w-full h-[400px] mb-3 overflow-hidden shadow-sm rounded-xl">
+        {selected && (
+          <div className="absolute inset-0 z-0 rounded-xl bg-yellow-400/20 blur-3xl scale-110" />
+        )}
+
         <Image
           src={image}
           alt={name}
           fill
-          className={`
-           ${selected ? "border-yellow-500" : "border-transparent"}
-           border-3 object-cover transition duration-200 `}
+          className={`relative z-10 border-3 transition duration-400 object-cover rounded-xl ${
+            selected ? "border-yellow-500" : "border-transparent"
+          }`}
           priority
         />
       </div>

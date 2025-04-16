@@ -79,7 +79,7 @@ export default function GuideSliderStep() {
           disabled={!selectedGuide}
           className={`mt-8 px-6 py-2 rounded-full font-semibold transition ${
             selectedGuide
-              ? "bg-yellow-400 text-black hover:bg-yellow-300"
+              ? "bg-red-400 text-black hover:bg-yellow-300 blur-xl scale-110 animate-pulse z-[-1]"
               : "bg-white/10 text-white/30 cursor-not-allowed"
           }`}
         >

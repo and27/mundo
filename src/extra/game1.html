@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viaje Sereno - InnerWorld</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"></script>
+    <style>
+        /* Estilos generales con fuente más suave */
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Fuente más suave */
+            background: linear-gradient(to bottom, #a0d2eb, #8ecae6, #a0d2eb);
+            /* Gradiente cielo suave actualizado */
+            color: #1a365d;
+            /* Texto azul oscuro */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        canvas {
+            background-color: rgba(255, 255, 255, 0.1);
+            /* Fondo del canvas más transparente */
+            display: block;
+            margin: 0 auto;
+            border: 3px solid #ffffff;
+            /* Borde blanco */
+            border-radius: 0.75rem;
+            /* Esquinas más redondeadas */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            /* Sombra suave */
+            cursor: pointer;
+        }
+
+        /* Mensajes y Botones con estilo suave */
+        #messageBox {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.85);
+            /* Fondo blanco semi-transparente */
+            color: #1a365d;
+            /* Texto azul oscuro */
+            padding: 1.5rem 2rem;
+            border: 2px solid #a0d2eb;
+            /* Borde azul claro */
+            border-radius: 0.75rem;
+            text-align: center;
+            font-size: 1.1rem;
+            /* Tamaño ajustado */
+            line-height: 1.6;
+            z-index: 10;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            font-family: 'Inter', sans-serif;
+            /* Fuente suave */
+            font-weight: 600;
+            /* Semi-bold */
+            padding: 0.7rem 1.3rem;
+            border-radius: 0.5rem;
+            border: none;
+            /* Sin borde */
+            background: linear-gradient(145deg, #8ecae6, #a0d2eb);
+            /* Gradiente azul claro */
+            color: #1a365d;
+            /* Texto azul oscuro */
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            margin-top: 1rem;
+            display: inline-block;
+        }
+
+        button:hover {
+            background: linear-gradient(145deg, #a0d2eb, #8ecae6);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        button:active {
+            transform: translateY(0px);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Contenedor para la calma */
+        .score-container {
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            /* Tamaño más grande */
+            font-weight: 600;
+            color: #ffffff;
+            /* Texto blanco */
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+            /* Sombra de texto */
+        }
+    </style>
+</head>
+
+<body class="">
+
+    <h1 class="text-3xl md:text-4xl mb-2 text-center font-bold text-white text-shadow-md">Viaje Sereno</h1>
+    <p class="mb-3 text-center text-sm md:text-base text-white text-shadow-sm">
+        Toca o presiona [↑] / [Espacio] para impulso, mantén para flotar. Usa [←] [→] para moverte.
+    </p>
+
+    <div class="score-container">
+        Calma: <span id="calmPoints">0</span>
+    </div>
+
+    <div class="relative">
+        <canvas id="gameCanvas" width="480" height="640"></canvas>
+        <div id="messageBox" class="hidden">
+            <p id="messageText"></p>
+            <button id="startButton">Comenzar Viaje</button>
+        </div>
+    </div>
+
+    <script>
+        // --- Configuración ---
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const calmPointsElement = document.getElementById('calmPoints');
+        const messageBox = document.getElementById('messageBox');
+        const messageText = document.getElementById('messageText');
+        const startButton = document.getElementById('startButton');
+
+        // --- Variables ---
+        let calmPoints = 0;
+        let gameSpeed = 1.5;
+        let gravity = 0.12;
+        let initialBoostLift = -3.2; // NUEVO: Impulso inicial al tocar/presionar
+        let upwardForce = 0.18;     // Fuerza sostenida al mantener (ligeramente reducida)
+        let gameRunning = false;
+        let animationFrameId;
+        let elementFrequency = 130;
+        let frameCount = 0;
+        let audioInitialized = false;
+
+        // --- Control Horizontal / Vertical ---
+        let moveSpeed = 2.5;
+        let isLeftPressed = false;
+        let isRightPressed = false;
+        let isFlapping = false; // Flag para impulso sostenido
+
+        // --- Efectos Visuales ---
+        const particles = [];
+        const clouds = [];
+        const stars = [];
+        const NUM_STARS = 50;
+        const NUM_CLOUDS = 5;
+
+        // --- Audio ---
+        let flapSound, collectSound, backgroundLoop;
+        let flapSoundInterval = null;
+        setupAudio();
+
+        function setupAudio() {
+            // (Código de audio sin cambios)
+            flapSound = new Tone.Synth({ oscillator: { type: 'sine' }, envelope: { attack: 0.01, decay: 0.1, sustain: 0.05, release: 0.2 }, volume: -14 }).toDestination();
+            collectSound = new Tone.Synth({ oscillator: { type: 'triangle' }, envelope: { attack: 0.01, decay: 0.3, sustain: 0.1, release: 0.3 }, volume: -10 }).toDestination();
+            const backgroundSynth = new Tone.Synth({ oscillator: { type: 'sine' }, envelope: { attack: 0.5, decay: 0.2, sustain: 0.5, release: 1 }, volume: -25 }).toDestination();
+            backgroundLoop = new Tone.Loop(time => { const note = (Math.random() < 0.5) ? 'C4' : 'G4'; backgroundSynth.triggerAttackRelease(note, '1n', time); }, "1n");
+            Tone.Transport.bpm.value = 70;
+        }
+
+        async function initializeAudio() {
+            // (Código de inicialización de audio sin cambios)
+            if (!audioInitialized && Tone.context.state !== 'running') {
+                try {
+                    await Tone.start(); audioInitialized = true; console.log("Audio Context Started.");
+                    if (gameRunning && backgroundLoop && Tone.Transport.state !== "started") { Tone.Transport.start(); backgroundLoop.start(0); }
+                } catch (error) { console.error("Error starting audio context:", error); audioInitialized = false; }
+            }
+        }
+
+        // --- Fondo ---
+        // (Funciones initBackground, drawCloud, drawStar, updateAndDrawBackground sin cambios)
+        function initBackground() { for (let i = 0; i < NUM_STARS; i++) { stars.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, radius: Math.random() * 1.5 + 0.5, alpha: Math.random() * 0.5 + 0.3, speed: Math.random() * 0.1 + 0.05 }) } for (let i = 0; i < NUM_CLOUDS; i++) { clouds.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height * 0.6, width: Math.random() * 80 + 60, height: Math.random() * 20 + 15, speed: Math.random() * 0.3 + 0.1 }) } }
+        function drawCloud(c) { ctx.fillStyle = `rgba(255,255,255,0.6)`; ctx.beginPath(); const s = c.width / 4; ctx.moveTo(c.x, c.y); ctx.lineTo(c.x + c.width, c.y); ctx.arc(c.x + c.width - s, c.y - c.height / 2, s, 0, Math.PI, true); ctx.arc(c.x + s, c.y - c.height / 2, s, 0, Math.PI, true); ctx.closePath(); ctx.fill() }
+        function drawStar(s) { ctx.fillStyle = `rgba(255,255,255,${s.alpha})`; ctx.beginPath(); ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2); ctx.fill() }
+        function updateAndDrawBackground() { stars.forEach(s => { s.x -= s.speed; if (s.x + s.radius < 0) { s.x = canvas.width + s.radius; s.y = Math.random() * canvas.height } drawStar(s) }); clouds.forEach(c => { c.x -= c.speed; if (c.x + c.width < 0) { c.x = canvas.width; c.y = Math.random() * canvas.height * 0.6 } drawCloud(c) }) }
+
+        // --- Partículas ---
+        // (Funciones createParticles, updateAndDrawParticles sin cambios)
+        function createParticles(x, y, c = 5, col = 'rgba(255,255,255,0.7)') { for (let i = 0; i < c; i++) { particles.push({ x: x, y: y, vx: (Math.random() - 0.5) * 1.5, vy: (Math.random() - 0.5) * 1.5, radius: Math.random() * 2 + 1, alpha: 1, decay: Math.random() * 0.03 + 0.01, color: col }) } }
+        function updateAndDrawParticles() { for (let i = particles.length - 1; i >= 0; i--) { const p = particles[i]; p.x += p.vx; p.y += p.vy; p.alpha -= p.decay; if (p.alpha <= 0) { particles.splice(i, 1) } else { ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fillStyle = `rgba(${p.color.match(/\d+/g).join(',')}, ${p.alpha})`; ctx.fill() } } }
+
+        // --- Personaje ---
+        const character = {
+            x: 80, y: canvas.height / 2, width: 50, height: 60, velocityY: 0, velocityX: 0,
+            draw() {
+                // (Código de dibujo sin cambios)
+                ctx.fillStyle = 'rgba(255,255,255,0.9)'; ctx.beginPath(); ctx.moveTo(this.x + this.width / 2, this.y); ctx.quadraticCurveTo(this.x, this.y, this.x, this.y + this.height / 2); ctx.quadraticCurveTo(this.x, this.y + this.height, this.x + this.width / 2, this.y + this.height); ctx.quadraticCurveTo(this.x + this.width, this.y + this.height, this.x + this.width, this.y + this.height / 2); ctx.quadraticCurveTo(this.x + this.width, this.y, this.x + this.width / 2, this.y); ctx.closePath(); ctx.fill(); ctx.fillStyle = '#4a5568'; ctx.beginPath(); ctx.arc(this.x + this.width * 0.35, this.y + this.height * 0.4, 3, 0, Math.PI * 2); ctx.arc(this.x + this.width * 0.65, this.y + this.height * 0.4, 3, 0, Math.PI * 2); ctx.fill();
+            },
+            update() {
+                if (gameRunning) {
+                    // Impulso Sostenido Vertical (si se mantiene presionado)
+                    if (isFlapping) {
+                        this.velocityY -= upwardForce;
+                    }
+
+                    // Aplicar Gravedad
+                    this.velocityY += gravity;
+                    this.y += this.velocityY;
+
+                    // Movimiento Horizontal
+                    this.x += this.velocityX;
+
+                    // Límites Verticales (Rebote arriba y abajo)
+                    const bounceFactor = -0.7;
+
+                    // Rebote Superior
+                    if (this.y < 0) {
+                        this.y = 0;
+                        if (this.velocityY < -0.1) { this.velocityY *= bounceFactor; }
+                        else { this.velocityY = 0; }
+                    }
+                    // Rebote Inferior
+                    else if (this.y + this.height > canvas.height) {
+                        this.y = canvas.height - this.height;
+                        if (this.velocityY > 0.5) { this.velocityY *= bounceFactor; }
+                        else { this.velocityY = 0; }
+                    }
+
+                    // Límites Horizontales
+                    if (this.x < 0) { this.x = 0; }
+                    if (this.x + this.width > canvas.width) { this.x = canvas.width - this.width; }
+
+                } else {
+                    this.velocityY = 0;
+                }
+            },
+            // NUEVO: Función separada para aplicar el impulso inicial
+            applyInitialBoost() {
+                if (gameRunning) {
+                    this.velocityY = initialBoostLift;
+                    // Tocar sonido una vez al inicio del flap
+                    if (flapSound && Tone.context.state === 'running' && !isFlapping) { // Asegurarse de no repetirlo si ya está flapping
+                        try {
+                            flapSound.triggerAttackRelease('G4', '16n'); // Sonido corto inicial
+                        } catch (error) { console.error("Error playing initial flap sound:", error); }
+                    }
+                }
+            }
+        };
+
+        // --- Elementos a Recolectar ---
+        const elements = [];
+        const elementRadius = 15;
+        const orbSpacing = elementRadius * 2.5;
+
+        function addElement() {
+            // (Código de addElement sin cambios)
+            const startY = Math.random() * (canvas.height - elementRadius * 4) + elementRadius * 2;
+            const startX = canvas.width + elementRadius;
+            if (Math.random() < 0.25) {
+                for (let i = 0; i < 3; i++) { elements.push({ x: startX + i * orbSpacing, y: startY, radius: elementRadius }); }
+            } else { elements.push({ x: startX, y: startY, radius: elementRadius }); }
+        }
+
+        function updateElements() {
+            // (Código de updateElements con borde dorado sin cambios)
+            if (!gameRunning) return;
+            frameCount++;
+            if (frameCount % elementFrequency === 0) { addElement(); }
+            for (let i = elements.length - 1; i >= 0; i--) {
+                const elem = elements[i];
+                elem.x -= gameSpeed;
+                const pulseFactor = 1 + Math.sin(Date.now() * 0.006) * 0.08;
+                const currentRadius = elem.radius * pulseFactor;
+                const currentAlpha = 0.8 * pulseFactor + 0.1;
+                ctx.beginPath(); ctx.arc(elem.x, elem.y, currentRadius, 0, Math.PI * 2); ctx.fillStyle = `rgba(255, 255, 255, ${currentAlpha})`; ctx.fill();
+                ctx.strokeStyle = 'rgba(255, 215, 0, 0.7)'; ctx.lineWidth = 1.5; ctx.stroke(); // Borde dorado
+                ctx.beginPath(); ctx.arc(elem.x, elem.y, currentRadius * 0.6, 0, Math.PI * 2); ctx.fillStyle = `rgba(255, 255, 255, ${currentAlpha * 0.6})`; ctx.fill();
+                if (checkCollision(character, elem)) {
+                    createParticles(elem.x, elem.y, 7, 'rgba(255, 255, 255, 0.8)');
+                    elements.splice(i, 1);
+                    calmPoints++; calmPointsElement.textContent = calmPoints;
+                    if (collectSound && Tone.context.state === 'running') { try { collectSound.triggerAttackRelease('C5', '4n'); } catch (error) { console.error(error); } }
+                    continue;
+                }
+                if (elem.x + elem.radius < 0) { elements.splice(i, 1); }
+            }
+        }
+
+        // --- Colisión ---
+        function checkCollision(rect, circle) {
+            // (Código sin cambios)
+            const closestX = Math.max(rect.x, Math.min(circle.x, rect.x + rect.width));
+            const closestY = Math.max(rect.y, Math.min(circle.y, rect.y + rect.height));
+            const distanceX = circle.x - closestX;
+            const distanceY = circle.y - closestY;
+            const distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
+            return distanceSquared < (circle.radius * circle.radius);
+        }
+
+        // --- Lógica del Juego ---
+        function gameLoop() {
+            // (Código sin cambios)
+            animationFrameId = requestAnimationFrame(gameLoop);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            updateAndDrawBackground();
+            if (gameRunning) { updateElements(); character.update(); }
+            character.draw();
+            updateAndDrawParticles();
+        }
+
+        function startGame() {
+            // (Código sin cambios)
+            if (gameRunning) return;
+            calmPoints = 0; calmPointsElement.textContent = calmPoints;
+            character.x = 80; character.y = canvas.height / 2; character.velocityY = 0; character.velocityX = 0;
+            elements.length = 0; particles.length = 0; frameCount = 0;
+            messageBox.classList.add('hidden');
+            gameRunning = true;
+            if (audioInitialized && backgroundLoop && Tone.Transport.state !== "started") { try { Tone.Transport.start(); backgroundLoop.start(0); } catch (e) { console.error(e); } }
+            if (!animationFrameId) { cancelAnimationFrame(animationFrameId); gameLoop(); }
+        }
+
+        // --- Controles ---
+        function handleInteractionStart() {
+            initializeAudio();
+            if (!gameRunning) { startGame(); }
+        }
+
+        function manageFlapSound(shouldPlay) {
+            // (Código sin cambios) - Controla sonido continuo al mantener
+            if (shouldPlay && !flapSoundInterval && audioInitialized && Tone.context.state === 'running') {
+                flapSoundInterval = setInterval(() => {
+                    try { flapSound.triggerAttackRelease('G4', '16n'); }
+                    catch (error) { console.error("Error playing flap sound:", error); }
+                }, 150);
+            } else if (!shouldPlay && flapSoundInterval) {
+                clearInterval(flapSoundInterval); flapSoundInterval = null;
+            }
+        }
+
+        // Listeners de Teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.target !== document.body && e.target !== canvas) return;
+            if (e.repeat) return;
+
+            handleInteractionStart(); // Asegurar que el juego inicie
+
+            // Flotar (Vertical) - Aplica boost inicial y activa flag para sostenido
+            if (e.code === 'Space' || e.code === 'ArrowUp') {
+                e.preventDefault();
+                if (gameRunning && !isFlapping) { // Solo si no está ya flotando
+                    character.applyInitialBoost(); // *** APLICAR BOOST INICIAL ***
+                    isFlapping = true;
+                    manageFlapSound(true); // Iniciar sonido continuo (si se desea)
+                    console.log("Flapping started (keydown)");
+                }
+            }
+            // Mover Izquierda / Derecha
+            else if (e.code === 'ArrowLeft') { e.preventDefault(); isLeftPressed = true; character.velocityX = -moveSpeed; }
+            else if (e.code === 'ArrowRight') { e.preventDefault(); isRightPressed = true; character.velocityX = moveSpeed; }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            if (e.target !== document.body && e.target !== canvas) return;
+
+            // Flotar (Vertical) - Detiene flag para sostenido
+            if (e.code === 'Space' || e.code === 'ArrowUp') {
+                if (isFlapping) {
+                    isFlapping = false;
+                    manageFlapSound(false); // Detener sonido continuo
+                    console.log("Flapping stopped (keyup)");
+                }
+            }
+            // Detener Izquierda / Derecha
+            else if (e.code === 'ArrowLeft') { isLeftPressed = false; if (!isRightPressed) { character.velocityX = 0; } }
+            else if (e.code === 'ArrowRight') { isRightPressed = false; if (!isLeftPressed) { character.velocityX = 0; } }
+        });
+
+
+        // Listeners para Tocar/Clic (Vertical - Tap + Hold)
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            handleInteractionStart();
+            if (gameRunning && !isFlapping) { // Solo si no está ya flotando
+                character.applyInitialBoost(); // *** APLICAR BOOST INICIAL ***
+                isFlapping = true;
+                manageFlapSound(true);
+                console.log("Flapping started (touchstart)");
+            }
+        });
+        canvas.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            if (isFlapping) {
+                isFlapping = false;
+                manageFlapSound(false);
+                console.log("Flapping stopped (touchend)");
+            }
+        });
+        canvas.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            handleInteractionStart();
+            if (gameRunning && !isFlapping) { // Solo si no está ya flotando
+                character.applyInitialBoost(); // *** APLICAR BOOST INICIAL ***
+                isFlapping = true;
+                manageFlapSound(true);
+                console.log("Flapping started (mousedown)");
+            }
+        });
+        canvas.addEventListener('mouseup', (e) => {
+            e.preventDefault();
+            if (isFlapping) {
+                isFlapping = false;
+                manageFlapSound(false);
+                console.log("Flapping stopped (mouseup)");
+            }
+        });
+        canvas.addEventListener('mouseleave', (e) => {
+            if (isFlapping) {
+                isFlapping = false;
+                manageFlapSound(false);
+                console.log("Flapping stopped (mouseleave)");
+            }
+        });
+
+
+        // Botón Empezar
+        startButton.onclick = (e) => { e.stopPropagation(); handleInteractionStart(); };
+
+
+        // --- Inicialización Visual ---
+        window.onload = () => {
+            // (Código sin cambios)
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            initBackground(); updateAndDrawBackground();
+            character.x = 80; character.y = canvas.height / 2; character.velocityY = 0; character.velocityX = 0;
+            character.draw();
+            messageText.innerHTML = 'Toca o presiona [↑] / [ESPACIO] para impulso, mantén para flotar.<br>Usa [←] [→] para moverte.'; // Instrucciones actualizadas
+            messageBox.classList.remove('hidden');
+        };
+
+    </script>
+
+</body>
+
+</html>
