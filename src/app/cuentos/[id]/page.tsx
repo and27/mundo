@@ -2,7 +2,6 @@
 import { useParams } from "next/navigation";
 import { stories } from "@/lib/stories";
 import { guides } from "@/lib/guides";
-import BreathingPlayer from "@/components/breathing/BreathingPlayer";
 import ForestWithLights from "@/components/userHome/ForestWithLights";
 import GuideHeader from "@/components/breathing/GuideHeader";
 import Game from "@/app/game/page";

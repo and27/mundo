@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { guides } from "@/lib/guides";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function GuideSliderStep() {
   const [selectedGuide, setSelectedGuide] = useState<string | null>(null);
@@ -59,7 +60,7 @@ export default function GuideSliderStep() {
             onClick={() => router.push(`/guide/${g.id}`)}
           >
             <div className="bg-white/10 rounded-2xl p-4 text-center">
-              <img
+              <Image
                 src={g.image}
                 alt={g.name}
                 className="w-full h-56 object-cover rounded-xl mb-2"

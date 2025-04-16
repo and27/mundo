@@ -24,7 +24,11 @@ const ErrorMessage = ({ message }: { message: string }) => (
 
 // Este BreathingCircle es el del fondo, quizás lo quieras mantener o quitar
 // en este modo si ya no es necesario.
-const BackgroundBreathingCircle = ({ isPlaying }: { isPlaying: boolean }) => (
+export const BackgroundBreathingCircle = ({
+  isPlaying,
+}: {
+  isPlaying: boolean;
+}) => (
   <div className="absolute inset-0 flex items-center justify-center -z-10 opacity-50 pointer-events-none">
     {/* Hice los círculos un poco más grandes y les añadí opacidad */}
     <div
@@ -42,12 +46,25 @@ const BackgroundBreathingCircle = ({ isPlaying }: { isPlaying: boolean }) => (
   </div>
 );
 
+export interface Guide {
+  id: string;
+  name: string;
+  subtitle: string;
+  phrase: string;
+  description: string;
+  image: string;
+  imageTransparent: string;
+  audioSrc?: string;
+  refinedImage?: string;
+}
+
 // *** RENOMBRADO ***
 const AudioGuidePage = () => {
   const { id } = useParams();
-  const [guide, setGuide] = useState<any>(null);
+  const [guide, setGuide] = useState<Guide | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  //eslint-disable-next-line
   const [isPlaying, setIsPlaying] = useState(false); // Inicia en false
 
   useEffect(() => {
@@ -66,8 +83,8 @@ const AudioGuidePage = () => {
   }, [id]);
 
   // --- Conectar estos al CustomAudioPlayer ---
-  const handlePlay = () => setIsPlaying(true);
-  const handlePauseOrEnd = () => setIsPlaying(false); // Se llama en pausa o al terminar
+  // const handlePlay = () => setIsPlaying(true);
+  // const handlePauseOrEnd = () => setIsPlaying(false); // Se llama en pausa o al terminar
 
   if (isLoading) return <LoadingIndicator />;
   if (error) return <ErrorMessage message={error} />;

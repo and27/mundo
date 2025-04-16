@@ -6,4 +6,5 @@ export type Guide = {
   description: string;
   image: string;
   imageTransparent: string;
+  refinedImage?: string;
 };

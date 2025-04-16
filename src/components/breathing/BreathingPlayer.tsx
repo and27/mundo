@@ -13,13 +13,7 @@ const DURATIONS = {
 
 export type BreathingPhase = "idle" | "inhale" | "hold" | "exhale";
 
-export default function BreathingPlayer({
-  guide,
-  mode,
-}: {
-  guide: any;
-  mode: string;
-}) {
+export default function BreathingPlayer() {
   const router = useRouter();
   const [cycle, setCycle] = useState(0);
   const [phase, setPhase] = useState<BreathingPhase>("idle");
@@ -49,7 +43,7 @@ export default function BreathingPlayer({
     }
 
     return () => clearTimeout(timeout);
-  }, [phase]);
+  }, [phase, cycle, done]);
 
   return (
     <div className="flex flex-col items-center gap-5">

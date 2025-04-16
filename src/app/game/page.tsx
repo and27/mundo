@@ -11,7 +11,10 @@ const TOTAL_PATH_SEGMENTS = 10; // Must match the constant in useGameLogic
 // --- Componente para dibujar el Camino Iluminado ---
 // (Debería estar fuera del canvas principal o dibujado DENTRO del canvas por el hook)
 // Opción A: Componente React fuera del canvas (más fácil para empezar)
-const IlluminatedPath = ({ totalSegments, litSegments }) => {
+const IlluminatedPath: React.FC<{
+  totalSegments: number;
+  litSegments: number;
+}> = ({ totalSegments, litSegments }) => {
   return (
     <div
       className="flex justify-center gap-1 my-2"
@@ -41,19 +44,19 @@ export default function Game() {
   const [isAudioInitialized, setIsAudioInitialized] = useState(false);
 
   // --- Refs ---
-  const canvasRef = useRef(null);
-  const contextRef = useRef(null);
-  const characterImageRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const contextRef = useRef<CanvasRenderingContext2D | null>(null);
+  const characterImageRef = useRef<HTMLImageElement | null>(null);
   // Refs de audio para pasar al hook (el hook las usará)
-  const flapSoundRef = useRef(null);
-  const collectSoundRef = useRef(null);
-  const backgroundLoopRef = useRef(null);
-  const segmentLitSoundRef = useRef(null);
-  const gameCompleteSoundRef = useRef(null);
+  const flapSoundRef = useRef<Tone.Synth | null>(null);
+  const collectSoundRef = useRef<Tone.Synth | null>(null);
+  const backgroundLoopRef = useRef<Tone.Player | null>(null);
+  const segmentLitSoundRef = useRef<Tone.Synth | null>(null);
+  const gameCompleteSoundRef = useRef<Tone.PolySynth | null>(null);
   // const flapSoundIntervalRef = useRef(null); // Ya no se usa para sonido continuo
 
   // --- Callbacks para el Hook ---
-  const handleSegmentLit = useCallback((segmentIndex) => {
+  const handleSegmentLit = useCallback((segmentIndex: number) => {
     console.log("App: Segment Lit:", segmentIndex);
     setCurrentLitSegments(segmentIndex);
     // Aquí podrías disparar alguna animación sutil fuera del canvas si quisieras
@@ -67,8 +70,15 @@ export default function Game() {
   }, []);
 
   // --- Funciones de Dibujo (sin cambios, se pasan al hook) ---
+  interface Character {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  }
+
   const drawCharacter = useCallback(
-    (char, img) => {
+    (char: Character, img: HTMLImageElement | null) => {
       // Recibe imagen ahora
       const ctx = contextRef.current;
       if (!ctx) return;
@@ -91,8 +101,14 @@ export default function Game() {
     [isCharacterImageLoaded]
   ); // Depende de isCharacterImageLoaded
 
-  const drawCloud = useCallback((c) => {
-    /* ... sin cambios ... */
+  interface Cloud {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  }
+
+  const drawCloud = useCallback((c: Cloud) => {
     const ctx = contextRef.current;
     if (!ctx) return;
     ctx.fillStyle = `rgba(255,255,255,0.2)`; // Más sutiles?
@@ -101,7 +117,14 @@ export default function Game() {
     ctx.roundRect(c.x, c.y, c.width, c.height, [c.height / 2]);
     ctx.fill();
   }, []);
-  const drawStar = useCallback((s) => {
+  interface Star {
+    x: number;
+    y: number;
+    radius: number;
+    alpha: number;
+  }
+
+  const drawStar = useCallback((s: Star) => {
     /* ... sin cambios ... */
     const ctx = contextRef.current;
     if (!ctx) return;
@@ -205,10 +228,14 @@ export default function Game() {
           fadeOut: 1,
         }).toDestination();
         // Precargar el buffer si es posible
-        backgroundLoopRef.current.buffer
-          .load("/audio/ambient-loop-calm.mp3")
-          .then(() => console.log("Background audio loaded."))
-          .catch((e) => console.error("Error loading background audio:", e));
+        if (backgroundLoopRef.current) {
+          backgroundLoopRef.current?.buffer
+            .load("/audio/ambient-loop-calm.mp3")
+            .then(() => console.log("Background audio loaded."))
+            .catch((e: unknown) =>
+              console.error("Error loading background audio:", e)
+            );
+        }
       }
 
       // Pasar las refs configuradas al hook (si el hook necesita reconfigurar algo)
@@ -240,7 +267,7 @@ export default function Game() {
     console.log("Canvas setup.");
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
-    contextRef.current = ctx;
+    contextRef.current = ctx ?? null;
     // ... manejo de error de contexto ...
     return () => {
       /* ... limpieza ... */
@@ -261,7 +288,12 @@ export default function Game() {
       }
     };
 
-    const handleKeyDown = (e) => {
+    interface KeyDownEvent extends KeyboardEvent {
+      code: string;
+      repeat: boolean;
+    }
+
+    const handleKeyDown = (e: KeyDownEvent): void => {
       console.log("App: KeyDown Detectado:", e.code); // <-- AÑADE ESTO
       if (e.repeat) return; // Evitar repetición de tecla
       handleInteractionStart(); // Iniciar en cualquier tecla relevante
@@ -278,7 +310,11 @@ export default function Game() {
         handleMoveStart("right");
       }
     };
-    const handleKeyUp = (e) => {
+    interface KeyUpEvent extends KeyboardEvent {
+      code: string;
+    }
+
+    const handleKeyUp = (e: KeyUpEvent): void => {
       if (e.code === "Space" || e.code === "ArrowUp") {
         handleFlapStop();
         // manageFlapSound(false); // REMOVIDO
@@ -289,14 +325,13 @@ export default function Game() {
       }
     };
 
-    // --- Listeners Táctiles y de Mouse (Simplificados para solo "Flap") ---
-    const handlePointerDown = (e) => {
-      console.log("App: Pointer Detectado:", e.code); // <-- AÑADE ESTO
+    // --- Liseners Táctiles y de Mouse (Simplificados para solo "Flap") ---
+    const handlePointerDown = (e: TouchEvent | MouseEvent): void => {
       e.preventDefault();
       handleInteractionStart();
       handleFlapStart();
     };
-    const handlePointerUpOrLeave = (e) => {
+    const handlePointerUpOrLeave = (e: TouchEvent | MouseEvent) => {
       e.preventDefault();
       handleFlapStop();
     };
@@ -334,6 +369,7 @@ export default function Game() {
     handleMoveStart,
     handleMoveStop,
     isGameComplete,
+    gameRunningRef,
   ]); // Dependencias
 
   // --- Renderizado del Componente ---

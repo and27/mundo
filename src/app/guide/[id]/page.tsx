@@ -1,11 +1,12 @@
 // src/components/guides/InteractiveGuidePage.tsx
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation"; // Importar useRouter
 import { guides } from "@/lib/guides"; // Asegúrate que la ruta sea correcta
 import Image from "next/image";
 import { FaStar } from "react-icons/fa"; // Importar icono de estrella
+import { Guide } from "@/types/guides";
 
 // Reutilizar o mover a compartidos
 const LoadingIndicator = () => (
@@ -27,7 +28,7 @@ const InteractiveBreathingVisual = ({ phase }: { phase: BreathingPhase }) => {
   let scale = 1;
   let color = "#FFDA63"; // Dorado base cálido
   let opacity = 0.8;
-  let internalPatternClass = "pattern-water-subtle"; // Clase CSS para el patrón
+  const internalPatternClass = "pattern-water-subtle"; // Clase CSS para el patrón
 
   switch (phase) {
     case "inhale":
@@ -103,7 +104,7 @@ type BreathingPhase = "idle" | "inhale" | "hold" | "exhale"; // Añadir 'pause' 
 const InteractiveGuidePage = () => {
   const { id } = useParams();
   const router = useRouter(); // Para navegar al final
-  const [guide, setGuide] = useState<any>(null);
+  const [guide, setGuide] = useState<Guide | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 

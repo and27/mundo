@@ -2,12 +2,10 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useOnboardingStore } from "@/store/useOnboardingStore";
 import ForestWithLights from "./ForestWithLights";
 import Image from "next/image";
 
 export default function UserHero() {
-  const name = useOnboardingStore((state) => state.name) || "viajero";
   const router = useRouter();
   const [stage, setStage] = useState<"intro" | "select_mode">("intro");
 

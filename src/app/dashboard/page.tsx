@@ -1,10 +1,6 @@
 "use client";
 
 import UserHero from "@/components/userHome/UserHero";
-import LastJourneys from "@/components/userHome/LastJourneys";
-import Forest from "@/components/userHome/Forest";
-import FavoriteJourneys from "@/components/userHome/FavoriteJourneys";
-import Recommended from "@/components/userHome/Recommended";
 
 export default function Dashboard() {
   return (

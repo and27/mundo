@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { guides } from "@/lib/guides";
-import Link from "next/link";
 import Image from "next/image";
+import { Guide } from "@/types/guides";
 
 const emotionOptions = [
   { id: "tranquilo", name: "Tranquilo/a", icon: "😊" },
@@ -29,7 +29,7 @@ const ErrorMessage = ({ message }: { message: string }) => (
 const EndPage = () => {
   const { id } = useParams();
   const router = useRouter();
-  const [guide, setGuide] = useState<any>(null);
+  const [guide, setGuide] = useState<Guide | null>(null);
   const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
