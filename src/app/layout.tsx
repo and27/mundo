@@ -46,8 +46,8 @@ export default function RootLayout({
             <span className="text-xs mt-1">Perfil</span>
           </Link>
         </nav> */}
-        <div className="bg-black/60 backdrop-blur-xs">
-          <div className="flex justify-between items-center px-10 py-5">
+        <div className="bg-black/30 backdrop-blur-xs">
+          <div className="flex justify-between items-center px-5 md:px-10 py-5">
             <Link href="/">
               <Image
                 src="/images/logo-mundo.png"

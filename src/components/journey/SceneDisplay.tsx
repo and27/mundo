@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 interface SceneDisplayProps {
@@ -12,7 +13,7 @@ const SceneDisplay: React.FC<SceneDisplayProps> = ({
   return (
     <div className="flex flex-col items-center justify-center text-center p-4">
       {foregroundImage && (
-        <img src={foregroundImage} alt="" className="object-contain" />
+        <Image src={foregroundImage} alt="" className="object-contain" />
       )}
       {text && <p className="text-lg md:text-xl">{text}</p>}
     </div>

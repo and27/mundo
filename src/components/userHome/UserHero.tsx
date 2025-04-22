@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import ForestWithLights from "./ForestWithLights";
 import Image from "next/image";
+import Button from "../ui/Button";
 
 export default function UserHero() {
   const router = useRouter();
@@ -12,7 +13,7 @@ export default function UserHero() {
   const handleCTA = () => setStage("select_mode");
 
   const handleSelectMode = (mode: "listen" | "play") => {
-    const storyId = "el-viaje-de-amaru";
+    const storyId = "amaru";
     router.push(`/cuentos/${storyId}?mode=${mode}`);
   };
 
@@ -27,18 +28,16 @@ export default function UserHero() {
       </p> */}
 
       <div className="absolute flex flex-col items-center pt-20">
-        <div className="flex flex-col items-center text-center justify-center z-10 px-10 py-6 w-[90%] max-w-xl bg-white/10 backdrop-blur-md rounded-2xl text-white shadow-2xl border border-white/20 space-y-4 animate-fade-in transition-all ">
+        <div className="flex flex-col items-center text-center justify-center z-10 px-10 py-6 w-[90%] max-w-2xl bg-white/10 backdrop-blur-md rounded-2xl text-white shadow-2xl border border-white/20 space-y-4 animate-fade-in transition-all ">
           {stage === "intro" && (
             <>
               <p className="text-xl font-semibold leading-relaxed">
                 ¿Quieres escuchar una historia sobre cómo calmar tu corazón? 🌟
               </p>
-              <button
-                onClick={handleCTA}
-                className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold py-2 px-6 rounded-full transition duration-200 hover:scale-105"
-              >
-                Sí, quiero escucharla
-              </button>
+              <div className="flex flex-col gap-3">
+                <Button onClick={handleCTA}>Sí, quiero escucharla</Button>
+                <Button variant="secondary">Cambiar de guía</Button>
+              </div>
             </>
           )}
 
@@ -49,16 +48,16 @@ export default function UserHero() {
                 historia para dormir. <br />
                 ¿Cómo prefieres vivirlo?
               </p>
-              <div className="flex flex-col sm:flex-row justify-center gap-3 pt-1">
+              <div className="w-full flex flex-col sm:flex-row justify-center gap-3 pt-1">
                 <button
                   onClick={() => handleSelectMode("listen")}
-                  className="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-2.5 px-4 rounded-lg transition hover:scale-105"
+                  className="rounded-full flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-2.5 px-3 transition hover:scale-105"
                 >
                   🌙 Escuchar para dormir
                 </button>
                 <button
                   onClick={() => handleSelectMode("play")}
-                  className="flex-1 bg-sky-600 hover:bg-sky-500 text-white font-semibold py-2.5 px-4 rounded-lg transition hover:scale-105"
+                  className="rounded-full flex-1 bg-sky-600 hover:bg-sky-500 text-white font-semibold py-2.5 px-3 transition hover:scale-105"
                 >
                   ✨ Vivir la aventura
                 </button>

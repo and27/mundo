@@ -1,7 +1,7 @@
 import React from "react";
 
 interface BreathingDisplayProps {
-  // type?: 'concentric_circles' | 'other_style'; // Ejemplo
+  type?: "concentric_circles" | "other_style";
 }
 
 const BreathingDisplay: React.FC<

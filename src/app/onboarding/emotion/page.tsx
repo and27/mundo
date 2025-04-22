@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useOnboardingStore } from "@/store/useOnboardingStore";
 import { useRouter } from "next/navigation";
 import SelectableEmotionGrid from "@/components/SelectableEmotion";
+import Button from "@/components/ui/Button";
 
 export default function Onboarding() {
   const { name, setEmotion: setGlobalEmotion } = useOnboardingStore();
@@ -38,21 +39,14 @@ export default function Onboarding() {
         className="max-w-lg w-full mb-10" // Ajustar ancho y margen
       />
 
-      <button
+      <Button
         onClick={handleContinue}
-        disabled={!selectedEmotion} // Se activa solo si se selecciona una emoción
-        className={`
-          bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold
-          py-3 px-10 rounded-full text-lg shadow-lg transition-all duration-200 ease-in-out
-          ${
-            !selectedEmotion
-              ? "opacity-50 cursor-not-allowed"
-              : "hover:scale-105"
-          }
+        disabled={!selectedEmotion}
+        className={`${!selectedEmotion && "opacity-50 cursor-not-allowed"}
         `}
       >
         Continuar
-      </button>
+      </Button>
     </section>
   );
 }

@@ -1,12 +1,23 @@
-export const guides = [
+export interface Guide {
+  id: string;
+  name: string;
+  subtitle: string;
+  phrase: string;
+  description: string;
+  image: string;
+  imageTransparent: string;
+  refinedImage?: string;
+}
+
+export const guides: Guide[] = [
   {
     id: "puma",
     name: "Yachay",
-    subtitle: "El guardián del poder interior",
+    subtitle: "Fuerza interior",
     phrase: "En tu calma vive toda tu fuerza.",
     description:
       "Yachay te ayudará a encontrar foco, valentía y conexión con tu fuerza interna.",
-    image: "/guides/babyPuma.png",
+    image: "/guides/yachay3d.png",
     imageTransparent: "/guides/puma-transparent.png",
   },
   {
@@ -16,37 +27,37 @@ export const guides = [
     phrase: "Tómate distancia. Todo se ve distinto desde arriba.",
     description:
       "Kuntur te acompaña a elevar tu mirada y encontrar esperanza en los momentos difíciles.",
-    image: "/guides/babyKuntur.png",
+    image: "/guides/kuntur3d.png",
     imageTransparent: "/guides/kuntur-transparent.png",
   },
   {
     id: "amaru",
     name: "Amaru",
-    subtitle: "La serpiente de la transformación",
+    subtitle: "Fluir y crecer",
     phrase: "Cada emoción es una puerta hacia tu libertad.",
     description:
       "Amaru te guía a través de la liberación emocional, ayudándote a transmutar lo que ya no necesitas.",
-    image: "/guides/amaru.png",
+    image: "/guides/amaru3d.png",
     imageTransparent: "/guides/amaru-transparent.png",
   },
   {
     id: "hatun",
-    name: "Hatun Tortuga",
-    subtitle: "La abuela del tiempo profundo",
+    name: "Hatun",
+    subtitle: "Abuela sabia",
     phrase: "Todo lo que es real se cultiva con paciencia.",
     description:
       "Hatun Tortuga te enseña a detenerte, confiar en el proceso y encontrar sabiduría en la lentitud.",
-    image: "/guides/babyHatun.png",
+    image: "/guides/hatun3d.png",
     imageTransparent: "/guides/hatun-transparent.png",
   },
   {
     id: "pajaro",
     name: "Pájaro Brujo",
-    subtitle: "El cantor de tu voz interior",
+    subtitle: "Voz interior",
     phrase: "Tu autenticidad es medicina.",
     description:
       "Pájaro Brujo te anima a expresar lo que sientes, recordándote que tu voz es parte del equilibrio del mundo.",
-    image: "/guides/babyMago.png",
+    image: "/guides/mago3d.png",
     imageTransparent: "/guides/mago-transparent.png",
   },
 ];

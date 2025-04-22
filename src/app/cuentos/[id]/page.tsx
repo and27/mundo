@@ -9,7 +9,6 @@ import SceneDisplay from "@/components/journey/SceneDisplay";
 import BreathingDisplay from "@/components/journey/BreathingDisplay";
 import ChoiceSelector from "@/components/journey/ChoiceSelector";
 // import GameWrapper from "@/components/journey/GameWrapper";
-import ForestWithLights from "@/components/userHome/ForestWithLights";
 import GuideHeader from "@/components/breathing/GuideHeader";
 import { FaPlay } from "react-icons/fa";
 import SubtitleDisplay from "@/components/journey/SubtitleDisplay";
@@ -26,13 +25,13 @@ export default function CuentoPage() {
   const [currentStepId, setCurrentStepId] = useState<string | null>(null);
   const [currentStep, setCurrentStep] = useState<JourneyStep | null>(null);
 
+  const endUrl = `/end/${story?.guideId}`;
   const advanceStep = useCallback(
     (nextStepId: string) => {
       if (nextStepId === "end") {
-        console.log("Viaje completado!");
         setJourneyState("finished");
         stopAudio();
-        setTimeout(() => router.push(`/end/${guide?.id}`), 1500);
+        setTimeout(() => router.push(endUrl), 1500);
         return;
       }
       const nextStep = story?.steps.find((s) => s.id === nextStepId) ?? null;
@@ -42,11 +41,11 @@ export default function CuentoPage() {
         console.error(
           `Error: No se encontró el siguiente paso con ID: ${nextStepId}`
         );
-        router.push("/home");
+        router.push(endUrl);
       }
     },
     [story, router]
-  ); // stopAudio removed from deps
+  );
 
   const handleAudioEnd = useCallback(() => {
     if (currentStep?.interaction.type === "auto_proceed") {
@@ -54,7 +53,7 @@ export default function CuentoPage() {
     }
   }, [currentStep, advanceStep]);
 
-  const { playAudio, stopAudio, isPlaying } = useJourneyAudio({
+  const { playAudio, stopAudio } = useJourneyAudio({
     onStepComplete: handleAudioEnd,
   });
 
@@ -105,6 +104,7 @@ export default function CuentoPage() {
       ) {
         advanceStep(currentStep.interaction.nextStepId);
       }
+      console.log(`Interacción del usuario: ${interactionValue}`);
     },
     [currentStep, advanceStep, journeyState]
   );
@@ -132,7 +132,7 @@ export default function CuentoPage() {
           />
         );
       case "game":
-        return <p>Tipo de paso 'game' aún no implementado.</p>;
+        return <p>Tipo de paso game aún no implementado.</p>;
       default:
         console.warn(`Tipo visual no reconocido: ${currentStep.visuals.type}`);
         return null;

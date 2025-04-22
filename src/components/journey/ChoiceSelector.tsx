@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 interface Choice {
@@ -32,7 +33,7 @@ const ChoiceSelector: React.FC<ChoiceSelectorProps> = ({
             selectedChoiceId === choice.id ? { border: "2px solid yellow" } : {}
           }
         >
-          <img
+          <Image
             src={choice.icon}
             alt={choice.label}
             className="w-12 h-12 object-contain"

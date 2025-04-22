@@ -1,9 +1,11 @@
 "use client";
 
+import { useOnboardingStore } from "@/store/useOnboardingStore";
 import Image from "next/image";
 import Link from "next/link";
 
 const Hero = () => {
+  const { name } = useOnboardingStore();
   return (
     <section className="flex flex-col justify-center md:flex-row my-16 gap-6 items-center">
       <div className="text-center md:text-left">
@@ -18,7 +20,7 @@ const Hero = () => {
           ¿Estás listo para volver a ti?
         </p>
         <Link
-          href="/onboarding/name"
+          href={name ? "/onboarding/emotion" : "/onboarding/name"}
           className="bg-yellow-400 text-black font-bold py-3 px-6 rounded-full hover:bg-yellow-300 transition"
         >
           Iniciar viaje

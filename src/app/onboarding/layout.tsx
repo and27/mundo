@@ -1,5 +1,4 @@
 "use client";
-import QuoteBanner from "@/components/QuoteBanner";
 import { useRouter } from "next/navigation";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -14,7 +13,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         >
           ← <span className="ml-1 text-sm">Volver</span>
         </button>
-        <QuoteBanner text="Cuando respiras, el bosque te escucha." />
+        {/* <QuoteBanner text="Cuando respiras, el bosque te escucha." /> */}
         {children}
       </div>
     </section>
