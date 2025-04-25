@@ -5,7 +5,6 @@ import { stories } from "@/lib/stories";
 import { guides, Guide } from "@/lib/guides";
 import { useJourneyPlayer } from "@/hooks/useJourneyPlayer";
 import ChoiceSelector from "@/components/journey/ChoiceSelector";
-import { FaPlay } from "react-icons/fa";
 import SubtitleDisplay from "@/components/journey/SubtitleDisplay";
 import DynamicBackgroundOverlay from "@/components/journey/DynamicBackgroundOverlay";
 import GuideVisualDisplay from "@/components/journey/GuideVisualDisplay";

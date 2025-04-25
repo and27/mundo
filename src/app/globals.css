@@ -3,7 +3,7 @@
 :root {
   --background: #0a0a0a;
   --foreground: #ededed;
-  --background-image: url("/images/forest-bg.webp");
+  --background-image: url("/images/forest-bg-h.png");
 }
 
 @theme inline {
@@ -25,17 +25,26 @@
 }
 
 body {
-  background-color: var(--color-sky);
-  color: var(--foreground);
-  font-family: var(--font-sans);
-  transition: background-color var(--transition-normal),
-    color var(--transition-normal);
-
+  position: relative;
+  isolation: isolate;
   background-image: var(--background-image);
+  background-color: var(--color-sky);
   background-size: cover;
   background-position: top center;
   background-repeat: no-repeat;
-  background-color: var(--background-color);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  transition: color var(--transition-normal);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--emotion-tint-color, transparent);
+  transition: background-color 0.8s ease-in-out;
+  pointer-events: none;
 }
 
 @keyframes float {
@@ -94,3 +103,95 @@ body {
 .animate-pulse-custom {
   animation: pulse 2s ease-in-out infinite;
 }
+
+@keyframes breathe-aura {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.6;
+  }
+}
+
+.animate-breathe-aura {
+  animation: breathe-aura 6s ease-in-out infinite;
+}
+
+/* === Animaciones para Orbe de Calma Interior === */
+
+/* Animación para el Resplandor Exterior (cambia opacidad) */
+@keyframes breathe-glow {
+  0%,
+  100% {
+    opacity: 0.15;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(1.05);
+  }
+}
+.animate-breathe-glow {
+  animation: breathe-glow 8s ease-in-out infinite;
+}
+
+/* Animación para el Anillo Exterior (cambia escala y opacidad) */
+@keyframes breathe-ring-outer {
+  0%,
+  100% {
+    transform: scale(0.9);
+    opacity: 0.2;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.5;
+  }
+}
+.animate-breathe-ring-outer {
+  animation: breathe-ring-outer 8s ease-in-out infinite;
+}
+
+/* Animación para el Anillo Interior (similar pero con ligero delay o diferencia) */
+@keyframes breathe-ring-inner {
+  0%,
+  100% {
+    transform: scale(0.85);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.7;
+  }
+}
+.animate-breathe-ring-inner {
+  /* Puedes darle un pequeño delay si quieres */
+  /* animation: breathe-ring-inner 8s 0.2s ease-in-out infinite; */
+  animation: breathe-ring-inner 8s ease-in-out infinite;
+}
+
+/* Animación para el Núcleo del Orbe (cambia escala y brillo/filtro) */
+@keyframes breathe-core {
+  0%,
+  100% {
+    transform: scale(0.95);
+    filter: brightness(0.9);
+  }
+  50% {
+    transform: scale(1.05);
+    filter: brightness(1.15);
+  }
+}
+.animate-breathe-core {
+  animation: breathe-core 8s ease-in-out infinite;
+}
+
+/* Helper para Gradiente Radial (si no lo tienes en Tailwind) */
+/* Asegúrate que tu config de Tailwind soporte radial gradients o usa esto */
+.bg-gradient-radial {
+  background-image: radial-gradient(circle, var(--tw-gradient-stops));
+}
+
+/* =========================================== */

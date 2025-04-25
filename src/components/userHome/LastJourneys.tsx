@@ -53,12 +53,6 @@ const LastJourneys = () => {
     <section className="my-12">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-xl font-bold text-white">Tus últimos viajes</h3>
-        <Link
-          href="/library"
-          className="text-sm text-yellow-400 hover:underline"
-        >
-          Ver todos
-        </Link>
       </div>
       {isLoading ? (
         <div className="flex gap-4 overflow-x-auto scrollbar-hide">
@@ -77,7 +71,7 @@ const LastJourneys = () => {
               key={m.title}
               href={m.href}
               aria-label={`Ir a meditación ${m.title}`}
-              className="flex-shrink-0 w-[200px] bg-white/5 rounded-2xl p-4 hover:bg-white/10 transition-colors duration-200 snap-start block"
+              className="flex-shrink-0 w-[200px] bg-gradient-to-t from-white/20 to-white/10 backdrop-blur-md rounded-2xl p-5 hover:bg-black/10 transition-colors duration-200 snap-start block"
             >
               <h4 className="font-bold text-md text-white truncate">
                 {m.title}

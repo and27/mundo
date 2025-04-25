@@ -2,13 +2,14 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import ForestWithLights from "./ForestWithLights";
 import Image from "next/image";
 import Button from "../ui/Button";
+import { useOnboardingStore } from "@/store/useOnboardingStore";
 
 export default function UserHero() {
   const router = useRouter();
   const [stage, setStage] = useState<"intro" | "select_mode">("intro");
+  const name = useOnboardingStore((state) => state.name);
 
   const handleCTA = () => setStage("select_mode");
 
@@ -18,24 +19,24 @@ export default function UserHero() {
   };
 
   return (
-    <section className="relative w-full max-h-screen flex justify-center  aspect-[6/9] sm:aspect-[9/8] md:aspect-[4/3]">
-      {/* <h2 className="text-3xl font-bold mb-2 text-white">
-        Bienvenido de nuevo, {name}. 🌱
+    <section className="flex flex-col">
+      <h2 className="pt-5 text-center text-xl md:text-3xl font-bold mt-5 text-white">
+        Que bueno verte de nuevo, {name}. 🌱
       </h2>
-      <p className="text-white/70 max-w-xl px-4 mb-6">
+      {/*  <p className="text-white/70 max-w-xl px-4 mb-6">
         Tu bosque interior está creciendo contigo. Hoy es un buen día para
         sembrar calma o comenzar una nueva historia.
       </p> */}
 
-      <div className="absolute flex flex-col items-center pt-20">
-        <div className="flex flex-col items-center text-center justify-center z-10 px-10 py-6 w-[90%] max-w-2xl bg-white/10 backdrop-blur-md rounded-2xl text-white shadow-2xl border border-white/20 space-y-4 animate-fade-in transition-all ">
+      <div className="flex flex-col items-center pt-5 ">
+        <div className="w-full  flex flex-col items-start md:text-center justify-center z-10 px-5 md:px-10 py-4 md:py-6 w-[90%] max-w-xl bg-white/10 backdrop-blur-md rounded-2xl text-white shadow-2xl space-y-4 animate-fade-in transition-all ">
           {stage === "intro" && (
             <>
-              <p className="text-xl font-semibold leading-relaxed">
+              <p className="leading-6 text-lg md:text-xl font-semibold">
                 ¿Quieres escuchar una historia sobre cómo calmar tu corazón? 🌟
               </p>
-              <div className="flex flex-col gap-3">
-                <Button onClick={handleCTA}>Sí, quiero escucharla</Button>
+              <div className="flex flex-wrap gap-3">
+                <Button onClick={handleCTA}>Sí, quiero escuchar</Button>
                 <Button variant="secondary">Cambiar de guía</Button>
               </div>
             </>
@@ -69,13 +70,12 @@ export default function UserHero() {
           <Image
             src="/guides/amaru-transparent.png"
             alt="Guía espiritual"
-            width={220}
-            height={220}
+            width={200}
+            height={200}
             className="animate-float"
           />
         </div>
       </div>
-      <ForestWithLights fireflyCount={5} />
     </section>
   );
 }

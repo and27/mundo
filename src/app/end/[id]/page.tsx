@@ -81,7 +81,7 @@ const EndPage = () => {
   }
 
   return (
-    <section className="text-center flex flex-col gap-4 justify-start items-center min-h-screen mx-auto p-4">
+    <section className="bg-black/30 backdrop-blur-md text-center flex flex-col gap-4 justify-start items-center min-h-screen mx-auto p-4">
       <div className="max-w-3xl mx-auto z-10 flex flex-col items-center">
         <div className="mb-4 relative w-28 h-28 mx-auto rounded-full overflow-hidden border-2 border-white/30 shadow-md">
           <Image

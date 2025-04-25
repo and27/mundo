@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Chakra_Petch, Quicksand } from "next/font/google";
 import "./globals.css";
-import Link from "next/link";
-import Image from "next/image";
-import AvatarButton from "@/components/common/AvatarButton";
+import { ClientLayoutWrapper } from "./layout/ClientLayoutWrapper";
 
 const chakra = Chakra_Petch({
   variable: "--font-chakra",
@@ -31,36 +29,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" className={`${chakra.variable} ${quicksand.variable}`}>
-      <body className="font-sans antialiased">
-        {/* <nav className="fixed top-0 left-0 w-full bg-black/30 backdrop-blur-md text-white flex justify-around py-3 z-50">
-          <Link href="/" className="flex flex-col items-center text-sm">
-            <span className="text-xs mt-1">Inicio</span>
-          </Link>
-          <Link href="/explore" className="flex flex-col items-center text-sm">
-            <span className="text-xs mt-1">Explorar</span>
-          </Link>
-          <Link href="/listen" className="flex flex-col items-center text-sm">
-            <span className="text-xs mt-1">Escuchar</span>
-          </Link>
-          <Link href="/profile" className="flex flex-col items-center text-sm">
-            <span className="text-xs mt-1">Perfil</span>
-          </Link>
-        </nav> */}
-        <div className="bg-black/30 backdrop-blur-xs">
-          <div className="flex justify-between items-center px-5 md:px-10 py-5">
-            <Link href="/">
-              <Image
-                src="/images/logo-mundo.png"
-                alt="Description"
-                className="mx-auto"
-                width={120}
-                height={10}
-              />
-            </Link>
-            <AvatarButton name="Andy" />
-          </div>
-          {children}
-        </div>
+      <body className="font-sans antialiased bg-emotion-default">
+        <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
       </body>
     </html>
   );

@@ -46,8 +46,8 @@ export function useJourneyPlayer(story: Story | undefined): JourneyPlayerState {
         router.push(endUrl);
       }
     },
-    [story, router]
-  ); // Removed stopAudio dependency, assuming it's stable from useJourneyAudio
+    [story, router, stopAudio]
+  );
 
   const handleAudioEnd = useCallback(() => {
     if (currentStep?.interaction.type === "auto_proceed") {
