@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import clsx from "clsx";
 
 interface Choice {
   id: string;
@@ -23,24 +24,55 @@ const ChoiceSelector: React.FC<ChoiceSelectorProps> = ({
   }
 
   return (
-    <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
-      {choices.map((choice) => (
-        <button
-          key={choice.id}
-          onClick={() => onSelect(choice.id)}
-          className="p-3 md:p-5 w-full flex gap-3 md:gap-1 md:flex-col items-center justify-start md:justify-center bg-white/20 hover:bg-white/30 rounded-lg shadow-md transition-colors duration-200 ease-in-out border border-white/30 text-white min-w-[100px]"
-          style={
-            selectedChoiceId === choice.id ? { border: "2px solid yellow" } : {}
-          }
-        >
-          <Image
-            src={choice.icon}
-            alt={choice.label}
-            className="w-12 h-12 object-contain"
-          />
-          <span className="text-center">{choice.label}</span>
-        </button>
-      ))}
+    <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 p-4">
+      {choices.map((choice) => {
+        const isSelected = selectedChoiceId === choice.id;
+
+        return (
+          <button
+            key={choice.id}
+            onClick={() => onSelect(choice.id)}
+            className={clsx(
+              "p-4 md:p-5 w-full flex flex-col items-center justify-center",
+              "rounded-2xl",
+              "border",
+              "bg-gradient-to-br from-white/25 via-white/15 to-white/10",
+              "backdrop-blur-sm",
+              "shadow-lg",
+              "text-white text-center",
+              "transition-all duration-300 ease-in-out",
+              !isSelected && [
+                "hover:brightness-110",
+                "hover:-translate-y-1",
+                "hover:shadow-xl",
+                "border-white/20 hover:border-white/40",
+              ],
+              isSelected && [
+                "border-yellow-400 border-2",
+                "scale-105",
+                "shadow-[0_0_18px_rgba(255,217,102,0.45)]",
+                "brightness-105",
+              ]
+            )}
+          >
+            <div
+              className={`relative w-12 h-12 md:w-14 md:h-14 mb-2 transition-transform duration-200 ${
+                isSelected ? "scale-110" : ""
+              }`}
+            >
+              <Image
+                src={choice.icon}
+                alt={choice.label}
+                fill
+                className="object-contain drop-shadow-md"
+              />
+            </div>
+            <span className="text-condor font-bold text-base md:text-lg">
+              {choice.label}
+            </span>
+          </button>
+        );
+      })}
     </div>
   );
 };
