@@ -1,30 +1,48 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Story, JourneyStep } from "@/lib/stories";
 import { useJourneyAudio } from "@/hooks/useJourneyAudio";
 
 export interface JourneyPlayerState {
-  journeyState: "idle" | "playing" | "finished";
+  journeyState: "idle" | "playing" | "paused" | "finished"; // Añadido 'paused'
   currentStep: JourneyStep | null;
   stepBackgroundUrl: string | null;
   selectedChoiceId: string | null;
-  isPlayingAudio: boolean;
+  isPlayingAudio: boolean; // Sigue reflejando el estado real del audio
   handleStartJourney: () => void;
   handleUserInteraction: (interactionValue?: string) => void;
+  handleTogglePlayPause: () => void; // Añadido handler
 }
 
 export function useJourneyPlayer(story: Story | undefined): JourneyPlayerState {
   const router = useRouter();
 
   const [journeyState, setJourneyState] = useState<
-    "idle" | "playing" | "finished"
-  >("idle");
+    "idle" | "playing" | "paused" | "finished"
+  >("idle"); // Actualizado
   const [currentStepId, setCurrentStepId] = useState<string | null>(null);
   const [currentStep, setCurrentStep] = useState<JourneyStep | null>(null);
   const [stepBackgroundUrl, setStepBackgroundUrl] = useState<string | null>(
     null
   );
   const [selectedChoiceId, setSelectedChoiceId] = useState<string | null>(null);
+
+  const advanceToStepRef = useRef<(nextStepId: string) => void>(null);
+
+  const handleAudioEnd = useCallback(() => {
+    const step = currentStep;
+    if (step?.interaction.type === "auto_proceed") {
+      advanceToStepRef.current?.(step.interaction.nextStepId);
+    }
+  }, [currentStep]);
+
+  const {
+    playAudio,
+    stopAudio,
+    isPlaying: isPlayingAudio,
+  } = useJourneyAudio({
+    onStepComplete: handleAudioEnd,
+  });
 
   const advanceToStep = useCallback(
     (nextStepId: string) => {
@@ -49,28 +67,12 @@ export function useJourneyPlayer(story: Story | undefined): JourneyPlayerState {
     [story, router, stopAudio]
   );
 
-  const handleAudioEnd = useCallback(() => {
-    if (currentStep?.interaction.type === "auto_proceed") {
-      advanceToStep(currentStep.interaction.nextStepId);
-    }
-  }, [currentStep, advanceToStep]);
-
-  const {
-    playAudio,
-    stopAudio,
-    isPlaying: isPlayingAudio,
-  } = useJourneyAudio({
-    onStepComplete: handleAudioEnd, // Ensure prop name matches useJourneyAudio
-  });
-
-  // Re-add stopAudio to dependency array if advanceToStep calls it internally
-  // If not, the dependency above is fine. Let's assume advanceToStep needs it if called directly.
-  // Note: Re-added stopAudio to advanceToStep dependency array for safety if it's called there.
-  // const advanceToStep = useCallback( (nextStepId: string) => { ... }, [story, router, stopAudio] );
+  useEffect(() => {
+    advanceToStepRef.current = advanceToStep;
+  }, [advanceToStep]);
 
   const handleStartJourney = useCallback(() => {
     if (story) {
-      console.log("Iniciando viaje...");
       setJourneyState("playing");
       setCurrentStepId(story.initialStepId);
       setSelectedChoiceId(null);
@@ -87,15 +89,25 @@ export function useJourneyPlayer(story: Story | undefined): JourneyPlayerState {
           setSelectedChoiceId(interactionValue);
         }
         setTimeout(() => {
-          advanceToStep(currentStep.interaction.nextStepId);
+          advanceToStepRef.current?.(currentStep.interaction.nextStepId);
         }, 400);
       }
-      console.log(`Interacción del usuario: ${interactionValue ?? "tap"}`);
     },
-    [currentStep, journeyState, advanceToStep]
+    [currentStep, journeyState]
   );
 
+  // --- NUEVO: Handler para Pausa/Play ---
+  const handleTogglePlayPause = useCallback(() => {
+    if (journeyState === "playing") {
+      stopAudio(); // O pauseAudio() si tu hook lo implementa
+      setJourneyState("paused");
+    } else if (journeyState === "paused") {
+      setJourneyState("playing"); // El useEffect del audio se encargará de llamar a playAudio
+    }
+  }, [journeyState, stopAudio /* pauseAudio, playAudio */]); // Añade play/pause si los usas
+
   useEffect(() => {
+    /* Efecto para cargar step y fondo - sin cambios */
     let stepData: JourneyStep | null = null;
     if (journeyState === "playing" && story && currentStepId) {
       stepData = story.steps.find((s) => s.id === currentStepId) ?? null;
@@ -105,7 +117,8 @@ export function useJourneyPlayer(story: Story | undefined): JourneyPlayerState {
           `Error: No se encontraron datos para el paso con ID: ${currentStepId}`
         );
       }
-    } else {
+    } else if (journeyState !== "paused") {
+      // No limpiar currentStep si está pausado
       setCurrentStep(null);
     }
     const newBgUrl = stepData?.visuals?.backgroundImage ?? null;
@@ -113,34 +126,48 @@ export function useJourneyPlayer(story: Story | undefined): JourneyPlayerState {
   }, [currentStepId, story, journeyState]);
 
   useEffect(() => {
+    // Efecto para reproducir audio
+    if (journeyState === "paused") {
+      // Si está pausado, detiene audio y no hace más
+      stopAudio();
+      return;
+    }
     if (journeyState !== "playing") {
+      // Si no está jugando (idle, finished), detiene audio
       stopAudio();
       return;
     }
 
-    if (currentStep?.isNarration) {
-      if (currentStep.audioSrc) {
+    if (currentStep) {
+      if (currentStep.isNarration && currentStep.audioSrc) {
         playAudio(currentStep.audioSrc);
       } else {
-        console.warn(
-          `Paso ${currentStep.id} marcado como narración pero sin audioSrc.`
-        );
-        if (currentStep.interaction.type === "auto_proceed") {
-          advanceToStep(currentStep.interaction.nextStepId);
+        stopAudio();
+        if (
+          currentStep.isNarration &&
+          !currentStep.audioSrc &&
+          currentStep.interaction.type === "auto_proceed"
+        ) {
+          setTimeout(
+            () =>
+              advanceToStepRef.current?.(currentStep.interaction.nextStepId),
+            0
+          );
         }
       }
     } else {
       stopAudio();
     }
-  }, [currentStep, journeyState, playAudio, stopAudio, advanceToStep]);
+  }, [currentStep, journeyState, playAudio, stopAudio]); // Quitamos advanceToStep de aquí
 
   return {
     journeyState,
     currentStep,
     stepBackgroundUrl,
     selectedChoiceId,
-    isPlayingAudio,
+    isPlayingAudio, // Sigue reflejando estado real del audio
     handleStartJourney,
     handleUserInteraction,
+    handleTogglePlayPause, // Exporta el nuevo handler
   };
 }

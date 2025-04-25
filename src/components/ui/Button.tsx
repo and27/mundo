@@ -16,7 +16,7 @@ const Button: FC<ButtonProps> = ({
   className,
   variant = "primary",
 }) => {
-  const primaryStyles = "bg-yellow-500 text-condor hover:bg-yellow-600";
+  const primaryStyles = "bg-yellow-500 text-black hover:bg-yellow-600";
   const secondaryStyles = "bg-magic/20 text-white hover:brightness-95";
 
   return (

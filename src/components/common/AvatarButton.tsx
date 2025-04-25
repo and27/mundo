@@ -14,7 +14,7 @@ const AvatarButton = ({ name, avatarUrl }: Props) => {
   return (
     <button
       onClick={() => router.push("/dashboard")}
-      className="flex items-center gap-3 bg-white/5 hover:bg-white/10 transition px-4 py-2 rounded-full text-sm text-white/80 font-medium"
+      className="flex items-center gap-3 bg-white/5 hover:bg-white/10 transition px-2 py-1 md:px-4 md:py-2 rounded-full text-sm text-white/80 font-medium"
     >
       <div className="w-8 h-8 relative rounded-full overflow-hidden border border-white/10">
         <Image

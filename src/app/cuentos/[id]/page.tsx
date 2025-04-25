@@ -10,6 +10,8 @@ import DynamicBackgroundOverlay from "@/components/journey/DynamicBackgroundOver
 import GuideVisualDisplay from "@/components/journey/GuideVisualDisplay";
 import SceneDisplay from "@/components/journey/SceneDisplay";
 import JourneyIdleScreen from "@/components/journey/JourneyIdleScreen";
+import { useOnboardingStore } from "@/store/useOnboardingStore";
+import JourneyControlsBar from "@/components/journey/JourneyControls";
 
 export default function CuentoPage() {
   const { id } = useParams();
@@ -23,7 +25,11 @@ export default function CuentoPage() {
     selectedChoiceId,
     handleStartJourney,
     handleUserInteraction,
+    handleTogglePlayPause,
   } = useJourneyPlayer(story);
+
+  const showSubtitles = useOnboardingStore((state) => state.showSubtitles);
+  const toggleSubtitles = useOnboardingStore((state) => state.toggleSubtitles);
 
   const renderStepContentInsideBox = () => {
     if (!currentStep) return null;
@@ -65,41 +71,51 @@ export default function CuentoPage() {
 
   return (
     <>
-      <section className="bg-black/30 backdrop-blur-md w-full min-h-screen overflow-hidden ">
-        <div className="mx-auto relative max-w-7xl flex justify-center items-center h-screen">
-          <DynamicBackgroundOverlay imageUrl={stepBackgroundUrl} />
+      <section className="mx-auto relative w-full max-w-7xl min-h-screen flex justify-center items-center overflow-hidden">
+        <DynamicBackgroundOverlay imageUrl={stepBackgroundUrl} />
 
-          <div className="absolute inset-0 z-10 flex flex-col items-center justify-start text-white text-center pt-5 md:pt-10 px-4">
-            <GuideVisualDisplay
-              guideImageSrc={guide.imageTransparent || ""}
-              isBreathing={
-                journeyState === "playing" &&
-                currentStep?.visuals.type === "breathing"
-              }
-            />
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-start text-white text-center pt-5 md:pt-10 px-4 pb-24 sm:pb-28">
+          <GuideVisualDisplay
+            guideImageSrc={guide.imageTransparent || ""}
+            isBreathing={
+              journeyState === "playing" &&
+              currentStep?.visuals.type === "breathing"
+            }
+          />
 
-            <div className="-mt-12 w-full max-w-2xl flex flex-col items-center justify-center gap-5 rounded-2xl text-white shadow-2xl border border-white/20 p-4 sm:p-6 min-h-[300px] sm:min-h-[400px] ">
-              {journeyState === "idle" && (
-                <JourneyIdleScreen
-                  onStartJourney={handleStartJourney}
-                  title={story.title}
-                  description={story.description}
-                />
-              )}
-
-              {journeyState === "playing" && renderStepContentInsideBox()}
-
-              {journeyState === "finished" && (
-                <div className="flex flex-col items-center gap-4">
-                  <p className="text-xl">¡Viaje completado!</p>
-                </div>
-              )}
-              {journeyState === "playing" && (
+          <div className="-mt-12 w-full max-w-2xl flex flex-col items-center justify-center flex-grow gap-5 rounded-2xl text-white shadow-2xl border border-white/20 p-4 sm:p-6 min-h-[400px] bg-white/5 overflow-y-auto">
+            {journeyState === "idle" && (
+              <JourneyIdleScreen
+                title={story.title}
+                description={story.description}
+                onStartJourney={handleStartJourney}
+              />
+            )}
+            {journeyState === "playing" && renderStepContentInsideBox()}
+            {journeyState === "paused" && (
+              <p className="text-xl opacity-80">Pausado...</p>
+            )}
+            {journeyState === "finished" && (
+              <div className="flex flex-col items-center gap-4">
+                <p className="text-xl">¡Viaje completado!</p>
+              </div>
+            )}
+            {journeyState === "playing" && showSubtitles && (
+              <div className=" pointer-events-none">
                 <SubtitleDisplay text={currentStep?.subtitle} />
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </div>
+
+        {(journeyState === "playing" || journeyState === "paused") && (
+          <JourneyControlsBar
+            isPlaying={journeyState === "playing"}
+            onTogglePlayPause={handleTogglePlayPause}
+            subtitlesEnabled={showSubtitles}
+            onToggleSubtitles={toggleSubtitles}
+          />
+        )}
       </section>
     </>
   );
