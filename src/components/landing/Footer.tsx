@@ -9,8 +9,12 @@ const Footer = () => {
           Contáctanos
         </Link>{" "}
         •{" "}
-        <Link href="/acerca" className="underline hover:text-white">
-          Acerca de Mundo Interior
+        <Link href="/about" className="underline hover:text-white">
+          Acerca de Mundo Interior{" "}
+        </Link>
+        •{" "}
+        <Link href="/terms" className="underline hover:text-white">
+          Términos y condiciones
         </Link>
       </p>
       <p className="mt-2">© {new Date().getFullYear()} Mundo Interior</p>

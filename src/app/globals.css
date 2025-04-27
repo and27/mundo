@@ -195,3 +195,94 @@ body::before {
 }
 
 /* =========================================== */
+
+/* Añade esto a tu archivo globals.css */
+
+/* Contenedor para contenido Markdown */
+.markdown-content {
+  color: rgba(
+    237,
+    237,
+    237,
+    0.9
+  ); /* color: var(--foreground) con ligera opacidad */
+  line-height: 1.65; /* Altura de línea cómoda */
+}
+
+.markdown-content h1 {
+  color: var(--foreground);
+  font-size: 1.875rem; /* text-3xl */
+  font-weight: 700; /* font-bold */
+  margin-bottom: 1.5rem; /* mb-6 */
+  padding-bottom: 0.5rem; /* pb-2 */
+  border-bottom: 1px solid rgba(237, 237, 237, 0.2);
+}
+
+.markdown-content h2 {
+  color: var(--foreground);
+  font-size: 1.25rem; /* text-xl */
+  font-weight: 600; /* font-semibold */
+  margin-top: 2rem; /* mt-8 */
+  margin-bottom: 1rem; /* mb-4 */
+  padding-bottom: 0.25rem; /* pb-1 */
+  border-bottom: 1px solid rgba(237, 237, 237, 0.15);
+}
+
+.markdown-content p {
+  margin-bottom: 1.25rem; /* mb-5 */
+}
+
+.markdown-content ul {
+  list-style: disc;
+  margin-left: 1.75rem; /* pl-7 */
+  margin-bottom: 1.25rem; /* mb-5 */
+}
+
+.markdown-content li {
+  margin-bottom: 0.5rem; /* mb-2 */
+}
+
+.markdown-content li > p {
+  margin-bottom: 0;
+}
+
+.markdown-content strong {
+  color: var(--foreground);
+  font-weight: 600; /* font-semibold */
+}
+
+.markdown-content em {
+  font-style: italic;
+  opacity: 0.9;
+}
+
+.markdown-content a {
+  color: var(--color-gold); /* Usa tu color de acento */
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: opacity 0.2s ease;
+}
+.markdown-content a:hover {
+  opacity: 0.8;
+}
+
+.markdown-content table {
+  width: 100%;
+  margin-bottom: 1.5rem; /* mb-6 */
+  border-collapse: collapse;
+  font-size: 0.875rem; /* text-sm */
+}
+
+.markdown-content th,
+.markdown-content td {
+  border: 1px solid rgba(237, 237, 237, 0.2);
+  padding: 0.5rem 0.75rem; /* py-2 px-3 */
+  vertical-align: top;
+}
+
+.markdown-content th {
+  font-weight: 600;
+  text-align: left;
+  background-color: rgba(255, 255, 255, 0.05); /* Fondo ligero para cabeceras */
+}
