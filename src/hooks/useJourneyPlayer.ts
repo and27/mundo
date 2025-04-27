@@ -50,6 +50,9 @@ export function useJourneyPlayer(story: Story | undefined): JourneyPlayerState {
       if (nextStepId === "end") {
         setJourneyState("finished");
         stopAudio();
+        if (window.umami && story) {
+          window.umami.track("journey_completed", { storyId: story.id });
+        }
         setTimeout(() => router.push(endUrl), 1500);
         return;
       }
@@ -76,6 +79,9 @@ export function useJourneyPlayer(story: Story | undefined): JourneyPlayerState {
       setJourneyState("playing");
       setCurrentStepId(story.initialStepId);
       setSelectedChoiceId(null);
+      if (window.umami) {
+        window.umami.track("journey_started", { storyId: story.id });
+      }
     }
   }, [story]);
 

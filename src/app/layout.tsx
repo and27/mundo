@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Chakra_Petch, Quicksand } from "next/font/google";
 import "./globals.css";
 import { ClientLayoutWrapper } from "./layout/ClientLayoutWrapper";
+import Script from "next/script";
 
 const chakra = Chakra_Petch({
   variable: "--font-chakra",
@@ -31,6 +32,11 @@ export default function RootLayout({
     <html lang="es" className={`${chakra.variable} ${quicksand.variable}`}>
       <body className="font-sans antialiased bg-emotion-default">
         <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
+        <Script
+          src="https://cloud.umami.is/script.js"
+          data-website-id="d2ec5e44-b861-4240-bc4d-1fac30b30535"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );

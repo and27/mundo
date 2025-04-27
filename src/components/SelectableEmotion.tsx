@@ -9,7 +9,7 @@ interface Emotion {
 
 interface GridProps {
   emotions?: Emotion[];
-  initialSelected?: string; // Renombrado para claridad
+  initialSelected?: string;
   onSelect?: (label: string) => void;
   mode?: "before" | "after";
   className?: string;
@@ -28,7 +28,8 @@ const defaultAfter: Emotion[] = [
   { emoji: "✨", label: "Conectado/a" },
   { emoji: "💛", label: "Feliz" },
   { emoji: "😌", label: "Relajado/a" },
-  { emoji: "🌀", label: "Reflexivo/a" }, // Ícono actualizado
+  { emoji: "🌀", label: "Reflexivo/a" },
+  { emoji: "😇", label: "Agradecido/a" },
 ];
 
 function SelectableEmotionGrid({
@@ -45,6 +46,13 @@ function SelectableEmotionGrid({
   const handleClick = (label: string) => {
     setSelectedLabel(label);
     onSelect?.(label);
+    if (window.umami) {
+      const eventName =
+        mode === "before"
+          ? "onboarding_emotion_selected"
+          : "emotion_post_journey";
+      window.umami.track(eventName, { emotion: label });
+    }
   };
 
   const emotionSet =

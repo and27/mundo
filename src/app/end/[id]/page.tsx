@@ -9,9 +9,9 @@ import { Guide } from "@/types/guides";
 const emotionOptions = [
   { id: "tranquilo", name: "Tranquilo/a", icon: "😊" },
   { id: "conectado", name: "Conectado/a", icon: "✨" },
-  { id: "feliz", name: "Feliz", icon: "💛" }, // Usando corazón como en la imagen
+  { id: "feliz", name: "Feliz", icon: "💛" },
   { id: "relajado", name: "Relajado/a", icon: "😌" },
-  { id: "reflexivo", name: "Reflexivo/a", icon: "🤔" }, // Ícono placeholder
+  { id: "reflexivo", name: "Reflexivo/a", icon: "🤔" },
 ];
 
 const LoadingIndicator = () => (
@@ -60,11 +60,21 @@ const EndPage = () => {
     setIsSaving(true);
     console.log("Guardando emoción:", selectedEmotion, "para guía:", guide?.id);
 
-    // Simulación de guardado en backend
+    const selectedEmotionObject = emotionOptions.find(
+      (opt) => opt.id === selectedEmotion
+    );
+    const emotionLabel = selectedEmotionObject?.name || selectedEmotion; // Usa la etiqueta para el evento
+
+    if (window.umami) {
+      window.umami.track("emotion_selected_post_journey", {
+        guideId: guide?.id || "unknown",
+        emotion: emotionLabel,
+      });
+    }
+
     setTimeout(() => {
       setIsSaving(false);
-      // Navegar a la página principal o 'bosque'
-      router.push("/dashboard"); // Ajusta esta ruta según tu estructura
+      router.push("/dashboard");
     }, 700);
   };
 
