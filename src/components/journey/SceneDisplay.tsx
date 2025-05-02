@@ -13,7 +13,13 @@ const SceneDisplay: React.FC<SceneDisplayProps> = ({
   return (
     <div className="flex flex-col items-center justify-center text-center p-4">
       {foregroundImage && (
-        <Image src={foregroundImage} alt="" className="object-contain" />
+        <Image
+          src={foregroundImage}
+          alt=""
+          className="object-contain"
+          width={300}
+          height={300}
+        />
       )}
       {text && <p className="text-lg md:text-xl">{text}</p>}
     </div>

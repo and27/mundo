@@ -26,7 +26,7 @@ const LastJourneys = () => {
         {
           title: "🌿 Calma profunda",
           desc: "Para soltar ansiedad",
-          href: "/guide/puma",
+          href: "/guide/yachay",
         },
         {
           title: "🔥 Foco interior",
@@ -42,7 +42,7 @@ const LastJourneys = () => {
           title: "☀️ Claridad Matutina",
           desc: "Empieza el día presente",
           href: "/guide/inti",
-        }, // Ejemplo adicional
+        },
       ]);
       setIsLoading(false);
     }, 1200);

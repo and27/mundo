@@ -7,7 +7,7 @@ const quickOptions = [
     icon: "🧘",
     title: "Meditación rápida",
     desc: "5 minutos para volver a ti",
-    href: "/guide/puma", // Temporal, puedes cambiar a ruta random o más lógica
+    href: "/guide/yachay", // Temporal, puedes cambiar a ruta random o más lógica
   },
   {
     icon: "🌙",

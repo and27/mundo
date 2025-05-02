@@ -11,14 +11,14 @@ export interface Guide {
 
 export const guides: Guide[] = [
   {
-    id: "puma",
+    id: "yachay",
     name: "Yachay",
     subtitle: "Fuerza interior",
     phrase: "En tu calma vive toda tu fuerza.",
     description:
       "Yachay te ayudará a encontrar foco, valentía y conexión con tu fuerza interna.",
     image: "/guides/yachay3d.png",
-    imageTransparent: "/guides/puma-transparent.png",
+    imageTransparent: "/guides/yachay-transparent.png",
   },
   {
     id: "kuntur",

@@ -71,7 +71,7 @@ export default function CuentoPage() {
 
   return (
     <>
-      <section className="mx-auto relative w-full max-w-7xl min-h-screen flex justify-center items-center overflow-hidden">
+      <section className="bg-black/50 backdrop-blur-sm w-full relative  min-h-screen flex justify-center items-center overflow-hidden">
         <DynamicBackgroundOverlay imageUrl={stepBackgroundUrl} />
 
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-start text-white text-center pt-5 md:pt-10 px-4 pb-24 sm:pb-28">

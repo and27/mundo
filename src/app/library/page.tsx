@@ -8,10 +8,10 @@ import LibraryHero from "@/components/library/LibraryHero";
 
 const journeys = [
   {
-    id: "puma",
+    id: "yachay",
     title: "Fuerza interior",
     description: "Activa tu poder con Yachay Puma",
-    image: "/guides/puma.png",
+    image: "/guides/yachay.png",
     category: "explorar",
   },
   {

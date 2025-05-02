@@ -36,7 +36,7 @@ const ChoiceSelector: React.FC<ChoiceSelectorProps> = ({
               "p-4 md:p-5 w-full flex flex-col items-center justify-center",
               "rounded-2xl",
               "border",
-              "bg-gradient-to-br from-white/25 via-white/15 to-white/10",
+              "bg-black/30",
               "backdrop-blur-sm",
               "shadow-lg",
               "text-white text-center",
@@ -67,7 +67,7 @@ const ChoiceSelector: React.FC<ChoiceSelectorProps> = ({
                 className="object-contain drop-shadow-md"
               />
             </div>
-            <span className="text-condor font-bold text-base md:text-lg">
+            <span className="text-white font-bold text-base md:text-lg">
               {choice.label}
             </span>
           </button>

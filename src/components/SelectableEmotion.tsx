@@ -81,7 +81,7 @@ function SelectableEmotionGrid({
           role="radio"
           aria-checked={selectedLabel === e.label}
           onClick={() => handleClick(e.label)}
-          className={`backdrop-blur-md  flex flex-col items-center justify-center p-3 border-2 rounded-xl text-xl ${transitionStyle} ${focusStyle} ${hoverStyle} ${
+          className={`backdrop-blur-md flex flex-col items-center justify-center p-3 border-2 rounded-xl text-xl ${transitionStyle} ${focusStyle} ${hoverStyle} ${
             selectedLabel === e.label ? selectedStyle : baseStyle
           }`}
         >
