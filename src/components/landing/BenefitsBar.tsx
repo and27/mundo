@@ -1,6 +1,12 @@
 import React from "react";
 
-const Benefit = ({ icon, title, subtitle }) => (
+type BenefitProps = {
+  icon: React.ReactNode;
+  title: string;
+  subtitle?: string;
+};
+
+const Benefit = ({ icon, title, subtitle }: BenefitProps) => (
   <div className="flex items-center gap-3">
     <span className="text-2xl">{icon}</span>
     <div className="leading-snug">
