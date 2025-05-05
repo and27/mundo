@@ -7,13 +7,13 @@ import Link from "next/link";
 const Hero = () => {
   const { name } = useOnboardingStore();
   return (
-    <section className="flex flex-col justify-center md:flex-row my-16 gap-6 items-center">
+    <section className="flex flex-col justify-center md:flex-row mb-16 gap-6 items-center">
       <div className="text-center md:text-left">
         <h1 className="text-4xl font-bold mb-4 leading-tight">
-          Comienza tu viaje interior
+          Calma interior para niños
         </h1>
         <p className="text-white/60 max-w-md mb-4">
-          Un viaje para sentir,sanar y despertar.
+          Un viaje guiado para soñar, sentir y dormir mejor
         </p>
         <p className="text-sm text-white/50 italic mb-8">
           Cierra los ojos por un instante... <br />
@@ -28,10 +28,10 @@ const Hero = () => {
       </div>
       <div className="mt-6">
         <Image
-          src="/guides/amaru-transparent.png"
+          src="/hero.png"
           alt="Guías en el bosque"
-          width={300}
-          height={300}
+          width={400}
+          height={400}
           className="animate-float rounded-lg object-cover"
         />
       </div>
