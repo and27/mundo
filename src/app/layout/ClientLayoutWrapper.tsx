@@ -47,7 +47,7 @@ export function ClientLayoutWrapper({ children }: ClientLayoutWrapperProps) {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <div className="bg-black/30 backdrop-blur-xs sticky top-0 z-50">
+      <div className="bg-black/50 backdrop-blur-lg sticky top-0 z-50">
         <div className="flex justify-between items-center px-5 md:px-10 py-3 md:py-5 max-w-screen-xl mx-auto">
           <Link href="/">
             <Image

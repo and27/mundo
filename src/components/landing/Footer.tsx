@@ -13,6 +13,10 @@ const Footer = () => {
           Acerca de Mundo Interior{" "}
         </Link>
         •{" "}
+        <Link href="/privacy" className="underline hover:text-white">
+          Política de privacidad{" "}
+        </Link>
+        •{" "}
         <Link href="/terms" className="underline hover:text-white">
           Términos y condiciones
         </Link>

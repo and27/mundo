@@ -13,7 +13,7 @@ const Navbar = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed bottom-0 left-0 w-full bg-black/30 backdrop-blur-md text-white flex justify-around py-3 z-50">
+    <nav className="fixed bottom-0 left-0 w-full bg-black/30 backdrop-blur-sm text-white flex justify-around py-3 z-50">
       {links.map(({ href, icon, label }) => (
         <Link
           key={href}
