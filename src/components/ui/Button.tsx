@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import clsx from "clsx";
 
-interface ButtonProps {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   onClick?: () => void;
   disabled?: boolean;

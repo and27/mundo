@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { stories } from "@/lib/stories";
 import { guides, Guide } from "@/lib/guides";
 import { useJourneyPlayer } from "@/hooks/useJourneyPlayer";
@@ -30,7 +30,7 @@ export default function CuentoPage() {
 
   const showSubtitles = useOnboardingStore((state) => state.showSubtitles);
   const toggleSubtitles = useOnboardingStore((state) => state.toggleSubtitles);
-
+  const router = useRouter();
   const renderStepContentInsideBox = () => {
     if (!currentStep) return null;
 
@@ -71,7 +71,16 @@ export default function CuentoPage() {
 
   return (
     <>
-      <section className="bg-black/50 backdrop-blur-sm w-full relative  min-h-screen flex justify-center items-center overflow-hidden">
+      {(journeyState === "playing" || journeyState === "paused") && (
+        <JourneyControlsBar
+          isPlaying={journeyState === "playing"}
+          onTogglePlayPause={handleTogglePlayPause}
+          subtitlesEnabled={showSubtitles}
+          onToggleSubtitles={toggleSubtitles}
+          onExitJourney={() => router.push("/")}
+        />
+      )}
+      <section className="bg-black/50 backdrop-blur-sm w-full min-h-screen flex justify-center items-center overflow-hidden">
         <DynamicBackgroundOverlay imageUrl={stepBackgroundUrl} />
 
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-start text-white text-center pt-5 md:pt-10 px-4 pb-24 sm:pb-28">
@@ -107,15 +116,6 @@ export default function CuentoPage() {
             )}
           </div>
         </div>
-
-        {(journeyState === "playing" || journeyState === "paused") && (
-          <JourneyControlsBar
-            isPlaying={journeyState === "playing"}
-            onTogglePlayPause={handleTogglePlayPause}
-            subtitlesEnabled={showSubtitles}
-            onToggleSubtitles={toggleSubtitles}
-          />
-        )}
       </section>
     </>
   );

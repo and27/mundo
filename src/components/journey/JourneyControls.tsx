@@ -3,6 +3,7 @@
 import React from "react";
 import { FaPlay, FaPause } from "react-icons/fa";
 import { BsBadgeCcFill, BsBadgeCc } from "react-icons/bs";
+import { IoArrowBack } from "react-icons/io5"; // Ejemplo de icono
 import clsx from "clsx";
 
 interface JourneyControlsBarProps {
@@ -10,6 +11,7 @@ interface JourneyControlsBarProps {
   onTogglePlayPause: () => void;
   subtitlesEnabled: boolean;
   onToggleSubtitles: () => void;
+  onExitJourney: () => void; // Nueva prop para salir
   className?: string;
 }
 
@@ -18,6 +20,7 @@ const JourneyControlsBar: React.FC<JourneyControlsBarProps> = ({
   onTogglePlayPause,
   subtitlesEnabled,
   onToggleSubtitles,
+  onExitJourney, // Recibir la función
   className,
 }) => {
   return (
@@ -30,7 +33,16 @@ const JourneyControlsBar: React.FC<JourneyControlsBarProps> = ({
       )}
     >
       <div className="max-w-screen-md mx-auto flex justify-between items-center gap-4">
-        <div className="w-10 h-10"></div>
+        {/* Botón de Salir a la Izquierda */}
+        <button
+          onClick={onExitJourney}
+          className="text-white p-2 rounded-full hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 focus:ring-offset-black/50 transition-all duration-200"
+          aria-label="Salir del Viaje"
+        >
+          <IoArrowBack className="w-6 h-6" />
+        </button>
+
+        {/* Botón de Play/Pausa en el Centro */}
         <button
           onClick={onTogglePlayPause}
           className="text-white p-3 rounded-full bg-white/10 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 focus:ring-offset-black/50 transition-all duration-200"
@@ -42,11 +54,13 @@ const JourneyControlsBar: React.FC<JourneyControlsBarProps> = ({
             <FaPlay className="w-5 h-5 md:w-6 md:h-6" />
           )}
         </button>
+
+        {/* Botón de Subtítulos a la Derecha */}
         <button
           onClick={onToggleSubtitles}
           className={clsx(
             "text-white p-2 rounded-full hover:bg-white/10 transition-colors duration-200",
-            !subtitlesEnabled && "opacity-50"
+            !subtitlesEnabled && "opacity-50" // Se mantiene la opacidad si están deshabilitados
           )}
           aria-label={
             subtitlesEnabled ? "Ocultar Subtítulos" : "Mostrar Subtítulos"

@@ -17,7 +17,7 @@ export const guides: Guide[] = [
     phrase: "En tu calma vive toda tu fuerza.",
     description:
       "Yachay te ayudará a encontrar foco, valentía y conexión con tu fuerza interna.",
-    image: "/guides/yachay3d.png",
+    image: "/guides/yachay3d.webp",
     imageTransparent: "/guides/yachay-transparent.png",
   },
   {
@@ -27,7 +27,7 @@ export const guides: Guide[] = [
     phrase: "Tómate distancia. Todo se ve distinto desde arriba.",
     description:
       "Kuntur te acompaña a elevar tu mirada y encontrar esperanza en los momentos difíciles.",
-    image: "/guides/kuntur3d.png",
+    image: "/guides/kuntur3d.webp",
     imageTransparent: "/guides/kuntur-transparent.png",
   },
   {
@@ -37,7 +37,7 @@ export const guides: Guide[] = [
     phrase: "Cada emoción es una puerta hacia tu libertad.",
     description:
       "Amaru te guía a través de la liberación emocional, ayudándote a transmutar lo que ya no necesitas.",
-    image: "/guides/amaru3d.png",
+    image: "/guides/amaru3d.webp",
     imageTransparent: "/guides/amaru-transparent.png",
   },
   {
@@ -47,7 +47,7 @@ export const guides: Guide[] = [
     phrase: "Todo lo que es real se cultiva con paciencia.",
     description:
       "Hatun Tortuga te enseña a detenerte, confiar en el proceso y encontrar sabiduría en la lentitud.",
-    image: "/guides/hatun3d.png",
+    image: "/guides/hatun3d.webp",
     imageTransparent: "/guides/hatun-transparent.png",
   },
   {
@@ -57,7 +57,7 @@ export const guides: Guide[] = [
     phrase: "Tu autenticidad es medicina.",
     description:
       "Pájaro Brujo te anima a expresar lo que sientes, recordándote que tu voz es parte del equilibrio del mundo.",
-    image: "/guides/mago3d.png",
+    image: "/guides/mago3d.webp",
     imageTransparent: "/guides/mago-transparent.png",
   },
 ];
