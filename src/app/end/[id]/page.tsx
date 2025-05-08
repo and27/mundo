@@ -2,17 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { guides } from "@/lib/guides";
 import Image from "next/image";
+import { guides } from "@/lib/guides";
 import { Guide } from "@/types/guides";
-
-const emotionOptions = [
-  { id: "tranquilo", name: "Tranquilo/a", icon: "😊" },
-  { id: "conectado", name: "Conectado/a", icon: "✨" },
-  { id: "feliz", name: "Feliz", icon: "💛" },
-  { id: "relajado", name: "Relajado/a", icon: "😌" },
-  { id: "reflexivo", name: "Reflexivo/a", icon: "🤔" },
-];
+import SelectableEmotionGrid from "@/components/SelectableEmotion";
+import { emotionsAfterJourney } from "@/lib/emotionsData";
+import Button from "@/components/ui/Button";
 
 const LoadingIndicator = () => (
   <div className="flex justify-center items-center min-h-screen">
@@ -30,7 +25,9 @@ const EndPage = () => {
   const { id } = useParams();
   const router = useRouter();
   const [guide, setGuide] = useState<Guide | null>(null);
-  const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null);
+  const [selectedEmotionId, setSelectedEmotionId] = useState<string | null>(
+    null
+  );
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -49,26 +46,33 @@ const EndPage = () => {
     }, 300);
   }, [id]);
 
-  const handleEmotionSelect = (emotionId: string) => {
+  const handleEmotionSelect = (label: string) => {
     if (isSaving) return;
-    setSelectedEmotion(emotionId);
+    const selectedOption = emotionsAfterJourney.find((e) => e.label === label);
+    setSelectedEmotionId(selectedOption?.id || null);
   };
 
   const handleFinish = () => {
-    if (!selectedEmotion || isSaving) return;
+    if (!selectedEmotionId || isSaving) return;
 
     setIsSaving(true);
-    console.log("Guardando emoción:", selectedEmotion, "para guía:", guide?.id);
-
-    const selectedEmotionObject = emotionOptions.find(
-      (opt) => opt.id === selectedEmotion
+    const selectedEmotionObject = emotionsAfterJourney.find(
+      (opt) => opt.id === selectedEmotionId
     );
-    const emotionLabel = selectedEmotionObject?.name || selectedEmotion; // Usa la etiqueta para el evento
+    const emotionLabelForEvent =
+      selectedEmotionObject?.label || selectedEmotionId;
+
+    console.log(
+      "Guardando emoción (ID):",
+      selectedEmotionId,
+      "para guía:",
+      guide?.id
+    );
 
     if (window.umami) {
       window.umami.track("emotion_selected_post_journey", {
         guideId: guide?.id || "unknown",
-        emotion: emotionLabel,
+        emotion: emotionLabelForEvent,
       });
     }
 
@@ -90,15 +94,19 @@ const EndPage = () => {
     return <ErrorMessage message="Guía no encontrada" />;
   }
 
+  const initialSelectedLabel = emotionsAfterJourney.find(
+    (e) => e.id === selectedEmotionId
+  )?.label;
+
   return (
     <section className="bg-black/30 backdrop-blur-md text-center flex flex-col gap-4 justify-start items-center min-h-screen mx-auto p-4">
-      <div className="max-w-3xl mx-auto z-10 flex flex-col items-center">
+      <div className="w-full max-w-xl flex flex-col items-center">
         <div className="mb-4 relative w-28 h-28 mx-auto rounded-full overflow-hidden border-2 border-white/30 shadow-md">
           <Image
             src={guide.imageTransparent || "/placeholder-image.png"}
             alt={guide.name}
             fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            sizes="112px"
             priority
             className="object-cover object-top"
             onError={(e) => {
@@ -119,43 +127,26 @@ const EndPage = () => {
           ¿Cómo te sientes ahora?
         </h3>
 
-        <div className="flex flex-wrap justify-center gap-3 mb-8 px-2">
-          {emotionOptions.map((option) => (
-            <button
-              key={option.id}
-              onClick={() => handleEmotionSelect(option.id)}
-              disabled={isSaving}
-              className={`
-                flex flex-col items-center justify-center p-3 min-w-[80px] h-[80px]
-                border rounded-lg shadow transition-all duration-200 ease-in-out
-                ${
-                  selectedEmotion === option.id
-                    ? "bg-yellow-500/30 border-yellow-400 scale-105 shadow-yellow-500/30"
-                    : "bg-white/5 border-white/20 hover:bg-white/10 hover:border-white/40"
-                }
-                ${isSaving ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}
-              `}
-            >
-              <span className="text-2xl mb-1">{option.icon}</span>
-              <span className="text-xs font-medium text-white/80">
-                {option.name}
-              </span>
-            </button>
-          ))}
-        </div>
+        <SelectableEmotionGrid
+          emotions={emotionsAfterJourney}
+          mode="after"
+          onSelect={handleEmotionSelect}
+          initialSelected={initialSelectedLabel}
+          className="w-full mb-10 "
+        />
 
-        <button
+        <Button
           onClick={handleFinish}
-          disabled={!selectedEmotion || isSaving}
+          disabled={!selectedEmotionId || isSaving}
           className={`
-            bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold
-            py-3 px-8 rounded-full text-md shadow-lg transition-all duration-200 ease-in-out
-            ${!selectedEmotion ? "opacity-50 cursor-not-allowed" : ""}
-            ${isSaving ? "opacity-75 cursor-wait" : ""}
-          `}
+             bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold
+             py-3 px-8 rounded-full text-md shadow-lg transition-all duration-200 ease-in-out
+             disabled:opacity-50 disabled:cursor-not-allowed
+             ${isSaving ? "opacity-75 cursor-wait" : ""}
+           `}
         >
           {isSaving ? "Guardando..." : "Volver al bosque"}
-        </button>
+        </Button>
       </div>
     </section>
   );

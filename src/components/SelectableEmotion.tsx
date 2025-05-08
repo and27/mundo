@@ -1,36 +1,15 @@
 "use client";
 
 import { useState } from "react";
-
-interface Emotion {
-  emoji: string;
-  label: string;
-}
+import { Emotion } from "@/lib/emotionsData";
 
 interface GridProps {
-  emotions?: Emotion[];
+  emotions: Emotion[];
   initialSelected?: string;
   onSelect?: (label: string) => void;
   mode?: "before" | "after";
   className?: string;
 }
-
-const defaultBefore: Emotion[] = [
-  { emoji: "😣", label: "Ansioso/a" },
-  { emoji: "😔", label: "Triste" },
-  { emoji: "😡", label: "Frustrado/a" },
-  { emoji: "😵", label: "Abrumado/a" },
-  { emoji: "❓", label: "No sé" },
-];
-
-const defaultAfter: Emotion[] = [
-  { emoji: "😊", label: "Tranquilo/a" },
-  { emoji: "✨", label: "Conectado/a" },
-  { emoji: "💛", label: "Feliz" },
-  { emoji: "😌", label: "Relajado/a" },
-  { emoji: "🌀", label: "Reflexivo/a" },
-  { emoji: "😇", label: "Agradecido/a" },
-];
 
 function SelectableEmotionGrid({
   emotions,
@@ -55,12 +34,9 @@ function SelectableEmotionGrid({
     }
   };
 
-  const emotionSet =
-    emotions ?? (mode === "before" ? defaultBefore : defaultAfter);
-
   const selectedStyle =
-    "border-yellow-400 bg-black/30  ring-2 ring-yellow-400 ring-offset-2 ring-offset-gray-900 scale-105";
-  const baseStyle = " border-transparent bg-black/30 text-white";
+    "border-yellow-400 bg-black/30 ring-2 ring-yellow-400 ring-offset-2 ring-offset-gray-900 scale-105";
+  const baseStyle = "border-transparent bg-black/30 text-white";
   const hoverStyle =
     "hover:border-yellow-500 hover:bg-black/10 hover:text-white";
   const focusStyle =
@@ -73,9 +49,10 @@ function SelectableEmotionGrid({
       aria-label={`Selecciona cómo te sientes ${
         mode === "before" ? "hoy" : "ahora"
       }`}
-      className={`grid grid-cols-2 sm:grid-cols-5 gap-4 justify-center ${className}`}
+      className={`grid gap-4 justify-center ${className}`}
+      style={{ gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))" }}
     >
-      {emotionSet.map((e) => (
+      {emotions.map((e) => (
         <button
           key={e.label}
           role="radio"

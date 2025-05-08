@@ -7,7 +7,7 @@ import Link from "next/link";
 const Hero = () => {
   const { name } = useOnboardingStore();
   return (
-    <section className="flex flex-col justify-center md:flex-row mb-16 gap-6 items-center">
+    <section className="flex flex-col justify-center md:flex-row px-10 my-10 md:mb-16 md:mt-0 md:gap-6 items-center">
       <div className="text-center md:text-left">
         <h1 className="text-4xl font-bold mb-4 leading-tight">
           Calma interior para niños
@@ -28,10 +28,10 @@ const Hero = () => {
       </div>
       <div className="mt-6">
         <Image
-          src="/hero.png"
+          src="/images/childrenHero.webp"
           alt="Guías en el bosque"
           width={400}
-          height={400}
+          height={600}
           className="animate-float rounded-lg object-cover"
         />
       </div>
