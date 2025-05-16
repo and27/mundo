@@ -1,29 +1,28 @@
 "use client";
 
-import { useOnboardingStore } from "@/store/useOnboardingStore";
 import Image from "next/image";
 import Link from "next/link";
 
 const Hero = () => {
-  const { name } = useOnboardingStore();
   return (
-    <section className="flex flex-col justify-center md:flex-row px-10 my-10 md:mb-16 md:mt-0 md:gap-6 items-center">
+    <section className="max-w-4xl mx-auto flex flex-col justify-center md:flex-row px-5 lg:px-0 my-10 md:mb-16 md:-mt-5 md:gap-6 items-center">
       <div className="text-center md:text-left">
-        <h1 className="text-4xl font-bold mb-4 leading-tight">
-          Calma interior para niños
+        <h1 className="text-4xl tracking-tight font-extrabold mb-4 leading-tight">
+          Desbloquea <br />
+          la <span className="leading-none">calma</span> y el{" "}
+          <span className="leading-none">potencial</span> <br />
+          en cada niño y niña
         </h1>
-        <p className="text-white/60 max-w-md mb-4">
-          Un viaje guiado para soñar, sentir y dormir mejor
+        <p className="text-white/60 max-w-md mb-10 text-lg">
+          Te ofrecemos un enfoque único y recursos listos para nutrir su
+          fortaleza interior.
         </p>
-        <p className="text-sm text-white/50 italic mb-8">
-          Cierra los ojos por un instante... <br />
-          ¿Estás listo para volver a ti?
-        </p>
+
         <Link
-          href={name ? "/onboarding/emotion" : "/onboarding/name"}
+          href={"login"}
           className="bg-yellow-400 text-black font-bold py-3 px-6 rounded-full hover:bg-yellow-300 transition"
         >
-          Iniciar viaje
+          Empieza a Guiar
         </Link>
       </div>
       <div className="mt-6">

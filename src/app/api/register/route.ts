@@ -1,0 +1,78 @@
+import { createFacilitatorProfile } from "@/lib/supabaseDB";
+import { supabase } from "../../../lib/supabaseServer";
+import { NextRequest, NextResponse } from "next/server";
+
+export async function POST(req: NextRequest) {
+  const body = await req.json();
+  const { email, password, role } = body;
+
+  if (!email || !password) {
+    return NextResponse.json(
+      { error: "Email and password are required" },
+      { status: 400 }
+    );
+  }
+
+  try {
+    const { data: signUpData, error: authError } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+
+    if (authError) {
+      let errorMessage = "Error en el registro.";
+      if (authError.message.includes("already registered")) {
+        errorMessage = "Este correo electrónico ya está registrado.";
+      } else if (
+        authError.message.includes("Password should be at least 6 characters")
+      ) {
+        errorMessage = "La contraseña debe tener al menos 6 caracteres.";
+      } else {
+        errorMessage = authError.message;
+      }
+      return NextResponse.json({ error: errorMessage }, { status: 400 });
+    }
+
+    const actualUser = signUpData?.user;
+
+    if (actualUser) {
+      const { error: profileError } = await createFacilitatorProfile({
+        id: actualUser.id,
+        email: actualUser.email || "",
+        role: role,
+      });
+
+      if (profileError) {
+        console.error(
+          "Profile creation failed after auth user creation:",
+          profileError
+        );
+        return NextResponse.json(
+          {
+            error: "Error al crear el perfil de usuario después del registro.",
+          },
+          { status: 500 }
+        );
+      }
+    } else {
+      return NextResponse.json(
+        {
+          error:
+            "No se pudo obtener la información del usuario después del registro.",
+        },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json(
+      { message: "Registro exitoso", userId: actualUser.id },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Server error during registration:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}

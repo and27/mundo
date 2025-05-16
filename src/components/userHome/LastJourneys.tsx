@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
@@ -120,7 +121,7 @@ export default function LastJourneys() {
                          p-5 hover:bg-black/20 transition-colors duration-200 snap-start"
             >
               {j.img && (
-                <img
+                <Image
                   src={j.img}
                   alt=""
                   loading="lazy"

@@ -1,13 +1,11 @@
 "use client";
 
 import AboutSection from "@/components/landing/AboutSection";
-import Benefits from "@/components/landing/Benefits";
 import BenefitsBar from "@/components/landing/BenefitsBar";
 import FAQs from "@/components/landing/Faqs";
 import FinalCallToAction from "@/components/landing/FinalCTA";
 import Footer from "@/components/landing/Footer";
 import Hero from "@/components/landing/Hero";
-import TestimonialCarousel from "@/components/landing/Testimonials";
 
 export default function Home() {
   return (
@@ -16,8 +14,7 @@ export default function Home() {
       <BenefitsBar />
       <AboutSection />
       <FAQs />
-      <Benefits />
-      <TestimonialCarousel />
+      {/* <TestimonialCarousel /> */}
       <FinalCallToAction />
       <Footer />
     </main>
