@@ -1,7 +1,6 @@
 "use client";
 
 import InputWithLabel from "@/components/ui/InputWithLabel";
-import Link from "next/link";
 import { useState } from "react";
 
 interface RegistrationData {
@@ -83,14 +82,38 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center mt-10 md:mt-0 md:p-5">
-      <div className="w-full rounded-lg py-10 md:py-16 p-5 md:p-8 shadow-lg backgrop-blur-sm bg-black/30 md:bg-black/20">
-        <div className="grid md:grid-cols-2">
-          <div className="">
-            <h1 className="text-2xl md:text-3xl font-bold text-white mb-16">
-              ¿Cómo funciona?
+    <div className="md:p-5  md:mx-20 min-h-screen flex flex-col items-center ">
+      <div className="w-full rounded-lg py-2 md:py-5 shadow-lg backgrop-blur-sm bg-black/30 md:bg-black/20">
+        <div className="p-5 md:p-10 grid md:grid-cols-2 gap-10">
+          <div className="max-w-2xl">
+            <h1 className="text-2xl md:text-3xl font-bold text-white mb-8 md:mb-16">
+              ¿Cómo funciona <i>Mundo Interior?</i>
             </h1>
-            <p>Explanation</p>
+            <div className="text-white space-y-4 text-base md:text-lg">
+              <p>
+                Con nuestra Metodología Mim, te guiamos para que acompañes a tus
+                hijos a:
+              </p>
+              <ol className="list-decimal list-inside space-y-3 pl-2">
+                <li>
+                  <strong>Explorar Emociones:</strong> A través de cuentos
+                  andinos interactivos, los niños identifican y nombran lo que
+                  sienten en un entorno seguro y lúdico.
+                </li>
+                <li>
+                  <strong>Encontrar la Calma:</strong> Con ejercicios de
+                  respiración y mindfulness sencillos (de 5-10 min), aprenden
+                  herramientas prácticas para gestionar el estrés y la ansiedad.
+                </li>
+                <li>
+                  <strong>Cultivar su Fortaleza Interior:</strong> Las historias
+                  y actividades están diseñadas para reforzar su
+                  autoconocimiento, resiliencia y conexión con su rica herencia
+                  cultural.
+                </li>
+              </ol>
+              <p className="pt-4">Regístrate y empieza a guiar su camino</p>
+            </div>
           </div>
           <div>
             <h2 className="flex gap-5 text-xl  font-bold text-white mb-16">

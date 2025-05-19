@@ -17,7 +17,7 @@ export default function Home() {
   ) : (
     <>
       <FaPlay className="mr-2" />
-      Empezar meditación
+      Iniciar viaje
     </>
   );
 
@@ -27,7 +27,7 @@ export default function Home() {
 
   return (
     <main className="bg-black/30 backdrop-blur-sm  min-h-screen flex items-center py-8 text-white">
-      <div className="max-w-3xl text-center -mt-16 flex flex-col gap-5 items-center h-full items-center mx-auto">
+      <div className="px-10 max-w-3xl text-center -mt-16 flex flex-col gap-5 items-center h-full items-center mx-auto">
         <Image
           className="rounded-full ratio-1/1 w-50 h-50 object-cover"
           alt=""
@@ -35,11 +35,11 @@ export default function Home() {
           height="100"
           src="/guides/yachay3d.webp"
         />
-        <h1 className="text-6xl">
+        <h1 className="text-3xl md:text-6xl">
           Bienvenido/a a <br />
           tu Mundo Interior
         </h1>
-        <h2 className="text-2xl">
+        <h2 className="text-base md:text-2xl">
           ¿Listo/a para tu primer viaje de descubrimiento?
         </h2>
         <Link
