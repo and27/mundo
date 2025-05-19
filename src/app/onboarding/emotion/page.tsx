@@ -26,7 +26,7 @@ export default function OnboardingEmotionPage() {
   const userName = name || "viajero";
 
   return (
-    <section className="fade-in flex flex-col items-start md:items-center justify-start min-h-screen text-white p-4 sm:pt-20 text-center">
+    <section className="fade-in flex flex-col items-start md:items-center justify-start min-h-screen text-white sm:pt-10 text-center">
       <h2 className="text-2xl md:text-3xl font-semibold mb-8">{`¿Cómo te sientes hoy, ${userName}?`}</h2>
 
       <SelectableEmotionGrid
@@ -34,7 +34,7 @@ export default function OnboardingEmotionPage() {
         mode="before"
         onSelect={handleSelect}
         initialSelected={selectedEmotion ?? undefined}
-        className="max-w-2xl w-full mb-10"
+        className="max-w-2xl w-full mb-5"
       />
 
       <Button onClick={handleContinue} disabled={!selectedEmotion}>

@@ -6,14 +6,13 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <section className="min-h-screen x-4 py-8  mx-auto text-white">
-      <div className="max-w-3xl mx-auto">
+      <div className="p-3 max-w-3xl mx-auto">
         <button
           onClick={() => router.back()}
-          className="mb-6 flex items-center text-white/70 hover:text-white transition"
+          className="py-5 flex items-center text-white/70 hover:text-white transition"
         >
           ← <span className="ml-1 text-sm">Volver</span>
         </button>
-        {/* <QuoteBanner text="Cuando respiras, el bosque te escucha." /> */}
         {children}
       </div>
     </section>

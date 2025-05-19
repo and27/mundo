@@ -4,12 +4,12 @@ import { FC } from "react";
 import Image from "next/image";
 
 interface GuideCardProps {
-  id: string; // Add ID for key and potentially parent logic
+  id: string;
   name: string;
   subtitle: string;
   image: string;
-  selected: boolean; // Boolean directly indicates selection
-  onSelect: (id: string) => void; // Pass back the ID of the selected card
+  selected: boolean;
+  onSelect: (id: string) => void;
 }
 
 const GuideCard: FC<GuideCardProps> = ({
@@ -40,23 +40,23 @@ const GuideCard: FC<GuideCardProps> = ({
       )}
 
       <div
-        className={`relative w-full max-w-100 h-50 sm:h-80 md:h-96  overflow-hidden rounded-lg shadow-lg border-2 transition duration-300 ${
+        className={`relative w-full max-w-100 h-40 sm:h-80 md:h-96 overflow-hidden rounded-lg shadow-lg border-2 transition duration-300 ${
           selected
             ? "border-yellow-400"
             : "border-transparent group-hover:border-white/20"
         }`}
       >
-        <Image
-          src={image}
-          alt={name}
-          fill
-          className={`object-cover object-top sm:object-center transition-all duration-300 ${
-            selected ? "scale-105" : "group-hover:scale-105"
-          }`}
-          // Consider removing priority if many cards are loading initially
-          // priority={selected} // Maybe prioritize only the selected one if needed
-          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw" // Example sizes
-        />
+        <div className="relative h-60 sm:h-80 md:h-96">
+          <Image
+            src={image}
+            alt={name}
+            fill
+            className={`-mt-15 sm:mt-0 object-cover object-top sm:object-center transition-all duration-300 ${
+              selected ? "scale-105" : "group-hover:scale-105"
+            }`}
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw" // Example sizes
+          />
+        </div>
       </div>
       <div
         className="max-w-100 rounded-lg absolute inset-0 bg-gradient-to-b sm:bg-gradient-to-t from-black/70 via-black/40 to-transparent pointer-events-none"
@@ -67,7 +67,7 @@ const GuideCard: FC<GuideCardProps> = ({
         <h3 className="text-lg sm:text-xl font-semibold text-white tracking-tight leading-tight drop-shadow-md">
           {name}
         </h3>
-        <p className="text-xs sm:text-sm text-white/80 mt-0.5 leading-snug drop-shadow-md">
+        <p className="text-sm text-white/80 mt-0.5 leading-snug drop-shadow-md">
           {subtitle}
         </p>
       </div>

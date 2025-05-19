@@ -6,8 +6,8 @@ import Image from "next/image";
 import { guides } from "@/lib/guides";
 import { Guide } from "@/types/guides";
 import SelectableEmotionGrid from "@/components/SelectableEmotion";
-import { emotionsAfterJourney } from "@/lib/emotionsData";
 import Button from "@/components/ui/Button";
+import { emotionsAfterJourney_9_11 } from "@/lib/emotionsData";
 
 const LoadingIndicator = () => (
   <div className="flex justify-center items-center min-h-screen">
@@ -48,7 +48,9 @@ const EndPage = () => {
 
   const handleEmotionSelect = (label: string) => {
     if (isSaving) return;
-    const selectedOption = emotionsAfterJourney.find((e) => e.label === label);
+    const selectedOption = emotionsAfterJourney_9_11.find(
+      (e) => e.label === label
+    );
     setSelectedEmotionId(selectedOption?.id || null);
   };
 
@@ -56,7 +58,7 @@ const EndPage = () => {
     if (!selectedEmotionId || isSaving) return;
 
     setIsSaving(true);
-    const selectedEmotionObject = emotionsAfterJourney.find(
+    const selectedEmotionObject = emotionsAfterJourney_9_11.find(
       (opt) => opt.id === selectedEmotionId
     );
     const emotionLabelForEvent =
@@ -94,7 +96,7 @@ const EndPage = () => {
     return <ErrorMessage message="Guía no encontrada" />;
   }
 
-  const initialSelectedLabel = emotionsAfterJourney.find(
+  const initialSelectedLabel = emotionsAfterJourney_9_11.find(
     (e) => e.id === selectedEmotionId
   )?.label;
 
@@ -128,7 +130,7 @@ const EndPage = () => {
         </h3>
 
         <SelectableEmotionGrid
-          emotions={emotionsAfterJourney}
+          emotions={emotionsAfterJourney_9_11}
           mode="after"
           onSelect={handleEmotionSelect}
           initialSelected={initialSelectedLabel}

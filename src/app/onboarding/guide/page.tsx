@@ -36,9 +36,9 @@ export default function Onboarding() {
   const disabledButtonClasses = "opacity-50 cursor-not-allowed";
 
   return (
-    <div className="flex flex-col px-2 fade-in items-center">
+    <div className="flex flex-col fade-in sm:items-center">
       <h2 className="text-2xl font-bold mb-6">Elige tu guía</h2>
-      <div className="w-full grid sm:grid-cols-2 md:grid-cols-5 gap-8 sm:gap-2 md:gap-3 pb-4">
+      <div className="w-full grid sm:grid-cols-2 md:grid-cols-5 gap-4 sm:gap-2 md:gap-3 pb-4">
         {guides.map((g) => (
           <GuideCard
             key={g.id}

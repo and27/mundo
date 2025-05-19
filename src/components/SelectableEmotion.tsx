@@ -49,8 +49,7 @@ function SelectableEmotionGrid({
       aria-label={`Selecciona cómo te sientes ${
         mode === "before" ? "hoy" : "ahora"
       }`}
-      className={`grid gap-4 justify-center ${className}`}
-      style={{ gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))" }}
+      className={`grid grid-cols-2 md:grid-cols-3 gap-4 justify-center ${className}`}
     >
       {emotions.map((e) => (
         <button

@@ -84,72 +84,72 @@ const Register = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center mt-10 md:mt-0 md:p-5">
-      <div className=" rounded-lg py-10 md:py-16 p-5 md:p-8 shadow-lg backgrop-blur-sm bg-black/30 md:bg-black/20  max-w-lg w-full">
-        <h1 className="text-2xl md:text-3xl font-bold text-white mb-16 text-center">
-          Regístrate como Facilitador
-        </h1>
-
-        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-          <InputWithLabel
-            label="Correo Electrónico"
-            name="email"
-            type="email"
-            handleChange={handleChange}
-            error={errors.email}
-          />
-
-          <InputWithLabel
-            label="Contraseña"
-            name="password"
-            type="password"
-            handleChange={handleChange}
-            error={errors.password}
-          />
-
-          <InputWithLabel
-            label="Confirmar Contraseña"
-            name="confirmPassword"
-            type="password"
-            handleChange={handleChange}
-            error={errors.confirmPassword}
-          />
-
-          <div className="-mt-5">
-            <label htmlFor="role" className="block text-white text-sm mb-2">
-              Soy principalmente... (Opcional)
-            </label>
-            <select
-              id="role"
-              name="role"
-              className="w-full p-3 rounded-md border border-white text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
-              onChange={handleChange}
-            >
-              <option value="">Selecciona uno</option>
-              <option value="parent">Padre/Madre/Tutor</option>
-              <option value="educator">Educador/Maestro</option>
-              <option value="therapist">Terapeuta/Psicólogo</option>
-              <option value="other">Otro</option>
-            </select>
+      <div className="w-full rounded-lg py-10 md:py-16 p-5 md:p-8 shadow-lg backgrop-blur-sm bg-black/30 md:bg-black/20">
+        <div className="grid md:grid-cols-2">
+          <div className="">
+            <h1 className="text-2xl md:text-3xl font-bold text-white mb-16">
+              ¿Cómo funciona?
+            </h1>
+            <p>Explanation</p>
           </div>
+          <div>
+            <h2 className="flex gap-5 text-xl  font-bold text-white mb-16">
+              <p>Registrarme </p> |{" "}
+              <p className="opacity-50"> Iniciar Sesión</p>
+            </h2>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+              <InputWithLabel
+                label="Correo Electrónico"
+                name="email"
+                type="email"
+                handleChange={handleChange}
+                error={errors.email}
+              />
 
-          <button
-            type="submit"
-            className="w-full bg-yellow-400 text-black font-bold py-3 px-4 mt-4 rounded-md hover:bg-yellow-300 transition focus:outline-none focus:ring-2 focus:ring-yellow-500"
-            disabled={isSubmitting}
-          >
-            Crear Cuenta
-          </button>
-        </form>
+              <InputWithLabel
+                label="Contraseña"
+                name="password"
+                type="password"
+                handleChange={handleChange}
+                error={errors.password}
+              />
 
-        <p className="mt-6 text-center text-white/80 text-sm">
-          ¿Ya tienes una cuenta?{" "}
-          <Link
-            href="/acceso"
-            className="text-white font-semibold hover:underline"
-          >
-            Iniciar sesión aquí
-          </Link>
-        </p>
+              <InputWithLabel
+                label="Confirmar Contraseña"
+                name="confirmPassword"
+                type="password"
+                handleChange={handleChange}
+                error={errors.confirmPassword}
+              />
+
+              <div className="-mt-5">
+                <label htmlFor="role" className="block text-white text-sm mb-2">
+                  Soy principalmente... (Opcional)
+                </label>
+                <select
+                  id="role"
+                  name="role"
+                  className="w-full p-3 rounded-md border border-white text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                  onChange={handleChange}
+                >
+                  <option value="">Selecciona uno</option>
+                  <option value="parent">Padre/Madre/Tutor</option>
+                  <option value="educator">Educador/Maestro</option>
+                  <option value="therapist">Terapeuta/Psicólogo</option>
+                  <option value="other">Otro</option>
+                </select>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-yellow-400 text-black font-bold py-3 px-4 mt-4 rounded-md hover:bg-yellow-300 transition focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                disabled={isSubmitting}
+              >
+                Crear Cuenta
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   );
