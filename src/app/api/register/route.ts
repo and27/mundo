@@ -13,6 +13,14 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  const allowedRoles: string[] = ["parent", "educator"];
+  if (role && !allowedRoles.includes(role)) {
+    return NextResponse.json(
+      { error: "Rol no válido proporcionado" },
+      { status: 400 }
+    );
+  }
+
   try {
     const { data: signUpData, error: authError } = await supabase.auth.signUp({
       email,
@@ -41,15 +49,31 @@ export async function POST(req: NextRequest) {
         email: actualUser.email || "",
         role: role,
       });
-
+      console.log(profileError);
       if (profileError) {
         console.error(
           "Profile creation failed after auth user creation:",
           profileError
         );
+        try {
+          const { error: deleteAuthUserError } =
+            await supabase.auth.admin.deleteUser(actualUser.id);
+          if (deleteAuthUserError) {
+            console.error(
+              "CRITICAL: Failed to delete auth user after profile creation failure:",
+              deleteAuthUserError
+            );
+          }
+        } catch (cleanupError) {
+          console.error(
+            "CRITICAL: Exception during auth user cleanup:",
+            cleanupError
+          );
+        }
         return NextResponse.json(
           {
-            error: "Error al crear el perfil de usuario después del registro.",
+            error:
+              "Error al crear el perfil de usuario después del registro. Se intentó revertir el registro.",
           },
           { status: 500 }
         );
@@ -66,7 +90,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       { message: "Registro exitoso", userId: actualUser.id },
-      { status: 200 }
+      { status: 201 }
     );
   } catch (error) {
     console.error("Server error during registration:", error);

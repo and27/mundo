@@ -16,8 +16,6 @@ export async function createFacilitatorProfile(
         id: profileData.id,
         email: profileData.email,
         role: profileData.role || "parent",
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
       },
     ])
     .select();

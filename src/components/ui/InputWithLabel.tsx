@@ -2,12 +2,13 @@ import { FaEye } from "react-icons/fa6";
 import { useState } from "react";
 
 interface InputLabelProps {
-  type?: string; // Type of the input (text, password, email, etc.)
-  label: string; // The label text for the input
-  name: string; // The name attribute for the input (used for ID and form data)
-  className?: string; // Optional additional classes for the input element
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void; // Function to handle input changes
-  error?: string; // Optional error message to display
+  type?: string;
+  label: string;
+  name: string;
+  value: string;
+  className?: string;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  error?: string;
 }
 
 const InputWithLabel: React.FC<InputLabelProps> = ({
@@ -15,6 +16,7 @@ const InputWithLabel: React.FC<InputLabelProps> = ({
   label,
   name,
   className,
+  value,
   handleChange,
   error,
 }) => {
@@ -33,6 +35,7 @@ const InputWithLabel: React.FC<InputLabelProps> = ({
         type={inputType}
         id={name}
         name={name}
+        value={value}
         placeholder=" "
         onChange={handleChange}
       />

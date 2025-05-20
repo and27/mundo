@@ -2,6 +2,8 @@
 
 import InputWithLabel from "@/components/ui/InputWithLabel";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { registerUser } from "@/services/authService";
 
 interface RegistrationData {
   email: string;
@@ -14,7 +16,6 @@ interface RegistrationErrors {
   email?: string;
   password?: string;
   confirmPassword?: string;
-  role?: string;
 }
 
 const Register = () => {
@@ -26,8 +27,12 @@ const Register = () => {
   });
 
   const [errors, setErrors] = useState<RegistrationErrors>({});
-
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [apiFeedback, setApiFeedback] = useState<{
+    type: "success" | "error";
+    message: string;
+  } | null>(null);
+  const router = useRouter();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -35,6 +40,7 @@ const Register = () => {
     const { name, value } = e.target;
     setRegistrationData((prev) => ({ ...prev, [name]: value }));
     setErrors((prev) => ({ ...prev, [name]: undefined }));
+    setApiFeedback(null);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -42,9 +48,9 @@ const Register = () => {
 
     setIsSubmitting(true);
     setErrors({});
+    setApiFeedback(null);
 
-    const { email, password, confirmPassword } = registrationData;
-
+    const { email, password, confirmPassword, role } = registrationData;
     const newErrors: RegistrationErrors = {};
 
     if (!email) {
@@ -71,18 +77,40 @@ const Register = () => {
       return;
     }
 
-    console.log(
-      "Datos del formulario válidos, enviando a backend:",
-      registrationData
-    );
+    try {
+      const payload = {
+        email,
+        password,
+        role: role || undefined,
+      };
+      const result = await registerUser(payload);
 
-    console.log("Registro exitoso!");
-
-    setIsSubmitting(false);
+      setApiFeedback({
+        type: "success",
+        message: result.message || "¡Registro exitoso!",
+      });
+      setRegistrationData({
+        email: "",
+        password: "",
+        confirmPassword: "",
+        role: "",
+      });
+      // Ejemplo de redirección después de 2 segundos:
+      // setTimeout(() => {
+      //   router.push('/login'); // o a una página de "revisa tu email"
+      // }, 2000);
+    } catch (error: any) {
+      setApiFeedback({
+        type: "error",
+        message: error.message || "Ocurrió un error en el registro.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <div className="md:p-5  md:mx-20 min-h-screen flex flex-col items-center ">
+    <div className="md:p-5 md:mx-20 min-h-screen flex flex-col items-center ">
       <div className="w-full rounded-lg py-2 md:py-5 shadow-lg backgrop-blur-sm bg-black/30 md:bg-black/20">
         <div className="p-5 md:p-10 grid md:grid-cols-2 gap-10">
           <div className="max-w-2xl">
@@ -116,15 +144,30 @@ const Register = () => {
             </div>
           </div>
           <div>
-            <h2 className="flex gap-5 text-xl  font-bold text-white mb-16">
+            <h2 className="flex gap-5 text-xl font-bold text-white mb-16">
               <p>Registrarme </p> |{" "}
               <p className="opacity-50"> Iniciar Sesión</p>
             </h2>
+
+            {apiFeedback && (
+              <div
+                className={`mb-4 p-3 rounded-md text-sm ${
+                  apiFeedback.type === "success"
+                    ? "bg-green-100 border border-green-400 text-green-700"
+                    : "bg-red-100 border border-red-400 text-red-700"
+                }`}
+                role="alert"
+              >
+                {apiFeedback.message}
+              </div>
+            )}
+
             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
               <InputWithLabel
                 label="Correo Electrónico"
                 name="email"
                 type="email"
+                value={registrationData.email}
                 handleChange={handleChange}
                 error={errors.email}
               />
@@ -133,6 +176,7 @@ const Register = () => {
                 label="Contraseña"
                 name="password"
                 type="password"
+                value={registrationData.password}
                 handleChange={handleChange}
                 error={errors.password}
               />
@@ -141,6 +185,7 @@ const Register = () => {
                 label="Confirmar Contraseña"
                 name="confirmPassword"
                 type="password"
+                value={registrationData.confirmPassword}
                 handleChange={handleChange}
                 error={errors.confirmPassword}
               />
@@ -152,7 +197,8 @@ const Register = () => {
                 <select
                   id="role"
                   name="role"
-                  className="w-full p-3 rounded-md border border-white text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                  value={registrationData.role}
+                  className="w-full p-3 rounded-md border border-white text-white focus:outline-none focus:ring-2 focus:ring-yellow-500 bg-transparent"
                   onChange={handleChange}
                 >
                   <option value="">Selecciona uno</option>
@@ -165,10 +211,10 @@ const Register = () => {
 
               <button
                 type="submit"
-                className="w-full bg-yellow-400 text-black font-bold py-3 px-4 mt-4 rounded-md hover:bg-yellow-300 transition focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                className="w-full bg-yellow-400 text-black font-bold py-3 px-4 mt-4 rounded-md hover:bg-yellow-300 transition focus:outline-none focus:ring-2 focus:ring-yellow-500 disabled:opacity-50"
                 disabled={isSubmitting}
               >
-                Crear Cuenta
+                {isSubmitting ? "Creando cuenta..." : "Crear Cuenta"}
               </button>
             </form>
           </div>
