@@ -23,7 +23,7 @@ const Button: FC<ButtonProps> = ({
     <button
       type="button"
       className={clsx(
-        "px-7 py-3 font-semibold rounded-full",
+        "",
         "transition-colors duration-300 ease-in-out",
         "disabled:opacity-50 disabled:cursor-not-allowed",
         "inline-flex items-center justify-center",
