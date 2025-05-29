@@ -92,7 +92,7 @@ export default function CuentoPage() {
             }
           />
 
-          <div className="-mt-12 w-full max-w-2xl flex flex-col items-center justify-center flex-grow gap-5 rounded-2xl text-white shadow-2xl border border-white/20 p-4 sm:p-6 min-h-[400px] bg-white/5 overflow-y-auto">
+          <div className="-mt-12 w-full max-w-2xl flex flex-col items-center justify-between flex-grow gap-5 rounded-2xl text-white shadow-2xl border border-white/20 p-4 sm:p-6 min-h-[400px] bg-white/5 overflow-y-auto">
             {journeyState === "idle" && (
               <JourneyIdleScreen
                 title={story.title}
@@ -110,7 +110,7 @@ export default function CuentoPage() {
               </div>
             )}
             {journeyState === "playing" && showSubtitles && (
-              <div className=" pointer-events-none">
+              <div className="p-8 pointer-events-none">
                 <SubtitleDisplay text={currentStep?.subtitle} />
               </div>
             )}
