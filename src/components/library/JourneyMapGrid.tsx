@@ -2,7 +2,6 @@
 
 import JourneyCard from "./JourneyCard";
 
-// Simulador temporal de datos
 const journeys = [
   {
     id: "1",
