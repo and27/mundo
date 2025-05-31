@@ -2,6 +2,8 @@
 
 import InputWithLabel from "@/components/ui/InputWithLabel";
 import { useState, FormEvent, ChangeEvent } from "react";
+import Button from "../ui/Button";
+import { registerUser } from "@/services/authService";
 // import { registerUser } from "@/services/authService"; // Descomentar cuando el servicio esté listo
 
 interface RegistrationData {
@@ -50,7 +52,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
     setErrors({});
     setApiFeedback(null);
 
-    const { email, password, confirmPassword } = registrationData;
+    const { email, password, confirmPassword, role } = registrationData;
     const newErrors: RegistrationErrors = {};
 
     if (!email) {
@@ -74,13 +76,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
     }
 
     try {
-      // const payload = { email, password, role: role || undefined };
-      // const result = await registerUser(payload);
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      const result = {
-        message: "¡Registro exitoso! Te hemos enviado un correo de bienvenida.",
-      };
-
+      const payload = { email, password, role: role || undefined };
+      const result = await registerUser(payload);
       setApiFeedback({
         type: "success",
         message: result.message,
@@ -175,13 +172,13 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
           </option>
         </select>
       </div>
-      <button
+      <Button
         type="submit"
-        className="w-full bg-yellow-400 text-black font-semibold py-3 px-4 mt-2 rounded-md hover:bg-yellow-300 transition focus:outline-none focus:ring-2 focus:ring-yellow-500 disabled:opacity-50"
+        className="w-full mt-5 transition focus:outline-none focus:ring-2 focus:ring-yellow-500 disabled:opacity-50"
         disabled={isSubmitting}
       >
         {isSubmitting ? "Creando cuenta..." : "Crear Cuenta"}
-      </button>
+      </Button>
     </form>
   );
 };

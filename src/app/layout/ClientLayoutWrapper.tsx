@@ -2,9 +2,6 @@
 
 import { useEffect } from "react";
 import { useOnboardingStore } from "@/store/useOnboardingStore";
-import Link from "next/link";
-import Image from "next/image";
-import AvatarButton from "@/components/common/AvatarButton";
 
 interface ClientLayoutWrapperProps {
   children: React.ReactNode;
@@ -12,7 +9,6 @@ interface ClientLayoutWrapperProps {
 
 export function ClientLayoutWrapper({ children }: ClientLayoutWrapperProps) {
   const emotion = useOnboardingStore((state) => state.emotion);
-  const name = useOnboardingStore((state) => state.name);
 
   useEffect(() => {
     const getTintColorValueForEmotion = (emo: string | null): string => {
@@ -47,20 +43,6 @@ export function ClientLayoutWrapper({ children }: ClientLayoutWrapperProps) {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <div className="bg-black/50 backdrop-blur-lg sticky top-0 z-50">
-        <div className="flex justify-between items-center px-5 md:px-10 py-2 md:py-3 max-w-screen-xl mx-auto">
-          <Link href="/">
-            <Image
-              src="/images/logo-mundo.png"
-              alt="Mundo Interior Logo"
-              width={120}
-              height={30}
-              priority
-            />
-          </Link>
-          <AvatarButton name={name} />
-        </div>
-      </div>
       <main className="flex-grow">{children}</main>
     </div>
   );

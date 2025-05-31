@@ -238,7 +238,7 @@ const SearchAndFilterBar: React.FC<SearchAndFilterBarProps> = ({
               <div className="flex items-center gap-2 text-sm">
                 {searchTerm && (
                   <span className="bg-jaguar/10 text-jaguar px-3 py-1 rounded-full border border-jaguar/20 flex items-center gap-1">
-                    Búsqueda: {searchTerm}
+                    Búsqueda: {searchTerm}  
                     <button
                       onClick={handleClearSearch}
                       className="hover:bg-jaguar/20 rounded-full p-0.5 transition-colors"

@@ -1,62 +1,189 @@
 "use client";
-
-import Button from "@/components/ui/Button";
+import React, { useState, useCallback, useMemo, useEffect, memo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useOnboardingStore } from "@/store/useOnboardingStore";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaPlay } from "react-icons/fa";
+import { FiUsers, FiBookOpen } from "react-icons/fi";
+import Button from "@/components/ui/Button";
+
+const inspirationalQuotes = [
+  "Cada emoción es un tesoro por descubrir.",
+  "Tu mundo interior está lleno de magia.",
+  "Descubre la fortaleza que llevas dentro.",
+  "Un viaje de mil emociones empieza con un solo paso.",
+];
+type WelcomePanelType = {
+  name: string;
+};
+const WelcomePanel: React.FC<WelcomePanelType> = memo(({ name }) => {
+  const [currentQuote, setCurrentQuote] = useState(0);
+  console.log(name);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentQuote((prev) => (prev + 1) % inspirationalQuotes.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="relative z-10 p-12 flex flex-col justify-center items-center text-center h-full">
+      <motion.div
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ delay: 0.3, type: "spring", stiffness: 100 }}
+        className="-mt-70 md:-mt-100 absolute mb-6"
+      >
+        <Image
+          priority
+          className="rounded-full w-50 h-50 md:w-80 md:h-80 object-contain shadow-strong"
+          alt="Yachay - Tu guía interior"
+          width="300"
+          height="300"
+          src="/images/yachwithkuntur.png"
+        />
+      </motion.div>
+      <motion.h1
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5 }}
+        className="text-3xl lg:text-4xl font-bold text-foreground mb-4"
+      >
+        Bienvenidos a <br />
+        mundo interior
+      </motion.h1>
+
+      <div className="hidden md:flex h-12 flex items-center justify-center">
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={currentQuote}
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            transition={{ duration: 0.5 }}
+            className="text-foreground/70 italic"
+          >
+            &ldquo;{inspirationalQuotes[currentQuote]}&rdquo;
+          </motion.p>
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+});
+WelcomePanel.displayName = "WelcomePanel";
+
+type ActionPanelType = {
+  name: string;
+  isLoading: boolean;
+  onStartJourney: () => void;
+};
+
+const ActionPanel: React.FC<ActionPanelType> = memo(
+  ({ name, isLoading, onStartJourney }) => {
+    const primaryButtonContent = useMemo(
+      () =>
+        isLoading ? (
+          <div className="flex items-center justify-center gap-3">
+            <AiOutlineLoading3Quarters className="w-5 h-5 animate-spin" />
+            <span>Preparando...</span>
+          </div>
+        ) : (
+          <div className="flex items-center justify-center gap-3">
+            <FaPlay className="w-4 h-4" />
+            <span>Iniciar viaje</span>
+          </div>
+        ),
+      [isLoading]
+    );
+
+    return (
+      <div className="bg-color-primary-900/40 p-8 md:p-12 flex flex-col justify-center items-center text-center rounded-b-2xl lg:rounded-r-2xl lg:rounded-bl-none h-full">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
+        >
+          {/* <HiSparkles className="w-10 h-10 text-color-accent-gold mb-4" /> */}
+          <h2 className="text-2xl lg:text-3xl font-bold text-foreground mb-3">
+            Tu Aventura Comienza
+          </h2>
+          <p className="text-foreground/80 mb-8 max-w-sm">
+            Estás a un solo clic de explorar un universo de emociones, calma y
+            autoconocimiento.
+          </p>
+        </motion.div>
+
+        <motion.div
+          className="w-full max-w-xs"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.8 }}
+        >
+          <Link
+            href={name ? "/onboarding/emotion" : "/onboarding/name"}
+            passHref
+            legacyBehavior
+          >
+            <motion.a
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={onStartJourney}
+              className="block mb-4"
+            >
+              <Button
+                className="w-full transition-all duration-300 hover:shadow-lg"
+                disabled={isLoading}
+              >
+                {primaryButtonContent}
+              </Button>
+            </motion.a>
+          </Link>
+
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
+            <Link
+              href="/register"
+              className="w-full inline-flex items-center justify-center gap-3 px-6 py-3 font-semibold rounded-xl glass-light text-foreground/80 hover:text-foreground hover:bg-glass-bg-medium transition-all duration-300"
+            >
+              <FiUsers className="w-5 h-5" />
+              <span>Soy padre o educador</span>
+              <FiBookOpen className="w-5 h-5" />
+            </Link>
+          </motion.div>
+        </motion.div>
+      </div>
+    );
+  }
+);
+ActionPanel.displayName = "ActionPanel";
 
 export default function Home() {
   const { name } = useOnboardingStore();
-  const [isLoading, setIsLoading] = useState<boolean>();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const PrimaryButtonContent = isLoading ? (
-    <AiOutlineLoading3Quarters className="w-5 h-5 animate-spin" />
-  ) : (
-    <>
-      <FaPlay className="mr-2" />
-      Iniciar viaje
-    </>
-  );
-
-  const handleNavigationStart = () => {
+  const handleNavigationStart = useCallback(() => {
     setIsLoading(true);
-  };
+  }, []);
 
   return (
-    <main className="bg-black/30 backdrop-blur-sm  min-h-screen flex items-center py-8 text-white">
-      <div className="px-10 max-w-3xl text-center -mt-16 flex flex-col gap-5 items-center h-full items-center mx-auto">
-        <Image
-          className="rounded-full ratio-1/1 w-50 h-50 object-cover"
-          alt=""
-          width="100"
-          height="100"
-          src="/guides/yachay3d.webp"
-        />
-        <h1 className="text-3xl md:text-6xl">
-          Bienvenido/a a <br />
-          tu Mundo Interior
-        </h1>
-        <h2 className="text-base md:text-2xl">
-          ¿Listo/a para tu primer viaje de descubrimiento?
-        </h2>
-        <Link
-          className="w-60"
-          href={name ? "/onboarding/emotion" : "/onboarding/name"}
-        >
-          <Button className="w-full" onClick={handleNavigationStart}>
-            {PrimaryButtonContent}
-          </Button>
-        </Link>
-        <Link
-          href="/register"
-          className="w-60 px-7 py-3 font-semibold rounded-full bg-magic/20 text-white hover:brightness-95"
-        >
-          Soy padre o educador
-        </Link>
-      </div>
+    <main className="min-h-screen w-full bg-gradient-background flex items-center justify-center p-4">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="w-full max-w-5xl mx-auto"
+      >
+        <div className="grid md:grid-cols-2 rounded-2xl shadow-strong glass-strong">
+          <WelcomePanel name={name} />
+          <ActionPanel
+            name={name}
+            isLoading={isLoading}
+            onStartJourney={handleNavigationStart}
+          />
+        </div>
+      </motion.div>
     </main>
   );
 }

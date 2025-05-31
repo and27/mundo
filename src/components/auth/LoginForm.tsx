@@ -3,7 +3,8 @@
 import InputWithLabel from "@/components/ui/InputWithLabel";
 import { useState, FormEvent, ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
-// import { loginUser } from "@/services/authService"; // Descomentar cuando el servicio esté listo
+import Button from "../ui/Button";
+import { loginUser } from "@/services/authService";
 
 interface LoginData {
   email: string;
@@ -15,11 +16,7 @@ interface LoginErrors {
   password?: string;
 }
 
-interface LoginFormProps {
-  onSuccess?: () => void;
-}
-
-const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
+const LoginForm: React.FC = () => {
   const router = useRouter();
   const [loginData, setLoginData] = useState<LoginData>({
     email: "",
@@ -60,25 +57,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
     }
 
     try {
-      // const result = await loginUser(loginData);
-      await new Promise((resolve) => setTimeout(resolve, 500));
-
-      if (loginData.email === "mundo" && loginData.password === "12345") {
-        setApiFeedback({
-          type: "success",
-          message: "¡Inicio de sesión exitoso! Redirigiendo...",
-        });
-
-        if (onSuccess) onSuccess();
-
-        setTimeout(() => {
-          router.push("/parentDashboard");
-        }, 1000);
-      } else {
-        throw new Error(
-          "Credenciales inválidas. Intenta con 'mundo' y '12345'."
-        );
-      }
+      await loginUser(loginData);
     } catch (error) {
       if (error instanceof Error) {
         setApiFeedback({
@@ -88,6 +67,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
       }
     } finally {
       setIsSubmitting(false);
+      router.push("/parentDashboard");
     }
   };
 
@@ -121,13 +101,13 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
         handleChange={handleChange}
         error={errors.password}
       />
-      <button
+      <Button
         type="submit"
-        className="w-full bg-yellow-400 text-black font-semibold py-3 px-4 mt-2 rounded-md hover:bg-yellow-300 transition focus:outline-none focus:ring-2 focus:ring-yellow-500 disabled:opacity-50"
+        className="w-full mt-5 transition focus:outline-none focus:ring-2 focus:ring-yellow-500 disabled:opacity-50"
         disabled={isSubmitting}
       >
         {isSubmitting ? "Iniciando Sesión..." : "Iniciar Sesión"}
-      </button>
+      </Button>
     </form>
   );
 };

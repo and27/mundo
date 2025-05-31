@@ -49,7 +49,6 @@ export async function POST(req: NextRequest) {
         email: actualUser.email || "",
         role: role,
       });
-      console.log(profileError);
       if (profileError) {
         console.error(
           "Profile creation failed after auth user creation:",
