@@ -1,7 +1,7 @@
 "use client";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useState, useEffect } from "react";
-import { FaBars, FaSearch, FaBell, FaQuestionCircle } from "react-icons/fa";
+import { FaBars } from "react-icons/fa";
 import { FiHome, FiUsers, FiBookOpen, FiActivity } from "react-icons/fi";
 import { HiSparkles } from "react-icons/hi2";
 import Sidebar from "../../components/dashboard/Sidebar";
@@ -16,13 +16,6 @@ const FacilitatorDashboard = () => {
   const section = searchParams.get("section");
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isDesktopCollapsed, setIsDesktopCollapsed] = useState(false);
-  const [currentTime, setCurrentTime] = useState(new Date());
-
-  // Actualizar tiempo cada minuto
-  useEffect(() => {
-    const timer = setInterval(() => setCurrentTime(new Date()), 60000);
-    return () => clearInterval(timer);
-  }, []);
 
   const renderSection = () => {
     switch (section) {
@@ -68,12 +61,12 @@ const FacilitatorDashboard = () => {
     role: "Guía Principal",
   };
 
-  const getGreeting = () => {
-    const hour = currentTime.getHours();
-    if (hour < 12) return "Buenos días";
-    if (hour < 18) return "Buenas tardes";
-    return "Buenas noches";
-  };
+  // const getGreeting = () => {
+  //   const hour = currentTime.getHours();
+  //   if (hour < 12) return "Buenos días";
+  //   if (hour < 18) return "Buenas tardes";
+  //   return "Buenas noches";
+  // };
 
   return (
     <div className="bg-gradient-to-br text-condor min-h-screen flex">

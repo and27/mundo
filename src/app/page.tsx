@@ -30,16 +30,16 @@ const WelcomePanel: React.FC<WelcomePanelType> = memo(({ name }) => {
   }, []);
 
   return (
-    <div className="relative z-10 p-12 flex flex-col justify-center items-center text-center h-full">
+    <div className="relative z-10 flex flex-col justify-center items-center text-center h-full">
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 0.3, type: "spring", stiffness: 100 }}
-        className="-mt-70 md:-mt-100 absolute mb-6"
+        className="-mt-70 md:-mt-110 absolute mb-6"
       >
         <Image
           priority
-          className="rounded-full w-50 h-50 md:w-80 md:h-80 object-contain shadow-strong"
+          className="rounded-full w-60 h-60 md:w-80 md:h-80 object-contain shadow-strong"
           alt="Yachay - Tu guía interior"
           width="300"
           height="300"
@@ -50,13 +50,13 @@ const WelcomePanel: React.FC<WelcomePanelType> = memo(({ name }) => {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="text-3xl lg:text-4xl font-bold text-foreground mb-4"
+        className="text-3xl lg:text-4xl font-bold text-foreground mb-2"
       >
         Bienvenidos a <br />
         mundo interior
       </motion.h1>
 
-      <div className="hidden md:flex h-12 flex items-center justify-center">
+      <div className="mt-3 hidden md:flex h-12 flex items-center justify-center">
         <AnimatePresence mode="wait">
           <motion.p
             key={currentQuote}
@@ -107,7 +107,7 @@ const ActionPanel: React.FC<ActionPanelType> = memo(
           transition={{ delay: 0.6 }}
         >
           {/* <HiSparkles className="w-10 h-10 text-color-accent-gold mb-4" /> */}
-          <h2 className="text-2xl lg:text-3xl font-bold text-foreground mb-3">
+          <h2 className="hidden md:flex text-2xl lg:text-3xl font-bold text-foreground mb-3">
             Tu Aventura Comienza
           </h2>
           <p className="text-foreground/80 mb-8 max-w-sm">
@@ -168,14 +168,14 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="min-h-screen w-full bg-gradient-background flex items-center justify-center p-4">
+    <main className="min-h-screen w-full bg-gradient-background flex items-center justify-center p-3  ">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="w-full max-w-5xl mx-auto"
       >
-        <div className="grid md:grid-cols-2 rounded-2xl shadow-strong glass-strong">
+        <div className="grid md:grid-cols-2 py-10 rounded-2xl shadow-strong glass-strong">
           <WelcomePanel name={name} />
           <ActionPanel
             name={name}
