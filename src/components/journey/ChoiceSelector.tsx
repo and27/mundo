@@ -138,9 +138,8 @@ const ChoiceSelector: React.FC<ChoiceSelectorProps> = ({
       return `${baseClasses} grid grid-cols-2 sm:grid-cols-4`;
 
     return `${baseClasses} grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4`;
-  }, [choices]); // Usar `choices` en lugar de `choices.length` es más seguro si `choices` puede ser null/undefined
+  }, [choices]);
 
-  // Ahora sí, el return temprano
   if (!choices || choices.length === 0) {
     return (
       <div className="w-full p-8 text-center">

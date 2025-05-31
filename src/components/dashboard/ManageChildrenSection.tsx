@@ -56,7 +56,6 @@ const childrenList: ChildProfile[] = [
 
 const ManageChildrenSection = () => {
   const generateChildAccessCode = (childId: string) => {
-    // Simulación de código de acceso
     return (
       childId.toUpperCase().slice(-4) +
       Math.random().toString(36).slice(-2).toUpperCase()
@@ -64,11 +63,10 @@ const ManageChildrenSection = () => {
   };
 
   return (
-    <div className="text-condor space-y-8 p-4 md:p-6">
-      {/* Header mejorado */}
-      <header className="space-y-4">
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 bg-gradient-to-br from-jaguar to-jaguar/80 rounded-xl flex items-center justify-center">
+    <div className="text-primary-800 space-y-8 p-4 md:p-6">
+      <header className="rounded space-y-4">
+        <div className="text-white  flex items-center gap-3">
+          <div className="w-12 h-12 rounded-xl flex items-center justify-center">
             <FaChild className="w-6 h-6 text-white" />
           </div>
           <div>
@@ -82,8 +80,7 @@ const ManageChildrenSection = () => {
           </div>
         </div>
 
-        {/* Información importante sobre plataformas separadas */}
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-4 md:p-6">
+        <div className="mt-10 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-4 md:p-6">
           <div className="flex items-start gap-4">
             <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
               <FaGamepad className="w-5 h-5 text-blue-600" />
@@ -145,17 +142,15 @@ const ManageChildrenSection = () => {
         </div>
       )}
 
-      {/* Grid de perfiles mejorado */}
       {childrenList.length > 0 && (
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
           {childrenList.map((child) => (
             <article
               key={child.id}
-              className="bg-white rounded-xl border border-condor/10 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden focus-within:ring-2 focus-within:ring-jaguar/30"
+              className="bg-white rounded-xl  shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden focus-within:ring-2 focus-within:ring-jaguar/30"
               role="article"
               aria-labelledby={`child-name-${child.id}`}
             >
-              {/* Header del perfil */}
               <div className="p-6 pb-4">
                 <div className="flex items-center gap-4 mb-4">
                   <div
@@ -290,7 +285,7 @@ const ManageChildrenSection = () => {
         <div className="text-center pt-4">
           <Link
             href="/dashboard/explorers/new"
-            className="inline-flex items-center bg-gradient-to-r from-jaguar to-jaguar/90 hover:from-jaguar/90 hover:to-jaguar/80 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-jaguar/30"
+            className="inline-flex items-center bg-yellow-400 text-black py-3 px-6 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-jaguar/30"
             aria-label="Agregar nuevo perfil de explorador"
           >
             <FaPlus className="mr-2" aria-hidden="true" />

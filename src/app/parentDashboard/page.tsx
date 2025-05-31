@@ -76,7 +76,7 @@ const FacilitatorDashboard = () => {
   };
 
   return (
-    <div className="bg-gradient-to-br from-white to-gray-50/50 text-condor min-h-screen flex">
+    <div className="bg-gradient-to-br text-condor min-h-screen flex">
       <Sidebar
         userName={currentUser.name}
         isMobileOpen={isMobileOpen}
@@ -114,11 +114,9 @@ const FacilitatorDashboard = () => {
       </Sidebar>
 
       <main className="flex-1 flex flex-col w-full overflow-x-hidden">
-        {/* Header refinado */}
-        <header className="bg-white/90 backdrop-blur-md sticky top-0 z-20 border-b border-condor/10 shadow-sm">
+        <header className="backdrop-blur-md sticky top-0 z-20 border-b border-condor/10 shadow-sm">
           <div className="flex items-center justify-between h-16 px-4 md:px-6">
             <div className="flex items-center gap-4">
-              {/* Botón de menú mejorado */}
               <button
                 onClick={() => {
                   setIsMobileOpen(!isMobileOpen);
@@ -130,7 +128,6 @@ const FacilitatorDashboard = () => {
                 <FaBars className="text-lg group-hover:scale-110 transition-transform" />
               </button>
 
-              {/* Información de sección */}
               <div className="hidden sm:block">
                 <h1 className="text-lg font-bold text-condor">
                   {getSectionTitle()}
@@ -141,9 +138,7 @@ const FacilitatorDashboard = () => {
               </div>
             </div>
 
-            {/* Barra de herramientas del header */}
-            <div className="flex items-center gap-3">
-              {/* Saludo y hora */}
+            {/* <div className="flex items-center gap-3">
               <div className="hidden md:flex items-center gap-3 mr-4">
                 <div className="text-right">
                   <p className="text-sm font-medium text-condor">
@@ -161,7 +156,6 @@ const FacilitatorDashboard = () => {
                 </div>
               </div>
 
-              {/* Botones de acción */}
               <div className="flex items-center gap-2">
                 <button
                   className="p-2.5 text-condor/70 hover:text-condor hover:bg-condor/10 rounded-xl transition-all duration-200"
@@ -187,14 +181,12 @@ const FacilitatorDashboard = () => {
                   <FaQuestionCircle className="w-4 h-4" />
                 </button>
               </div>
-            </div>
+            </div> */}
           </div>
         </header>
 
-        {/* Área de contenido mejorada */}
         <div className="flex-1 p-4 md:p-6 overflow-y-auto">
-          <div className="max-w-7xl mx-auto">
-            {/* Breadcrumb mejorado */}
+          <div className="max-w-7xl ml-5 md:ml-12">
             <div className="mb-6">
               <nav className="flex items-center gap-2 text-sm text-condor/60">
                 <span>Panel</span>
@@ -205,8 +197,7 @@ const FacilitatorDashboard = () => {
               </nav>
             </div>
 
-            {/* Contenedor del contenido con mejor diseño */}
-            <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-sm border border-condor/10 overflow-hidden">
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl shadow-sm overflow-hidden">
               <div className="p-6 md:p-8">{renderSection()}</div>
             </div>
           </div>
@@ -219,7 +210,7 @@ const FacilitatorDashboard = () => {
 const FacilitatorDashboardPage = () => (
   <Suspense
     fallback={
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-white to-gray-50/50">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="w-12 h-12 bg-gradient-to-br from-jaguar to-jaguar/80 rounded-xl flex items-center justify-center mx-auto mb-4 animate-pulse">
             <HiSparkles className="w-6 h-6 text-white" />

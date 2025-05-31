@@ -183,7 +183,6 @@ const EmotionalJournalSection = () => {
 
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-8">
-      {/* Header */}
       <header className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           <div className="flex items-center gap-4">

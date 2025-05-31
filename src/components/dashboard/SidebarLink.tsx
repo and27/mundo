@@ -23,7 +23,7 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
       href={href}
       className={`flex items-center p-3 rounded-lg transition-colors duration-200 ${
         isActive
-          ? "bg-jaguar text-white font-bold"
+          ? "bg-primary-700 text-white font-bold"
           : "text-condor/80 hover:bg-condor/10 hover:text-white"
       } ${isCollapsed ? "justify-center" : ""}`}
       title={isCollapsed ? label : ""}

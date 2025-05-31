@@ -43,16 +43,14 @@ const Sidebar: React.FC<SidebarProps> = ({
         {/* Header del sidebar */}
         <div>
           {!isDesktopCollapsed && (
-            <div className="mb-8 pb-4 border-b border-condor/20">
+            <div className="mb-8 pb-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-jaguar to-jaguar/80 rounded-xl flex items-center justify-center shadow-lg">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg">
                   <HiSparkles className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h1 className="text-lg font-bold text-condor">
-                    Mundo Interior
-                  </h1>
-                  <p className="text-xs text-condor/60">Panel de Guía</p>
+                  <h1 className="text-lg font-bold">Mundo Interior</h1>
+                  <p className="text-xs">Panel de Guía</p>
                 </div>
               </div>
             </div>
