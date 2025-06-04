@@ -9,12 +9,12 @@ const DashboardWelcomeSection = () => {
 
   return (
     <>
-      <div className="space-y-8 p-4 md:p-6">
+      <div className="space-y-8 md:p-6">
         <div>
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground">
+          <h1 className="text-xl md:text-3xl md:text-4xl font-bold text-foreground">
             ¡Hola, {userName}!
           </h1>
-          <p className="text-lg text-foreground/80 mt-2 max-w-3xl">
+          <p className="md:text-lg text-foreground/80 mt-2 max-w-3xl">
             Bienvenido/a a tu espacio en Mundo Interior. Aquí encontrarás las
             respuestas para ser el faro que guía las experiencias de tus
             exploradores.

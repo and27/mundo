@@ -148,7 +148,7 @@ const AiGuideChat = () => {
   };
 
   return (
-    <div className="glass-strong p-4 sm:p-5 rounded-2xl shadow-xl flex flex-col h-[70vh] max-h-[600px] sm:max-h-[650px] border border-white/10">
+    <div className="glass-strong sm:p-5 rounded-2xl shadow-xl flex flex-col h-[60vh] max-h-[600px] sm:max-h-[650px] border border-white/10">
       <div className="flex-grow overflow-y-auto pr-2 space-y-2.5 sm:space-y-3 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent scrollbar-thumb-rounded-full">
         {messages.map((msg) => (
           <ChatMessage key={msg.id} message={msg} />

@@ -69,7 +69,7 @@ const FacilitatorDashboard = () => {
   // };
 
   return (
-    <div className="bg-gradient-to-br text-condor min-h-screen flex">
+    <div className="bg-gradient-to-br min-h-screen flex">
       <Sidebar
         userName={currentUser.name}
         isMobileOpen={isMobileOpen}
@@ -178,8 +178,8 @@ const FacilitatorDashboard = () => {
           </div>
         </header>
 
-        <div className="flex-1 p-4 md:p-6 overflow-y-auto">
-          <div className="max-w-7xl ml-5 md:ml-12">
+        <div className="flex-1 p-2 md:p-6 overflow-y-auto">
+          <div className="max-w-7xl  md:ml-12">
             <div className="mb-6">
               <nav className="flex items-center gap-2 text-sm text-condor/60">
                 <span>Panel</span>
@@ -191,7 +191,7 @@ const FacilitatorDashboard = () => {
             </div>
 
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl shadow-sm overflow-hidden">
-              <div className="p-6 md:p-8">{renderSection()}</div>
+              <div className="p-5 md:p-8">{renderSection()}</div>
             </div>
           </div>
         </div>

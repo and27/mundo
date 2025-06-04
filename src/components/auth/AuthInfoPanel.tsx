@@ -1,10 +1,5 @@
 import { memo, useEffect, useState } from "react";
-import {
-  HiHeart,
-  HiLightBulb,
-  HiShieldCheck,
-  HiSparkles,
-} from "react-icons/hi2";
+import { HiHeart, HiLightBulb, HiShieldCheck } from "react-icons/hi2";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiCheck } from "react-icons/fi";
 
@@ -46,16 +41,7 @@ const InfoPanel: React.FC<InfoPanelProps> = memo(({ activeTab }) => {
   }, []);
 
   return (
-    <div className="bg-gradient-to-br from-indigo-600/90 to-purple-700/90 backdrop-blur-sm p-8 lg:p-12 flex flex-col justify-center relative overflow-hidden h-full">
-      <div className="absolute top-4 right-4">
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        >
-          <HiSparkles className="w-8 h-8 text-yellow-300/60" />
-        </motion.div>
-      </div>
-
+    <div className="flex-1 bg-gradient-to-br from-indigo-600/90 to-purple-700/90 backdrop-blur-sm p-8 lg:p-12 flex flex-col justify-center relative overflow-hidden h-full">
       <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}

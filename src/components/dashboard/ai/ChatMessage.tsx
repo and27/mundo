@@ -21,7 +21,7 @@ const ChatMessage: React.FC<ChatMessageComponentProps> = ({ message }) => {
       className={`flex my-3 ${isUser ? "justify-end" : "justify-start"}`}
     >
       <div
-        className={`flex gap-2 sm:gap-3 max-w-[85%] sm:max-w-[75%] ${
+        className={`flex gap-2 sm:gap-3 max-w-[90%] sm:max-w-[80%] ${
           isUser ? "flex-row-reverse" : "flex-row"
         }`}
       >

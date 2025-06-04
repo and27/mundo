@@ -28,13 +28,7 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex flex-col items-center justify-center p-4 relative overflow-hidden">
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500/20 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl"></div>
-      </div>
-
+    <div className="p-5 flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -42,9 +36,9 @@ export default function AuthPage() {
         className="w-full max-w-6xl relative z-10"
       >
         <div className="bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 overflow-hidden">
-          <div className="grid lg:grid-cols-2 min-h-[600px]">
+          <div className="flex flex-col-reverse lg:flex-row min-h-[600px]">
             <InfoPanel activeTab={activeTab} />
-            <div className="bg-white/5 backdrop-blur-sm p-8 lg:p-12 flex flex-col">
+            <div className="flex-1 bg-white/5 backdrop-blur-sm p-8 lg:p-12 flex flex-col">
               <div className="mb-12">
                 <div className="flex bg-white/10 rounded-2xl p-1 backdrop-blur-sm">
                   {["register", "login"].map((tab) => (
