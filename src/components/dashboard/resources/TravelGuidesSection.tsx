@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useMemo } from "react";
-import ResourceCard from "./ResourceCard";
 import SearchAndFilterBar from "./SearchAndFilterBar";
 import { stories } from "@/lib/stories";
 import {
@@ -245,7 +244,7 @@ const TravelGuidesSection = () => {
                     Resultado Destacado
                   </h3>
                 </div>
-                <div className="bg-gradient-to-r from-jaguar/5 to-jaguar/10 rounded-xl p-4 border border-jaguar/20">
+                {/* <div className="bg-gradient-to-r from-jaguar/5 to-jaguar/10 rounded-xl p-4 border border-jaguar/20">
                   <ResourceCard
                     key={`featured-${filteredAndSortedStories[0].id}`}
                     title={`Guía: ${filteredAndSortedStories[0].title}`}
@@ -273,12 +272,12 @@ const TravelGuidesSection = () => {
                     actionLink={`/dashboard/resources/story-guides/${filteredAndSortedStories[0].id}`}
                     // featured={true}
                   />
-                </div>
+                </div> */}
               </div>
             )}
 
             {/* Guides Grid/List */}
-            <div
+            {/* <div
               className={`${
                 viewMode === "grid"
                   ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
@@ -311,7 +310,7 @@ const TravelGuidesSection = () => {
                   // viewMode={viewMode}
                 />
               ))}
-            </div>
+            </div> */}
           </>
         ) : (
           <div className="text-center py-12">

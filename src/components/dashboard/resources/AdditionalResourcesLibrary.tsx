@@ -16,6 +16,7 @@ const sampleAdditionalResources = [
     category: "articulos",
     tags: ["Ansiedad", "Apoyo Parental"],
     actionLink: "/articles/ansiedad-infantil",
+    linkToDetail: "",
   },
   {
     id: "video1",
@@ -27,6 +28,7 @@ const sampleAdditionalResources = [
     category: "videos",
     tags: ["Respiración", "MIM"],
     actionLink: "https://youtube.com/link-al-video",
+    linkToDetail: "",
   },
   {
     id: "tool1",
@@ -38,6 +40,7 @@ const sampleAdditionalResources = [
     category: "descargables",
     tags: ["Gratitud", "Imprimible"],
     actionLink: "/downloads/diario_gratitud.pdf",
+    linkToDetail: "",
   },
 ];
 
@@ -104,19 +107,8 @@ const AdditionalResourcesLibrary = () => {
 
       {filteredResources.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredResources.map((resource) => (
-            <ResourceCard
-              key={resource.id}
-              title={resource.title}
-              description={resource.description}
-              imageUrl={resource.imageUrl}
-              type={resource.type}
-              tags={resource.tags}
-              actionButtonLabel={
-                resource.category === "descargables" ? "Descargar" : "Ver Más"
-              }
-              actionLink={resource.actionLink}
-            />
+          {filteredResources.map((resource, index) => (
+            <ResourceCard key={index} resource={resource} />
           ))}
         </div>
       ) : (

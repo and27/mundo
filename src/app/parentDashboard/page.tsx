@@ -1,6 +1,6 @@
 "use client";
 import { useSearchParams } from "next/navigation";
-import { Suspense, useState, useEffect } from "react";
+import { Suspense, useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { FiHome, FiUsers, FiBookOpen, FiActivity } from "react-icons/fi";
 import { HiSparkles } from "react-icons/hi2";
