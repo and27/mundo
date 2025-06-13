@@ -2,20 +2,19 @@
 
 import React, { useState } from "react";
 import { Lightbulb, Sparkles, MessageCircle, Send, Clock } from "lucide-react";
-
 import { SuggestionCard } from "./SuggestionCard";
 import {
-  getMixedSuggestions,
+  getSuggestionsByMode,
   SuggestionConfig,
 } from "../../lib/suggestionsConfig";
 import { TextareaWithCounter } from "./TextAreaWithCounter";
 import { useQueryStore } from "@/store/useQueryStore";
+import { useModeStore } from "@/store/useModeState";
+import ContextPanel from "./ContextPanel";
 
 interface InputFormProps {
   isLoading: boolean;
   onSubmit: (query: string) => void;
-  suggestions?: SuggestionConfig[];
-  placeholder?: string;
   maxChars?: number;
   showLoadingDetails?: boolean;
 }
@@ -23,13 +22,27 @@ interface InputFormProps {
 export default function InputForm({
   isLoading,
   onSubmit,
-  suggestions = getMixedSuggestions(4), // ← Cambiado: ahora usa mix de miedos/ira
-  placeholder = "Ejemplo: Mi hijo de 4 años tiene miedo a la oscuridad y no quiere dormir solo. Se despierta llorando en la madrugada y viene a nuestra cama...",
   maxChars = 500,
 }: InputFormProps) {
   const [query, setQuery] = useState<string>("");
   const [isFocused, setIsFocused] = useState(false);
+  const { isSchoolMode } = useModeStore();
+  const [context, setContext] = useState<any>(null);
   const setOriginalQuery = useQueryStore((state) => state.setOriginalQuery);
+
+  const suggestions = getSuggestionsByMode(isSchoolMode, 4);
+
+  const placeholder = isSchoolMode
+    ? "Ejemplo: Varios estudiantes de mi clase muestran ansiedad antes de los exámenes. Algunos se quedan paralizados, otros lloran, y otros se vuelven muy inquietos..."
+    : "Ejemplo: Mi hijo de 4 años tiene miedo a la oscuridad y no quiere dormir solo. Se despierta llorando en la madrugada y viene a nuestra cama...";
+
+  const buttonText = isSchoolMode
+    ? "Generar Guía para Educadores MIM"
+    : "Generar Guía Emocional MIM";
+
+  const successMessage = isSchoolMode
+    ? "Recibirás una guía adaptada para aplicación grupal en el aula"
+    : "Recibirás una guía personalizada basada en la metodología MIM";
 
   const handleSuggestionClick = (suggestion: string) => {
     setQuery(suggestion);
@@ -52,7 +65,6 @@ export default function InputForm({
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">
-      {/* Suggestions Section */}
       {!query && !isFocused && (
         <>
           <div className="flex items-center gap-3 mb-4">
@@ -80,8 +92,8 @@ export default function InputForm({
         </>
       )}
 
-      {/* Main Form */}
       <div>
+        <ContextPanel onContextChange={setContext} />
         <div
           className={`bg-white/90 backdrop-blur-sm border border-white/50 rounded-xl overflow-hidden transition-all duration-300 ${
             isFocused
@@ -104,7 +116,6 @@ export default function InputForm({
               </div>
             </div>
 
-            {/* Textarea Component */}
             <TextareaWithCounter
               value={query}
               onChange={setQuery}
@@ -118,7 +129,6 @@ export default function InputForm({
           </div>
         </div>
 
-        {/* Submit Button */}
         <button
           onClick={handleFormSubmit}
           disabled={isLoading || !query.trim()}
@@ -128,7 +138,6 @@ export default function InputForm({
               : "bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white shadow-lg hover:shadow-xl hover:scale-105 active:scale-95"
           }`}
         >
-          {/* Shine effect */}
           {!isLoading && query.trim() && (
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
           )}
@@ -143,14 +152,13 @@ export default function InputForm({
             ) : (
               <>
                 <Sparkles className="w-5 h-5" />
-                <span>Generar Guía Emocional MIM</span>
+                <span>{buttonText}</span>
                 <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </>
             )}
           </div>
         </button>
 
-        {/* Success state */}
         {query.trim() && !isLoading && (
           <div className="mt-4 p-4 bg-indigo-50 border border-indigo-200 rounded-xl">
             <div className="flex items-start gap-3">
@@ -161,10 +169,7 @@ export default function InputForm({
                 <p className="text-sm text-indigo-800 font-medium mb-1">
                   ¡Perfecto! Tu consulta está lista
                 </p>
-                <p className="text-xs text-indigo-600">
-                  Recibirás una guía personalizada basada en la metodología MIM
-                  y adaptada a la edad de tu hijo/a.
-                </p>
+                <p className="text-xs text-indigo-600">{successMessage}</p>
               </div>
             </div>
           </div>

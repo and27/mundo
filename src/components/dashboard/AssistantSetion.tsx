@@ -1,5 +1,4 @@
 "use client";
-
 import { useMundoAssistant } from "@/hooks/useAssistant";
 import InputForm from "../assistant/InputForm";
 import ResultsDisplay from "../assistant/ResultsDisplay";

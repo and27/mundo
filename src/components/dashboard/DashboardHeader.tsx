@@ -1,15 +1,18 @@
 import { FaBars } from "react-icons/fa";
+import ModeToggle from "./ModeToggle";
 
 interface DashboardHeaderProps {
   sectionTitle: string;
   sectionDescription: string;
   onToggleSidebar: () => void;
+  showModeToggle?: boolean;
 }
 
 export default function DashboardHeader({
   sectionTitle,
   sectionDescription,
   onToggleSidebar,
+  showModeToggle = true,
 }: DashboardHeaderProps) {
   return (
     <header className="backdrop-blur-md sticky top-0 z-20 border-b border-white/10 shadow-sm">
@@ -27,6 +30,8 @@ export default function DashboardHeader({
             <p className="text-xs text-white/60">{sectionDescription}</p>
           </div>
         </div>
+
+        {showModeToggle && <ModeToggle variant="header" />}
       </div>
     </header>
   );
