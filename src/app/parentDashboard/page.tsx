@@ -32,10 +32,10 @@ const FacilitatorDashboard = () => {
           onToggleSidebar={toggleSidebar}
         />
 
-        <div className="flex-1 p-2 md:p-6 overflow-y-auto">
+        <div className="flex-1 md:p-6 overflow-y-auto">
           <div className="max-w-7xl">
-            <div className="bg-white/90  rounded-2xl shadow-sm overflow-hidden">
-              <div className="p-5 md:p-8">
+            <div className="bg-white/90 rounded-2xl shadow-sm overflow-hidden">
+              <div className="p-3 md:p-8">
                 <ActiveComponent />
               </div>
             </div>

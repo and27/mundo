@@ -1,70 +1,83 @@
-"use client";
-
 import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FiChevronDown } from "react-icons/fi";
 
-interface PillarCardProps {
+interface PillarConfig {
   icon: React.ReactNode;
   title: string;
-  children: React.ReactNode;
-  isActive?: boolean;
-  onClick?: () => void;
-  accentColor?: "primary" | "secondary" | "success";
+  subtitle: string;
+  gradientFrom: string;
+  gradientTo: string;
+  bgAccent: string;
+  borderAccent: string;
 }
 
-export default function PillarCard({
-  icon,
-  title,
-  children,
+interface PillarCardProps {
+  pillar: PillarConfig;
+  isActive: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}
+
+const PillarCard: React.FC<PillarCardProps> = ({
+  pillar,
   isActive,
   onClick,
-  accentColor = "primary",
-}: PillarCardProps) {
-  const colorClasses = {
-    primary: "text-primary-300",
-    secondary: "text-secondary-300",
-    success: "text-accent-success",
-  };
-
+  children,
+}) => {
   return (
-    <div className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
-      <button
+    <div className="group">
+      <div
+        className={`bg-white/90 backdrop-blur-sm border border-white/50 rounded-xl overflow-hidden transition-all duration-300 cursor-pointer ${
+          isActive
+            ? `${pillar.borderAccent} shadow-xl scale-[1.01]`
+            : "hover:border-indigo-200 hover:shadow-lg"
+        }`}
         onClick={onClick}
-        className="w-full flex items-center justify-between p-6 text-left"
-        aria-expanded={isActive}
       >
-        <div className="flex items-center gap-4">
-          <div className={`text-2xl ${colorClasses[accentColor]}`}>{icon}</div>
-          <h3 className="text-xl font-bold text-white">{title}</h3>
-        </div>
-        <FiChevronDown
-          className={`text-2xl text-white/50 transition-transform duration-300 ${
-            isActive ? "rotate-180" : ""
-          }`}
-        />
-      </button>
-
-      <AnimatePresence initial={false}>
-        {isActive && (
-          <motion.div
-            key="content"
-            initial="collapsed"
-            animate="open"
-            exit="collapsed"
-            variants={{
-              open: { opacity: 1, height: "auto" },
-              collapsed: { opacity: 0, height: 0 },
-            }}
-            transition={{ duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] }}
-            className="overflow-hidden"
-          >
-            <div className="px-6 pb-6 pt-2 text-slate-300 space-y-4 prose prose-invert prose-p:text-slate-300 prose-li:text-slate-300">
-              {children}
+        <div
+          className={`p-4 md:p-8 ${isActive ? pillar.bgAccent : "bg-white/50"}`}
+        >
+          <div className="flex items-center gap-4">
+            <div
+              className={`w-10 h-10 bg-gradient-to-r ${pillar.gradientFrom} ${pillar.gradientTo} rounded-xl flex items-center justify-center shadow-lg`}
+            >
+              <div className="text-white">{pillar.icon}</div>
             </div>
-          </motion.div>
+            <div className="flex-1">
+              <h3 className="text-lg font-semibold text-indigo-900 mb-1">
+                {pillar.title}
+              </h3>
+              <p className="text-sm text-slate-600">{pillar.subtitle}</p>
+            </div>
+            <div
+              className={`transition-transform duration-300 ${
+                isActive ? "rotate-180" : ""
+              }`}
+            >
+              <svg
+                className="w-5 h-5 text-slate-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        {isActive && (
+          <div className="p-6 pt-0 animate-in slide-in-from-top-2 duration-300">
+            <div className="border-t border-slate-200 pt-6">{children}</div>
+          </div>
         )}
-      </AnimatePresence>
+      </div>
     </div>
   );
-}
+};
+
+export default PillarCard;

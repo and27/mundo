@@ -136,8 +136,8 @@ export default function GuideActions({ guide }: GuideActionsProps) {
                 onClick={handleConnectSpecialist}
                 className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:scale-105 shadow-lg ${
                   isHighRisk
-                    ? "bg-red-600 hover:bg-red-700 text-white"
-                    : "bg-yellow-600 hover:bg-yellow-700 text-white"
+                    ? "bg-red-600 hover:bg-red-700 text-indigo-500"
+                    : "bg-yellow-600 hover:bg-yellow-700 text-indigo-500"
                 }`}
               >
                 <Phone className="w-4 h-4" />
@@ -153,48 +153,48 @@ export default function GuideActions({ guide }: GuideActionsProps) {
         <div className="flex justify-center items-center gap-4 flex-wrap">
           <button
             onClick={() => setShowEmailModal(true)}
-            className="group w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full hover:scale-110 transition-all duration-300 flex items-center justify-center"
+            className="group w-12 h-12 backdrop-blur-sm shadow-sm border border-indigo-500 rounded-lg hover:scale-110 transition-all duration-300 flex items-center justify-center"
             title="Enviar por email"
           >
-            <Mail className="w-5 h-5 text-white" />
+            <Mail className="w-5 h-5 text-indigo-500" />
           </button>
 
           <button
             onClick={handleShare}
             disabled={isSharing}
-            className="group w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full hover:scale-110 transition-all duration-300 flex items-center justify-center disabled:opacity-50"
+            className="group w-12 h-12 backdrop-blur-sm shadow-sm border border-indigo-500 rounded-lg hover:scale-110 transition-all duration-300 flex items-center justify-center disabled:opacity-50"
             title="Compartir"
           >
             {isSharing ? (
-              <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin text-white" />
+              <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-lg animate-spin text-indigo-500" />
             ) : (
-              <Share2 className="w-5 h-5 text-white" />
+              <Share2 className="w-5 h-5 text-indigo-500" />
             )}
           </button>
 
           <button
             onClick={handleSave}
             disabled={isSaved}
-            className={`group w-12 h-12 rounded-full transition-all duration-300 flex items-center justify-center ${
+            className={`group w-12 h-12 rounded-lg transition-all duration-300 flex items-center justify-center ${
               isSaved
                 ? "bg-green-100 border border-green-300 cursor-default"
-                : "bg-gradient-to-r from-indigo-500 to-purple-600 hover:scale-110"
+                : "backdrop-blur-sm shadow-sm border border-indigo-500 hover:scale-110"
             }`}
             title={isSaved ? "Guardado" : "Guardar guía"}
           >
             {isSaved ? (
               <CheckCircle2 className="w-5 h-5 text-green-600" />
             ) : (
-              <Bookmark className="w-5 h-5 text-white" />
+              <Bookmark className="w-5 h-5 text-indigo-500" />
             )}
           </button>
 
           <button
             onClick={handleDownload}
-            className="group w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full hover:scale-110 transition-all duration-300 flex items-center justify-center"
+            className="group w-12 h-12 backdrop-blur-sm shadow-sm border border-indigo-500 rounded-lg hover:scale-110 transition-all duration-300 flex items-center justify-center"
             title="Descargar PDF"
           >
-            <Download className="w-5 h-5 text-white" />
+            <Download className="w-5 h-5 text-indigo-500" />
           </button>
         </div>
       </div>

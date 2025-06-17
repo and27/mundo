@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { create3PillarGuidePrompt, createAuditorPrompt } from "@/lib/prompts";
+import { create3PillarGuidePrompt } from "@/lib/prompts";
+// import { createAuditorPrompt } from "@/lib/prompts"; // COMENTADO PARA DEMO - Reactivar en producción
 import { ActionableGuide } from "@/types/ai";
 
 async function callDeepSeek(prompt: string): Promise<string> {
@@ -37,17 +38,23 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Query is required" }, { status: 400 });
     }
 
-    console.log("Ayni Guard - Paso 1: Generando borrador creativo...");
+    console.log("Aynia - Generando guía personalizada con metodología MIM...");
     const generatorPrompt = create3PillarGuidePrompt(userQuery);
-    const draftGuideString = await callDeepSeek(generatorPrompt);
-    console.log("Ayni Guard - Borrador generado.");
+    const guideString = await callDeepSeek(generatorPrompt);
+    console.log("Aynia - Guía generada exitosamente.");
 
-    console.log("Ayni Guard - Paso 2: Auditando y refinando contenido...");
-    const auditorPrompt = createAuditorPrompt(draftGuideString);
+    /*
+    // REACTIVAR EN PRODUCCIÓN: Sistema dual Aynia + Ayni Guard
+    console.log("Ayni Guard - Auditando y refinando contenido...");
+    const auditorPrompt = createAuditorPrompt(guideString);
     const finalGuideString = await callDeepSeek(auditorPrompt);
     console.log("Ayni Guard - Auditoría completada.");
-
     const finalGuide: ActionableGuide = JSON.parse(finalGuideString);
+    */
+
+    // Usar directamente la respuesta de Aynia para demo
+    const finalGuide: ActionableGuide = JSON.parse(guideString);
+
     return NextResponse.json(finalGuide);
   } catch (error) {
     if (error instanceof Error) {
