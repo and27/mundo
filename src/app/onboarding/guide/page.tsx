@@ -43,7 +43,7 @@ export default function Onboarding() {
 
   return (
     <motion.div
-      className="flex flex-col items-center w-full max-w-6xl mx-auto px-4 py-8"
+      className=" flex flex-col items-center w-full max-w-7xl mx-auto px-4 py-8 p-5 md:p-10 bg-black/50 backdrop-blur-sm rounded-lg"
       variants={containerVariants}
       initial="hidden"
       animate="visible"

@@ -12,6 +12,10 @@ export interface JourneyPlayerState {
   handleStartJourney: () => void;
   handleUserInteraction: (interactionValue?: string) => void;
   handleTogglePlayPause: () => void;
+  handleGoBack: () => void;
+  handleGoForward: () => void;
+  canGoBack: boolean;
+  canGoForward: boolean;
 }
 
 export function useJourneyPlayer(story: Story | undefined): JourneyPlayerState {
@@ -26,6 +30,7 @@ export function useJourneyPlayer(story: Story | undefined): JourneyPlayerState {
     null
   );
   const [selectedChoiceId, setSelectedChoiceId] = useState<string | null>(null);
+  const [stepHistory, setStepHistory] = useState<string[]>([]);
 
   const advanceToStepRef = useRef<(nextStepId: string) => void>(null);
 
@@ -47,6 +52,42 @@ export function useJourneyPlayer(story: Story | undefined): JourneyPlayerState {
     onStepComplete: handleAudioEnd,
   });
 
+  const getCurrentStepIndex = useCallback(() => {
+    if (!story || !currentStepId) return -1;
+    return story.steps.findIndex((step) => step.id === currentStepId);
+  }, [story, currentStepId]);
+
+  const canGoBack = stepHistory.length > 0;
+  const canGoForward = useCallback(() => {
+    const currentIndex = getCurrentStepIndex();
+    return currentIndex >= 0 && currentIndex < (story?.steps.length ?? 0) - 1;
+  }, [getCurrentStepIndex, story]);
+
+  const handleGoBack = useCallback(() => {
+    if (canGoBack && stepHistory.length > 0) {
+      const previousStepId = stepHistory[stepHistory.length - 1];
+      setStepHistory((prev) => prev.slice(0, -1));
+      setCurrentStepId(previousStepId);
+      setSelectedChoiceId(null);
+      stopAudio();
+    }
+  }, [canGoBack, stepHistory, stopAudio]);
+
+  const handleGoForward = useCallback(() => {
+    if (canGoForward() && story) {
+      const currentIndex = getCurrentStepIndex();
+      if (currentIndex >= 0 && currentIndex < story.steps.length - 1) {
+        const nextStep = story.steps[currentIndex + 1];
+        if (currentStepId) {
+          setStepHistory((prev) => [...prev, currentStepId]);
+        }
+        setCurrentStepId(nextStep.id);
+        setSelectedChoiceId(null);
+        stopAudio();
+      }
+    }
+  }, [canGoForward, story, getCurrentStepIndex, currentStepId, stopAudio]);
+
   const advanceToStep = useCallback(
     (nextStepId: string) => {
       const endUrl = `/end/${story?.guideId}?story=${story?.id}`;
@@ -61,6 +102,9 @@ export function useJourneyPlayer(story: Story | undefined): JourneyPlayerState {
       }
       const nextStep = story?.steps.find((s) => s.id === nextStepId) ?? null;
       if (nextStep) {
+        if (currentStepId) {
+          setStepHistory((prev) => [...prev, currentStepId]);
+        }
         setCurrentStepId(nextStepId);
         setSelectedChoiceId(null);
       } else {
@@ -70,7 +114,7 @@ export function useJourneyPlayer(story: Story | undefined): JourneyPlayerState {
         router.push(endUrl);
       }
     },
-    [story, router, stopAudio]
+    [story, router, stopAudio, currentStepId]
   );
 
   useEffect(() => {
@@ -82,6 +126,7 @@ export function useJourneyPlayer(story: Story | undefined): JourneyPlayerState {
       setJourneyState("playing");
       setCurrentStepId(story.initialStepId);
       setSelectedChoiceId(null);
+      setStepHistory([]);
       if (window.umami) {
         window.umami.track("journey_started", { storyId: story.id });
       }
@@ -111,36 +156,28 @@ export function useJourneyPlayer(story: Story | undefined): JourneyPlayerState {
             });
           }
 
-          // --- Lógica Flexible: Intenta Branching primero, luego nextStepId ---
           const branch = currentStep.interaction.branching?.find(
             (b) => b.choiceId === interactionValue
           );
           if (branch) {
-            // Si hay branching y coincide la opción, usa esa ruta
             nextStepId = branch.nextStepId;
           } else if (currentStep.interaction.nextStepId) {
-            // Si no hay branching O no coincidió, pero SÍ hay un nextStepId simple, úsalo
-            // (Esto cubrirá el caso de j1_prompt)
             nextStepId = currentStep.interaction.nextStepId;
           } else {
-            // Si no hay branching Y TAMPOCO hay nextStepId simple, usa el default o fallback
             console.warn(
               `No specific branch or nextStepId found for choice: ${interactionValue}. Using defaultNextStepId.`
             );
             nextStepId = currentStep.interaction.defaultNextStepId ?? null;
           }
-          // --- Fin Lógica Flexible ---
         } else if (currentStep.interaction.nextStepId) {
-          // Si NO es una elección (o no hubo interactionValue), pero SÍ hay un nextStepId simple
           nextStepId = currentStep.interaction.nextStepId;
         } else {
           console.warn(
             `Tap interaction on step ${currentStep.id} without clear next step defined.`
           );
-          nextStepId = currentStep.interaction.defaultNextStepId ?? null; // Usa default como último recurso
+          nextStepId = currentStep.interaction.defaultNextStepId ?? null;
         }
 
-        // --- Avanzar si se determinó un paso ---
         if (nextStepId) {
           setTimeout(() => {
             advanceToStepRef.current?.(nextStepId as string);
@@ -150,7 +187,7 @@ export function useJourneyPlayer(story: Story | undefined): JourneyPlayerState {
             `Could not determine next step from: ${currentStep.id}`
           );
           setTimeout(() => {
-            advanceToStepRef.current?.("end"); // Ir al final si no hay ruta clara
+            advanceToStepRef.current?.("end");
           }, 400);
         }
       }
@@ -236,5 +273,9 @@ export function useJourneyPlayer(story: Story | undefined): JourneyPlayerState {
     handleStartJourney,
     handleUserInteraction,
     handleTogglePlayPause,
+    handleGoBack,
+    handleGoForward,
+    canGoBack,
+    canGoForward: canGoForward(),
   };
 }

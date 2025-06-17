@@ -6,7 +6,7 @@ interface ContextPanelProps {
   onContextChange: (context: ContextData) => void;
 }
 
-interface ContextData {
+export interface ContextData {
   age?: string;
   grade?: string;
   groupSize?: string;

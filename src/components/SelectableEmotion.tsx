@@ -86,7 +86,7 @@ const SelectableEmotionGrid = memo(
                   exit={{ opacity: 0, scale: 0.8 }}
                   className="inline-flex items-center gap-2 glass-light rounded-full px-4 py-2"
                 >
-                  <HiHeart className="w-5 h-5 text-color-secondary-300" />
+                  <HiHeart className="w-5 h-5 text-secondary-500" />
                   <span className="text-foreground font-medium">
                     {selectedLabel}
                   </span>
@@ -109,12 +109,11 @@ const SelectableEmotionGrid = memo(
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 onClick={() => handleClick(emotion.label)}
-                className={`relative rounded-2xl p-6 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-color-primary-400 min-h-[140px] flex flex-col items-center justify-center text-center
-                  ${
-                    isSelected
-                      ? "glass-strong"
-                      : "glass-medium hover:glass-strong/80"
-                  }`}
+                className={`text-black relative rounded-2xl p-6 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-primary-400 min-h-[140px] flex flex-col items-center justify-center text-center ${
+                  isSelected
+                    ? "glass-strong"
+                    : "glass-medium hover:glass-strong/80"
+                }`}
               >
                 <AnimatePresence>
                   {isSelected && (
@@ -123,7 +122,7 @@ const SelectableEmotionGrid = memo(
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      className="absolute inset-0 bg-gradient-primary rounded-2xl blur-lg opacity-40"
+                      className="absolute inset-0 bg-gradient-primary rounded-2xl blur-xl opacity-30"
                     />
                   )}
                 </AnimatePresence>
@@ -146,7 +145,7 @@ const SelectableEmotionGrid = memo(
                         stiffness: 400,
                         damping: 25,
                       }}
-                      className="absolute -top-3 -right-3 w-7 h-7 bg-color-accent-success rounded-full flex items-center justify-center shadow-lg"
+                      className="absolute -top-3 -right-3 w-7 h-7 bg-success-500 rounded-full flex items-center justify-center shadow-lg"
                     >
                       <FiCheck className="w-4 h-4 text-white" />
                     </motion.div>
@@ -165,8 +164,8 @@ const SelectableEmotionGrid = memo(
               exit={{ opacity: 0, y: 20 }}
               className="mt-8 text-center"
             >
-              <div className="inline-flex items-center gap-2 bg-color-accent-success/10 rounded-xl px-4 py-2">
-                <HiSparkles className="w-5 h-5 text-color-accent-success" />
+              <div className="inline-flex items-center gap-2 bg-success-500/10 rounded-xl px-4 py-2">
+                <HiSparkles className="w-5 h-5 text-success-500" />
                 <span className="text-foreground/90 font-medium">
                   {mode === "before"
                     ? "¡Perfecto! Continuemos"

@@ -3,14 +3,11 @@
 import React, { useState } from "react";
 import { Lightbulb, Sparkles, MessageCircle, Send, Clock } from "lucide-react";
 import { SuggestionCard } from "./SuggestionCard";
-import {
-  getSuggestionsByMode,
-  SuggestionConfig,
-} from "../../lib/suggestionsConfig";
+import { getSuggestionsByMode } from "../../lib/suggestionsConfig";
 import { TextareaWithCounter } from "./TextAreaWithCounter";
 import { useQueryStore } from "@/store/useQueryStore";
 import { useModeStore } from "@/store/useModeState";
-import ContextPanel from "./ContextPanel";
+import ContextPanel, { ContextData } from "./ContextPanel";
 
 interface InputFormProps {
   isLoading: boolean;
@@ -27,7 +24,8 @@ export default function InputForm({
   const [query, setQuery] = useState<string>("");
   const [isFocused, setIsFocused] = useState(false);
   const { isSchoolMode } = useModeStore();
-  const [context, setContext] = useState<any>(null);
+  const [context, setContext] = useState<ContextData | null>(null);
+  console.log(context);
   const setOriginalQuery = useQueryStore((state) => state.setOriginalQuery);
 
   const suggestions = getSuggestionsByMode(isSchoolMode, 4);

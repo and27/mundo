@@ -8,6 +8,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaPlay } from "react-icons/fa";
 import { FiUsers, FiBookOpen } from "react-icons/fi";
 import Button from "@/components/ui/Button";
+import { HiSparkles } from "react-icons/hi2";
 
 const inspirationalQuotes = [
   "Cada emoción es un tesoro por descubrir.",
@@ -106,10 +107,12 @@ const ActionPanel: React.FC<ActionPanelType> = memo(
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
         >
-          {/* <HiSparkles className="w-10 h-10 text-color-accent-gold mb-4" /> */}
-          <h2 className="hidden md:flex text-2xl lg:text-3xl font-bold text-foreground mb-3">
-            Tu Aventura Comienza
-          </h2>
+          <div className="text-center flex gap-3">
+            <HiSparkles className="w-10 h-10 text-color-accent-gold mb-4" />
+            <h2 className="hidden md:flex w-fit text-2xl lg:text-3xl font-bold text-foreground mb-3">
+              Tu Aventura Comienza
+            </h2>
+          </div>
           <p className="text-foreground/80 mb-8 max-w-sm">
             Estás a un solo clic de explorar un universo de emociones, calma y
             autoconocimiento.
@@ -125,7 +128,6 @@ const ActionPanel: React.FC<ActionPanelType> = memo(
           <Link
             href={name ? "/onboarding/emotion" : "/onboarding/name"}
             passHref
-            legacyBehavior
           >
             <motion.a
               whileHover={{ scale: 1.05 }}
@@ -168,14 +170,14 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="min-h-screen w-full bg-gradient-background flex items-center justify-center p-3  ">
+    <main className="text-white  min-h-screen w-full bg-gradient-background flex items-center justify-center p-3  ">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="w-full max-w-5xl mx-auto"
       >
-        <div className="grid md:grid-cols-2 py-10 rounded-2xl shadow-strong glass-strong">
+        <div className="bg-black/50 backdrop-blur-sm grid md:grid-cols-2 py-10 rounded-2xl">
           <WelcomePanel name={name} />
           <ActionPanel
             name={name}

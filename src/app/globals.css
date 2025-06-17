@@ -94,6 +94,23 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
+  /* === Gradiente místico === */
+  --tw-gradient-from: var(--color-neutral-900); /* base oscuro */
+  --tw-gradient-via: var(--color-secondary-600); /* púrpura */
+  --tw-gradient-to: var(--color-primary-900); /* índigo profundo */
+  --tw-gradient-position: to bottom right;
+  --tw-gradient-from-position: 0%;
+  --tw-gradient-via-position: 50%;
+  --tw-gradient-to-position: 100%;
+  --tw-gradient-via-stops: var(--tw-gradient-position),
+    var(--tw-gradient-from) var(--tw-gradient-from-position),
+    var(--tw-gradient-via) var(--tw-gradient-via-position),
+    var(--tw-gradient-to) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-via-stops);
+  background-image: linear-gradient(var(--tw-gradient-stops));
+
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 /* === ANIMACIONES FUNDAMENTALES === */
@@ -272,5 +289,27 @@ body {
     background: white !important;
     color: black !important;
     box-shadow: none !important;
+  }
+}
+@layer utilities {
+  .glass-light {
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-medium {
+    background-color: rgba(255, 255, 255, 0.588);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .glass-strong {
+    background-color: rgba(255, 255, 255, 0.903);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
   }
 }

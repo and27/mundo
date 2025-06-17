@@ -1,6 +1,5 @@
 "use client";
-
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -11,50 +10,57 @@ interface DynamicBackgroundOverlayProps {
 const DynamicBackgroundOverlay: React.FC<DynamicBackgroundOverlayProps> = ({
   imageUrl,
 }) => {
+  const [currentImage, setCurrentImage] = useState<string | null>(imageUrl);
+
+  useEffect(() => {
+    if (imageUrl && imageUrl !== currentImage) {
+      // Precargar imagen antes de cambiar
+      const img = new window.Image();
+      img.src = imageUrl;
+      img.onload = () => {
+        setCurrentImage(imageUrl);
+      };
+    }
+  }, [imageUrl, currentImage]);
+
   return (
-    <AnimatePresence>
-      {imageUrl && (
+    <AnimatePresence mode="wait">
+      {currentImage && (
         <motion.div
-          key={imageUrl} // Change key on URL change to trigger fade animation
-          className="absolute inset-0 z-0 overflow-hidden" // Added overflow-hidden
+          key={currentImage}
+          className="absolute inset-0 z-0 overflow-hidden"
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }} // Handles fade-in
+          animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.75, ease: "easeInOut" }} // Smooth fade for image change
+          transition={{ duration: 0.8, ease: "easeInOut" }}
         >
-          <motion.div
-            className="absolute inset-0" // This div will hold the image and pan
-            animate={{
-              // New animation for panning
-              x: ["-2%", "2%", "-2%"], // Move slightly left, then right, then back to start-ish
-            }}
-            transition={{
-              x: {
-                // Transition specific for x property
-                duration: 20, // Duration of one full pan cycle (ida y vuelta) - ajusta esto
-                repeat: Infinity, // Repeat indefinitely
-                repeatType: "loop", // Loop the animation
-                ease: "linear", // Smooth, constant movement - o "easeInOut" para suavizar inicios/finales
-              },
-            }}
-          >
-            <Image
-              src={imageUrl}
-              alt="Fondo del viaje"
-              fill
-              className="object-cover object-center" // object-center might be better for panning
-              // o asegúrate que la imagen sea más ancha que el viewport
-              priority={false}
-              // quality={75} // Descomenta para optimizar
-              // Para que el paneo funcione bien visualmente, la imagen debería
-              // ser un poco más ancha que su contenedor, o el movimiento debe ser muy sutil.
-              // Si usas 'fill', la imagen ya se estira para llenar.
-              // Podríamos necesitar un contenedor interno para la imagen con un 'scale'
-              // si la imagen no es suficientemente ancha.
-              // Ejemplo para asegurar que la imagen es más ancha:
-              // style={{ scale: 1.05 }} // Escala la imagen un 5% más
-            />
-          </motion.div>
+          {/* Contenedor con escala extra para evitar bordes */}
+          <div className="absolute inset-0 scale-110">
+            <motion.div
+              className="absolute inset-0"
+              animate={{
+                x: ["0%", "-4%", "0%", "4%", "0%"],
+                y: ["0%", "-2%", "0%", "2%", "0%"],
+                scale: [1, 1.05, 1.02, 1.05, 1],
+              }}
+              transition={{
+                duration: 40,
+                repeat: Infinity,
+                ease: "easeInOut",
+                times: [0, 0.25, 0.5, 0.75, 1],
+              }}
+            >
+              <Image
+                src={currentImage}
+                alt="Fondo del viaje"
+                fill
+                className="object-cover"
+                priority
+                quality={95}
+                sizes="120vw"
+              />
+            </motion.div>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
