@@ -41,20 +41,20 @@ const InfoPanel: React.FC<InfoPanelProps> = memo(({ activeTab }) => {
   }, []);
 
   return (
-    <div className="flex-1 bg-gradient-to-br from-indigo-600/90 to-purple-700/90 backdrop-blur-sm p-8 lg:p-12 flex flex-col justify-center relative overflow-hidden h-full">
+    <div className="flex-1 bg-gradient-to-br from-indigo-600/90 to-purple-700/90 backdrop-blur-sm p-6 lg:p-12 flex flex-col justify-center relative overflow-hidden h-full">
       <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
         className="mb-8"
       >
-        <h1 className="text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
+        <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
           ¿Cómo funciona{" "}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-orange-300 italic">
             Mundo Interior?
           </span>
         </h1>
-        <p className="text-white/90 text-lg">
+        <p className="text-white/90 md:text-lg">
           Con nuestra forma de acompañar, te guiamos para que tus hijos o
           estudiantes puedan:
         </p>
@@ -70,23 +70,26 @@ const InfoPanel: React.FC<InfoPanelProps> = memo(({ activeTab }) => {
                 : { scale: 1, opacity: 0.7 }
             }
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            className={`flex items-start gap-4 p-4 rounded-2xl ${
+            className={`flex md:flex-row items-start gap-4 p-4 rounded-2xl ${
               index === currentStep ? "bg-white/20 shadow-lg" : "bg-white/5"
             }`}
           >
-            <div
-              className={`p-3 rounded-xl bg-gradient-to-r ${benefit.color} shadow-lg`}
-            >
-              {benefit.icon}
+            <div className="gap-3 flex flex-col md:flex-row">
+              <div
+                className={`hidden md:flex text-white w-fit h-fit p-2 md:p-3 rounded-xl bg-gradient-to-r ${benefit.color} shadow-lg`}
+              >
+                {benefit.icon}
+              </div>
+              <div className={`flex-row max-w-70 md:max-w-80 `}>
+                <h3 className="text-white font-semibold md:text-lg mb-1">
+                  {benefit.title}
+                </h3>
+                <p className="text-white/80 text-sm leading-relaxed">
+                  {benefit.description}
+                </p>
+              </div>
             </div>
-            <div className={`flex-row max-w-80 `}>
-              <h3 className="text-white font-semibold text-lg mb-1">
-                {benefit.title}
-              </h3>
-              <p className="text-white/80 text-sm leading-relaxed">
-                {benefit.description}
-              </p>
-            </div>
+
             <AnimatePresence>
               {index === currentStep && (
                 <motion.div

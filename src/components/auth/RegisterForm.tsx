@@ -104,7 +104,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
     <form onSubmit={handleSubmit} className="flex flex-col gap-5">
       {apiFeedback && (
         <div
-          className={`mb-4 p-3 rounded-md text-sm ${
+          className={`mb-4 rounded-md text-sm ${
             apiFeedback.type === "success"
               ? "bg-green-100 border border-green-400 text-green-700"
               : "bg-red-100 border border-red-400 text-red-700"

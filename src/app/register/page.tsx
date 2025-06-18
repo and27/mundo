@@ -28,7 +28,7 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="p-5 flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
+    <div className="p-2 md:p-6 flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -36,9 +36,9 @@ export default function AuthPage() {
         className="w-full max-w-6xl relative z-10"
       >
         <div className="bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 overflow-hidden">
-          <div className="flex flex-col-reverse lg:flex-row min-h-[600px]">
+          <div className="flex flex-col lg:flex-row min-h-[600px]">
             <InfoPanel activeTab={activeTab} />
-            <div className="flex-1 bg-white/5 backdrop-blur-sm p-8 lg:p-12 flex flex-col">
+            <div className="flex-1 bg-white/5 backdrop-blur-sm  px-4 py-8 lg:p-12 flex flex-col">
               <div className="mb-12">
                 <div className="flex bg-white/10 rounded-2xl p-1 backdrop-blur-sm">
                   {["register", "login"].map((tab) => (

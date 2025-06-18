@@ -29,7 +29,7 @@ const InputWithLabel: React.FC<InputLabelProps> = ({
   return (
     <div className="relative w-full mb-4">
       <input
-        className={`peer border text-white  py-2.5 px-4 rounded-md w-full placeholder-transparent focus:outline-none focus:ring-2 focus:ring-yellow-500 ${
+        className={`text-sm md:text-base peer border text-white  py-2.5 px-4 rounded-md w-full placeholder-transparent focus:outline-none focus:ring-2 focus:ring-yellow-500 ${
           error ? "border-red-500" : ""
         } ${className}`}
         type={inputType}
@@ -42,8 +42,8 @@ const InputWithLabel: React.FC<InputLabelProps> = ({
       <label
         htmlFor={name}
         className={`
-          px-2 rounded absolute -left-2 -top-6 text-sm transition-all
-          peer-placeholder-shown:top-2 peer-placeholder-shown:left-2 peer-placeholder-shown:text-base 
+          px-2 rounded absolute -left-2 -top-6 text-sm text-white transition-all
+          peer-placeholder-shown:top-2 peer-placeholder-shown:left-2 md:peer-placeholder-shown:text-base 
           peer-focus:-top-6 peer-focus:-left-2 peer-focus:text-sm 
            peer-focus:text-white peer-placeholder-shown:text-white/60
 
