@@ -13,9 +13,8 @@ import {
   Share2,
   Check,
   Mail,
-  Phone,
-  AlertTriangle,
 } from "lucide-react";
+import { RiskAlertBanner } from "@/components/assistant/RiskAlertBanner";
 
 interface GuideActionsProps {
   guide: ActionableGuide | null;
@@ -42,8 +41,6 @@ export default function GuideActions({ guide }: GuideActionsProps) {
 
   const shouldShowRiskAlert =
     guide.riskAssessment && guide.riskAssessment.riskLevel !== "normal";
-  const isHighRisk =
-    guide.riskAssessment?.riskLevel === "professional_required";
 
   const handleSave = async () => {
     if (user) {
@@ -106,49 +103,13 @@ export default function GuideActions({ guide }: GuideActionsProps) {
 
   return (
     <div className="space-y-6 print-hidden">
-      {/* Risk Alert Banner con CTA integrado */}
       {shouldShowRiskAlert && guide.riskAssessment && (
-        <div
-          className={`p-4 rounded-xl border-l-4 ${
-            isHighRisk
-              ? "bg-red-50 border-red-400 text-red-800"
-              : "bg-yellow-50 border-yellow-400 text-yellow-800"
-          }`}
-        >
-          <div className="flex items-start gap-3">
-            <AlertTriangle
-              className={`w-5 h-5 mt-0.5 ${
-                isHighRisk ? "text-red-600" : "text-yellow-600"
-              }`}
-            />
-            <div className="flex-1">
-              <h4 className="font-semibold mb-1">
-                {isHighRisk
-                  ? "Recomendamos atención profesional"
-                  : "Situación que requiere atención"}
-              </h4>
-              <p className="text-sm mb-3">
-                {guide.riskAssessment.derivationNote ||
-                  "Esta situación podría beneficiarse de orientación profesional."}
-              </p>
-
-              <button
-                onClick={handleConnectSpecialist}
-                className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:scale-105 shadow-lg ${
-                  isHighRisk
-                    ? "bg-red-600 hover:bg-red-700 text-indigo-500"
-                    : "bg-yellow-600 hover:bg-yellow-700 text-indigo-500"
-                }`}
-              >
-                <Phone className="w-4 h-4" />
-                <span>Conectar con especialista ahora</span>
-              </button>
-            </div>
-          </div>
-        </div>
+        <RiskAlertBanner
+          riskAssessment={guide.riskAssessment}
+          onConnectSpecialist={handleConnectSpecialist}
+        />
       )}
 
-      {/* Main Action Buttons */}
       <div className="text-center">
         <div className="flex justify-center items-center gap-4 flex-wrap">
           <button
@@ -199,7 +160,6 @@ export default function GuideActions({ guide }: GuideActionsProps) {
         </div>
       </div>
 
-      {/* Status Messages */}
       {shareStatus && (
         <div className="flex items-center justify-center gap-2 p-3 bg-green-50 border border-green-200 rounded-xl text-green-700 animate-in slide-in-from-top-2 duration-300">
           <Check className="w-4 h-4" />
@@ -207,7 +167,6 @@ export default function GuideActions({ guide }: GuideActionsProps) {
         </div>
       )}
 
-      {/* Modales separados */}
       <EmailModal
         isOpen={showEmailModal}
         onClose={() => setShowEmailModal(false)}

@@ -1,5 +1,4 @@
 "use client";
-
 import InputWithLabel from "@/components/ui/InputWithLabel";
 import { useState, FormEvent, ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
@@ -57,7 +56,12 @@ const LoginForm: React.FC = () => {
     }
 
     try {
-      await loginUser(loginData);
+      const result = await loginUser(loginData);
+
+      setApiFeedback({
+        type: "success",
+        message: result.message,
+      });
     } catch (error) {
       if (error instanceof Error) {
         setApiFeedback({

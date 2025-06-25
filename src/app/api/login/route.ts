@@ -37,8 +37,34 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const { data: profile, error: profileError } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", data.user.id)
+      .single();
+
+    if (profileError || !profile) {
+      const { error: createError } = await supabase.from("profiles").insert({
+        id: data.user.id,
+        email: data.user.email!,
+        role: "parent",
+        display_name: data.user.email!.split("@")[0],
+        current_mode: "individual",
+      });
+
+      if (createError) {
+        console.error("Error creating missing profile:", createError);
+      }
+    }
+
     return NextResponse.json(
-      { message: "Inicio de sesión exitoso", user: data.user },
+      {
+        message: "Inicio de sesión exitoso",
+        userId: data.user.id,
+        email: data.user.email,
+        role: profile?.role || "parent",
+        display_name: profile?.display_name || data.user.email?.split("@")[0],
+      },
       { status: 200 }
     );
   } catch (error) {

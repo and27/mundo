@@ -26,7 +26,7 @@ export default function OnboardingEmotionPage() {
   const userName = name || "viajero";
 
   return (
-    <section className="bg-black/50 backdrop-blur-sm rounded-lg fade-in flex flex-col items-start md:items-center justify-start text-white sm:py-10 text-center">
+    <section className="p-5 md:p-10 bg-black/50 backdrop-blur-sm rounded-lg fade-in flex flex-col items-start md:items-center justify-start text-white sm:py-10 text-center">
       <h2 className="text-2xl md:text-3xl font-semibold mb-8">{`¿Cómo te sientes hoy, ${userName}?`}</h2>
 
       <SelectableEmotionGrid
