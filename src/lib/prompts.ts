@@ -43,7 +43,7 @@ EVALUACIÓN RIESGO:
 - professional_required: miedo a cuidadores, trauma/abuso, autolesiones, cambios súbitos graves
 
 ESTRUCTURA RESPUESTA:
-Responde ÚNICAMENTE JSON válido con campos: id, guideTitle, metaphorStory, conversationPlan{questionsToExplore[3], phrasesToValidate[2]}, suggestedActivity{title, description, materials}, tags[], riskAssessment{riskLevel, confidence(0.1-1.0), reasoning, derivationNote(solo si attention/professional_required)}
+Responde ÚNICAMENTE JSON válido con campos: id, guideTitle, metaphorStory, emotion ("miedo" | "ira"), conversationPlan{questionsToExplore[3], phrasesToValidate[2]}, suggestedActivity{title, description, materials}, tags[], riskAssessment{riskLevel, confidence(0.1-1.0), reasoning, derivationNote(solo si attention/professional_required)}
 
 PILARES:
 1. metaphorStory: cuento 2-3 párrafos, usa metáfora para la emoción/situación

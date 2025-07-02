@@ -1,12 +1,10 @@
 "use client";
 
-import PersonalizedHeader from "@/components/userHome/PersonalizedHeader"; // Ajusta las rutas de importación
+import PersonalizedHeader from "@/components/userHome/PersonalizedHeader";
 import DynamicSuggestion from "@/components/userHome/DynamicSuggestion";
 import OverallProgress from "@/components/userHome/OverallProgress";
 import MoodTracker from "@/components/userHome/MoodTracker";
 import CoreNavigation from "@/components/userHome/NavigationCore";
-
-// import MoodTrackerPreview from "@/components/userHome/MoodTrackerPreview"; // Mantén tu ruta actual
 
 export default function ChildDashboardPage() {
   return (

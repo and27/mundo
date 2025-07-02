@@ -52,7 +52,6 @@ export const MOCK_SPECIALISTS: MockSpecialist[] = [
   },
 ];
 
-// Función para obtener especialistas según el nivel de riesgo
 export const getSpecialistsByRisk = (
   riskLevel: "attention" | "professional_required"
 ): MockSpecialist[] => {
@@ -61,7 +60,6 @@ export const getSpecialistsByRisk = (
   ).slice(0, 3); // Máximo 3 especialistas
 };
 
-// Función para obtener todos los especialistas (para casos mixtos)
 export const getAllSpecialists = (): MockSpecialist[] => {
   return MOCK_SPECIALISTS.slice(0, 3);
 };

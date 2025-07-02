@@ -1,0 +1,55 @@
+{
+  "id": "story_miedo_yachay",
+  "title": "Yachay, el Joven Puma y la Montaña",
+  "description": "Una historia para transformar el miedo",
+  "category": "emotions",
+  "steps": [
+    {
+      "id": "scene_1",
+      "subtitle": "Yachay, un joven puma de pelaje dorado, miraba desde el borde del bosque la gran montaña que nunca se atrevía a escalar.",
+      "prompt_img": "A dense forest edge at twilight, with a towering mountain shrouded in mist.",
+      "visuals": {
+        "type": "scene",
+        "backgroundImage": "/images/generated/a_dense_forest_edge_at_twilight_with_a_t_bg.jpg"
+      },
+      "audioSrc": "/audio/generated/story_miedo_yachay_scene_1.mp3",
+      "interaction": {
+        "type": "auto_proceed",
+        "nextStepId": "scene_2"
+      },
+      "isNarration": true
+    },
+    {
+      "id": "scene_2",
+      "subtitle": "Una voz suave del viento le susurró: 'El miedo es solo una sombra que se disipa cuando caminas hacia ella.'",
+      "prompt_img": "A moonlit path through ancient trees, with glowing fireflies lighting the way.",
+      "visuals": {
+        "type": "scene",
+        "backgroundImage": "/images/generated/a_moonlit_path_through_ancient_trees_wit_bg.jpg"
+      },
+      "audioSrc": "/audio/generated/story_miedo_yachay_scene_2.mp3",
+      "interaction": {
+        "type": "auto_proceed",
+        "nextStepId": "scene_3"
+      },
+      "isNarration": true
+    },
+    {
+      "id": "scene_3",
+      "subtitle": "Con cada paso, Yachay sintió cómo su corazón latía más fuerte, no de temor, sino de la emoción de descubrir lo desconocido.",
+      "prompt_img": "The first light of dawn breaking over the mountain peak, painting the sky in gold and purple.",
+      "visuals": {
+        "type": "scene",
+        "backgroundImage": "/images/generated/the_first_light_of_dawn_breaking_over_th_bg.jpg"
+      },
+      "audioSrc": "/audio/generated/story_miedo_yachay_scene_3.mp3",
+      "interaction": {
+        "type": "auto_proceed",
+        "nextStepId": "end"
+      },
+      "isNarration": true
+    }
+  ],
+  "initialStepId": "scene_1",
+  "guideId": "yachay"
+}

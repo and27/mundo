@@ -46,7 +46,12 @@ export interface ActionableGuide {
   suggestedActivity: ActivitySuggestion;
   tags: string[];
   riskAssessment?: RiskAssessment;
+  emotion: "miedo" | "ira";
 }
+
+export type GuideWithCharacter = ActionableGuide & {
+  character: "yachay" | "amaru";
+};
 
 export interface RiskAssessment {
   riskLevel: "normal" | "attention" | "professional_required";

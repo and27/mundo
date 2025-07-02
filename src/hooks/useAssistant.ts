@@ -1,4 +1,4 @@
-import { ActionableGuide } from "@/types/ai";
+import { GuideWithCharacter } from "@/types/ai";
 import { useState, useEffect } from "react";
 
 const loadingMessages = [
@@ -13,7 +13,7 @@ const loadingMessages = [
 
 export function useMundoAssistant() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [guide, setGuide] = useState<ActionableGuide | null>(null);
+  const [guide, setGuide] = useState<GuideWithCharacter | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loadingMessage, setLoadingMessage] = useState<string>(
     loadingMessages[0]
@@ -55,8 +55,18 @@ export function useMundoAssistant() {
         );
       }
 
-      const data: ActionableGuide = await response.json();
-      setGuide(data);
+      const rawData = await response.json();
+
+      const emotion = rawData.emotion;
+      const character = getCharacterFromEmotion(emotion);
+
+      const finalGuide: GuideWithCharacter = {
+        ...rawData,
+        emotion,
+        character,
+      };
+
+      setGuide(finalGuide);
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
@@ -69,4 +79,12 @@ export function useMundoAssistant() {
   };
 
   return { isLoading, guide, error, loadingMessage, generateGuide };
+}
+
+function getCharacterFromEmotion(emotion: "miedo" | "ira"): "yachay" | "amaru" {
+  const map = {
+    miedo: "yachay",
+    ira: "amaru",
+  } as const;
+  return map[emotion];
 }

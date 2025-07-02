@@ -2,12 +2,12 @@ import ErrorMessage from "./ErrorMessage";
 import EmptyState from "./EmptyState";
 import LoadingState from "./LoadingState";
 import GuideDisplay from "./GuideDisplay";
-import { ActionableGuide } from "@/types/ai";
+import { GuideWithCharacter } from "@/types/ai";
 
 interface ResultsDisplayProps {
   isLoading: boolean;
   error: string | null;
-  guide: ActionableGuide | null;
+  guide: GuideWithCharacter | null;
   loadingMessage: string;
 }
 

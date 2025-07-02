@@ -1,12 +1,12 @@
 "use client";
-import { useGameLogic } from "@/hooks/useGameLogic"; // Import the REFACTORED hook
+import { useGameLogic } from "@/hooks/useGameLogic";
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import * as Tone from "tone";
-import { FaStar } from "react-icons/fa"; // For potential completion button
+import { FaStar } from "react-icons/fa";
 
 const GAME_WIDTH = 480;
 const GAME_HEIGHT = 640;
-const TOTAL_PATH_SEGMENTS = 10; // Must match the constant in useGameLogic
+const TOTAL_PATH_SEGMENTS = 10;
 
 // --- Componente para dibujar el Camino Iluminado ---
 // (Debería estar fuera del canvas principal o dibujado DENTRO del canvas por el hook)

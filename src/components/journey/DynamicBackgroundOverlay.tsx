@@ -11,7 +11,6 @@ const DynamicBackgroundOverlay: React.FC<DynamicBackgroundOverlayProps> = ({
   imageUrl,
 }) => {
   const [currentImage, setCurrentImage] = useState<string | null>(imageUrl);
-
   useEffect(() => {
     if (imageUrl && imageUrl !== currentImage) {
       // Precargar imagen antes de cambiar
@@ -50,15 +49,17 @@ const DynamicBackgroundOverlay: React.FC<DynamicBackgroundOverlayProps> = ({
                 times: [0, 0.25, 0.5, 0.75, 1],
               }}
             >
-              <Image
-                src={currentImage}
-                alt="Fondo del viaje"
-                fill
-                className="object-cover"
-                priority
-                quality={95}
-                sizes="120vw"
-              />
+              <div className="absolute inset-0 scale-[1.05] blur-[6px]">
+                <Image
+                  src={currentImage}
+                  alt="Fondo del viaje"
+                  fill
+                  className="object-cover"
+                  priority
+                  quality={95}
+                  sizes="120vw"
+                />
+              </div>
             </motion.div>
           </div>
         </motion.div>
