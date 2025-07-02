@@ -25,7 +25,6 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 
 import { fichas } from "@/lib/fichas";
-import { useSessionTimer } from "@/hooks/useSessionTimter";
 import { useRotatingTips } from "@/hooks/useRotationTips";
 import { tabs } from "@/lib/fichaTabs";
 import TabNavigation from "@/components/ui/TabNavigation";
@@ -45,14 +44,6 @@ const FichaTutorPage: React.FC = () => {
 
   const ficha = fichas.find((f) => f.id === fichaId);
 
-  const {
-    sessionTimer,
-    isTimerRunning,
-    startTimer,
-    stopTimer,
-    resetTimer,
-    formatTime,
-  } = useSessionTimer();
   const currentTip = useRotatingTips(ficha?.quickTips || [], 8000);
 
   const toggleObjective = (index: number): void => {
@@ -120,28 +111,6 @@ const FichaTutorPage: React.FC = () => {
             <HiOutlineArrowLeft className="w-5 h-5 group-hover:text-purple-400 transition-colors" />
             Volver
           </button>
-
-          <div className="flex items-center gap-4">
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2">
-              <span className="text-sm font-medium">
-                {formatTime(sessionTimer)}
-              </span>
-            </div>
-            <div className="flex gap-2">
-              <button
-                onClick={isTimerRunning ? stopTimer : startTimer}
-                className="p-2 bg-green-500/20 hover:bg-green-500/30 rounded-lg transition-colors"
-              >
-                <HiOutlineClock className="w-5 h-5 text-green-400" />
-              </button>
-              <button
-                onClick={resetTimer}
-                className="p-2 bg-red-500/20 hover:bg-red-500/30 rounded-lg transition-colors"
-              >
-                <HiOutlineRefresh className="w-5 h-5 text-red-400" />
-              </button>
-            </div>
-          </div>
         </div>
 
         <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl overflow-hidden">

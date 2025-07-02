@@ -1,17 +1,18 @@
 import React, { useState } from "react";
-import { ActionableGuide } from "@/types/ai";
+import { ActionableGuide, GuideWithCharacter } from "@/types/ai";
 import { X } from "lucide-react";
 import FearExperienceSelector from "./FearExperienceSelector";
 
 interface ExperienceModalProps {
   isOpen: boolean;
   onClose: () => void;
-  guide: ActionableGuide;
+  guide: GuideWithCharacter;
 }
 
 const ExperienceModal: React.FC<ExperienceModalProps> = ({
   isOpen,
   onClose,
+  guide,
 }) => {
   const [selectedExperience, setSelectedExperience] = useState<
     "shared" | "digital" | null
@@ -44,6 +45,7 @@ const ExperienceModal: React.FC<ExperienceModalProps> = ({
           <FearExperienceSelector
             onExperienceSelect={setSelectedExperience}
             selectedExperience={selectedExperience}
+            guide={guide}
           />
         </div>
       </div>

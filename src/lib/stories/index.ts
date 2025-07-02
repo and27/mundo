@@ -13,4 +13,25 @@ export const stories: Story[] = [
   yachayFear,
 ];
 
+export async function loadStory(id: string): Promise<Story | undefined> {
+  const staticStory = stories.find((s) => s.id === id);
+  if (staticStory) return staticStory;
+
+  const baseUrl =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : "https://aynia.abstudio.com.co";
+
+  try {
+    const res = await fetch(`${baseUrl}/stories/${id}.json`);
+
+    if (!res.ok) return undefined;
+    const json = await res.json();
+    return json as Story;
+  } catch (err) {
+    console.error("Error cargando historia JSON:", err);
+    return undefined;
+  }
+}
+
 export type { Story, JourneyStep };

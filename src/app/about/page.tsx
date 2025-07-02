@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm"; // Importa el plugin para tablas
+import remarkGfm from "remark-gfm";
 
 const EthicsCharterDisplay: React.FC = () => {
   const [markdown, setMarkdown] = useState<string>("");

@@ -34,7 +34,7 @@ export const childrenList: ChildProfile[] = [
     id: "child-3",
     name: "Sofía Rodríguez",
     age: 10,
-    avatarUrl: undefined, // O puedes omitirlo
+    avatarUrl: undefined,
     lastJourney: undefined,
     nextSuggestedJourney: "El Sendero del Puma Valiente",
     totalJourneys: 0,

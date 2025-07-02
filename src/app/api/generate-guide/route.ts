@@ -4,7 +4,7 @@ import { create3PillarGuidePrompt } from "@/lib/prompts";
 import { ActionableGuide } from "@/types/ai";
 
 async function callDeepSeek(prompt: string): Promise<string> {
-  const response = await fetch("https://api.deepseek.com/chat/completions", {
+  const response = await fetch(process.env.DEEPSEEK_API_URL!, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

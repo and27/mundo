@@ -70,7 +70,7 @@ export const rioEmocionesAmaruStory: Story = {
         type: "scene",
         backgroundImage: "/images/journey3/dos_corrientes.png",
       },
-      interaction: { type: "auto_proceed", nextStepId: "j3_corriente_desc" }, // Asume auto_proceed por ahora
+      interaction: { type: "auto_proceed", nextStepId: "j3_corriente_desc" },
       isNarration: true,
     },
     {
@@ -141,7 +141,7 @@ export const rioEmocionesAmaruStory: Story = {
       audioSrc: "/audio/journey3/j3_navegar_b_respiracion.mp3",
       subtitle:
         "Inhala suave: 1... 2... 3... (pausa) Exhala lento: 1... 2... 3... 4...",
-      visuals: { type: "breathing" }, // Activa animación
+      visuals: { type: "breathing" },
       interaction: { type: "auto_proceed", nextStepId: "j3_navegar_c" },
       isNarration: true,
     },

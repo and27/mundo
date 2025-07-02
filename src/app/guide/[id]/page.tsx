@@ -8,7 +8,6 @@ import Image from "next/image";
 import { FaStar } from "react-icons/fa"; // Importar icono de estrella
 import { Guide } from "@/types/guides";
 
-// Reutilizar o mover a compartidos
 const LoadingIndicator = () => (
   <div className="flex justify-center items-center min-h-screen">
     <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-white/50"></div>
@@ -21,7 +20,6 @@ const ErrorMessage = ({ message }: { message: string }) => (
   </div>
 );
 
-// --- Componente para el Visual de Respiración ---
 const InteractiveBreathingVisual = ({ phase }: { phase: BreathingPhase }) => {
   // Determina el estilo basado en la fase actual (inhale, hold, exhale)
   // Usaremos clases de Tailwind y quizás alguna variable de estilo inline para la animación
@@ -32,19 +30,18 @@ const InteractiveBreathingVisual = ({ phase }: { phase: BreathingPhase }) => {
 
   switch (phase) {
     case "inhale":
-      scale = 1.25; // Se expande
-      color = "#FFE082"; // Más brillante
+      scale = 1.25;
+      color = "#FFE082";
       opacity = 1;
-      // Podrías cambiar la clase del patrón aquí si quieres que reaccione
       break;
     case "hold":
-      scale = 1.25; // Mantiene tamaño
+      scale = 1.25;
       color = "#FFE082";
-      opacity = 0.9; // Baja un poco el brillo al sostener
+      opacity = 0.9;
       break;
     case "exhale":
-      scale = 1; // Vuelve al tamaño original
-      color = "#AED5F5"; // Color más frío/calmado al exhalar
+      scale = 1;
+      color = "#AED5F5";
       opacity = 0.7;
       break;
     // case "pause": // Si tienes una pausa entre ciclos
@@ -58,15 +55,14 @@ const InteractiveBreathingVisual = ({ phase }: { phase: BreathingPhase }) => {
     <div
       className={`w-42 relative rounded-full transition-all duration-3000 ease-in-out`} // Duración larga para suavidad
       style={{
-        maxWidth: "300px", // Tamaño máximo
-        aspectRatio: "1 / 1", // Mantiene forma circular
+        maxWidth: "300px",
+        aspectRatio: "1 / 1",
         transform: `scale(${scale})`,
         backgroundColor: color,
         opacity: opacity,
-        boxShadow: `0 0 30px 10px ${color}60`, // Resplandor suave
+        boxShadow: `0 0 30px 10px ${color}60`,
       }}
     >
-      {/* Aquí el patrón interno. Podrías usar un div ::before o ::after o un SVG */}
       <div
         className={`absolute inset-0 rounded-full ${internalPatternClass} opacity-50`}
         // Añade aquí estilos CSS para el patrón de ondas de agua sutil
@@ -75,7 +71,6 @@ const InteractiveBreathingVisual = ({ phase }: { phase: BreathingPhase }) => {
   );
 };
 
-// --- Componente para los Puntos de Progreso ---
 const ProgressDots = ({
   total,
   completed,
@@ -97,10 +92,8 @@ const ProgressDots = ({
   );
 };
 
-// --- Tipos para las Fases de Respiración ---
 type BreathingPhase = "idle" | "inhale" | "hold" | "exhale"; // Añadir 'pause' si es necesario
 
-// --- Componente Principal Interactivo ---
 const InteractiveGuidePage = () => {
   const { id } = useParams();
   const router = useRouter(); // Para navegar al final
@@ -123,7 +116,6 @@ const InteractiveGuidePage = () => {
   useEffect(() => {
     if (!guide || isComplete) return; // No hacer nada si no hay guía o ya terminó
 
-    // Iniciar el primer ciclo
     if (phase === "idle" && breathCycle === 0) {
       // Simular voz inicial: "Hola, soy Yachay..."
       console.log("VOZ: Iniciando ejercicio con Yachay");
@@ -132,7 +124,6 @@ const InteractiveGuidePage = () => {
       return; // Salir para que el siguiente useEffect maneje la fase
     }
 
-    // Lógica del temporizador basado en la fase
     let timerId: NodeJS.Timeout;
 
     if (phase === "inhale") {
@@ -189,11 +180,8 @@ const InteractiveGuidePage = () => {
     }, 500);
   }, [id]);
 
-  // Navegar al finalizar
   const handleFinish = () => {
-    // Navegar a una pantalla de resumen/finalización o de vuelta al menú
-    // Pasando quizás el id de la guía
-    router.push(`/`); // Cambia esta ruta según necesidad
+    router.push(`/`);
     console.log("Ejercicio finalizado por el usuario.");
   };
 
@@ -201,7 +189,6 @@ const InteractiveGuidePage = () => {
   if (error) return <ErrorMessage message={error} />;
   if (!guide) return <ErrorMessage message="Guía no encontrada" />;
 
-  // Usar la imagen específica del mockup refinado si existe
   const guideImage =
     guide.refinedImage ||
     guide.imageTransparent ||
@@ -210,7 +197,6 @@ const InteractiveGuidePage = () => {
   return (
     <section className="text-center flex flex-col justify-start items-center min-h-screen mx-auto p-4 overflow-hidden text-white relative">
       <div className="relative max-w-3xl w-full flex flex-col items-center">
-        {/* --- Área Superior: Guía y Prompt --- */}
         <div className="mb-6 flex flex-col items-center">
           <div className="relative w-28 h-28 mb-2">
             <Image
@@ -239,7 +225,6 @@ const InteractiveGuidePage = () => {
 
         {/* --- Área Central: Visual de Respiración --- */}
         <div className="flex justify-center items-center h-10 m-20">
-          {/* Contenedor con altura fija */}
           <InteractiveBreathingVisual phase={phase} />
         </div>
 
@@ -252,8 +237,6 @@ const InteractiveGuidePage = () => {
           {phase === "exhale" && "Suelta el aire despacio..."}
           {phase === "idle" && !isComplete && "Prepárate..."}
           {isComplete && "¡Lo hiciste muy bien!"}
-          {/* Texto fijo de apoyo: */}
-          {/* Siente la calma, como el viento suave del Imbabura. */}
         </p>
 
         <button
@@ -268,7 +251,6 @@ const InteractiveGuidePage = () => {
           <FaStar
             className={`${isComplete ? "text-yellow-400" : "text-gray-500"}`}
           />{" "}
-          {/* Icono estrella */}
           ¡Listo!
         </button>
       </div>

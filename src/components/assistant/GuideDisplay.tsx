@@ -1,7 +1,7 @@
 "use client";
 
 import { useGuideInteraction } from "@/hooks/useGuideInteraction";
-import { ActionableGuide } from "@/types/ai";
+import { ActionableGuide, GuideWithCharacter } from "@/types/ai";
 import GuideHeader from "../dashboard/ai/GuideHeader";
 import GuideActions from "../dashboard/ai/GuideActionts";
 import { MessageCircle, Sparkles, BookOpen } from "lucide-react";
@@ -15,7 +15,7 @@ import ExperienceModal from "./ExperienceModal";
 import useModalStore from "@/store/useModalStore";
 
 interface GuideDisplayProps {
-  guide: ActionableGuide | null;
+  guide: GuideWithCharacter | null;
 }
 
 export default function GuideDisplay({ guide }: GuideDisplayProps) {
