@@ -1,8 +1,16 @@
+import {
+  Emotion,
+  Etapa,
+  ModuleData,
+  ModuleSection,
+  SectionContent as SectionContentType,
+  SubSection,
+} from "@/types/course";
 import { BookOpen, Activity, Lightbulb, CheckCircle } from "lucide-react";
 
 interface SectionContentProps {
-  module: any;
-  section: any;
+  module: ModuleData;
+  section: ModuleSection;
   isCompleted: boolean;
   onComplete: () => void;
 }
@@ -77,7 +85,7 @@ export default function SectionContent({
   );
 }
 
-function renderContent(content: any, module: any) {
+function renderContent(content: SectionContentType, module: ModuleData) {
   return (
     <div className="space-y-8">
       {/* Texto principal */}
@@ -111,7 +119,7 @@ function renderContent(content: any, module: any) {
       {/* Subsecciones */}
       {content.subsecciones && (
         <div className="space-y-6">
-          {content.subsecciones.map((sub: any, index: number) => (
+          {content.subsecciones.map((sub: SubSection, index: number) => (
             <div
               key={index}
               className="border-l-4 pl-6"
@@ -129,7 +137,7 @@ function renderContent(content: any, module: any) {
       {/* Etapas del desarrollo */}
       {content.etapas && (
         <div className="space-y-6">
-          {content.etapas.map((etapa: any, index: number) => (
+          {content.etapas.map((etapa: Etapa, index: number) => (
             <div
               key={index}
               className="bg-white/60 border border-white/30 rounded-xl p-6"
@@ -194,7 +202,7 @@ function renderContent(content: any, module: any) {
       {/* Emociones */}
       {content.emociones && (
         <div className="space-y-6">
-          {content.emociones.map((emocion: any, index: number) => (
+          {content.emociones.map((emocion: Emotion, index: number) => (
             <div
               key={index}
               className="bg-white/60 border border-white/30 rounded-xl p-6"
@@ -249,7 +257,7 @@ function renderContent(content: any, module: any) {
   );
 }
 
-function renderActivity(content: any) {
+function renderActivity(content: SectionContentType) {
   return (
     <div className="space-y-8">
       {/* Instrucciones */}

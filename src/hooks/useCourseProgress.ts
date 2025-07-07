@@ -1,3 +1,4 @@
+import { SectionContent } from "@/types/course";
 import { useState, useEffect } from "react";
 
 export interface ModuleData {
@@ -10,7 +11,7 @@ export interface ModuleData {
   colorPrimario: string;
   colorSecundario: string;
   icono: string;
-  secciones: any[];
+  secciones: SectionContent[];
 }
 
 export interface CourseProgress {
@@ -96,14 +97,14 @@ export function useCourseProgress() {
       const newCompletedSections = [...progress.completedSections, sectionKey];
 
       // Calcular progreso del módulo
-      const module = modules.find((m) => m.id === moduleId);
+      const mod = modules.find((m) => m.id === moduleId);
       if (module) {
-        const moduleSections = module.secciones.length;
+        const moduleSections = mod?.secciones.length;
         const completedInModule = newCompletedSections.filter((s) =>
           s.startsWith(moduleId)
         ).length;
         const moduleProgressPercent =
-          (completedInModule / moduleSections) * 100;
+          (completedInModule / (moduleSections || 1)) * 100;
 
         const newModuleProgress = {
           ...progress.moduleProgress,

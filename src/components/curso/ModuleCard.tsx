@@ -1,14 +1,8 @@
-import {
-  Clock,
-  Heart,
-  CheckCircle,
-  Lock,
-  Play,
-  ChevronRight,
-} from "lucide-react";
+import { ModuleData } from "@/types/course";
+import { CheckCircle, Play, ChevronRight } from "lucide-react";
 
 interface ModuleCardProps {
-  module: any;
+  module: ModuleData;
   moduleNumber: number;
   isUnlocked: boolean;
   moduleProgress: number;
@@ -19,7 +13,6 @@ interface ModuleCardProps {
 export default function ModuleCard({
   module,
   moduleNumber,
-  isUnlocked = true, // Siempre desbloqueado
   moduleProgress,
   isCurrent,
   onClick,
@@ -95,7 +88,6 @@ export default function ModuleCard({
 }
 
 function StatusBadge({
-  isUnlocked,
   isCompleted,
   isCurrent,
 }: {

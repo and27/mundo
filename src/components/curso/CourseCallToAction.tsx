@@ -1,8 +1,9 @@
+import { CourseProgress, ModuleData } from "@/types/course";
 import { Award, Play } from "lucide-react";
 
 interface CourseCallToActionProps {
-  modules: any[];
-  progress: any;
+  modules: ModuleData[];
+  progress: CourseProgress;
   stats: {
     progressPercentage: number;
   };
