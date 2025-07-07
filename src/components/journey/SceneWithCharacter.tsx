@@ -35,6 +35,8 @@ const SceneWithCharacter: React.FC<SceneWithCharacterProps> = ({
         <Image
           src={characterUrl}
           alt="Character"
+          width={"400"}
+          height={"400"}
           className="w-[320px] sm:w-[400px] md:w-[480px] drop-shadow-[0_15px_25px_rgba(0,0,0,0.4)]"
         />
       </motion.div>

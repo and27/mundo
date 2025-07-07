@@ -11,6 +11,8 @@ type PageProps = {
 export default async function CuentoPage({ params }: PageProps) {
   const { id } = await params;
   const story = await loadStory(id);
+  console.log(id);
+  console.log(story);
   const guide = guides.find((g) => g.id === story?.guideId);
 
   if (!story) {

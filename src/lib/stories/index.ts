@@ -19,8 +19,8 @@ export async function loadStory(id: string): Promise<Story | undefined> {
 
   const baseUrl =
     process.env.NODE_ENV === "development"
-      ? "http://localhost:3000"
-      : "https://aynia.abstudio.com.co";
+      ? `http://localhost:${process.env.PORT || 3000}`
+      : process.env.NEXT_PUBLIC_SITE_URL;
 
   try {
     const res = await fetch(`${baseUrl}/stories/${id}.json`);
