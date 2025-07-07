@@ -1,5 +1,6 @@
 import React from "react";
-import { Users, User, Settings, ChevronDown } from "lucide-react";
+import { Users, User, Settings, ChevronDown, Star } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useModeStore } from "@/store/useModeState";
 import ModeOption from "../ui/ModeOption";
 import Dropdown from "../ui/Dropdown";
@@ -13,11 +14,52 @@ export default function ModeToggle({
   variant = "header",
   className = "",
 }: ModeToggleProps) {
-  const { isSchoolMode, setSchoolMode } = useModeStore();
+  const { mode, setMode } = useModeStore();
+  const router = useRouter();
 
-  const handleModeSelect = (schoolMode: boolean) => {
-    setSchoolMode(schoolMode);
+  const handleModeSelect = (newMode: "individual" | "educator" | "child") => {
+    const currentMode = mode;
+    setMode(newMode);
+
+    // Solo redirigir cuando hay cambio de contexto
+    if (newMode === "child" && currentMode !== "child") {
+      // Ir a child mode
+      router.push("/child/stories");
+    } else if (currentMode === "child" && newMode !== "child") {
+      // Salir de child mode
+      router.push("/parentDashboard");
+    }
+    // Si cambio entre individual ↔ educator: no redirect, solo cambio de modo
   };
+
+  // Configuración de cada modo
+  const getModeConfig = () => {
+    switch (mode) {
+      case "child":
+        return {
+          icon: <Star className="w-3 h-3" />,
+          label: "Modo Explorador",
+          bgColor: "bg-yellow-500/30 text-yellow-300",
+          bgColorInline: "bg-yellow-100 text-yellow-600",
+        };
+      case "educator":
+        return {
+          icon: <Users className="w-3 h-3" />,
+          label: "Educador",
+          bgColor: "bg-green-500/30 text-green-300",
+          bgColorInline: "bg-green-100 text-green-600",
+        };
+      default: // individual
+        return {
+          icon: <User className="w-3 h-3" />,
+          label: "Individual",
+          bgColor: "bg-blue-500/30 text-blue-300",
+          bgColorInline: "bg-blue-100 text-blue-600",
+        };
+    }
+  };
+
+  const modeConfig = getModeConfig();
 
   // Trigger button styles based on variant
   const getTriggerStyles = () => {
@@ -34,15 +76,9 @@ export default function ModeToggle({
   const getIconStyles = () => {
     const base = "w-5 h-5 rounded flex items-center justify-center";
     if (variant === "header") {
-      return `${base} ${
-        isSchoolMode
-          ? "bg-green-500/30 text-green-300"
-          : "bg-blue-500/30 text-blue-300"
-      }`;
+      return `${base} ${modeConfig.bgColor}`;
     }
-    return `${base} ${
-      isSchoolMode ? "bg-green-100 text-green-600" : "bg-blue-100 text-blue-600"
-    }`;
+    return `${base} ${modeConfig.bgColorInline}`;
   };
 
   const getTextColor = () => {
@@ -51,15 +87,9 @@ export default function ModeToggle({
 
   const trigger = (
     <button className={`${getTriggerStyles()} ${className}`}>
-      <div className={getIconStyles()}>
-        {isSchoolMode ? (
-          <Users className="w-3 h-3" />
-        ) : (
-          <User className="w-3 h-3" />
-        )}
-      </div>
+      <div className={getIconStyles()}>{modeConfig.icon}</div>
       <span className={`hidden sm:inline ${getTextColor()}`}>
-        {isSchoolMode ? "Educador" : "Individual"}
+        {modeConfig.label}
       </span>
       <ChevronDown
         className={`w-4 h-4 ${
@@ -87,8 +117,8 @@ export default function ModeToggle({
           icon={<User className="w-4 h-4" />}
           title="Padres & Psicólogos"
           description="Casos individuales y familiares"
-          isActive={!isSchoolMode}
-          onClick={() => handleModeSelect(false)}
+          isActive={mode === "individual"}
+          onClick={() => handleModeSelect("individual")}
           activeColor="blue"
         />
 
@@ -96,17 +126,33 @@ export default function ModeToggle({
           icon={<Users className="w-4 h-4" />}
           title="Educadores"
           description="Gestión grupal y aula"
-          isActive={isSchoolMode}
-          onClick={() => handleModeSelect(true)}
+          isActive={mode === "educator"}
+          onClick={() => handleModeSelect("educator")}
           activeColor="green"
+        />
+
+        <ModeOption
+          icon={<Star className="w-4 h-4" />}
+          title="Modo Explorador"
+          description="Experiencia segura para pequeños"
+          isActive={mode === "child"}
+          onClick={() => handleModeSelect("child")}
+          activeColor="blue"
         />
       </div>
 
       <div className="p-3 bg-slate-50 border-t border-slate-100">
         <p className="text-xs text-slate-600">
           <span className="font-medium">Modo actual:</span>{" "}
-          {isSchoolMode ? "Educadores" : "Individual"} - Las guías se adaptarán
-          a tu contexto específico.
+          {mode === "child"
+            ? "Modo Explorador"
+            : mode === "educator"
+            ? "Educadores"
+            : "Individual"}{" "}
+          -
+          {mode === "child"
+            ? " Experiencia adaptada para niños."
+            : " Las guías se adaptarán a tu contexto específico."}
         </p>
       </div>
     </div>

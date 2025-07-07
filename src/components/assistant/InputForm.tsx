@@ -23,7 +23,10 @@ export default function InputForm({
 }: InputFormProps) {
   const [query, setQuery] = useState<string>("");
   const [isFocused, setIsFocused] = useState(false);
-  const { isSchoolMode } = useModeStore();
+
+  const { mode } = useModeStore();
+  const isSchoolMode = mode === "educator"; // Derived value
+
   const [context, setContext] = useState<ContextData | null>(null);
   console.log(context);
   const setOriginalQuery = useQueryStore((state) => state.setOriginalQuery);
