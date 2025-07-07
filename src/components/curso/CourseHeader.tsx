@@ -1,4 +1,4 @@
-import { Heart, CheckCircle, Clock, Award, Star, Users } from "lucide-react";
+import { Heart, CheckCircle, Clock, Award } from "lucide-react";
 
 interface CourseStats {
   progressPercentage: number;
@@ -12,7 +12,6 @@ interface CourseHeaderProps {
 }
 
 export default function CourseHeader({ stats }: CourseHeaderProps) {
-  const progressWidth = Math.min(stats.progressPercentage, 100);
   const isCompleted = stats.progressPercentage >= 100;
 
   return (

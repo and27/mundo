@@ -1,5 +1,7 @@
+import { ModuleData } from "@/types/course";
+
 interface ModuleHeaderProps {
-  module: any;
+  module: ModuleData;
   current: number;
 }
 

@@ -1,8 +1,7 @@
+import { ModuleData, ModuleSection } from "@/types/course";
 import {
   ChevronLeft,
-  Clock,
   BookOpen,
-  Award,
   CheckCircle,
   Play,
   ChevronRight,
@@ -12,7 +11,7 @@ import {
 } from "lucide-react";
 
 interface ModuleDetailViewProps {
-  module: any;
+  module: ModuleData;
   onBack: () => void;
   onStartModule: () => void;
   onSectionClick?: (sectionIndex: number) => void; // Cambio: ahora usa el índice
@@ -118,7 +117,7 @@ export default function ModuleDetailView({
             </p>
           </div>
           <div className="space-y-3">
-            {module.secciones.map((seccion: any, index: number) => (
+            {module.secciones.map((seccion: ModuleSection, index: number) => (
               <button
                 key={seccion.id}
                 onClick={() => handleSectionClick(index)}
@@ -169,26 +168,6 @@ export default function ModuleDetailView({
           </p>
         </div>
       </div>
-    </div>
-  );
-}
-
-function MetaCard({
-  icon,
-  label,
-  value,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  value: string;
-}) {
-  return (
-    <div className="bg-white/60 border border-white/30 rounded-lg p-4">
-      <div className="flex items-center gap-2 mb-2">
-        {icon}
-        <span className="text-sm text-slate-600">{label}</span>
-      </div>
-      <p className="text-slate-800 font-medium">{value}</p>
     </div>
   );
 }

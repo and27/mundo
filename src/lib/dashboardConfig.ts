@@ -1,8 +1,5 @@
-import { FiUsers, FiBookOpen, FiActivity } from "react-icons/fi";
+import { FiActivity } from "react-icons/fi";
 import { HiSparkles } from "react-icons/hi2";
-import ManageChildrenSection from "@/components/dashboard/ManageChildrenSection";
-import ResourcesPageLayout from "@/components/dashboard/resources/ResourcesPageLayout";
-import EmotionalJournalSection from "@/components/dashboard/EmotionalJournalSection";
 import AssistantSection from "@/components/dashboard/AssistantSetion";
 import GeneratedStories from "@/components/dashboard/GeneratedStories";
 import CursoSection from "@/components/curso/CourseSection";

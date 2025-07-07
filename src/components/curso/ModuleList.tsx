@@ -1,9 +1,10 @@
 import { Heart } from "lucide-react";
 import ModuleCard from "./ModuleCard";
+import { CourseProgress, ModuleData } from "@/types/course";
 
 interface ModuleListProps {
-  modules: any[];
-  progress: any;
+  modules: ModuleData[];
+  progress: CourseProgress;
   isModuleUnlocked: (n: number) => boolean;
   onClick: (moduleId: string, moduleNumber: number) => void;
 }
@@ -11,7 +12,6 @@ interface ModuleListProps {
 export default function ModuleList({
   modules,
   progress,
-  isModuleUnlocked,
   onClick,
 }: ModuleListProps) {
   return (

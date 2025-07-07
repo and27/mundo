@@ -15,12 +15,17 @@ interface ModeState {
   toggleMode: () => void;
 }
 
+// Estado legacy (solo tenía isSchoolMode)
+type LegacyModeState = {
+  isSchoolMode: boolean;
+};
+
 export const useModeStore = create<ModeState>()(
   persist(
     (set, get) => ({
-      mode: "individual" as Mode,
+      mode: "individual",
 
-      setMode: (mode: Mode) => set({ mode }),
+      setMode: (mode) => set({ mode }),
 
       get isSchoolMode() {
         return get().mode === "educator";
@@ -34,31 +39,43 @@ export const useModeStore = create<ModeState>()(
         return get().mode === "individual";
       },
 
-      setSchoolMode: (isSchoolMode: boolean) => {
-        set({ mode: isSchoolMode ? "educator" : "individual" });
+      setSchoolMode: (isSchool) => {
+        set({ mode: isSchool ? "educator" : "individual" });
       },
 
       toggleMode: () => {
-        const currentMode = get().mode;
-        if (currentMode === "educator") {
-          set({ mode: "individual" });
-        } else {
-          set({ mode: "educator" });
-        }
+        const current = get().mode;
+        set({ mode: current === "educator" ? "individual" : "educator" });
       },
     }),
     {
       name: "mundo-interior-mode",
-      migrate: (persistedState: any, version: number) => {
+      migrate: (persistedState: unknown): Partial<ModeState> => {
         if (
-          persistedState &&
-          typeof persistedState.isSchoolMode === "boolean"
+          typeof persistedState === "object" &&
+          persistedState !== null &&
+          "isSchoolMode" in persistedState &&
+          typeof (persistedState as LegacyModeState).isSchoolMode === "boolean"
         ) {
           return {
-            mode: persistedState.isSchoolMode ? "educator" : "individual",
+            mode: (persistedState as LegacyModeState).isSchoolMode
+              ? "educator"
+              : "individual",
           };
         }
-        return persistedState;
+
+        if (
+          typeof persistedState === "object" &&
+          persistedState !== null &&
+          "mode" in persistedState &&
+          typeof (persistedState as { mode: unknown }).mode === "string"
+        ) {
+          return {
+            mode: (persistedState as { mode: string }).mode as Mode,
+          };
+        }
+
+        return { mode: "individual" };
       },
     }
   )

@@ -20,9 +20,9 @@ export default function ModuleContent({
     useCourseProgress();
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
 
-  const module = modules.find((m) => m.id === moduleId);
+  const mod = modules.find((m) => m.id === moduleId);
 
-  if (!module) {
+  if (!mod) {
     return (
       <div className="bg-white/90 backdrop-blur-sm border border-white/50 rounded-xl p-8 text-center">
         <p className="text-slate-600">Módulo no encontrado</p>
@@ -30,7 +30,7 @@ export default function ModuleContent({
     );
   }
 
-  const currentSection = module.secciones[currentSectionIndex];
+  const currentSection = mod.secciones[currentSectionIndex];
 
   const handleSectionComplete = (sectionId: string) => {
     markSectionCompleted(moduleId, sectionId);
@@ -49,17 +49,17 @@ export default function ModuleContent({
         </button>
 
         <div className="text-sm text-slate-500">
-          Sección {currentSectionIndex + 1} de {module.secciones.length}
+          Sección {currentSectionIndex + 1} de {mod.secciones.length}
         </div>
       </div>
 
       {/* Header del módulo con progreso */}
-      <ModuleHeader module={module} current={currentSectionIndex} />
+      <ModuleHeader module={mod} current={currentSectionIndex} />
 
       {/* Contenido de la sección actual */}
       <div className="bg-white/90 backdrop-blur-sm border border-white/50 rounded-xl p-8">
         <SectionContent
-          module={module}
+          module={mod}
           section={currentSection}
           isCompleted={isSectionCompleted(moduleId, currentSection.id)}
           onComplete={() => handleSectionComplete(currentSection.id)}
