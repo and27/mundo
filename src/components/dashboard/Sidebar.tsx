@@ -4,17 +4,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { LogOut, User, MoreHorizontal } from "lucide-react";
 import { HiSparkles } from "react-icons/hi2";
-import { FiUsers, FiBookOpen, FiActivity } from "react-icons/fi";
-
-type NavigationItem = {
-  label: string;
-  icon: React.ComponentType<{ className?: string }>;
-  href: string;
-  active?: boolean;
-  disabled?: boolean;
-  comingSoon?: boolean;
-  description: string;
-};
+import { dashboardSections } from "@/lib/dashboardConfig";
 
 type SidebarProps = {
   userName?: string;
@@ -25,46 +15,12 @@ type SidebarProps = {
   currentPath?: string;
 };
 
-const navigationItems: NavigationItem[] = [
-  {
-    label: "Guía emocional",
-    icon: HiSparkles,
-    href: "/parentDashboard?section=asistente",
-    active: true,
-    description: "Genera guías prácticas y empáticas",
-  },
-  {
-    label: "Mis Exploradores",
-    icon: FiUsers,
-    href: "/parentDashboard?section=ninos",
-    disabled: true,
-    comingSoon: true,
-    description: "Próximamente",
-  },
-  {
-    label: "Bitácora Emocional",
-    icon: FiActivity,
-    href: "/parentDashboard?section=bitacora",
-    disabled: true,
-    comingSoon: true,
-    description: "Próximamente",
-  },
-  {
-    label: "Centro de Guías",
-    icon: FiBookOpen,
-    href: "/parentDashboard?section=recursos",
-    disabled: true,
-    comingSoon: true,
-    description: "Próximamente",
-  },
-];
-
 const NavItem = ({
   item,
   isCollapsed,
   isActive,
 }: {
-  item: NavigationItem;
+  item: (typeof dashboardSections)[0];
   isCollapsed: boolean;
   isActive: boolean;
 }) => {
@@ -193,12 +149,12 @@ const Sidebar: React.FC<SidebarProps> = ({
           )}
 
           <nav className="space-y-2">
-            {navigationItems.map((item) => {
+            {dashboardSections.map((item) => {
               const isItemActive = currentPath === item.href;
 
               return (
                 <NavItem
-                  key={item.href}
+                  key={item.id}
                   item={item}
                   isCollapsed={isDesktopCollapsed}
                   isActive={isItemActive}
