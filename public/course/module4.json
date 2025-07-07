@@ -1,0 +1,923 @@
+{
+  "id": "modulo4",
+  "titulo": "Metodología MIM en Acción",
+  "subtitulo": "Los 3 Pilares: Metáfora + Conversación + Actividad",
+  "descripcion": "Domina la metodología MIM, el corazón de Mundo Interior, para crear experiencias transformadoras que integren sabiduría ancestral, ciencia moderna y práctica efectiva.",
+  "duracion": "3-4 horas",
+  "objetivos": [
+    "Comprender la filosofía y estructura de la metodología MIM",
+    "Dominar el arte de crear metáforas culturalmente resonantes",
+    "Desarrollar habilidades de conversación emocional auténtica",
+    "Diseñar actividades que anclen el aprendizaje emocional",
+    "Aplicar MIM en diferentes contextos (individual, grupal, familiar)",
+    "Identificar cuándo derivar a profesionales especializados"
+  ],
+  "colorPrimario": "#8A2BE2",
+  "colorSecundario": "#DDA0DD",
+  "icono": "🎭",
+  "secciones": [
+    {
+      "id": "introduccion-mim",
+      "titulo": "La Filosofía MIM: Más que una Técnica",
+      "tipo": "contenido",
+      "contenido": {
+        "origen": "La metodología MIM nace de la síntesis entre la sabiduría ancestral andina, la neurociencia moderna y años de práctica terapéutica. No es solo una herramienta, sino una filosofía de acompañamiento que honra tanto la profundidad como la practicidad.",
+        "significado_acronimo": {
+          "M": "Metáfora - El puente simbólico hacia la comprensión",
+          "I": "Conversación (Interacción) - El diálogo auténtico que valida y guía",
+          "M": "Actividad (Movimiento) - La experiencia corporal que ancla el aprendizaje"
+        },
+        "principios_fundamentales": [
+          {
+            "principio": "Integración Holística",
+            "descripcion": "Cada pilar se fortalece con los otros, creando una experiencia completa que involucra mente, corazón y cuerpo",
+            "aplicacion": "Nunca uses solo uno de los pilares; la magia está en la sinergia de los tres"
+          },
+          {
+            "principio": "Resonancia Cultural",
+            "descripcion": "Las metáforas y símbolos emergen de la sabiduría ancestral, creando conexión profunda con la identidad cultural",
+            "aplicacion": "Usa elementos que resuenen con la herencia cultural del niño y su familia"
+          },
+          {
+            "principio": "Adaptabilidad Inteligente",
+            "descripcion": "Cada aplicación se adapta al momento presente, la edad del niño y la situación específica",
+            "aplicacion": "Mantén la estructura pero ajusta el contenido según las necesidades emergentes"
+          },
+          {
+            "principio": "Empoderamiento del Guía",
+            "descripcion": "MIM fortalece al adulto acompañante, no lo reemplaza con técnicas automáticas",
+            "aplicacion": "Usa MIM para amplificar tu intuición y sabiduría natural, no para seguir un guión rígido"
+          }
+        ],
+        "diferenciadores_unicos": [
+          "Primera metodología que integra sistemáticamente sabiduría ancestral con neurociencia",
+          "Enfoque en el empoderamiento del guía, no en la dependencia de técnicas",
+          "Diseñada específicamente para la realidad cultural latinoamericana",
+          "Escalable desde intervenciones de 5 minutos hasta programas de semanas",
+          "Aplicable tanto en crisis como en desarrollo preventivo"
+        ]
+      }
+    },
+    {
+      "id": "primer-pilar-metafora",
+      "titulo": "Primer Pilar: La Metáfora - El Puente Hacia la Comprensión",
+      "tipo": "contenido",
+      "contenido": {
+        "fundamento": "Las metáforas no son decoraciones poéticas, sino herramientas neurocientíficamente poderosas que permiten al cerebro procesar experiencias complejas a través de símbolos familiares y seguros.",
+        "por_que_funcionan": [
+          {
+            "razon": "Activación de Múltiples Redes Neuronales",
+            "explicacion": "Las metáforas activan simultáneamente áreas del lenguaje, visualización, emoción y memoria, creando conexiones más ricas y duraderas"
+          },
+          {
+            "razon": "Distancia Emocional Segura",
+            "explicacion": "Permiten explorar emociones intensas a través de personajes o símbolos, reduciendo la amenaza percibida"
+          },
+          {
+            "razon": "Conexión con Arquetipos Universales",
+            "explicacion": "Las metáforas andinas conectan con símbolos ancestrales que resuenan en el inconsciente colectivo"
+          },
+          {
+            "razon": "Flexibilidad Interpretativa",
+            "explicacion": "Cada niño puede encontrar su propio significado en la metáfora, haciendo la experiencia personal y relevante"
+          }
+        ],
+        "elementos_metafora_efectiva": [
+          {
+            "elemento": "Conexión Emocional Inmediata",
+            "descripcion": "La metáfora debe resonar emocionalmente desde los primeros segundos",
+            "criterios": [
+              "Usa elementos familiares para el niño (naturaleza, animales, objetos cotidianos)",
+              "Evoca sensaciones más que conceptos abstractos",
+              "Conecta con la experiencia emocional actual del niño",
+              "Genera curiosidad y engagement natural"
+            ]
+          },
+          {
+            "elemento": "Simbolismo Cultural Auténtico",
+            "descripcion": "Los símbolos deben emerger genuinamente de la tradición andina",
+            "simbolos_centrales": [
+              "La Montaña (estabilidad, fortaleza, perspectiva)",
+              "El Río (fluidez, cambio, purificación)",
+              "El Cóndor (visión amplia, libertad, sabiduría)",
+              "La Pachamama (nutrición, sostén, conexión)",
+              "El Fuego Sagrado (transformación, energía, renovación)"
+            ]
+          },
+          {
+            "elemento": "Progresión Narrativa Clara",
+            "descripcion": "La metáfora debe tener un arco que lleve desde el problema hacia la resolución",
+            "estructura": [
+              "Situación inicial: personaje/elemento en estado similar al del niño",
+              "Desafío: aparece una dificultad que requiere crecimiento",
+              "Búsqueda: el personaje busca recursos (internos o externos)",
+              "Transformación: aplicación de sabiduría ancestral o fuerza interior",
+              "Nueva integración: estado de mayor sabiduría y fortaleza"
+            ]
+          }
+        ],
+        "banco_metaforas": [
+          {
+            "metafora": "El Pequeño Cóndor que Olvidó Volar",
+            "emocion_objetivo": "Autoestima y confianza en capacidades propias",
+            "edad_recomendada": "6-12 años",
+            "resumen": "Un joven cóndor que se compara con otros y olvida su propia naturaleza poderosa, hasta que encuentra en las montañas sagradas la sabiduría de sus ancestros",
+            "elementos_clave": [
+              "Cóndor representa las capacidades únicas del niño",
+              "Montañas sagradas simbolizan la sabiduría interior",
+              "Otros pájaros representan comparaciones sociales",
+              "El vuelo simboliza la expresión auténtica de talentos"
+            ]
+          },
+          {
+            "metafora": "El Río que Aprendió a Ser Valiente",
+            "emocion_objetivo": "Regulación del miedo y desarrollo de coraje",
+            "edad_recomendada": "4-10 años",
+            "resumen": "Un río montañoso que tiene miedo de los rápidos y cascadas, hasta que descubre que su fuerza está en fluir con confianza, no en evitar los desafíos",
+            "elementos_clave": [
+              "Río representa el flujo emocional del niño",
+              "Rápidos y cascadas simbolizan desafíos temidos",
+              "Rocas representan obstáculos que se pueden navegar",
+              "El mar simboliza la calma que viene después de la valentía"
+            ]
+          },
+          {
+            "metafora": "La Semilla en la Tierra Oscura",
+            "emocion_objetivo": "Procesamiento de tristeza y crecimiento a través del dolor",
+            "edad_recomendada": "7-12 años",
+            "resumen": "Una semilla que inicialmente teme a la oscuridad de la tierra, hasta que comprende que necesita esa oscuridad para crecer y convertirse en un árbol fuerte",
+            "elementos_clave": [
+              "Semilla representa el potencial del niño",
+              "Tierra oscura simboliza los momentos difíciles",
+              "Agua representa las lágrimas que nutren",
+              "Árbol simboliza la sabiduría y fortaleza que emergen"
+            ]
+          },
+          {
+            "metafora": "Los Cuatro Vientos del Corazón",
+            "emocion_objetivo": "Integración y aceptación de múltiples emociones",
+            "edad_recomendada": "8-12 años",
+            "resumen": "Un niño que descubre que su corazón tiene cuatro vientos sagrados (alegría, tristeza, miedo, ira) y que necesita todos para volar completo por la vida",
+            "elementos_clave": [
+              "Cuatro vientos representan las emociones básicas",
+              "Corazón como espacio sagrado de integración",
+              "Vuelo simboliza la vida emocional equilibrada",
+              "Ceremonia de aceptación de todos los vientos"
+            ]
+          }
+        ],
+        "como_crear_metaforas": {
+          "paso_1": {
+            "titulo": "Identificar la Emoción Central",
+            "descripcion": "Determina la emoción principal que el niño está experimentando",
+            "preguntas_guia": [
+              "¿Cuál es la emoción que más necesita atención?",
+              "¿Qué función adaptativa está cumpliendo esta emoción?",
+              "¿Qué mensaje esencial necesita escuchar el niño?"
+            ]
+          },
+          "paso_2": {
+            "titulo": "Seleccionar el Símbolo Andino",
+            "descripcion": "Elige un elemento de la naturaleza andina que represente la cualidad que el niño necesita desarrollar",
+            "simbolos_disponibles": [
+              "Para fortaleza: Montaña, Árbol centenario, Roca sagrada",
+              "Para fluidez: Río, Viento, Agua de manantial",
+              "Para perspectiva: Cóndor, Águila, Cumbre",
+              "Para transformación: Fuego, Mariposa, Semilla"
+            ]
+          },
+          "paso_3": {
+            "titulo": "Desarrollar el Conflicto Simbólico",
+            "descripcion": "Crea una situación donde el símbolo enfrenta un desafío similar al del niño",
+            "tipos_conflicto": [
+              "Externo: obstáculos del entorno que requieren adaptación",
+              "Interno: dudas o miedos que limitan el potencial",
+              "Relacional: dificultades con otros elementos del ecosistema",
+              "Evolutivo: necesidad de crecer o transformarse"
+            ]
+          },
+          "paso_4": {
+            "titulo": "Integrar la Sabiduría Ancestral",
+            "descripcion": "Introduce elementos de sabiduría andina que ofrezcan la solución",
+            "elementos_disponibles": [
+              "Ayni: reciprocidad que sana las relaciones",
+              "Pachamama: conexión con la tierra que da fortaleza",
+              "Inti: energía solar que renueva y transforma",
+              "Ceremonias: rituales que marcan transiciones importantes"
+            ]
+          },
+          "paso_5": {
+            "titulo": "Crear la Resolución Empoderadora",
+            "descripcion": "Desarrolla un final que muestre al símbolo transformado y empoderado",
+            "criterios_resolucion": [
+              "El símbolo mantiene su esencia pero gana nueva sabiduría",
+              "La solución emerge de recursos internos, no externos",
+              "Queda claro que el desafío era necesario para el crecimiento",
+              "Se honra tanto la vulnerabilidad como la fortaleza"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "segundo-pilar-conversacion",
+      "titulo": "Segundo Pilar: La Conversación - El Diálogo que Transforma",
+      "tipo": "contenido",
+      "contenido": {
+        "fundamento": "La conversación en MIM no es interrogatorio ni consejería tradicional, sino un diálogo auténtico que valida la experiencia del niño mientras lo guía suavemente hacia nuevas perspectivas y recursos internos.",
+        "elementos_conversacion_mim": [
+          {
+            "elemento": "Validación Emocional Profunda",
+            "descripcion": "Reconocer y legitimizar la experiencia emocional del niño como punto de partida",
+            "tecnicas": [
+              "Reflejo emocional: 'Veo que tu corazón está sintiéndose...'",
+              "Normalización: 'Es completamente natural sentir eso cuando...'",
+              "Contextualización: 'Tu (emoción) tiene sentido porque...'",
+              "Honrar la sabiduría emocional: 'Tu (emoción) te está cuidando al...'"
+            ],
+            "frases_poder": [
+              "'Tu tristeza me dice cuánto te importa esto'",
+              "'Tu enojo está protegiendo algo valioso en ti'",
+              "'Tu miedo es como un guardián sabio que te cuida'",
+              "'Tu alegría es como un sol que ilumina todo a tu alrededor'"
+            ]
+          },
+          {
+            "elemento": "Conexión con la Metáfora",
+            "descripcion": "Tejer la historia contada con la experiencia presente del niño",
+            "estrategias": [
+              "Paralelismo directo: '¿Te parece que tú también eres como ese río que...'",
+              "Pregunta reflexiva: '¿Qué parte de la historia del cóndor resuena contigo?'",
+              "Identificación de recursos: '¿Cuál crees que es tu montaña interior?'",
+              "Exploración de similitudes: '¿En qué se parece tu situación a la de...?'"
+            ]
+          },
+          {
+            "elemento": "Preguntas que Abren Perspectivas",
+            "descripcion": "Interrogantes que invitan a la reflexión sin presionar hacia respuestas específicas",
+            "tipos_preguntas": [
+              {
+                "tipo": "Preguntas de Curiosidad",
+                "proposito": "Invitar a la exploración sin juicio",
+                "ejemplos": [
+                  "'Me pregunto qué pasaría si...'",
+                  "'¿Qué crees que diría tu yo de dentro sobre esto?'",
+                  "'¿Cómo se sentiría en tu cuerpo si...?'"
+                ]
+              },
+              {
+                "tipo": "Preguntas de Recursos",
+                "proposito": "Ayudar a identificar fortalezas y capacidades",
+                "ejemplos": [
+                  "'¿Cuándo te has sentido fuerte como una montaña?'",
+                  "'¿Qué te ha ayudado otras veces que te sentiste así?'",
+                  "'¿Quién en tu vida te recuerda tu propia fuerza?'"
+                ]
+              },
+              {
+                "tipo": "Preguntas de Sabiduría Corporal",
+                "proposito": "Conectar con la inteligencia del cuerpo",
+                "ejemplos": [
+                  "'¿Qué te dice tu barriguita sobre esto?'",
+                  "'¿Dónde sientes esa emoción en tu cuerpo?'",
+                  "'¿Cómo respira tu cuerpo cuando está tranquilo?'"
+                ]
+              }
+            ]
+          },
+          {
+            "elemento": "Siembra de Nuevas Posibilidades",
+            "descripcion": "Introducir suavemente nuevas perspectivas sin invalidar la experiencia actual",
+            "tecnicas": [
+              "Ofrecimiento suave: 'Una posibilidad podría ser...'",
+              "Pregunta hipotética: '¿Qué pasaría si fuera posible que...?'",
+              "Invitación a experimentar: '¿Te gustaría probar algo diferente?'",
+              "Conexión con la sabiduría ancestral: 'Los abuelos de nuestros abuelos sabían que...'"
+            ]
+          }
+        ],
+        "flujo_conversacional": {
+          "fase_1": {
+            "titulo": "Llegada y Sintonía",
+            "duracion": "2-5 minutos",
+            "objetivo": "Establecer conexión y seguridad emocional",
+            "elementos": [
+              "Presencia plena y contacto visual apropiado",
+              "Reconocimiento de la persona completa del niño",
+              "Sintonía con su estado emocional actual",
+              "Creación de espacio seguro para la expresión"
+            ],
+            "frases_tipo": [
+              "'Me da gusto estar contigo'",
+              "'Veo que has venido con algo en tu corazón'",
+              "'Estoy aquí para escucharte completamente'"
+            ]
+          },
+          "fase_2": {
+            "titulo": "Exploración y Validación",
+            "duracion": "5-10 minutos",
+            "objetivo": "Comprender profundamente la experiencia del niño",
+            "elementos": [
+              "Escucha activa y reflexiva",
+              "Validación emocional sin prisa por 'arreglar'",
+              "Preguntas que inviten a profundizar",
+              "Normalización de la experiencia emocional"
+            ],
+            "frases_tipo": [
+              "'Cuéntame más sobre eso'",
+              "'Eso suena realmente importante'",
+              "'Entiendo por qué te sientes así'"
+            ]
+          },
+          "fase_3": {
+            "titulo": "Introducción de la Metáfora",
+            "duracion": "5-15 minutos",
+            "objetivo": "Ofrecer nueva perspectiva a través del símbolo",
+            "elementos": [
+              "Narrativa culturalmente resonante",
+              "Conexión explícita con la experiencia del niño",
+              "Participación activa del niño en la historia",
+              "Identificación de paralelos y recursos"
+            ],
+            "frases_tipo": [
+              "'Esto me recuerda una historia...'",
+              "'¿Te parece que tú también eres como...?'",
+              "'¿Qué crees que haría el (personaje) en tu situación?'"
+            ]
+          },
+          "fase_4": {
+            "titulo": "Integración y Empoderamiento",
+            "duracion": "3-8 minutos",
+            "objetivo": "Anclar nuevas perspectivas y recursos",
+            "elementos": [
+              "Conexión explícita entre metáfora y vida real",
+              "Identificación de recursos internos y externos",
+              "Invitación a experimentar nuevas posibilidades",
+              "Celebración de la sabiduría y fortaleza del niño"
+            ],
+            "frases_tipo": [
+              "'¿Cómo puedes usar la sabiduría del (personaje) en tu vida?'",
+              "'¿Cuál es tu montaña interior en esta situación?'",
+              "'Me parece que ya tienes todo lo que necesitas dentro de ti'"
+            ]
+          }
+        },
+        "adaptaciones_por_contexto": {
+          "crisis_emocional": {
+            "enfoque": "Regulación antes que comprensión",
+            "adaptaciones": [
+              "Fase de regulación inicial antes del diálogo",
+              "Validación intensa y presencia corporal",
+              "Metáforas muy simples y directas",
+              "Enfoque en recursos inmediatos"
+            ]
+          },
+          "sesion_grupal": {
+            "enfoque": "Participación colectiva y aprendizaje social",
+            "adaptaciones": [
+              "Metáforas que permitan múltiples identificaciones",
+              "Preguntas que inviten a compartir sin presionar",
+              "Espacios para que cada niño encuentre su conexión",
+              "Celebración de la diversidad de perspectivas"
+            ]
+          },
+          "acompañamiento_familiar": {
+            "enfoque": "Fortalecimiento de vínculos y comprensión mutua",
+            "adaptaciones": [
+              "Metáforas que incluyan elementos familiares",
+              "Preguntas que inviten a la comprensión mutua",
+              "Validación de las perspectivas de todos los miembros",
+              "Exploración de recursos familiares y culturales"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "tercer-pilar-actividad",
+      "titulo": "Tercer Pilar: La Actividad - El Cuerpo que Ancla la Sabiduría",
+      "tipo": "contenido",
+      "contenido": {
+        "fundamento": "El cuerpo es donde las emociones se sienten, donde la sabiduría se ancla y donde la transformación se integra. Las actividades en MIM no son entretenimiento, sino experiencias diseñadas para somatizar el aprendizaje emocional.",
+        "principios_actividades_mim": [
+          {
+            "principio": "Integración Somatica",
+            "descripcion": "Cada actividad ayuda al cuerpo a 'recordar' la nueva perspectiva o recurso",
+            "aplicacion": "Las actividades deben involucrar sensaciones corporales que refuercen el mensaje de la metáfora"
+          },
+          {
+            "principio": "Conexión Simbólica",
+            "descripcion": "La actividad física refleja y refuerza los elementos simbólicos de la metáfora",
+            "aplicacion": "Si la metáfora habla de fortaleza de montaña, la actividad debe generar sensaciones de estabilidad y solidez"
+          },
+          {
+            "principio": "Autorregulación Activa",
+            "descripcion": "Cada actividad enseña al niño una habilidad práctica de regulación emocional",
+            "aplicacion": "El niño debe poder repetir elementos de la actividad independientemente cuando lo necesite"
+          },
+          {
+            "principio": "Placer y Significado",
+            "descripcion": "Las actividades deben ser intrínsecamente satisfactorias, no obligaciones",
+            "aplicacion": "Diseña actividades que los niños quieran repetir por el placer de hacerlas"
+          }
+        ],
+        "categorias_actividades": [
+          {
+            "categoria": "Actividades de Enraizamiento",
+            "objetivo": "Conectar con estabilidad y seguridad corporal",
+            "cuando_usar": "Para ansiedad, hiperactividad, sensación de 'estar flotando'",
+            "ejemplos": [
+              {
+                "actividad": "Raíces de Árbol Sagrado",
+                "descripcion": "Imaginar y sentir raíces creciendo desde los pies hacia el centro de la Pachamama",
+                "pasos": [
+                  "Pararse descalzo o sentir los pies firmes en el suelo",
+                  "Imaginar raíces fuertes creciendo desde las plantas de los pies",
+                  "Sentir cómo las raíces se conectan con todas las raíces de la naturaleza",
+                  "Respirar la fuerza de la tierra subiendo por las raíces"
+                ],
+                "materiales": "Ninguno necesario, opcional: semillas o pequeñas piedras"
+              },
+              {
+                "actividad": "Montaña Interior",
+                "descripcion": "Crear una postura corporal que represente la montaña sagrada interior",
+                "pasos": [
+                  "Sentarse con espalda recta pero relajada",
+                  "Imaginar que la columna vertebral es una montaña majestuosa",
+                  "Sentir la cima en la coronilla conectada con el cielo",
+                  "Respirar la estabilidad inmutable de la montaña"
+                ],
+                "materiales": "Cojín o manta para sentarse cómodamente"
+              }
+            ]
+          },
+          {
+            "categoria": "Actividades de Fluidez",
+            "objetivo": "Promover movimiento emocional y adaptabilidad",
+            "cuando_usar": "Para emociones estancadas, rigidez, necesidad de cambio",
+            "ejemplos": [
+              {
+                "actividad": "Danza del Río Sagrado",
+                "descripcion": "Movimiento libre que imita el flujo del agua en diferentes estados",
+                "pasos": [
+                  "Comenzar como manantial suave y tranquilo",
+                  "Fluir como arroyo juguetón entre las piedras",
+                  "Crecer como río poderoso que supera obstáculos",
+                  "Llegar al mar como expansión infinita y calma"
+                ],
+                "materiales": "Música instrumental suave, pañuelos o telas ligeras"
+              },
+              {
+                "actividad": "Respiración del Viento",
+                "descripcion": "Técnica respiratoria que imita los diferentes vientos andinos",
+                "pasos": [
+                  "Viento suave: respiración lenta y constante",
+                  "Viento de cambio: respiración rítmica con pausas",
+                  "Viento purificador: exhalación fuerte que limpia",
+                  "Viento sagrado: respiración que conecta cielo y tierra"
+                ],
+                "materiales": "Pluma natural o tela ligera para visualizar el viento"
+              }
+            ]
+          },
+          {
+            "categoria": "Actividades de Transformación",
+            "objetivo": "Facilitar cambios y crecimiento personal",
+            "cuando_usar": "Para transiciones, duelos, necesidad de renovación",
+            "ejemplos": [
+              {
+                "actividad": "Ceremonia de la Mariposa",
+                "descripcion": "Ritual de transformación inspirado en la metamorfosis",
+                "pasos": [
+                  "Crear un 'capullo' con mantas o cobijas",
+                  "Respirar dentro del capullo dejando ir lo que ya no sirve",
+                  "Emerger lentamente como nueva versión de sí mismo",
+                  "Celebrar las nuevas 'alas' (capacidades o perspectivas)"
+                ],
+                "materiales": "Mantas suaves, opcional: máscaras decorativas simples"
+              },
+              {
+                "actividad": "Siembra de Intenciones",
+                "descripcion": "Plantar semillas físicas como símbolo de crecimiento interior",
+                "pasos": [
+                  "Elegir una semilla que represente lo que quiere crecer",
+                  "Crear un espacio sagrado para la siembra",
+                  "Plantar con intención y cuidado amoroso",
+                  "Comprometerse con el cuidado diario como autocuidado"
+                ],
+                "materiales": "Semillas, tierra, macetas pequeñas, agua"
+              }
+            ]
+          },
+          {
+            "categoria": "Actividades de Integración",
+            "objetivo": "Unificar mente, corazón y cuerpo en coherencia",
+            "cuando_usar": "Para consolidar aprendizajes, preparar transiciones",
+            "ejemplos": [
+              {
+                "actividad": "Mandala del Corazón",
+                "descripcion": "Crear un mandala con elementos naturales representando el balance emocional",
+                "pasos": [
+                  "Recolectar elementos naturales con significado personal",
+                  "Crear un círculo sagrado con estos elementos",
+                  "Colocar cada elemento con intención y gratitud",
+                  "Contemplar el mandala como reflejo del equilibrio interior"
+                ],
+                "materiales": "Piedras, flores, hojas, semillas, otros elementos naturales"
+              },
+              {
+                "actividad": "Escritura Sagrada",
+                "descripcion": "Escribir o dibujar mensajes de sabiduría para el futuro",
+                "pasos": [
+                  "Conectar con la sabiduría aprendida en la sesión",
+                  "Escribir o dibujar un mensaje para recordar en el futuro",
+                  "Crear un 'sobre sagrado' para guardar el mensaje",
+                  "Decidir cuándo abrir el mensaje (en una semana, un mes, etc.)"
+                ],
+                "materiales": "Papel especial, colores, sobres, elementos decorativos"
+              }
+            ]
+          }
+        ],
+        "secuencia_actividades": {
+          "inicio": {
+            "objetivo": "Preparar el cuerpo para la experiencia",
+            "duracion": "2-3 minutos",
+            "tipos": "Actividades de centrado, respiración consciente, conexión corporal"
+          },
+          "desarrollo": {
+            "objetivo": "Explorar y experimentar la metáfora corporalmente",
+            "duracion": "10-20 minutos",
+            "tipos": "Actividades específicas relacionadas con la metáfora y emoción trabajada"
+          },
+          "cierre": {
+            "objetivo": "Integrar y anclar la experiencia",
+            "duracion": "3-5 minutos",
+            "tipos": "Actividades de gratitud, compromiso personal, conexión con recursos"
+          }
+        },
+        "adaptaciones_por_edad": {
+          "3-6_años": {
+            "enfoque": "Juego imaginativo y exploración sensorial",
+            "caracteristicas": [
+              "Actividades cortas (5-10 minutos)",
+              "Uso abundante de imaginación y fantasía",
+              "Materiales concretos y manipulables",
+              "Repetición y rituales simples",
+              "Celebración entusiasta de cada logro"
+            ],
+            "ejemplos": "Juegos de animales, construcción con bloques, pintura con dedos, danza libre"
+          },
+          "7-9_años": {
+            "enfoque": "Exploración consciente con estructura clara",
+            "caracteristicas": [
+              "Actividades medianas (10-20 minutos)",
+              "Instrucciones más detalladas",
+              "Conexión entre actividad y aprendizaje",
+              "Elementos de desafío apropiado",
+              "Reflexión sobre la experiencia"
+            ],
+            "ejemplos": "Proyectos artísticos, experimentos sensoriales, yoga narrativo, ceremonias simples"
+          },
+          "10-12_años": {
+            "enfoque": "Integración consciente y aplicación práctica",
+            "caracteristicas": [
+              "Actividades más largas (15-30 minutos)",
+              "Comprensión del propósito y beneficios",
+              "Personalización y elección individual",
+              "Aplicación a situaciones reales",
+              "Desarrollo de rutinas personales"
+            ],
+            "ejemplos": "Meditaciones guiadas, proyectos creativos complejos, diseño de rituales personales"
+          }
+        }
+      }
+    },
+    {
+      "id": "integracion-tres-pilares",
+      "titulo": "La Sinergia de los Tres Pilares: Casos Prácticos Completos",
+      "tipo": "contenido",
+      "contenido": {
+        "introduccion": "La verdadera magia de MIM emerge cuando los tres pilares se integran fluidamente. Aquí exploramos casos completos que muestran esta sinergia en acción.",
+        "casos_completos": [
+          {
+            "caso": "Niña de 7 años con miedo a la oscuridad",
+            "contexto": "Miedo que interfiere con el sueño y autonomía, después de mudanza familiar",
+            "aplicacion_mim": {
+              "metafora": {
+                "titulo": "La Estrellita que Aprendió a Brillar en la Noche",
+                "resumen": "Una pequeña estrella que tenía miedo de la noche hasta que descubrió que su luz era más necesaria y hermosa en la oscuridad",
+                "elementos_clave": [
+                  "Estrella representa la luz interior de la niña",
+                  "Noche simboliza lo desconocido que debe enfrentar",
+                  "Otras estrellas representan la comunidad de apoyo",
+                  "Brillo propio simboliza los recursos internos"
+                ]
+              },
+              "conversacion": {
+                "validacion": "'Es completamente natural sentir miedo cuando todo está oscuro y desconocido'",
+                "conexion": "'¿Te parece que tú también eres como esa estrellita que tiene una luz especial adentro?'",
+                "recursos": "'¿Cuándo has sido valiente antes? ¿Qué te ayudó?'",
+                "empoderamiento": "'¿Cómo podrías usar tu luz interior cuando sientes miedo?'"
+              },
+              "actividad": {
+                "nombre": "Linterna del Corazón",
+                "descripcion": "Crear una linterna decorada que represente la luz interior",
+                "pasos": [
+                  "Decorar una linterna pequeña con estrellas y símbolos de poder",
+                  "Practicar 'encender' la luz interior con respiración",
+                  "Crear un ritual nocturno de activación de la luz del corazón",
+                  "Colocar la linterna física cerca como recordatorio"
+                ],
+                "integracion": "La linterna física se convierte en ancla para acceder al recurso interno"
+              }
+            },
+            "resultados_esperados": [
+              "Reducción progresiva del miedo nocturno",
+              "Desarrollo de estrategia de autorregulación",
+              "Fortalecimiento de autoestima y autonomía",
+              "Integración simbólica que perdura en el tiempo"
+            ]
+          },
+          {
+            "caso": "Niño de 9 años con ira frecuente hacia hermanos",
+            "contexto": "Conflictos familiares constantes, sensación de injusticia, explosiones emocionales",
+            "aplicacion_mim": {
+              "metafora": {
+                "titulo": "El Volcán que Aprendió a Ser Guardián",
+                "resumen": "Un volcán joven que explota frecuentemente hasta que aprende a usar su fuego interior para proteger y calentar en lugar de destruir",
+                "elementos_clave": [
+                  "Volcán representa la energía poderosa del niño",
+                  "Erupciones simbolizan las explosiones de ira",
+                  "Pueblo al pie del volcán representa la familia",
+                  "Transformación del fuego destructor en fuego protector"
+                ]
+              },
+              "conversacion": {
+                "validacion": "'Tu enojo está tratando de proteger algo muy importante para ti'",
+                "conexion": "'¿Sientes que tienes un volcán poderoso adentro como el de la historia?'",
+                "exploracion": "'¿Qué está tratando de proteger tu volcán interior?'",
+                "recursos": "'¿Cómo podrías usar tu fuego interior para cuidar en lugar de lastimar?'"
+              },
+              "actividad": {
+                "nombre": "Ritual del Fuego Sagrado",
+                "descripcion": "Transformar la energía de ira en energía protectora",
+                "pasos": [
+                  "Crear un 'fuego sagrado' simbólico (vela segura o dibujo)",
+                  "Practicar 'alimentar el fuego' con respiración cuando siente ira",
+                  "Visualizar cómo su fuego interno protege a su familia",
+                  "Desarrollar gestos físicos de 'guardar el fuego' para autorregulación"
+                ],
+                "integracion": "El ritual se convierte en herramienta de transformación de ira en protección"
+              }
+            },
+            "resultados_esperados": [
+              "Reducción de episodios de ira explosiva",
+              "Desarrollo de identidad como 'protector' en lugar de 'problema'",
+              "Mejora en relaciones familiares",
+              "Habilidades de autorregulación transferibles"
+            ]
+          }
+        ],
+        "indicadores_exito": [
+          "El niño puede recordar y aplicar elementos de la metáfora independientemente",
+          "Mejora observable en la regulación de la emoción trabajada",
+          "El niño muestra orgullo y apropiación de la experiencia",
+          "Los recursos desarrollados se transfieren a nuevas situaciones",
+          "La familia reporta cambios positivos sostenidos"
+        ]
+      }
+    },
+    {
+      "id": "contextos-aplicacion",
+      "titulo": "MIM en Diferentes Contextos: Adaptaciones Estratégicas",
+      "tipo": "contenido",
+      "contenido": {
+        "individual": {
+          "caracteristicas": "Personalización máxima, profundidad emocional, ritmo flexible",
+          "ventajas": [
+            "Adaptación completa a necesidades específicas",
+            "Exploración profunda sin presión social",
+            "Desarrollo de confianza en relación uno-a-uno",
+            "Posibilidad de trabajar traumas o temas sensibles"
+          ],
+          "adaptaciones": [
+            "Metáforas altamente personalizadas",
+            "Conversaciones que pueden ser más íntimas",
+            "Actividades que respeten el estilo del niño",
+            "Flexibilidad total en timing y profundidad"
+          ]
+        },
+        "grupal": {
+          "caracteristicas": "Aprendizaje social, normalización, diversidad de perspectivas",
+          "ventajas": [
+            "Los niños aprenden que no están solos en sus experiencias",
+            "Modelos de regulación a través de observar a pares",
+            "Economía de recursos para llegar a más niños",
+            "Desarrollo de habilidades sociales simultáneo"
+          ],
+          "adaptaciones": [
+            "Metáforas que permitan múltiples identificaciones",
+            "Conversaciones que incluyan a todos sin forzar participación",
+            "Actividades que fomenten cooperación",
+            "Manejo cuidadoso de diferentes niveles de necesidad"
+          ]
+        },
+        "familiar": {
+          "caracteristicas": "Fortalecimiento de vínculos, comprensión mutua, recursos sistémicos",
+          "ventajas": [
+            "Involucra a los cuidadores como co-terapeutas",
+            "Fortalece la comprensión familiar de las emociones",
+            "Desarrolla lenguaje común para hablar de sentimientos",
+            "Sostenibilidad a largo plazo del trabajo"
+          ],
+          "adaptaciones": [
+            "Metáforas que incluyan elementos familiares/generacionales",
+            "Conversaciones que validen todas las perspectivas",
+            "Actividades que fortalezcan vínculos",
+            "Educación emocional para toda la familia"
+          ]
+        },
+        "escolar": {
+          "caracteristicas": "Prevención, habilidades sociales, aplicación académica",
+          "ventajas": [
+            "Alcance masivo para prevención",
+            "Integración con currículo académico",
+            "Desarrollo de clima escolar emocionalmente inteligente",
+            "Formación de maestros como agentes de bienestar"
+          ],
+          "adaptaciones": [
+            "Metáforas que conecten con contenido académico",
+            "Conversaciones que respeten dinámicas grupales",
+            "Actividades adaptables al aula",
+            "Entrenamiento para educadores en aplicación"
+          ]
+        }
+      }
+    },
+    {
+      "id": "señales-derivacion",
+      "titulo": "Cuándo Derivar: Límites y Responsabilidades del Guía",
+      "tipo": "contenido",
+      "contenido": {
+        "introduccion": "Como guías conscientes, debemos reconocer tanto nuestro poder como nuestros límites. MIM es una herramienta poderosa, pero no es terapia clínica ni reemplaza la intervención profesional cuando es necesaria.",
+        "señales_rojas": [
+          {
+            "categoria": "Riesgo Inmediato",
+            "señales": [
+              "Ideación suicida o expresiones de deseo de muerte",
+              "Autolesión o amenazas de daño a otros",
+              "Comportamientos que pongan en riesgo la seguridad física",
+              "Síntomas psicóticos (alucinaciones, delirios)"
+            ],
+            "accion": "Derivación inmediata a servicios de emergencia o salud mental"
+          },
+          {
+            "categoria": "Trauma Complejo",
+            "señales": [
+              "Revelación de abuso físico, sexual o emocional",
+              "Síntomas de estrés postraumático severo",
+              "Disociación frecuente o pérdida de memoria",
+              "Regresión significativa en desarrollo"
+            ],
+            "accion": "Derivación a profesional especializado en trauma infantil"
+          },
+          {
+            "categoria": "Trastornos del Desarrollo",
+            "señales": [
+              "Retrasos significativos en desarrollo social o emocional",
+              "Comportamientos repetitivos o rituales obsesivos",
+              "Dificultades severas de comunicación o interacción social",
+              "Síntomas que sugieren trastornos del espectro autista"
+            ],
+            "accion": "Evaluación por equipo multidisciplinario especializado"
+          },
+          {
+            "categoria": "Problemas Familiares Severos",
+            "señales": [
+              "Violencia doméstica o negligencia evidente",
+              "Abuso de sustancias en cuidadores principales",
+              "Dinámicas familiares severamente disfuncionales",
+              "Falta de supervisión o cuidado básico"
+            ],
+            "accion": "Derivación a servicios sociales y terapia familiar"
+          }
+        ],
+        "señales_amarillas": [
+          {
+            "descripcion": "Situaciones que requieren atención profesional pero no constituyen emergencia",
+            "señales": [
+              "Ansiedad o depresión que interfiere significativamente con funcionamiento",
+              "Problemas de conducta persistentes que no responden a intervenciones",
+              "Dificultades académicas severas con componente emocional",
+              "Problemas de sueño o alimentación crónicos"
+            ],
+            "accion": "Derivación planificada a psicólogo infantil o pediatra"
+          }
+        ],
+        "como_derivar": {
+          "paso_1": "Documentar observaciones específicas con fechas y contextos",
+          "paso_2": "Hablar con los cuidadores sobre las preocupaciones observadas",
+          "paso_3": "Ofrecer recursos específicos y ayuda para contactar profesionales",
+          "paso_4": "Mantener rol de apoyo durante el proceso de derivación",
+          "paso_5": "Coordinar con profesionales cuando sea apropiado y autorizado"
+        },
+        "manteniendo_limites": [
+          "Ser claro sobre tu rol como guía/acompañante, no terapeuta",
+          "No intentar 'diagnosticar' o interpretar síntomas complejos",
+          "Reconocer cuando una situación excede tu capacitación",
+          "Mantener confidencialidad apropiada pero reportar riesgos de seguridad",
+          "Continuar ofreciendo apoyo emocional dentro de tus competencias"
+        ]
+      }
+    },
+    {
+      "id": "reflexion-mim",
+      "titulo": "Reflexión: Integrando MIM en tu Práctica",
+      "tipo": "actividad",
+      "contenido": {
+        "introduccion": "La metodología MIM se convierte en parte natural de tu forma de acompañar cuando se integra con tu estilo personal y contexto específico.",
+        "preguntas_reflexion": [
+          "¿Cuál de los tres pilares sientes más natural para ti? ¿Cuál te desafía más?",
+          "¿Qué metáforas andinas resuenan más profundamente con tu propia experiencia?",
+          "¿Cómo puedes adaptar MIM al contexto específico donde acompañas niños?",
+          "¿Qué aspectos de tu personalidad y experiencia enriquecen tu aplicación de MIM?",
+          "¿Qué necesitas desarrollar o aprender más para sentirte confiado usando MIM?",
+          "¿Cómo puedes mantener la autenticidad mientras usas una metodología estructurada?"
+        ],
+        "ejercicio_diseño": {
+          "titulo": "Diseñando tu Primera Sesión MIM Completa",
+          "instrucciones": "Crea una sesión MIM completa para una situación real o hipotética que encuentres frecuentemente.",
+          "pasos": [
+            "Define la situación emocional que quieres abordar",
+            "Elige una metáfora andina apropiada y desarrolla la narrativa",
+            "Diseña el flujo conversacional con preguntas específicas",
+            "Selecciona 2-3 actividades que refuercen la metáfora",
+            "Crea un plan de seguimiento y transferencia",
+            "Identifica posibles adaptaciones según diferentes edades"
+          ]
+        },
+        "plan_implementacion": {
+          "titulo": "Mi Plan Personal de Implementación MIM",
+          "elementos": [
+            "Contexto específico donde aplicaré MIM (familia, escuela, consulta, etc.)",
+            "Edades principales de los niños que acompaño",
+            "3 metáforas que dominaré primero",
+            "Materiales básicos que necesito reunir",
+            "Cronograma de práctica y desarrollo de habilidades",
+            "Red de apoyo profesional para derivaciones cuando sea necesario"
+          ]
+        }
+      }
+    }
+  ],
+  "recursos_adicionales": [
+    {
+      "tipo": "manual",
+      "titulo": "Banco de Metáforas Andinas Expandido",
+      "descripcion": "Colección de 50+ metáforas categorizadas por edad y emoción objetivo"
+    },
+    {
+      "tipo": "herramienta",
+      "titulo": "Guía de Actividades MIM por Edad",
+      "descripcion": "Actividades específicas organizadas por grupo etario y objetivo emocional"
+    },
+    {
+      "tipo": "checklist",
+      "titulo": "Lista de Verificación para Derivación",
+      "descripcion": "Criterios claros para identificar cuándo derivar a profesionales"
+    },
+    {
+      "tipo": "template",
+      "titulo": "Plantilla de Sesión MIM",
+      "descripcion": "Formato estructurado para planificar y documentar sesiones"
+    },
+    {
+      "tipo": "video",
+      "titulo": "Demostraciones de MIM en Acción",
+      "descripcion": "Ejemplos grabados de sesiones MIM en diferentes contextos"
+    }
+  ],
+  "evaluacion": {
+    "tipo": "practica",
+    "criterios": [
+      "Comprensión profunda de la filosofía y estructura MIM",
+      "Habilidad para crear metáforas culturalmente resonantes",
+      "Competencia en conversación emocional validante y guiada",
+      "Capacidad de diseñar actividades integradoras efectivas",
+      "Destreza en adaptar MIM a diferentes contextos y edades",
+      "Claridad sobre límites profesionales y criterios de derivación"
+    ],
+    "evaluacion_practica": {
+      "titulo": "Demostración de Sesión MIM Completa",
+      "descripcion": "Facilitar una sesión MIM de 30-45 minutos integrando los tres pilares",
+      "criterios_observacion": [
+        "Fluidez en la transición entre pilares",
+        "Autenticidad y presencia en la facilitación",
+        "Adaptación responsiva a las necesidades del momento",
+        "Integración efectiva de elementos culturales",
+        "Empoderamiento visible del participante"
+      ]
+    }
+  }
+}

@@ -1,0 +1,399 @@
+{
+  "id": "modulo2",
+  "titulo": "Sabiduría Ancestral Andina Aplicada",
+  "subtitulo": "Conceptos Fundacionales para el Bienestar Integral",
+  "descripcion": "Descubre cómo los principios ancestrales andinos enriquecen el acompañamiento emocional infantil, creando conexiones más profundas y significativas.",
+  "duracion": "2-3 horas",
+  "objetivos": [
+    "Comprender los principios fundamentales de la cosmovisión andina",
+    "Aplicar el concepto de Ayni (reciprocidad) en las relaciones adulto-niño",
+    "Integrar el Sumak Kawsay (buen vivir) como marco de bienestar integral",
+    "Reconocer el poder de las metáforas culturales en el aprendizaje emocional",
+    "Establecer la conexión naturaleza-emoción para el equilibrio interior"
+  ],
+  "colorPrimario": "#8B4513",
+  "colorSecundario": "#DEB887",
+  "icono": "🏔️",
+  "secciones": [
+    {
+      "id": "introduccion",
+      "titulo": "La Sabiduría Milenaria: Más Allá de lo Decorativo",
+      "tipo": "contenido",
+      "contenido": {
+        "texto": "La sabiduría ancestral andina no es folklore pintoresco, sino un sistema completo de comprensión del ser humano y su relación con el mundo. Estos principios, refinados durante milenios, ofrecen herramientas profundas para el acompañamiento emocional que complementan perfectamente los hallazgos de la psicología moderna.",
+        "puntosClave": [
+          "La cosmovisión andina ve al ser humano como parte integral del cosmos",
+          "Los principios andinos priorizan el equilibrio y la armonía sobre la dominación",
+          "La reciprocidad (Ayni) es el fundamento de todas las relaciones saludables",
+          "La conexión con la naturaleza es esencial para el bienestar emocional"
+        ],
+        "contexto_cultural": "En la región andina, que abarca desde Venezuela hasta Chile, viven más de 200 millones de personas. Esta sabiduría ancestral sigue siendo relevante y poderosa para el desarrollo humano integral."
+      }
+    },
+    {
+      "id": "principios-fundamentales",
+      "titulo": "Los Principios Rectores de la Cosmovisión Andina",
+      "tipo": "contenido",
+      "contenido": {
+        "introduccion": "La cosmovisión andina se estructura sobre principios fundamentales que guían tanto la vida individual como comunitaria. Estos principios son especialmente relevantes para el acompañamiento emocional infantil.",
+        "principios": [
+          {
+            "principio": "Reciprocidad (Ayni)",
+            "significado": "Intercambio equilibrado de energía, cuidado y recursos",
+            "aplicacion_emocional": "En el acompañamiento emocional, significa que tanto el adulto como el niño se enriquecen mutuamente en la relación. El adulto ofrece contención y sabiduría, mientras que el niño aporta espontaneidad y enseña al adulto a reconectarse con su propia naturaleza emocional."
+          },
+          {
+            "principio": "Complementariedad (Yanatin)",
+            "significado": "Todas las fuerzas existen en pares complementarios, no opuestos",
+            "aplicacion_emocional": "Las emociones 'difíciles' (miedo, ira, tristeza) no son 'malas' sino complementarias a las 'agradables' (alegría, calma, entusiasmo). Ambas son necesarias para una vida emocional completa y equilibrada."
+          },
+          {
+            "principio": "Relacionalidad (Runa)",
+            "significado": "Nada existe en aislamiento, todo está interconectado",
+            "aplicacion_emocional": "El estado emocional del niño no puede entenderse sin considerar sus relaciones familiares, escolares y comunitarias. El bienestar emocional es un fenómeno relacional, no individual."
+          },
+          {
+            "principio": "Correspondencia (Tinku)",
+            "significado": "Lo que sucede en un nivel se refleja en otros niveles",
+            "aplicacion_emocional": "Los conflictos emocionales internos del niño se reflejan en su comportamiento externo, y viceversa. Trabajar en armonía exterior ayuda a sanar el mundo interior."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ayni-profundo",
+      "titulo": "Ayni: La Reciprocidad Sagrada en el Acompañamiento",
+      "tipo": "contenido",
+      "contenido": {
+        "definicion": "El Ayni va más allá del simple intercambio. Es el reconocimiento de que en toda relación auténtica, ambas partes se nutren y transforman mutuamente. En el acompañamiento emocional infantil, esto significa que el adulto no solo 'da' sino que también 'recibe' y aprende.",
+        "niveles_ayni": [
+          {
+            "nivel": "Ayni Emocional",
+            "descripcion": "Intercambio auténtico de estados emocionales",
+            "ejemplo_practico": "Cuando un niño comparte su miedo, el adulto no solo ofrece tranquilidad, sino que también se permite sentir y recordar sus propios miedos infantiles, creando un espacio de humanidad compartida."
+          },
+          {
+            "nivel": "Ayni Energético",
+            "descripcion": "Intercambio de presencia y atención consciente",
+            "ejemplo_practico": "El adulto ofrece su presencia plena y atenta, mientras que el niño aporta su espontaneidad y capacidad de estar en el momento presente, recordando al adulto la importancia del 'aquí y ahora'."
+          },
+          {
+            "nivel": "Ayni Sapiencial",
+            "descripcion": "Intercambio de sabiduría y aprendizaje",
+            "ejemplo_practico": "El adulto comparte su experiencia de vida, mientras que el niño enseña al adulto nuevas formas de ver el mundo, manteniendo viva la curiosidad y el asombro."
+          }
+        ],
+        "como_cultivar_ayni": [
+          "Practica la escucha auténtica: no solo oyes las palabras, sino que sientes la experiencia del niño",
+          "Reconoce lo que el niño te enseña: cada interacción es una oportunidad de aprendizaje mutuo",
+          "Mantén la humildad: no eres el 'experto' absoluto, sino un compañero de viaje con más experiencia",
+          "Celebra los momentos de conexión genuina: cuando se produce un Ayni auténtico, ambos se sienten nutrido"
+        ]
+      }
+    },
+    {
+      "id": "sumak-kawsay",
+      "titulo": "Sumak Kawsay: El Buen Vivir como Marco Integral",
+      "tipo": "contenido",
+      "contenido": {
+        "definicion": "Sumak Kawsay, traducido como 'Buen Vivir', es mucho más que bienestar individual. Es un concepto integral que abarca la armonía entre el ser humano, la comunidad y la naturaleza. Para el acompañamiento emocional infantil, ofrece una visión holística del desarrollo saludable.",
+        "dimensiones": [
+          {
+            "dimension": "Bienestar Personal (Alli Kawsay)",
+            "descripcion": "Equilibrio interno del niño",
+            "indicadores": [
+              "Capacidad de sentir y expresar emociones auténticamente",
+              "Desarrollo de autoestima sana basada en la aceptación",
+              "Cultivo de resiliencia emocional ante adversidades",
+              "Conexión con los propios recursos internos"
+            ],
+            "como_fomentarlo": [
+              "Validación consistente de la experiencia emocional del niño",
+              "Creación de espacios seguros para la expresión auténtica",
+              "Enseñanza de técnicas de autorregulación culturalmente resonantes",
+              "Celebración de la individualidad dentro del colectivo"
+            ]
+          },
+          {
+            "dimension": "Bienestar Relacional (Ayni Kawsay)",
+            "descripcion": "Armonía en las relaciones interpersonales",
+            "indicadores": [
+              "Capacidad de establecer vínculos seguros y nutritivos",
+              "Habilidad para resolver conflictos constructivamente",
+              "Desarrollo de empatía y compasión hacia otros",
+              "Participación activa en la vida comunitaria"
+            ],
+            "como_fomentarlo": [
+              "Modelado de relaciones respetuosas y equitativas",
+              "Enseñanza de habilidades de comunicación emocional",
+              "Creación de oportunidades para la cooperación",
+              "Cultivo de la gratitud y el reconocimiento mutuo"
+            ]
+          },
+          {
+            "dimension": "Bienestar Ambiental (Pachamama Kawsay)",
+            "descripcion": "Armonía con el entorno natural",
+            "indicadores": [
+              "Conexión regular y significativa con la naturaleza",
+              "Comprensión del lugar del ser humano en el ecosistema",
+              "Desarrollo de sensibilidad hacia los ciclos naturales",
+              "Cultivo de respeto y cuidado por el medio ambiente"
+            ],
+            "como_fomentarlo": [
+              "Actividades regulares en contacto con la naturaleza",
+              "Enseñanza sobre la interdependencia con otros seres vivos",
+              "Uso de metáforas naturales para explicar procesos emocionales",
+              "Cultivo de rituales de conexión con los elementos"
+            ]
+          },
+          {
+            "dimension": "Bienestar Espiritual (Munay Kawsay)",
+            "descripcion": "Conexión con el propósito y significado de vida",
+            "indicadores": [
+              "Desarrollo de valores personales sólidos",
+              "Sentido de propósito apropiado para la edad",
+              "Capacidad de encontrar significado en las experiencias",
+              "Conexión con algo mayor que uno mismo"
+            ],
+            "como_fomentarlo": [
+              "Exploración de valores familiares y comunitarios",
+              "Creación de rituales y tradiciones significativas",
+              "Cultivo de la admiración y el asombro",
+              "Desarrollo de prácticas de gratitud y reflexión"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "poder-metaforas",
+      "titulo": "El Poder de las Metáforas Culturales",
+      "tipo": "contenido",
+      "contenido": {
+        "introduccion": "Las metáforas no son simples comparaciones literarias. En la tradición andina, las metáforas son vehículos de transmisión de sabiduría profunda. Para el acompañamiento emocional infantil, las metáforas culturalmente resonantes tienen un poder transformador único.",
+        "por_que_funcionan": [
+          {
+            "razon": "Conexión Cultural Profunda",
+            "explicacion": "Las metáforas andinas conectan con arquetipos y símbolos que resuenan en el inconsciente colectivo de las familias latinoamericanas, creando un sentido de pertenencia y validación cultural."
+          },
+          {
+            "razon": "Procesamiento Emocional Seguro",
+            "explicacion": "Las metáforas permiten al niño explorar emociones complejas a través de historias simbólicas, creando una distancia emocional segura que facilita el procesamiento."
+          },
+          {
+            "razon": "Integración Cerebral",
+            "explicacion": "Las metáforas activan tanto el hemisferio lógico como el emocional, promoviendo la integración neuronal y el aprendizaje profundo."
+          },
+          {
+            "razon": "Memorabilidad y Transferencia",
+            "explicacion": "Las metáforas visuales y sensoriales se graban más profundamente en la memoria y son más fáciles de recordar en momentos de necesidad."
+          }
+        ],
+        "metaforas_centrales": [
+          {
+            "metafora": "La Montaña Interior",
+            "emocion_objetivo": "Estabilidad y fortaleza ante adversidades",
+            "descripcion": "Cada niño tiene una montaña sólida en su interior que no puede ser movida por las tormentas emocionales externas.",
+            "como_usarla": "Cuando el niño se siente abrumado: 'Cierra los ojos y siente esa montaña fuerte en tu pecho. Las nubes pueden cubrir la cima, pero la montaña siempre está ahí, firme y poderosa.'"
+          },
+          {
+            "metafora": "El Río de las Emociones",
+            "emocion_objetivo": "Fluidez y aceptación de los cambios emocionales",
+            "descripcion": "Las emociones son como un río que fluye naturalmente, con corrientes rápidas y pozas tranquilas.",
+            "como_usarla": "Para emociones intensas: 'Tu enojo es como el río cuando llueve mucho, corre rápido y fuerte. Pero como todos los ríos, encontrará su cauce tranquilo.'"
+          },
+          {
+            "metafora": "El Cóndor y el Colibrí",
+            "emocion_objetivo": "Perspectiva y presencia",
+            "descripcion": "El cóndor ve desde las alturas (perspectiva amplia) mientras el colibrí se enfoca en la flor (presencia en el momento).",
+            "como_usarla": "Para ansiedad: 'A veces necesitas ser cóndor y ver todo desde arriba, otras veces necesitas ser colibrí y solo ver la flor hermosa que tienes frente a ti.'"
+          },
+          {
+            "metafora": "La Chakana del Corazón",
+            "emocion_objetivo": "Equilibrio e integración emocional",
+            "descripcion": "El corazón tiene cuatro direcciones como la chakana: alegría, tristeza, miedo y coraje, todas necesarias para caminar completo.",
+            "como_usarla": "Para emociones 'negativas': 'Tu tristeza es una de las cuatro direcciones sagradas de tu corazón. Sin ella, no podrías caminar completo por la vida.'"
+          }
+        ]
+      }
+    },
+    {
+      "id": "conexion-naturaleza",
+      "titulo": "La Conexión Naturaleza-Emoción: Sanando desde la Pachamama",
+      "tipo": "contenido",
+      "contenido": {
+        "fundamento": "En la cosmovisión andina, la Pachamama (Madre Tierra) no es solo el entorno físico, sino una entidad viva y sagrada que nutre y sana. La conexión con la naturaleza es esencial para el equilibrio emocional, especialmente en la infancia.",
+        "beneficios_cientificos": [
+          "Reducción del cortisol (hormona del estrés) mediante contacto con la naturaleza",
+          "Activación del sistema nervioso parasimpático (relajación) por sonidos naturales",
+          "Mejora de la atención y concentración tras tiempo en espacios verdes",
+          "Fortalecimiento del sistema inmunológico por exposición a microorganismos naturales"
+        ],
+        "elementos_naturales": [
+          {
+            "elemento": "Tierra (Allpa)",
+            "cualidad_emocional": "Estabilidad, conexión a tierra, seguridad",
+            "actividades": [
+              "Caminar descalzo sobre tierra o césped",
+              "Plantar semillas y cuidar plantas",
+              "Crear mandalas con piedras y elementos naturales",
+              "Ejercicios de respiración en contacto con la tierra"
+            ],
+            "cuando_usar": "Para niños ansiosos, hiperactivos o desconectados de su cuerpo"
+          },
+          {
+            "elemento": "Agua (Yaku)",
+            "cualidad_emocional": "Fluidez, purificación, adaptabilidad",
+            "actividades": [
+              "Escuchar y observar el agua corriente",
+              "Juegos sensoriales con agua",
+              "Rituales de 'lavado' simbólico de preocupaciones",
+              "Meditaciones junto a fuentes de agua"
+            ],
+            "cuando_usar": "Para emociones estancadas, rigidez emocional o necesidad de renovación"
+          },
+          {
+            "elemento": "Fuego (Nina)",
+            "cualidad_emocional": "Transformación, energía, pasión",
+            "actividades": [
+              "Observar fuego de velas o fogata (con supervisión)",
+              "Rituales de transformación escribiendo y quemando preocupaciones",
+              "Danza libre expresiva",
+              "Ejercicios de respiración energizante"
+            ],
+            "cuando_usar": "Para falta de energía, depresión leve o necesidad de cambio"
+          },
+          {
+            "elemento": "Aire (Wayra)",
+            "cualidad_emocional": "Libertad, expansión, claridad mental",
+            "actividades": [
+              "Ejercicios de respiración consciente al aire libre",
+              "Volar cometas o globos",
+              "Observar nubes y crear historias",
+              "Caminatas en lugares ventosos"
+            ],
+            "cuando_usar": "Para sensaciones de opresión, confusión mental o falta de perspectiva"
+          }
+        ],
+        "rituales_conexion": [
+          {
+            "ritual": "Saludo a la Pachamama",
+            "descripcion": "Momento diario de conexión consciente con la tierra",
+            "pasos": [
+              "Colocar las manos sobre el corazón",
+              "Agradecer a la Pachamama por sostenernos",
+              "Pedirle que nos ayude a estar tranquilos y fuertes",
+              "Sentir la conexión con todos los seres vivos"
+            ]
+          },
+          {
+            "ritual": "Respiración de la Montaña",
+            "descripcion": "Técnica de respiración usando la imagen de la montaña",
+            "pasos": [
+              "Imaginar que se es una montaña fuerte y estable",
+              "Inhalar subiendo por la montaña",
+              "Exhalar bajando por la montaña",
+              "Sentir la estabilidad y fortaleza de la montaña interior"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "integracion-practica",
+      "titulo": "Integración Práctica: Llevando la Sabiduría a la Vida Cotidiana",
+      "tipo": "contenido",
+      "contenido": {
+        "introduccion": "La sabiduría ancestral andina cobra vida cuando se integra naturalmente en las rutinas diarias. No se trata de crear rituales elaborados, sino de infundir los principios andinos en las interacciones cotidianas.",
+        "momentos_integracion": [
+          {
+            "momento": "Despertar",
+            "principio": "Gratitud y conexión",
+            "practica": "Saludo breve a la Pachamama, agradecer por el nuevo día, sentir la conexión con la familia y la naturaleza"
+          },
+          {
+            "momento": "Comidas",
+            "principio": "Reciprocidad y mindfulness",
+            "practica": "Agradecer a la tierra por los alimentos, comer con consciencia, compartir en comunidad"
+          },
+          {
+            "momento": "Conflictos",
+            "principio": "Complementariedad y equilibrio",
+            "practica": "Recordar que el conflicto es oportunidad de crecimiento, buscar el equilibrio entre las necesidades de todos"
+          },
+          {
+            "momento": "Descanso",
+            "principio": "Armonía y reflexión",
+            "practica": "Revisar el día con gratitud, reconocer aprendizajes, pedir protección y guía para el descanso"
+          }
+        ],
+        "frases_poder": [
+          "Tu corazón es fuerte como la montaña y fluye como el río",
+          "Cada emoción es un mensajero sagrado que merece ser escuchado",
+          "Somos parte de la gran familia de la vida, nunca estamos solos",
+          "Tu luz interior brilla tan fuerte como el sol en el Inti Raymi",
+          "La Pachamama te sostiene siempre, puedes confiar en su abrazo"
+        ]
+      }
+    },
+    {
+      "id": "reflexion-cultural",
+      "titulo": "Reflexión: Mi Conexión con la Sabiduría Ancestral",
+      "tipo": "actividad",
+      "contenido": {
+        "instrucciones": "Explora tu propia conexión con la sabiduría ancestral y cómo puedes integrarla auténticamente en tu rol como guía consciente.",
+        "preguntas": [
+          "¿Qué elementos de la sabiduría ancestral andina resuenan más profundamente contigo? ¿Por qué?",
+          "¿Cómo se relacionaba tu familia de origen con la naturaleza y las tradiciones culturales?",
+          "¿Qué metáforas naturales o culturales usas instintivamente cuando explicas emociones?",
+          "¿En qué aspectos de tu vida sientes que podrías incorporar más los principios del Sumak Kawsay?",
+          "¿Cómo puedes honrar la sabiduría ancestral sin apropiarte culturalmente o caer en estereotipos?",
+          "¿Qué ritual o práctica andina te gustaría incorporar en tu acompañamiento emocional?"
+        ],
+        "ejercicio_practico": {
+          "titulo": "Creando tu Metáfora Personal",
+          "instrucciones": "Piensa en un elemento de la naturaleza que te genere calma y fortaleza. Desarrolla una metáfora personal basada en este elemento que puedas usar para acompañar a los niños en momentos de dificultad emocional.",
+          "pasos": [
+            "Elige tu elemento natural (montaña, río, árbol, etc.)",
+            "Identifica qué cualidades emocionales representa para ti",
+            "Crea una frase o visualización que conecte este elemento con la fortaleza interior",
+            "Practica usando esta metáfora contigo mismo/a",
+            "Reflexiona sobre cómo la compartirías con un niño"
+          ]
+        }
+      }
+    }
+  ],
+  "recursos_adicionales": [
+    {
+      "tipo": "lectura",
+      "titulo": "Filosofía Andina: Sabiduría Indígena para un Mundo Nuevo - José Estermann",
+      "descripcion": "Introducción profunda a los principios filosóficos andinos"
+    },
+    {
+      "tipo": "documental",
+      "titulo": "Sumak Kawsay: El Buen Vivir",
+      "descripcion": "Exploración visual de los principios del buen vivir en comunidades andinas"
+    },
+    {
+      "tipo": "herramienta",
+      "titulo": "Rueda de Metáforas Andinas",
+      "descripcion": "Guía visual con metáforas organizadas por emociones y situaciones"
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Ritual Diario de Conexión con la Pachamama",
+      "descripcion": "Secuencia simple para integrar la conexión natural en la rutina diaria"
+    }
+  ],
+  "evaluacion": {
+    "tipo": "integrativa",
+    "criterios": [
+      "Comprensión auténtica de los principios andinos fundamentales",
+      "Capacidad de aplicar el Ayni en relaciones de acompañamiento",
+      "Integración del Sumak Kawsay como marco de bienestar integral",
+      "Habilidad para crear y usar metáforas culturalmente resonantes",
+      "Establecimiento de conexiones genuinas naturaleza-emoción"
+    ]
+  }
+}

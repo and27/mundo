@@ -1,0 +1,362 @@
+{
+  "id": "modulo1",
+  "titulo": "Fundamentos del Desarrollo Emocional (0-12 años)",
+  "subtitulo": "El Por Qué del Desarrollo Emocional",
+  "descripcion": "Comprende las bases científicas y evolutivas del desarrollo emocional infantil para convertirte en un guía consciente y efectivo.",
+  "duracion": "2-3 horas",
+  "objetivos": [
+    "Comprender la neurociencia básica del desarrollo emocional infantil",
+    "Identificar los hitos evolutivos críticos de 0 a 12 años",
+    "Reconocer por qué surgen miedos, ira y ansiedad en cada etapa",
+    "Distinguir entre apego seguro e inseguro y su impacto",
+    "Evaluar las consecuencias del desarrollo emocional inadecuado"
+  ],
+  "colorPrimario": "#2E8B57",
+  "colorSecundario": "#98FB98",
+  "icono": "🧠",
+  "secciones": [
+    {
+      "id": "introduccion",
+      "titulo": "Introducción: ¿Por Qué Importa el Desarrollo Emocional?",
+      "tipo": "contenido",
+      "contenido": {
+        "texto": "El desarrollo emocional no es un lujo, es una necesidad fundamental. Los primeros 12 años de vida determinan en gran medida cómo los niños procesarán, regularán y expresarán sus emociones durante toda su vida. Como guías conscientes, necesitamos entender profundamente estos procesos para acompañar efectivamente.",
+        "puntosClave": [
+          "Las emociones tienen un origen neurobiológico y se ven influenciadas por vivencias y aprendizajes",
+          "Cada etapa del desarrollo presenta desafíos emocionales específicos",
+          "La calidad del acompañamiento adulto determina la salud emocional futura",
+          "La intervención temprana es más efectiva que la corrección tardía"
+        ]
+      }
+    },
+    {
+      "id": "neurociencia-basica",
+      "titulo": "Neurociencia del Desarrollo Emocional",
+      "tipo": "contenido",
+      "contenido": {
+        "texto": "El cerebro infantil se desarrolla desde las estructuras más primitivas (tronco cerebral) hacia las más complejas (corteza prefrontal). Esta secuencia explica por qué los niños experimentan emociones intensas antes de desarrollar la capacidad de regularlas.",
+        "subsecciones": [
+          {
+            "subtitulo": "El Cerebro Emocional vs Racional",
+            "texto": "La amígdala (centro del miedo y emociones intensas) está completamente desarrollada al nacer, mientras que la corteza prefrontal (control ejecutivo y regulación) no madura hasta los 25 años. Esto explica las 'montañas rusas emocionales' infantiles."
+          },
+          {
+            "subtitulo": "Ventanas Críticas de Desarrollo",
+            "texto": "Existen períodos sensibles donde el cerebro es especialmente maleable. Los primeros 3 años son cruciales para el apego, los 4-7 años para la regulación emocional básica, y los 8-12 años para habilidades sociales complejas."
+          },
+          {
+            "subtitulo": "Neuroplasticidad: La Esperanza",
+            "texto": "El cerebro mantiene su capacidad de cambio toda la vida. Aunque las experiencias tempranas son fundamentales, siempre hay oportunidad de generar nuevas conexiones neuronales a través de experiencias reparadoras."
+          }
+        ]
+      }
+    },
+    {
+      "id": "hitos-evolutivos",
+      "titulo": "Hitos del Desarrollo Emocional por Etapas",
+      "tipo": "contenido",
+      "contenido": {
+        "etapas": [
+          {
+            "rango": "0-2 años",
+            "titulo": "Primera Infancia: Fundamentos del Apego",
+            "descripcion": "Establecimiento de vínculos básicos y primeras formas de regulación emocional.",
+            "hitos": [
+              "4-6 meses: Primeras expresiones emocionales diferenciadas",
+              "6-8 meses: Ansiedad ante extraños, apego específico",
+              "8-12 meses: Atención conjunta, referenciación social",
+              "12-18 meses: Primeras expresiones de autonomía y frustración",
+              "18-24 meses: Consciencia emocional básica, inicio del autocontrol"
+            ],
+            "desafios": [
+              "Regulación básica (sueño, alimentación, calma)",
+              "Establecimiento de rutinas predecibles",
+              "Respuesta sensible a las necesidades emocionales"
+            ]
+          },
+          {
+            "rango": "3-6 años",
+            "titulo": "Preescolar: Desarrollo de la Conciencia Emocional",
+            "descripcion": "Explosión del lenguaje emocional y primeras habilidades de autorregulación.",
+            "hitos": [
+              "3 años: Narcisismo saludable, juego simbólico emocional",
+              "4 años: Inicio de la empatía cognitiva, comprensión de causas emocionales",
+              "5 años: Seguimiento de reglas simples, expresión emocional más sofisticada",
+              "6 años: Comprensión de emociones mixtas, inicio del autocontrol consciente"
+            ],
+            "desafios": [
+              "Manejo de rabietas y frustración",
+              "Desarrollo de habilidades sociales básicas",
+              "Equilibrio entre autonomía y límites necesarios"
+            ]
+          },
+          {
+            "rango": "7-9 años",
+            "titulo": "Escolar Temprana: Sofisticación Emocional",
+            "descripcion": "Desarrollo de habilidades metacognitivas y sociales más complejas.",
+            "hitos": [
+              "7 años: Comprensión de la perspectiva ajena",
+              "8 años: Autocontrol emocional más consistente",
+              "9 años: Expresión emocional más reservada y madura"
+            ],
+            "desafios": [
+              "Presión académica y social",
+              "Desarrollo de la autoestima realista",
+              "Manejo de conflictos entre pares"
+            ]
+          },
+          {
+            "rango": "10-12 años",
+            "titulo": "Preadolescencia: Preparación para la Complejidad",
+            "descripcion": "Consolidación de habilidades emocionales antes de los cambios adolescentes.",
+            "hitos": [
+              "Mayor capacidad de reflexión emocional",
+              "Comprensión de normas sociales complejas",
+              "Desarrollo de valores personales iniciales"
+            ],
+            "desafios": [
+              "Cambios corporales y hormonales iniciales",
+              "Mayor influencia del grupo de pares",
+              "Necesidad de independencia vs seguridad"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "origen-emociones",
+      "titulo": "¿Por Qué Surgen Miedos, Ira y Ansiedad?",
+      "tipo": "contenido",
+      "contenido": {
+        "introduccion": "Cada emoción tiene una función adaptativa. Comprender el 'para qué' de las emociones nos permite acompañarlas en lugar de suprimirlas.",
+        "emociones": [
+          {
+            "emocion": "Miedo",
+            "funcion": "Protección ante amenazas percibidas",
+            "manifestaciones_por_edad": {
+              "0-2": "Miedo a ruidos fuertes, alturas, separación",
+              "3-6": "Miedos fantásticos (monstruos, oscuridad), ansiedad de separación",
+              "7-9": "Miedos más realistas (desastres, muerte), preocupación por el rendimiento",
+              "10-12": "Ansiedad social, preocupación por la aceptación"
+            },
+            "cuando_preocuparse": [
+              "Miedos que interfieren significativamente con la vida diaria",
+              "Regresión a miedos de etapas anteriores",
+              "Miedos hacia figuras de cuidado",
+              "Evitación extrema de situaciones normales"
+            ]
+          },
+          {
+            "emocion": "Ira",
+            "funcion": "Movilización de energía para superar obstáculos",
+            "manifestaciones_por_edad": {
+              "0-2": "Llanto intenso ante frustración, primeras rabietas",
+              "3-6": "Rabietas elaboradas, agresión física ocasional",
+              "7-9": "Expresión verbal de enfado, comprensión de injusticia",
+              "10-12": "Ira más controlada, inicio de sarcasmo o agresión verbal"
+            },
+            "cuando_preocuparse": [
+              "Agresión que daña a otros o a sí mismo",
+              "Ira desproporcionada o muy frecuente",
+              "Incapacidad total para calmarse",
+              "Ira dirigida consistentemente hacia figuras de autoridad"
+            ]
+          },
+          {
+            "emocion": "Ansiedad",
+            "funcion": "Preparación ante situaciones desafiantes",
+            "manifestaciones_por_edad": {
+              "0-2": "Irritabilidad, dificultades de sueño, apego excesivo",
+              "3-6": "Preocupaciones verbalizadas, rituales tranquilizadores",
+              "7-9": "Ansiedad de rendimiento, preocupación por el futuro",
+              "10-12": "Ansiedad social, preocupación por la imagen personal"
+            },
+            "cuando_preocuparse": [
+              "Ansiedad que paraliza la acción",
+              "Síntomas físicos persistentes (dolores, nauseas)",
+              "Evitación de actividades apropiadas para la edad",
+              "Preocupaciones excesivas por temas menores"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "apego",
+      "titulo": "Apego Seguro vs Inseguro: Las Bases de la Regulación",
+      "tipo": "contenido",
+      "contenido": {
+        "introduccion": "El estilo de apego formado en los primeros años se convierte en el 'manual de instrucciones' interno del niño para las relaciones y la regulación emocional.",
+        "tipos_apego": [
+          {
+            "tipo": "Apego Seguro (65% población)",
+            "caracteristicas": [
+              "El niño confía en que sus necesidades serán atendidas",
+              "Busca consuelo cuando está angustiado",
+              "Explora con confianza cuando se siente seguro",
+              "Desarrolla autorregulación emocional saludable"
+            ],
+            "conductas_cuidador": [
+              "Respuesta consistente y sensible a las necesidades",
+              "Sintonía emocional (refleja y valida emociones)",
+              "Disponibilidad física y emocional",
+              "Reparación de rupturas en la conexión"
+            ]
+          },
+          {
+            "tipo": "Apego Inseguro Evitativo (20% población)",
+            "caracteristicas": [
+              "Minimiza la expresión de necesidades emocionales",
+              "Aparenta independencia excesiva para la edad",
+              "Dificultad para buscar ayuda cuando la necesita",
+              "Tiende a suprimir emociones"
+            ],
+            "conductas_cuidador": [
+              "Incomodidad con las emociones intensas",
+              "Énfasis excesivo en la autonomía",
+              "Dificultad para sintonizar emocionalmente",
+              "Mensajes directos o indirectos de que las emociones 'molestan'"
+            ]
+          },
+          {
+            "tipo": "Apego Inseguro Ansioso (15% población)",
+            "caracteristicas": [
+              "Amplifica la expresión emocional para obtener atención",
+              "Dificultad para calmarse sin ayuda externa",
+              "Hipervigilancia hacia las emociones del cuidador",
+              "Ansiedad ante la separación"
+            ],
+            "conductas_cuidador": [
+              "Inconsistencia en las respuestas",
+              "Disponibilidad emocional intermitente",
+              "Propias emociones no reguladas",
+              "Confusión entre sus necesidades y las del niño"
+            ]
+          }
+        ],
+        "impacto_a_largo_plazo": {
+          "apego_seguro": [
+            "Mayor resilencia ante adversidades",
+            "Relaciones más satisfactorias",
+            "Mejor regulación emocional",
+            "Mayor autoestima y confianza"
+          ],
+          "apego_inseguro": [
+            "Mayor vulnerabilidad a trastornos emocionales",
+            "Dificultades en relaciones íntimas",
+            "Estrategias de regulación menos adaptativas",
+            "Mayor riesgo de problemas de salud mental"
+          ]
+        }
+      }
+    },
+    {
+      "id": "consecuencias",
+      "titulo": "Impacto del Desarrollo Emocional Inadecuado",
+      "tipo": "contenido",
+      "contenido": {
+        "introduccion": "Comprender las consecuencias del acompañamiento emocional inadecuado nos motiva a mejorar nuestras prácticas y nos ayuda a identificar cuándo se necesita intervención especializada.",
+        "areas_impacto": [
+          {
+            "area": "Salud Mental",
+            "consecuencias_corto_plazo": [
+              "Ansiedad y depresión infantil",
+              "Trastornos del sueño y alimentación",
+              "Problemas de atención y concentración",
+              "Autoestima baja"
+            ],
+            "consecuencias_largo_plazo": [
+              "Mayor riesgo de trastornos de ansiedad y depresión",
+              "Tendencia a relaciones tóxicas",
+              "Dificultades de regulación emocional en la adultez",
+              "Mayor vulnerabilidad al estrés"
+            ]
+          },
+          {
+            "area": "Rendimiento Académico",
+            "consecuencias_corto_plazo": [
+              "Dificultades de concentración",
+              "Problemas de comportamiento en el aula",
+              "Evitación de desafíos académicos",
+              "Conflictos con maestros y compañeros"
+            ],
+            "consecuencias_largo_plazo": [
+              "Menor logro educativo",
+              "Dificultades en el trabajo en equipo",
+              "Problemas de liderazgo",
+              "Menor adaptabilidad profesional"
+            ]
+          },
+          {
+            "area": "Relaciones Sociales",
+            "consecuencias_corto_plazo": [
+              "Dificultad para hacer amigos",
+              "Conflictos frecuentes con pares",
+              "Aislamiento social",
+              "Problemas de comunicación"
+            ],
+            "consecuencias_largo_plazo": [
+              "Relaciones de pareja inestables",
+              "Dificultades en la crianza",
+              "Problemas laborales interpersonales",
+              "Menor satisfacción social general"
+            ]
+          }
+        ],
+        "senales_alerta": [
+          "Regresión significativa en habilidades ya adquiridas",
+          "Cambios dramáticos en el comportamiento o personalidad",
+          "Síntomas físicos sin causa médica (dolores frecuentes, fatiga)",
+          "Expresiones de desesperanza o deseos de muerte",
+          "Comportamientos autolesivos",
+          "Aislamiento social extremo",
+          "Miedo persistente a cuidadores",
+          "Comportamientos sexualizados inapropiados para la edad"
+        ]
+      }
+    },
+    {
+      "id": "reflexion",
+      "titulo": "Reflexión y Autoevaluación",
+      "tipo": "actividad",
+      "contenido": {
+        "instrucciones": "Tómate un momento para reflexionar sobre tu propio desarrollo emocional y cómo esto puede influir en tu papel como guía consciente.",
+        "preguntas": [
+          "¿Cómo describirías tu propio estilo de apego en la infancia? ¿Cómo crees que esto influye en tu forma de acompañar a los niños?",
+          "¿Qué emociones te resultan más difíciles de acompañar en los niños? ¿Por qué crees que es así?",
+          "¿Puedes identificar algún patrón en tu propia familia de origen respecto al manejo de las emociones?",
+          "¿Qué aspectos de tu desarrollo emocional consideras fortalezas para tu rol como guía? ¿Cuáles podrían ser áreas de crecimiento?",
+          "¿Hay alguna etapa del desarrollo infantil que te genera más ansiedad o inseguridad? ¿Qué crees que necesitas para sentirte más preparado/a?"
+        ],
+        "objetivo": "Desarrollar autoconciencia sobre nuestros propios patrones emocionales para ser guías más efectivos y conscientes."
+      }
+    }
+  ],
+  "recursos_adicionales": [
+    {
+      "tipo": "lectura",
+      "titulo": "Attachment in Psychotherapy - David Wallin",
+      "descripcion": "Profundización en la teoría del apego y su aplicación terapéutica"
+    },
+    {
+      "tipo": "video",
+      "titulo": "El Cerebro del Niño - Daniel Siegel",
+      "descripcion": "Explicación accesible de la neurociencia del desarrollo infantil"
+    },
+    {
+      "tipo": "herramienta",
+      "titulo": "Tabla de Hitos del Desarrollo Emocional",
+      "descripcion": "Referencia rápida para identificar hitos apropiados por edad"
+    }
+  ],
+  "evaluacion": {
+    "tipo": "reflexiva",
+    "criterios": [
+      "Comprensión de los fundamentos neurobiológicos del desarrollo emocional",
+      "Identificación correcta de hitos evolutivos por edad",
+      "Reconocimiento de las funciones adaptativas de las emociones básicas",
+      "Diferenciación entre estilos de apego y sus implicaciones",
+      "Autoconciencia sobre los propios patrones emocionales"
+    ]
+  }
+}
