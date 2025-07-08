@@ -4,6 +4,36 @@ import { useSearchParams } from "next/navigation";
 import { ChevronRight, ArrowLeft, Clock, Calendar, Trash2 } from "lucide-react";
 import { useSavedGuides } from "@/hooks/useSavedGuides";
 import GuideDisplay from "../assistant/GuideDisplay";
+import { GuideWithCharacter } from "@/types/ai";
+
+const getSummary = (guide: GuideWithCharacter) => {
+  const elements: string[] = [];
+
+  if (guide.metaphorStory) {
+    elements.push(`Metáfora: ${guide.metaphorStory.slice(0, 30)}...`);
+  }
+
+  if (guide.conversationPlan?.phrasesToValidate?.length) {
+    elements.push(`${guide.conversationPlan.phrasesToValidate.length} frases`);
+  }
+
+  if (guide.suggestedActivity?.title) {
+    elements.push(`Actividad: ${guide.suggestedActivity.title}`);
+  }
+
+  return elements.join(" • ");
+};
+
+const getDuration = (guide: GuideWithCharacter) => {
+  let wordCount = 0;
+  wordCount += guide.metaphorStory?.split(" ").length || 0;
+  wordCount +=
+    guide.conversationPlan?.questionsToExplore.join(" ").split(" ").length || 0;
+  wordCount += guide.suggestedActivity?.description?.split(" ").length || 0;
+
+  const minutes = Math.max(1, Math.ceil(wordCount / 200));
+  return `${minutes} min lectura`;
+};
 
 export default function GeneratedStories() {
   const searchParams = useSearchParams();
@@ -14,17 +44,14 @@ export default function GeneratedStories() {
   );
   const { savedGuides, isLoaded, deleteGuide, getGuide } = useSavedGuides();
 
-  // Si llega un guideId por URL, seleccionarlo automáticamente
   useEffect(() => {
     if (guideIdFromUrl && guideIdFromUrl !== selectedGuideId) {
       setSelectedGuideId(guideIdFromUrl);
     }
   }, [guideIdFromUrl, selectedGuideId]);
 
-  // Si hay una guía seleccionada, mostrar vista detalle
   if (selectedGuideId) {
     const currentGuide = getGuide(selectedGuideId);
-
     if (!currentGuide) {
       setSelectedGuideId(null);
       return null;
@@ -32,7 +59,6 @@ export default function GeneratedStories() {
 
     return (
       <div className="space-y-6">
-        {/* Breadcrumbs */}
         <nav className="flex items-center space-x-2 text-sm text-slate-600">
           <button
             onClick={() => setSelectedGuideId(null)}
@@ -43,32 +69,31 @@ export default function GeneratedStories() {
           </button>
           <ChevronRight className="w-4 h-4 text-slate-400" />
           <span className="text-slate-800 font-medium">
-            {currentGuide.title}
+            {currentGuide.guideTitle}
           </span>
         </nav>
 
-        {/* Vista detalle */}
         <div className="bg-white rounded-xl border border-slate-200 p-6">
           <div className="mb-6 flex items-start justify-between">
             <div className="flex-1">
               <h1 className="text-2xl font-bold text-slate-900 mb-2">
-                {currentGuide.title}
+                {currentGuide.guideTitle}
               </h1>
-              <p className="text-slate-600 mb-4">{currentGuide.summary}</p>
+              <p className="text-slate-600 mb-4">{getSummary(currentGuide)}</p>
 
               <div className="flex items-center gap-4 text-sm text-slate-500">
                 <span className="flex items-center gap-1">
                   <Calendar className="w-4 h-4" />
-                  {currentGuide.createdAt}
+                  {/* Aquí puedes mostrar una fecha real si la agregás al guardar */}
+                  Generada localmente
                 </span>
                 <span className="flex items-center gap-1">
                   <Clock className="w-4 h-4" />
-                  {currentGuide.duration}
+                  {getDuration(currentGuide)}
                 </span>
               </div>
             </div>
 
-            {/* Botón eliminar */}
             <button
               onClick={() => {
                 if (window.confirm("¿Estás seguro de eliminar esta guía?")) {
@@ -83,7 +108,6 @@ export default function GeneratedStories() {
             </button>
           </div>
 
-          {/* Contenido de la guía */}
           <GuideDisplay guide={currentGuide} />
         </div>
       </div>
@@ -98,21 +122,18 @@ export default function GeneratedStories() {
     );
   }
 
-  // Vista lista de guías
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-slate-900 mb-2">
           📚 Tus Guías Generadas
         </h1>
         <p className="text-slate-600">
           Accede a todas las guías emocionales que has creado (
-          {savedGuides.length} guías)
+          {savedGuides.length})
         </p>
       </div>
 
-      {/* Lista de guías */}
       {savedGuides.length > 0 ? (
         <div className="grid gap-4">
           {savedGuides.map((guide) => (
@@ -124,52 +145,42 @@ export default function GeneratedStories() {
               <div className="flex items-start justify-between">
                 <div className="flex-1 min-w-0">
                   <h3 className="text-lg font-semibold text-slate-900 mb-2 group-hover:text-indigo-600 transition-colors">
-                    {guide.title}
+                    {guide.guideTitle}
                   </h3>
                   <p className="text-slate-600 text-sm mb-4 line-clamp-2">
-                    {guide.summary}
+                    {getSummary(guide)}
                   </p>
 
-                  {/* Pillars preview */}
                   <div className="flex flex-wrap gap-2 mb-4">
-                    {guide.metaphor?.title && (
-                      <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-700">
-                        📖 {guide.metaphor.title}
-                      </span>
-                    )}
-                    {guide.conversation?.phrases && (
-                      <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
-                        💬 {guide.conversation.phrases.length} frases
-                      </span>
-                    )}
-                    {guide.activity?.title && (
-                      <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
-                        🎯 {guide.activity.title}
-                      </span>
-                    )}
+                    <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-700">
+                      📖 Metáfora
+                    </span>
+                    <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
+                      💬 {guide.conversationPlan.phrasesToValidate.length}{" "}
+                      frases
+                    </span>
+                    <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                      🎯 {guide.suggestedActivity.title}
+                    </span>
                   </div>
 
-                  {/* Meta info */}
                   <div className="flex items-center gap-4 text-sm text-slate-500">
                     <span className="flex items-center gap-1">
                       <Calendar className="w-4 h-4" />
-                      {guide.createdAt}
+                      Generada localmente
                     </span>
                     <span className="flex items-center gap-1">
                       <Clock className="w-4 h-4" />
-                      {guide.duration}
+                      {getDuration(guide)}
                     </span>
                   </div>
                 </div>
-
-                {/* Arrow indicator */}
                 <ChevronRight className="w-5 h-5 text-slate-400 group-hover:text-indigo-500 transition-colors ml-4 flex-shrink-0" />
               </div>
             </div>
           ))}
         </div>
       ) : (
-        /* Empty state */
         <div className="text-center py-12">
           <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <Calendar className="w-8 h-8 text-slate-400" />

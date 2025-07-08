@@ -1,27 +1,5 @@
-import { SectionContent } from "@/types/course";
+import { CourseProgress, ModuleData } from "@/types/course";
 import { useState, useEffect } from "react";
-
-export interface ModuleData {
-  id: string;
-  titulo: string;
-  subtitulo: string;
-  descripcion: string;
-  duracion: string;
-  objetivos: string[];
-  colorPrimario: string;
-  colorSecundario: string;
-  icono: string;
-  secciones: SectionContent[];
-}
-
-export interface CourseProgress {
-  currentModule: number;
-  completedSections: string[];
-  moduleProgress: Record<string, number>;
-  totalProgress: number;
-  startedDate?: string;
-  lastActivityDate?: string;
-}
 
 const defaultProgress: CourseProgress = {
   currentModule: 1,
