@@ -4,9 +4,8 @@ import {
   generateAudio,
   generateHiveImage,
 } from "@/lib/storyEngine";
-import fs from "fs";
-import path from "path";
 import { enhancePromptStyle } from "@/utils/imageUtils";
+import { supabase } from "@/lib/supabaseServer";
 
 export async function POST(request: Request) {
   const body = await request.json();
@@ -34,6 +33,7 @@ export async function POST(request: Request) {
       const audioFilename = `${story.id}_${step.id}.mp3`;
       step.audioSrc = await generateAudio(step.subtitle, audioFilename);
 
+      // Interacción automática si no se define
       if (!step.interaction) {
         step.interaction = {
           type: "auto_proceed",
@@ -54,16 +54,26 @@ export async function POST(request: Request) {
       step.isNarration = true;
     }
 
-    const storyPath = path.join(
-      process.cwd(),
-      "public",
-      "stories",
-      `${story.id}.json`
-    );
-    fs.mkdirSync(path.dirname(storyPath), { recursive: true });
-    fs.writeFileSync(storyPath, JSON.stringify(story, null, 2), "utf8");
+    // Subir a Supabase Storage
+    const filename = `${story.id}.json`;
+    const uploadRes = await supabase.storage
+      .from("stories") // nombre del bucket
+      .upload(filename, JSON.stringify(story, null, 2), {
+        contentType: "application/json",
+        upsert: true,
+      });
 
-    return NextResponse.json({ story });
+    if (uploadRes.error) {
+      throw new Error(
+        "Error al subir historia a Supabase: " + uploadRes.error.message
+      );
+    }
+
+    const { data: publicUrlData } = supabase.storage
+      .from("stories")
+      .getPublicUrl(filename);
+
+    return NextResponse.json({ story, url: publicUrlData?.publicUrl });
   } catch (error) {
     return NextResponse.json(
       { error: "Error generando historia", details: (error as Error).message },
