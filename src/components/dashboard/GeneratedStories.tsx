@@ -123,12 +123,12 @@ export default function GeneratedStories() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="p-5 md:p-0 space-y-6">
       <div>
         <h1 className="text-sm md:text-lg font-semibold text-slate-800 mb-2">
           📚 Tus Cuentos Generados
         </h1>
-        <p className="text-slate-600">
+        <p className="text-sm md:text-base text-slate-600">
           Accede a todos los cuentos emocionales que has creado (
           {savedGuides.length})
         </p>
@@ -144,20 +144,16 @@ export default function GeneratedStories() {
             >
               <div className="flex items-start justify-between">
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-lg font-semibold text-slate-900 mb-2 group-hover:text-indigo-600 transition-colors">
+                  <h3 className="text-sm md:text-lg font-semibold text-slate-800 mb-2 group-hover:text-indigo-600 transition-colors">
                     {guide.guideTitle}
                   </h3>
-                  <p className="text-slate-600 text-sm mb-4 line-clamp-2">
+                  <p className="hidden text-slate-600 text-sm mb-4 md:line-clamp-2">
                     {getSummary(guide)}
                   </p>
 
                   <div className="flex flex-wrap gap-2 mb-4">
                     <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-700">
                       📖 Metáfora
-                    </span>
-                    <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
-                      💬 {guide.conversationPlan.phrasesToValidate.length}{" "}
-                      frases
                     </span>
                     <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
                       🎯 {guide.suggestedActivity.title}

@@ -58,11 +58,16 @@ export default function ContextPanel({ onContextChange }: ContextPanelProps) {
       {/* Toggle Button */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="flex items-center gap-2 px-3 py-2 text-sm text-slate-600 hover:text-slate-800 hover:bg-slate-50 rounded-lg transition-all duration-200"
+        className="flex items-center gap-3 px-3 py-2 text-sm text-slate-600 rounded-lg transition-all duration-200"
       >
-        <Settings className="w-4 h-4" />
-        <span>Agregar contexto específico</span>
+        <div className="w-8 h-8 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center">
+          <Settings className="w-4 h-4 text-white" />
+        </div>
+        <h3 className="text-sm md:text-lg font-semibold text-slate-800">
+          Agregar contexto específico
+        </h3>
         <span className="text-xs text-slate-400">(opcional)</span>
+
         <ChevronDown
           className={`w-4 h-4 transition-transform ${
             isExpanded ? "rotate-180" : ""
@@ -72,7 +77,7 @@ export default function ContextPanel({ onContextChange }: ContextPanelProps) {
 
       {/* Expandible Content */}
       {isExpanded && (
-        <div className="mt-3 p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-4 animate-in slide-in-from-top-2 duration-300">
+        <div className="mt-2 p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-4 animate-in slide-in-from-top-2 duration-300">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Age/Grade Selection */}
             <div>

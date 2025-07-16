@@ -1,7 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
-import { Lightbulb, Sparkles, MessageCircle, Send, Clock } from "lucide-react";
+import {
+  Lightbulb,
+  Sparkles,
+  MessageCircle,
+  Send,
+  Clock,
+  ChevronDown,
+} from "lucide-react";
 import { SuggestionCard } from "./SuggestionCard";
 import { getSuggestionsByMode } from "../../lib/suggestionsConfig";
 import { TextareaWithCounter } from "./TextAreaWithCounter";
@@ -23,6 +30,7 @@ export default function InputForm({
 }: InputFormProps) {
   const [query, setQuery] = useState<string>("");
   const [isFocused, setIsFocused] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const { mode } = useModeStore();
   const isSchoolMode = mode === "educator"; // Derived value
@@ -65,17 +73,29 @@ export default function InputForm({
   };
 
   return (
-    <div className="max-w-2xl mx-auto space-y-6">
-      {!query && !isFocused && (
-        <div className="px-3">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-8 h-8 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center">
-              <Lightbulb className="w-4 h-4 text-white" />
-            </div>
-            <h3 className="text-sm md:text-lg font-semibold text-slate-800">
-              Sugerencias populares
-            </h3>
+    <div className="max-w-2xl mx-auto">
+      <button
+        onClick={() => setIsExpanded(!isExpanded)}
+        className="flex items-center gap-2 px-3 text-sm text-slate-600 transition-all duration-200"
+      >
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-8 h-8 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center">
+            <Lightbulb className="w-4 h-4 text-white" />
           </div>
+
+          <h3 className="text-sm md:text-lg font-semibold text-slate-800">
+            Sugerencias populares
+          </h3>
+          <ChevronDown
+            className={`w-4 h-4 transition-transform ${
+              isExpanded ? "rotate-180" : ""
+            }`}
+          />
+        </div>
+      </button>
+
+      {isExpanded && (
+        <div className="px-3 mb-6">
           <p className="text-slate-600 text-sm md:text-base mb-4">
             Puedes empezar con alguna de estas consultas frecuentes o escribir
             tu propia pregunta.
