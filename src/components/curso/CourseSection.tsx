@@ -6,7 +6,6 @@ import { BookOpen } from "lucide-react";
 import { HiSparkles } from "react-icons/hi2";
 import CourseHeader from "./CourseHeader";
 import ModuleList from "./ModuleList";
-import CourseCallToAction from "./CourseCallToAction";
 import ModuleDetailView from "./ModuleDetailView";
 import ModuleContent from "./ModuleContent";
 
@@ -111,12 +110,6 @@ export default function CursoSection() {
         modules={modules}
         progress={progress}
         isModuleUnlocked={isModuleUnlocked}
-        onClick={handleModuleClick}
-      />
-      <CourseCallToAction
-        modules={modules}
-        progress={progress}
-        stats={stats}
         onClick={handleModuleClick}
       />
     </div>

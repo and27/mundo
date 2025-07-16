@@ -241,6 +241,7 @@ export function useJourneyPlayer(story: Story | undefined): JourneyPlayerState {
 
     if (currentStep) {
       if (currentStep.isNarration && currentStep.audioSrc) {
+        console.log(currentStep.audioSrc);
         playAudio(currentStep.audioSrc);
       } else {
         stopAudio();

@@ -31,7 +31,36 @@ export async function POST(request: Request) {
 
       // Audio
       const audioFilename = `${story.id}_${step.id}.mp3`;
-      step.audioSrc = await generateAudio(step.subtitle, audioFilename);
+
+      // Verificar si ya existe en Supabase
+      const { data: existingAudio } = await supabase.storage
+        .from("stories")
+        .list("audio", { search: audioFilename });
+
+      if (!existingAudio || existingAudio.length === 0) {
+        const audioData = await generateAudio(step.subtitle, audioFilename);
+
+        const audioUploadRes = await supabase.storage
+          .from("stories")
+          .upload(`audio/${audioFilename}`, audioData.buffer, {
+            contentType: "audio/mpeg",
+            upsert: true,
+          });
+
+        if (audioUploadRes.error) {
+          throw new Error(
+            `Error al subir audio: ${audioUploadRes.error.message}`
+          );
+        }
+      } else {
+        console.log(`Audio ya existe: ${audioFilename}`);
+      }
+
+      const { data: audioPublicUrl } = supabase.storage
+        .from("stories")
+        .getPublicUrl(`audio/${audioFilename}`);
+
+      step.audioSrc = audioPublicUrl.publicUrl;
 
       // Interacción automática si no se define
       if (!step.interaction) {
@@ -41,13 +70,33 @@ export async function POST(request: Request) {
         };
       }
 
-      // Visuales
+      //images
       if (step.prompt_img) {
         const styledPrompt = enhancePromptStyle(step.prompt_img);
-        const imageUrl = await generateHiveImage(styledPrompt, orientation);
+        const imageData = await generateHiveImage(styledPrompt, orientation);
+
+        // Subir imagen a Supabase
+        const imageUploadRes = await supabase.storage
+          .from("stories")
+          .upload(`images/${imageData.filename}`, imageData.buffer, {
+            contentType: "image/jpeg",
+            upsert: true,
+          });
+
+        if (imageUploadRes.error) {
+          throw new Error(
+            `Error al subir imagen: ${imageUploadRes.error.message}`
+          );
+        }
+
+        // Obtener URL pública de la imagen
+        const { data: imagePublicUrl } = supabase.storage
+          .from("stories")
+          .getPublicUrl(`images/${imageData.filename}`);
+
         step.visuals = {
           ...step.visuals,
-          backgroundImage: imageUrl,
+          backgroundImage: imagePublicUrl.publicUrl,
         };
       }
 

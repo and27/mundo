@@ -1,4 +1,5 @@
 import { Story, JourneyStep } from "@/types/story";
+import { supabase } from "@/lib/supabaseServer";
 import { rioEmocionesAmaruStory } from "./definitions/rio-emociones-amaru.story";
 import { calmaTortugaStory } from "./definitions/calma-tortuga.story";
 import { senderoPumaValienteStory } from "./definitions/sendero-puma.story";
@@ -14,22 +15,26 @@ export const stories: Story[] = [
 ];
 
 export async function loadStory(id: string): Promise<Story | undefined> {
+  // 1. Primero buscar en historias estáticas (legacy)
   const staticStory = stories.find((s) => s.id === id);
   if (staticStory) return staticStory;
 
-  const baseUrl =
-    process.env.NODE_ENV === "development"
-      ? `http://localhost:${process.env.PORT || 3000}`
-      : process.env.NEXT_PUBLIC_SITE_URL;
-
+  // 2. Si no está en static, buscar en Supabase
   try {
-    const res = await fetch(`${baseUrl}/stories/${id}.json`);
+    const { data, error } = await supabase.storage
+      .from("stories")
+      .download(`${id}.json`);
 
-    if (!res.ok) return undefined;
-    const json = await res.json();
+    if (error) {
+      console.error("Error descargando de Supabase:", error);
+      return undefined;
+    }
+
+    const text = await data.text();
+    const json = JSON.parse(text);
     return json as Story;
   } catch (err) {
-    console.error("Error cargando historia JSON:", err);
+    console.error("Error cargando historia JSON desde Supabase:", err);
     return undefined;
   }
 }

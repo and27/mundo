@@ -1,7 +1,7 @@
 import { GoogleAuth } from "google-auth-library";
-import fs from "fs";
-import path from "path";
 import { buildImageFilename } from "@/utils/imageUtils";
+import { buildStoryPrompt } from "./buildStoryPrompt";
+import { StoryPromptOptions } from "@/types/promptGenerationTypes";
 
 export type StoryStep = {
   id: string;
@@ -43,15 +43,19 @@ export type GeneratedStory = {
   steps: StoryStep[];
 };
 
+function cleanTextForTTS(text: string): string {
+  return text
+    .replace(/\[SONIDO_[^\]]+\]/g, "") // Remover [SONIDO_X]
+    .replace(/\[SILENCIO (\d+)s\]/g, " ... ") // Pausas naturales
+    .replace(/\(\d+\.{3}\d+\.{3}\d+\.{3}\)/g, "") // Remover conteos
+    .replace(/\s+/g, " ") // Limpiar espacios múltiples
+    .trim();
+}
+
 export async function generateAudio(
   text: string,
   filename: string
-): Promise<string> {
-  const relativeUrl = `/audio/generated/${filename}`;
-  const audioPath = path.join(process.cwd(), "public", relativeUrl);
-
-  if (fs.existsSync(audioPath)) return `/audio/generated/${filename}`;
-
+): Promise<{ buffer: Buffer; filename: string }> {
   const base64 = process.env.GOOGLE_APPLICATION_CREDENTIALS_B64;
 
   if (!base64) throw new Error("Missing GOOGLE_APPLICATION_CREDENTIALS_B64");
@@ -78,6 +82,7 @@ export async function generateAudio(
     pitch: -1.0,
   };
 
+  const cleanText = cleanTextForTTS(text);
   const res = await fetch(
     "https://texttospeech.googleapis.com/v1/text:synthesize",
     {
@@ -87,7 +92,7 @@ export async function generateAudio(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        input: { text },
+        input: { text: cleanText },
         voice: voiceConfig,
         audioConfig,
       }),
@@ -102,10 +107,7 @@ export async function generateAudio(
   const data = await res.json();
   const buffer = Buffer.from(data.audioContent, "base64");
 
-  fs.mkdirSync(path.dirname(audioPath), { recursive: true });
-  fs.writeFileSync(audioPath, buffer);
-
-  return `/audio/generated/${filename}`;
+  return { buffer, filename };
 }
 
 export async function generateStory(
@@ -115,48 +117,18 @@ export async function generateStory(
   const storyId = `story_${emotion}_${character}`
     .toLowerCase()
     .replace(/\s+/g, "_");
-  const storyPath = path.join(
-    process.cwd(),
-    "public",
-    "stories",
-    `${storyId}.json`
-  );
 
-  if (fs.existsSync(storyPath)) {
-    const content = fs.readFileSync(storyPath, "utf8");
-    return JSON.parse(content);
-  }
-
-  const prompt = `
-Genera una historia breve para niños en JSON estructurado. Solo 2 o 3 escenas máximo.
-Debe estar dividida en pasos como un cuento narrado. Usa tono simbólico y emocional. Formato exacto:
-
-{
-  "id": "${storyId}",
-  "title": "Yachay, el Joven Puma y la Montaña",
-  "description": "Una historia para transformar el miedo",
-  "category": "emotions",
-  "steps": [
-    {
-      "id": "scene_1",
-      "subtitle": "Texto de esta parte del cuento",
-      "prompt_img": "Descripción visual breve de esta escena, sin personajes",
-      "visuals": {
-        "type": "scene",
-        "backgroundImage": "nombre_sugerido_bg.png"
-      }
-    }
-  ]
-}
-
-Reglas clave:
-- El campo \`prompt_img\` debe describir el entorno visual de la escena en 1 oración, sin personajes.
-- Evita repetir el \`subtitle\`. Solo describe el espacio, iluminación, atmósfera, paisaje o elementos mágicos.
-- Usa inglés en \`prompt_img\`, incluso si el cuento es en español.
-
-La emoción central es: ${emotion}. El personaje es: ${character}.
-Devuelve solo el JSON, sin explicaciones.
-`.trim();
+  const promptOptions: StoryPromptOptions = {
+    storyId,
+    emotion,
+    character,
+    format: "semilla",
+    ageGroup: "7-9",
+    techniquePrimary: "breathing_condor",
+    techniqueSecondary: null,
+  };
+  const prompt2 = buildStoryPrompt(promptOptions);
+  console.log(prompt2);
 
   const res = await fetch(process.env.DEEPSEEK_API_URL!, {
     method: "POST",
@@ -166,11 +138,12 @@ Devuelve solo el JSON, sin explicaciones.
     },
     body: JSON.stringify({
       model: "deepseek-chat",
-      messages: [{ role: "user", content: prompt }],
+      messages: [{ role: "user", content: prompt2 }],
     }),
   });
 
   const result = await res.json();
+  console.log(result);
   const content = result?.choices?.[0]?.message?.content;
   if (!content || typeof content !== "string") {
     throw new Error("Respuesta inesperada del modelo.");
@@ -184,7 +157,9 @@ Devuelve solo el JSON, sin explicaciones.
     throw new Error("Historia incompleta.");
   }
 
-  for (const step of story.steps) {
+  story.guideId = character;
+  story.initialStepId = "scene_1";
+  story.steps.forEach((step, idx) => {
     const prompt = step.prompt_img;
     const filename = buildImageFilename(prompt);
 
@@ -192,10 +167,9 @@ Devuelve solo el JSON, sin explicaciones.
       ...step.visuals,
       backgroundImage: filename,
     };
-  }
 
-  fs.mkdirSync(path.dirname(storyPath), { recursive: true });
-  fs.writeFileSync(storyPath, JSON.stringify(story, null, 2), "utf8");
+    step.id = `scene_${idx + 1}`;
+  });
 
   return story;
 }
@@ -203,13 +177,8 @@ Devuelve solo el JSON, sin explicaciones.
 export async function generateHiveImage(
   prompt: string,
   orientation: "vertical" | "horizontal" = "vertical"
-): Promise<string> {
-  const imageUrl = buildImageFilename(prompt);
-  const imagePath = path.join(process.cwd(), "public", imageUrl);
-
-  if (fs.existsSync(imagePath)) {
-    return imageUrl;
-  }
+): Promise<{ buffer: Buffer; filename: string }> {
+  const filename = buildImageFilename(prompt);
 
   const imageSize =
     orientation === "horizontal"
@@ -248,8 +217,5 @@ export async function generateHiveImage(
 
   const response = await fetch(hiveImageUrl);
   const buffer = await response.arrayBuffer();
-  fs.mkdirSync(path.dirname(imagePath), { recursive: true });
-  fs.writeFileSync(imagePath, Buffer.from(buffer));
-
-  return imageUrl;
+  return { buffer: Buffer.from(buffer), filename };
 }

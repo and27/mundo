@@ -5,7 +5,7 @@ export function buildImageFilename(prompt: string): string {
     .slice(0, 40)
     .replace(/_+$/, "");
 
-  return `/images/generated/${base}_bg.jpg`;
+  return `${base}_bg.jpg`;
 }
 
 export function enhancePromptStyle(prompt: string): string {

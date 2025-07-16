@@ -19,7 +19,6 @@ export default function SectionContent({
   module,
   section,
   isCompleted,
-  onComplete,
 }: SectionContentProps) {
   const getSectionIcon = (tipo: string) => {
     switch (tipo) {
@@ -68,19 +67,6 @@ export default function SectionContent({
           renderContent(section.contenido, module)}
         {section.tipo === "actividad" && renderActivity(section.contenido)}
       </div>
-
-      {/* Botón completar */}
-      {!isCompleted && (
-        <div className="pt-6 border-t border-white/30">
-          <button
-            onClick={onComplete}
-            className="px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-lg font-medium transition-all duration-300 hover:scale-105 flex items-center gap-2 shadow-lg"
-          >
-            <CheckCircle className="w-5 h-5" />
-            Marcar como completado
-          </button>
-        </div>
-      )}
     </div>
   );
 }

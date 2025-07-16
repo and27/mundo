@@ -37,7 +37,7 @@ export default function ModuleCard({
         <div className="flex items-start gap-4">
           {/* Icono del Módulo */}
           <div
-            className="w-12 h-12 rounded-xl flex items-center justify-center shadow-lg flex-shrink-0"
+            className="hidden md:flex w-12 h-12 rounded-xl items-center justify-center shadow-lg flex-shrink-0"
             style={{
               background: `linear-gradient(135deg, ${module.colorPrimario}, ${module.colorSecundario})`,
             }}
@@ -51,11 +51,11 @@ export default function ModuleCard({
               Módulo {moduleNumber}: {module.titulo}
             </h3>
 
-            <p className="text-indigo-600 text-sm font-medium mb-2">
+            <p className="hidden md:flex text-indigo-600 text-sm font-medium mb-2">
               {module.subtitulo}
             </p>
 
-            <p className="text-slate-600 text-sm mb-4 line-clamp-2">
+            <p className="hidden md:flex text-slate-600 text-sm mb-4 line-clamp-2">
               {module.descripcion}
             </p>
 
