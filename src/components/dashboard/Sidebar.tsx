@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { LogOut, User, MoreHorizontal } from "lucide-react";
 import { HiSparkles } from "react-icons/hi2";
 import { dashboardSections } from "@/lib/dashboardConfig";
+import { FaBars } from "react-icons/fa";
 
 type SidebarProps = {
   userName?: string;
@@ -120,7 +121,16 @@ const Sidebar: React.FC<SidebarProps> = ({
             <div className="mb-8 pb-6 border-b border-slate-700/50">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                  <HiSparkles className="w-6 h-6 text-white" />
+                  {/* Mostrar icono de cerrar solo en mobile */}
+                  <span
+                    className="md:hidden text-white text-2xl leading-none cursor-pointer"
+                    onClick={onCloseMobile}
+                  >
+                    <FaBars className="text-lg" />
+                  </span>
+
+                  {/* Mostrar sparkles solo en desktop */}
+                  <HiSparkles className="hidden md:block w-6 h-6 text-white" />
                 </div>
                 <div className="space-y-1">
                   <h1 className="text-xl font-bold text-white">

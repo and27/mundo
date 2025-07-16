@@ -33,7 +33,7 @@ export default function GuideDisplay({ guide }: GuideDisplayProps) {
             </div>
             <div>
               <h3 className="text-lg font-semibold text-slate-800 mb-1">
-                Creando tu guía personalizada...
+                Creando tu cuento personalizado...
               </h3>
               <p className="text-sm text-slate-600">
                 Estamos procesando tu consulta con la metodología MIM

@@ -126,10 +126,10 @@ export default function GeneratedStories() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-slate-900 mb-2">
-          📚 Tus Guías Generadas
+          📚 Tus Cuentos Generados
         </h1>
         <p className="text-slate-600">
-          Accede a todas las guías emocionales que has creado (
+          Accede a todos los cuentos emocionales que has creado (
           {savedGuides.length})
         </p>
       </div>
@@ -186,7 +186,7 @@ export default function GeneratedStories() {
             <Calendar className="w-8 h-8 text-slate-400" />
           </div>
           <h3 className="text-lg font-semibold text-slate-900 mb-2">
-            Aún no tienes guías guardadas
+            Aún no tienes cuentos guardados
           </h3>
           <p className="text-slate-600 max-w-md mx-auto">
             Cuando generes tu primera guía emocional, se guardará

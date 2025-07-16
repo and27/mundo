@@ -38,12 +38,12 @@ export default function InputForm({
     : "Ejemplo: Mi hijo de 4 años tiene miedo a la oscuridad y no quiere dormir solo. Se despierta llorando en la madrugada y viene a nuestra cama...";
 
   const buttonText = isSchoolMode
-    ? "Generar Guía para Educadores MIM"
-    : "Generar Guía Emocional MIM";
+    ? "Generar Cuento para Educadores MIM"
+    : "Generar Cuento Emocional MIM";
 
   const successMessage = isSchoolMode
-    ? "Recibirás una guía adaptada para aplicación grupal en el aula"
-    : "Recibirás una guía personalizada basada en la metodología MIM";
+    ? "Recibirás una cuento adaptado para aplicación grupal en el aula"
+    : "Recibirás un cuento personalizado basada en la metodología MIM";
 
   const handleSuggestionClick = (suggestion: string) => {
     setQuery(suggestion);
@@ -72,11 +72,11 @@ export default function InputForm({
             <div className="w-8 h-8 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center">
               <Lightbulb className="w-4 h-4 text-white" />
             </div>
-            <h3 className="text-lg font-semibold text-slate-800">
+            <h3 className="text-sm md:text-lg font-semibold text-slate-800">
               Sugerencias populares
             </h3>
           </div>
-          <p className="text-slate-600 text-sm mb-4">
+          <p className="text-slate-600 text-sm md:text-base mb-4">
             Puedes empezar con alguna de estas consultas frecuentes o escribir
             tu propia pregunta.
           </p>
@@ -108,11 +108,11 @@ export default function InputForm({
                 <MessageCircle className="w-4 h-4 text-white" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-slate-800">
+                <h3 className="text-sm md:text-lg text-lg font-semibold text-slate-800">
                   Describe tu situación
                 </h3>
-                <p className="text-sm text-slate-600">
-                  Comparte los detalles para recibir una guía personalizada
+                <p className="text-sm md:text-base text-slate-600">
+                  Comparte los detalles para recibir un cuento personalizado
                 </p>
               </div>
             </div>
@@ -147,7 +147,7 @@ export default function InputForm({
             {isLoading ? (
               <>
                 <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                <span>Creando tu guía personalizada...</span>
+                <span>Creando tu cuento personalizado...</span>
                 <Clock className="w-4 h-4 opacity-70" />
               </>
             ) : (

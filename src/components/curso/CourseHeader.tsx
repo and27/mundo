@@ -25,7 +25,7 @@ export default function CourseHeader({ stats }: CourseHeaderProps) {
               </div>
               <div>
                 <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent mb-2">
-                  Guías Conscientes
+                  Padres, educadores y cuidadores conscientes
                 </h1>
                 <p className="font-medium text-indigo-600 mb-4">
                   Fundamentos para Acompañar el Desarrollo Emocional Infantil
@@ -42,7 +42,7 @@ export default function CourseHeader({ stats }: CourseHeaderProps) {
         </div>
 
         {/* Stats grid */}
-        <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-4">
           <InfoCard
             icon={<CheckCircle className="w-5 h-5 text-emerald-500" />}
             label="Completado"
@@ -85,11 +85,11 @@ function InfoCard({
   highlight?: boolean;
 }) {
   return (
-    <div className={"bg-white/70 backdrop-blur-sm  rounded-xl p-4"}>
+    <div className={"bg-white/70 backdrop-blur-sm  rounded-xl p-3 md:p-4"}>
       <div className="flex items-center gap-3">
         <div
           className={`
-          p-2 rounded-lg
+          p-0 md:p-2 rounded-lg
           ${highlight ? "bg-emerald-100" : "bg-slate-100/50"}
         `}
         >
@@ -101,7 +101,7 @@ function InfoCard({
           </p>
           <p
             className={`
-            text-lg font-bold
+            lg:text-lg font-bold
             ${highlight ? "text-emerald-700" : "text-slate-800"}
           `}
           >

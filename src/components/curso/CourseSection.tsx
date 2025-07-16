@@ -113,12 +113,6 @@ export default function CursoSection() {
         isModuleUnlocked={isModuleUnlocked}
         onClick={handleModuleClick}
       />
-      <CourseCallToAction
-        modules={modules}
-        progress={progress}
-        stats={stats}
-        onClick={handleModuleClick}
-      />
     </div>
   );
 }

@@ -30,7 +30,7 @@ export const AccountPrompt: React.FC<AccountPromptProps> = ({
             ¡Guía guardada exitosamente!
           </h4>
           <p className="text-slate-700 mb-4 leading-relaxed">
-            Para acceder a tus guías guardadas desde cualquier dispositivo y
+            Para acceder a tus cuentos guardados desde cualquier dispositivo y
             recibir recomendaciones personalizadas, te invitamos a crear tu
             cuenta en Mundo Interior.
           </p>

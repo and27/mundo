@@ -38,7 +38,9 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Query is required" }, { status: 400 });
     }
 
-    console.log("Aynia - Generando guía personalizada con metodología MIM...");
+    console.log(
+      "Aynia - Generando cuento personalizado con metodología MIM..."
+    );
     const generatorPrompt = create3PillarGuidePrompt(userQuery);
     const guideString = await callDeepSeek(generatorPrompt);
     console.log("Aynia - Guía generada exitosamente.");

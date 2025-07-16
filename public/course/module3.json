@@ -1,690 +1,114 @@
 {
   "id": "modulo3",
-  "titulo": "La Ciencia de la Regulación Emocional",
-  "subtitulo": "El Por Qué de las Técnicas que Funcionan",
-  "descripcion": "Comprende las bases científicas detrás de las técnicas de regulación emocional para aplicarlas con conocimiento y confianza en el acompañamiento infantil.",
-  "duracion": "2.5-3 horas",
+  "titulo": "¿Qué Hago Cuando Explota o Se Encierra?",
+  "subtitulo": "Acompañar el Enojo, el Miedo y la Tristeza Sin Reprimir ni Abandonar",
+  "descripcion": "Este módulo ofrece una guía práctica y emocional para acompañar a los niños en sus tormentas internas. En lugar de corregir, calmarlos a la fuerza o ignorar lo que sienten, aprenderás a convertir esos momentos difíciles en oportunidades de vínculo profundo.",
+  "duracion": "3 horas",
   "objetivos": [
-    "Comprender la neurobiología de la respiración y su efecto en la regulación emocional",
-    "Explicar cómo el movimiento facilita el procesamiento emocional",
-    "Fundamentar científicamente el poder de las narrativas guiadas",
-    "Dominar las bases neurocientíficas de la validación emocional",
-    "Aplicar técnicas específicas según las etapas de desarrollo (0-12 años)"
+    "Reconocer la función adaptativa de las emociones difíciles como la rabia, el miedo y la tristeza",
+    "Acompañar sin castigar, sin distraer ni minimizar el dolor del niño",
+    "Aplicar estrategias de regulación emocional conjunta (coregulación)"
   ],
-  "colorPrimario": "#4169E1",
-  "colorSecundario": "#87CEEB",
-  "icono": "🧪",
+  "colorPrimario": "#3029a6",
+  "colorSecundario": "#4232cdbb",
+  "icono": "🤯",
   "secciones": [
     {
-      "id": "introduccion",
-      "titulo": "La Ciencia al Servicio del Corazón",
+      "id": "emociones-como-olas",
+      "titulo": "Las Emociones No Son un Problema, Son un Mensaje",
       "tipo": "contenido",
       "contenido": {
-        "texto": "La regulación emocional no es magia ni intuición pura. Detrás de cada técnica efectiva hay décadas de investigación neurocientífica que explican cómo y por qué funcionan. Comprender estos mecanismos nos permite ser guías más efectivos y adaptar las técnicas a cada niño y situación.",
-        "puntosClave": [
-          "La regulación emocional es una habilidad que se desarrolla gradualmente hasta los 25 años",
-          "Existen mecanismos neurobiológicos específicos que sustentan cada técnica",
-          "La efectividad de las técnicas varía según la edad y el estado del sistema nervioso",
-          "El conocimiento científico aumenta la confianza y precisión en la aplicación"
-        ],
-        "mito_vs_ciencia": {
-          "mito": "Las técnicas de regulación son solo 'calmantes temporales'",
-          "ciencia": "Las técnicas de regulación, aplicadas consistentemente, crean nuevas conexiones neuronales que fortalecen permanentemente la capacidad autoregulatoria del niño."
-        }
-      }
-    },
-    {
-      "id": "neurobiologia-respiracion",
-      "titulo": "La Respiración: Tu Sistema Nervioso en Acción",
-      "tipo": "contenido",
-      "contenido": {
-        "introduccion": "La respiración es el único proceso del sistema nervioso autónomo que podemos controlar conscientemente. Esta característica única la convierte en la puerta de entrada más directa para influir en nuestro estado emocional.",
-        "mecanismos_cientificos": [
+        "texto": "La rabia protege, el miedo alerta, la tristeza repara. Pero si el adulto no sabe recibir esas emociones, el niño aprende a esconderlas, convertirlas en síntomas o a actuar desde la desconexión. Esta sección te ayuda a entender el propósito evolutivo de las emociones difíciles.",
+        "emociones": [
           {
-            "mecanismo": "Activación del Nervio Vago",
-            "explicacion": "La respiración lenta y profunda estimula el nervio vago, el principal activador del sistema nervioso parasimpático (relajación). Esto reduce la frecuencia cardíaca, disminuye la presión arterial y promueve la calma.",
-            "evidencia": "Estudios muestran que la respiración a 4-6 respiraciones por minuto optimiza la variabilidad del ritmo cardíaco, indicador de resiliencia emocional."
-          },
-          {
-            "mecanismo": "Regulación del CO2",
-            "explicacion": "La respiración consciente equilibra los niveles de oxígeno y CO2, previniendo la hiperventilación que acompaña a la ansiedad y el pánico.",
-            "evidencia": "La respiración controlada normaliza el pH sanguíneo, reduciendo las sensaciones físicas de ansiedad en 3-5 minutos."
-          },
-          {
-            "mecanismo": "Coherencia Cardio-Respiratoria",
-            "explicacion": "Cuando sincronizamos conscientemente la respiración con el ritmo cardíaco, se crea un estado de 'coherencia' que optimiza la función cerebral y emocional.",
-            "evidencia": "La coherencia cardio-respiratoria mejora la atención, la toma de decisiones y reduce el cortisol hasta un 23%."
-          }
-        ],
-        "tipos_respiracion": [
-          {
-            "tipo": "Respiración Diafragmática",
-            "edad_recomendada": "3+ años",
-            "como_funciona": "Activa el diafragma, que masajea el nervio vago y estimula la respuesta de relajación",
-            "tecnica_basica": {
-              "posicion": "Sentado o acostado, una mano en el pecho, otra en el abdomen",
-              "instruccion": "Respirar de manera que solo se mueva la mano del abdomen",
-              "tiempo": "Inhalar 4 segundos, exhalar 6 segundos",
-              "repeticiones": "5-10 ciclos"
-            },
-            "adaptacion_infantil": "Usar la metáfora del 'globo en la barriga' que se infla y desinfla"
-          },
-          {
-            "tipo": "Respiración 4-7-8",
-            "edad_recomendada": "8+ años",
-            "como_funciona": "La exhalación prolongada activa máximamente el sistema parasimpático",
-            "tecnica_basica": {
-              "pasos": [
-                "Inhalar por la nariz contando hasta 4",
-                "Retener el aire contando hasta 7",
-                "Exhalar por la boca contando hasta 8"
-              ],
-              "repeticiones": "3-4 ciclos máximo inicialmente"
-            },
-            "adaptacion_infantil": "Usar visualizaciones: 'huele la flor (4), guarda el aroma (7), apaga la vela (8)'"
-          },
-          {
-            "tipo": "Respiración de la Abeja",
-            "edad_recomendada": "5+ años",
-            "como_funciona": "La vibración del zumbido estimula el nervio vago y activa la respuesta de calma",
-            "tecnica_basica": {
-              "instruccion": "Inhalar normalmente, exhalar haciendo el sonido 'mmm' como una abeja",
-              "duracion": "Exhalación lo más larga posible sin forzar",
-              "repeticiones": "5-8 ciclos"
-            },
-            "beneficios_adicionales": "La vibración también calma el sistema nervioso central"
-          }
-        ],
-        "cuando_usar": {
-          "ansiedad_aguda": "Respiración 4-7-8 para activación rápida del sistema de calma",
-          "hiperactividad": "Respiración diafragmática para centrarse y enraizarse",
-          "ira_intensa": "Respiración de la abeja para descargar energía de forma controlada",
-          "antes_dormir": "Respiración diafragmática lenta para preparar el descanso"
-        }
-      }
-    },
-    {
-      "id": "movimiento-emocion",
-      "titulo": "El Movimiento como Procesador Emocional",
-      "tipo": "contenido",
-      "contenido": {
-        "fundamento_cientifico": "Las emociones no son solo experiencias mentales, sino estados psicofisiológicos completos que involucran al cuerpo entero. El movimiento permite que las emociones se expresen, circulen y se metabolicen naturalmente.",
-        "bases_neurologicas": [
-          {
-            "concepto": "Teoría Polivagal de Stephen Porges",
-            "explicacion": "El sistema nervioso evalúa constantemente la seguridad a través de señales corporales. El movimiento rítmico y suave señala seguridad, mientras que la inmovilidad puede señalar peligro.",
-            "aplicacion": "Movimientos rítmicos suaves (balancearse, caminar) activan el estado de seguridad social, facilitando la regulación emocional."
-          },
-          {
-            "concepto": "Descarga de Energía de Activación",
-            "explicacion": "Las emociones intensas preparan al cuerpo para la acción (lucha, huida, congelamiento). Si esta energía no se descarga a través del movimiento, queda 'atrapada' causando tensión y disregulación.",
-            "aplicacion": "Permitir movimiento durante o después de emociones intensas ayuda a completar el ciclo natural de activación-descarga-relajación."
-          },
-          {
-            "concepto": "Neuroplasticidad a través del Movimiento",
-            "explicacion": "El movimiento, especialmente el que cruza la línea media del cuerpo, estimula la conexión entre hemisferios cerebrales, mejorando la integración emocional-cognitiva.",
-            "aplicacion": "Ejercicios de coordinación bilateral durante la regulación emocional fortalecen la capacidad de 'pensar con claridad' durante emociones intensas."
-          }
-        ],
-        "tipos_movimiento": [
-          {
-            "categoria": "Movimientos de Enraizamiento",
-            "objetivo": "Conectar con la estabilidad y seguridad corporal",
-            "ejemplos": [
-              "Caminar descalzo sintiendo cada paso",
-              "Posición de árbol (yoga): pararse en un pie sintiendo las raíces",
-              "Saltos suaves sintiendo el contacto con el suelo",
-              "Posiciones de cuadrupedia (gateando, postura del perro)"
+            "nombre": "Rabia",
+            "funcion": "Defiende la integridad cuando se siente invadido o impotente",
+            "conductas_comunes": [
+              "Gritos, golpes, muecas, portazos",
+              "Frases como '¡te odio!' o '¡me voy de esta casa!'"
             ],
-            "cuando_usar": "Para ansiedad, hiperactividad, sensación de 'estar en las nubes'"
-          },
-          {
-            "categoria": "Movimientos de Descarga",
-            "objetivo": "Liberar energía acumulada de emociones intensas",
-            "ejemplos": [
-              "Sacudir todo el cuerpo como los animales después del peligro",
-              "Saltar en el lugar mientras se cuenta hasta 10",
-              "Movimientos de 'boxeo' con almohadas",
-              "Correr en el lugar o hacer ejercicio cardiovascular suave"
-            ],
-            "cuando_usar": "Después de ira, frustración, miedo intenso o estrés acumulado"
-          },
-          {
-            "categoria": "Movimientos de Integración",
-            "objetivo": "Conectar ambos hemisferios cerebrales para integración emocional",
-            "ejemplos": [
-              "Marcha cruzada: tocar rodilla izquierda con mano derecha y viceversa",
-              "Dibujar ochos acostados (infinito) en el aire con ambas manos",
-              "Balancearse de lado a lado abrazándose a sí mismo",
-              "Movimientos de danza libre expresiva"
-            ],
-            "cuando_usar": "Cuando hay confusión emocional, conflictos internos o necesidad de clarity"
-          },
-          {
-            "categoria": "Movimientos de Calma",
-            "objetivo": "Activar el sistema parasimpático y promover relajación",
-            "ejemplos": [
-              "Balancearse suavemente de adelante hacia atrás",
-              "Movimientos lentos de estiramiento",
-              "Caminata lenta y consciente",
-              "Movimientos circulares suaves con brazos y torso"
-            ],
-            "cuando_usar": "Para preparar el descanso, después de actividades intensas, para transiciones"
-          }
-        ],
-        "adaptaciones_por_edad": {
-          "0-3_años": {
-            "enfoque": "Movimiento con cuidador, imitación simple",
-            "ejemplos": "Balancearse en brazos, aplaudir, movimientos de animales simples",
-            "precauciones": "Siempre acompañado, movimientos suaves, atención a sobreestimulación"
-          },
-          "4-7_años": {
-            "enfoque": "Juego de movimiento, historias corporales",
-            "ejemplos": "Yoga de animales, danza de emociones, deportes cooperativos",
-            "precauciones": "Instrucciones claras, tiempo limitado (5-15 minutos)"
-          },
-          "8-12_años": {
-            "enfoque": "Autorregulación consciente, técnicas específicas",
-            "ejemplos": "Secuencias de yoga, deportes de autorregulación, danza terapéutica",
-            "precauciones": "Enseñar automonitoreo, respetar preferencias individuales"
-          }
-        }
-      }
-    },
-    {
-      "id": "narrativas-guiadas",
-      "titulo": "El Poder Neurológico de las Narrativas Guiadas",
-      "tipo": "contenido",
-      "contenido": {
-        "introduccion": "Las narrativas guiadas no son solo 'cuentos bonitos'. Son herramientas neurocientíficamente fundamentadas que aprovechan la arquitectura natural del cerebro para promover sanación, aprendizaje y regulación emocional.",
-        "mecanismos_cerebrales": [
-          {
-            "mecanismo": "Activación de Neuronas Espejo",
-            "explicacion": "Cuando escuchamos una narrativa, nuestro cerebro simula las experiencias descritas como si las estuviéramos viviendo. Las neuronas espejo nos permiten 'sentir' lo que experimenta el protagonista.",
-            "implicacion": "Los niños pueden experimentar emociones de calma, coraje o resolución a través de los personajes, creando nuevos patrones neuronales de respuesta emocional."
-          },
-          {
-            "mecanismo": "Sincronización Cerebral Narrador-Oyente",
-            "explicacion": "Durante una narrativa bien contada, los cerebros del narrador y oyente se sincronizan, creando un estado de conexión profunda y receptividad aumentada.",
-            "implicacion": "El estado emocional calmado del narrador se transmite directamente al niño, facilitando la regulación co-regulada."
-          },
-          {
-            "mecanismo": "Consolidación de Memoria y Aprendizaje",
-            "explicacion": "Las historias activan múltiples áreas cerebrales simultáneamente (auditiva, visual, emocional, motora), creando memorias más ricas y duraderas que la información abstracta.",
-            "implicacion": "Las lecciones emocionales aprendidas a través de narrativas se integran más profundamente y son más fáciles de recordar en momentos de necesidad."
-          },
-          {
-            "mecanismo": "Distancia Emocional Segura",
-            "explicacion": "Las narrativas permiten explorar emociones complejas o traumáticas a través de personajes, creando suficiente distancia psicológica para el procesamiento seguro.",
-            "implicacion": "Los niños pueden trabajar emociones difíciles sin sentirse directamente amenazados o abrumados."
-          }
-        ],
-        "elementos_efectivos": [
-          {
-            "elemento": "Protagonista Identificable",
-            "descripcion": "Un personaje con quien el niño pueda conectar emocionalmente",
-            "criterios": [
-              "Edad similar o ligeramente mayor al niño",
-              "Enfrenta desafíos similares a los del niño",
-              "Muestra vulnerabilidad humana realista",
-              "Desarrolla gradualmente recursos para afrontar dificultades"
+            "acompanamiento": [
+              "Pon límites físicos sin castigar: 'No puedo dejar que golpees, pero aquí estoy contigo'",
+              "No le digas 'cálmate', ofrece tu calma primero",
+              "Validar: 'Estás muy enojado porque sentiste que no te escucharon, ¿verdad?'"
             ]
           },
           {
-            "elemento": "Viaje de Transformación",
-            "descripcion": "Una progresión clara desde la dificultad hacia la resolución",
-            "estructura": [
-              "Situación inicial: personaje en estado similar al del niño",
-              "Desafío: aparece una dificultad emocional",
-              "Búsqueda: el personaje busca recursos (internos o externos)",
-              "Transformación: aplicación de los recursos encontrados",
-              "Nueva integración: personaje en un estado más sabio/fuerte"
+            "nombre": "Miedo",
+            "funcion": "Protege de posibles amenazas o pérdidas",
+            "conductas_comunes": [
+              "Llanto repentino, rigidez corporal, evitación",
+              "Pesadillas, miedo a estar solo, apego excesivo"
+            ],
+            "acompanamiento": [
+              "Crea una base segura: luces suaves, voz tranquila, contacto físico si lo permite",
+              "No minimices: 'No es nada' o 'no tengas miedo' desconecta",
+              "Invita a imaginar juntos una salida segura: '¿Qué te haría sentir más protegido?'"
             ]
           },
           {
-            "elemento": "Recursos Sensoriales",
-            "descripcion": "Elementos que involucren múltiples sentidos",
-            "ejemplos": [
-              "Descripciones visuales ricas pero no abrumadoras",
-              "Sonidos que el niño pueda imaginar o reproducir",
-              "Sensaciones táctiles (texturas, temperaturas)",
-              "Elementos aromáticos o gustativos cuando sea relevante"
+            "nombre": "Tristeza",
+            "funcion": "Invita al repliegue para procesar pérdida, desconexión o dolor",
+            "conductas_comunes": [
+              "Llanto silencioso, aislamiento, mirada baja",
+              "Desinterés por actividades usuales"
+            ],
+            "acompanamiento": [
+              "Permite el llanto, no lo interrumpas con frases como 'no llores'",
+              "Ofrece presencia silenciosa: a veces basta con estar",
+              "Valida: 'Siento que estés así. No estás solo. Llora todo lo que necesites.'"
             ]
-          },
-          {
-            "elemento": "Pausas Interactivas",
-            "descripcion": "Momentos donde el niño puede participar activamente",
-            "tipos": [
-              "Pausas para respirar junto con el personaje",
-              "Momentos para imaginar o visualizar",
-              "Invitaciones a hacer gestos o movimientos",
-              "Preguntas reflexivas (¿qué harías tú?)"
-            ]
-          }
-        ],
-        "tipos_narrativas": [
-          {
-            "tipo": "Narrativas de Regulación Inmediata",
-            "objetivo": "Calmar estados de activación alta",
-            "duracion": "3-8 minutos",
-            "estructura": "Conexión rápida → respiración guiada → visualización calmante → anclaje positivo",
-            "ejemplo": "Un niño que encuentra un lugar secreto en la montaña donde puede respirar como el viento y sentirse fuerte como la roca."
-          },
-          {
-            "tipo": "Narrativas de Procesamiento Emocional",
-            "objetivo": "Ayudar a comprender y metabolizar emociones complejas",
-            "duracion": "10-20 minutos",
-            "estructura": "Identificación emocional → exploración segura → comprensión → integración → sabiduría",
-            "ejemplo": "Una niña que aprende que su tristeza es como la lluvia que necesita la tierra para crecer flores nuevas."
-          },
-          {
-            "tipo": "Narrativas de Fortalecimiento",
-            "objetivo": "Desarrollar recursos internos y autoestima",
-            "duracion": "15-25 minutos",
-            "estructura": "Desafío → búsqueda de recursos → descubrimiento de fortalezas → aplicación → celebración",
-            "ejemplo": "Un joven que descubre que tiene los mismos poderes que los antiguos guardianes de su pueblo para proteger su corazón."
           }
         ]
       }
     },
     {
-      "id": "validacion-emocional",
-      "titulo": "La Neurociencia de la Validación Emocional",
+      "id": "coregulacion",
+      "titulo": "Tu Calma No Solo Acompaña, También Regula",
       "tipo": "contenido",
       "contenido": {
-        "introduccion": "La validación emocional no es solo 'ser amable'. Es una intervención neurocientíficamente poderosa que literalmente cambia la estructura y función del cerebro infantil, promoviendo regulación emocional, autoestima y resiliencia.",
-        "que_sucede_en_el_cerebro": [
-          {
-            "proceso": "Reducción de la Activación de la Amígdala",
-            "explicacion": "Cuando un niño se siente emocionalmente validado, la activación de la amígdala (centro del miedo) disminuye rápidamente, permitiendo que las áreas de pensamiento superior se reactive.",
-            "evidencia": "Estudios de neuroimagen muestran reducción del 40% en la activación de la amígdala tras validación empática efectiva."
-          },
-          {
-            "proceso": "Fortalecimiento del Córtex Prefrontal",
-            "explicacion": "La validación consistente fortalece las conexiones entre la amígdala y el córtex prefrontal, mejorando la capacidad de regulación emocional a largo plazo.",
-            "evidencia": "Niños que reciben validación regular muestran mayor desarrollo del córtex prefrontal y mejor control ejecutivo."
-          },
-          {
-            "proceso": "Liberación de Oxitocina y Dopamina",
-            "explicacion": "Sentirse comprendido y aceptado libera hormonas de bienestar que refuerzan la conexión social y la motivación para el crecimiento.",
-            "evidencia": "La validación empática aumenta los niveles de oxitocina en un 25% y mejora el estado de ánimo durante horas."
-          },
-          {
-            "proceso": "Desarrollo de la Mentalización",
-            "explicacion": "Cuando validamos las emociones del niño, le enseñamos que los estados mentales son reales, importantes y comprensibles, desarrollando su capacidad de mentalización.",
-            "evidencia": "Niños con cuidadores validantes desarrollan teoría de la mente 6 meses antes que el promedio."
-          }
-        ],
-        "componentes_validacion": [
-          {
-            "componente": "Sintonía Emocional",
-            "descripcion": "Reconocer y reflejar el estado emocional del niño",
-            "como_hacerlo": [
-              "Observar señales no verbales (expresión, postura, tono)",
-              "Nombrar la emoción observada: 'Veo que estás frustrado'",
-              "Reflejar con el tono y energía apropiados",
-              "Evitar minimizar o magnificar la intensidad"
-            ],
-            "frases_ejemplo": [
-              "'Tu cuerpo me dice que estás muy enojado'",
-              "'Parece que algo te tiene preocupado'",
-              "'Veo tristeza en tus ojos'"
-            ]
-          },
-          {
-            "componente": "Legitimación",
-            "descripcion": "Comunicar que la emoción es comprensible y aceptable",
-            "como_hacerlo": [
-              "Normalizar la respuesta emocional",
-              "Explicar la función adaptativa de la emoción",
-              "Evitar juicios sobre 'emociones buenas o malas'",
-              "Contextualizar la respuesta emocional"
-            ],
-            "frases_ejemplo": [
-              "'Es totalmente normal sentirse así cuando...'",
-              "'Tu miedo te está cuidando, es inteligente'",
-              "'Cualquier persona se sentiría frustrada en esa situación'"
-            ]
-          },
-          {
-            "componente": "Empatía Genuina",
-            "descripcion": "Demostrar comprensión profunda de la experiencia del niño",
-            "como_hacerlo": [
-              "Conectar con tu propia experiencia similar",
-              "Imaginar vívidamente cómo se siente el niño",
-              "Usar lenguaje corporal abierto y receptivo",
-              "Ofrecer presencia completa sin prisa"
-            ],
-            "frases_ejemplo": [
-              "'Puedo imaginar lo difícil que debe ser eso para ti'",
-              "'Si yo fuera tú, también me sentiría confundido'",
-              "'Entiendo por qué tu corazón está doliendo'"
-            ]
-          }
-        ],
-        "validacion_vs_otros": {
-          "validacion_vs_minimizacion": {
-            "minimizacion": "'No es para tanto', 'Ya se te pasará', 'No tienes por qué estar triste'",
-            "validacion": "'Veo que esto es muy importante para ti', 'Tu tristeza tiene sentido', 'Es comprensible que te sientas así'"
-          },
-          "validacion_vs_sobreproteccion": {
-            "sobreproteccion": "'Pobrecito, no te preocupes, yo lo arreglo', 'No deberías sentir eso'",
-            "validacion": "'Entiendo tu preocupación, ¿cómo podemos enfrentarla juntos?', 'Es valioso que sientas eso'"
-          },
-          "validacion_vs_rescate": {
-            "rescate": "'No llores, mira, te compro esto', 'Ven, te distraigo con otra cosa'",
-            "validacion": "'Está bien llorar cuando algo duele', 'Quédate con esa tristeza un momento, yo estoy aquí contigo'"
-          }
-        },
-        "niveles_validacion": [
-          {
-            "nivel": "Nivel 1 - Presencia Activa",
-            "descripcion": "Estar completamente presente y atento",
-            "indicadores": "Contacto visual, lenguaje corporal abierto, escucha sin interrumpir"
-          },
-          {
-            "nivel": "Nivel 2 - Reflejo Preciso",
-            "descripcion": "Reflejar con precisión lo que observas",
-            "indicadores": "Nombrar emociones correctamente, captar matices, reflejar intensidad apropiada"
-          },
-          {
-            "nivel": "Nivel 3 - Comprensión Empática",
-            "descripcion": "Demostrar comprensión profunda de la experiencia",
-            "indicadores": "Conectar con causas, mostrar empatía genuina, normalizar la respuesta"
-          },
-          {
-            "nivel": "Nivel 4 - Sabiduría Emocional",
-            "descripcion": "Ayudar al niño a aprender de la experiencia emocional",
-            "indicadores": "Extraer aprendizajes, conectar con valores, fortalecer autocompasión"
-          }
+        "texto": "Cuando el niño está desbordado, no puede calmarse solo. Su cerebro necesita 'importar' regulación desde el tuyo. Esto es la coregulación: prestar tu sistema nervioso como ancla hasta que el suyo pueda estabilizarse.",
+        "principios": [
+          "Respira profundo y lento: tu cuerpo es su modelo",
+          "No respondas a la emoción con más emoción: responde con presencia",
+          "Tocar, abrazar o solo estar cerca puede ser más poderoso que hablar",
+          "La conexión emocional siempre va antes que la corrección de conducta"
         ]
       }
     },
     {
-      "id": "tecnicas-por-edad",
-      "titulo": "Técnicas Específicas por Etapa de Desarrollo",
+      "id": "reflexion-desborde",
+      "titulo": "¿Qué Me Pasa a Mí con Su Tormenta?",
       "tipo": "contenido",
       "contenido": {
-        "introduccion": "La efectividad de las técnicas de regulación emocional depende críticamente de la adecuación al nivel de desarrollo neurológico y cognitivo del niño. Lo que funciona para un preescolar puede ser contraproducente para un preadolescente.",
-        "etapas": [
-          {
-            "rango": "0-2 años: Regulación Co-regulada",
-            "principio_central": "El niño se regula a través del cuidador",
-            "desarrollo_neurologico": "Sistema nervioso inmaduro, dependiente de regulación externa",
-            "tecnicas_principales": [
-              {
-                "tecnica": "Sintonía Corporal",
-                "descripcion": "Ajustar tu propio estado para influir en el del bebé",
-                "aplicacion": [
-                  "Respiración lenta y profunda mientras sostienes al bebé",
-                  "Movimientos rítmicos suaves (balancearse, caminar)",
-                  "Tono de voz calmado y melodioso",
-                  "Contacto piel a piel cuando sea apropiado"
-                ]
-              },
-              {
-                "tecnica": "Contención Sensorial",
-                "descripcion": "Crear un ambiente que module la estimulación",
-                "aplicacion": [
-                  "Envolver suavemente (swaddling) para seguridad",
-                  "Control de luz, sonido y temperatura",
-                  "Rutinas predecibles para crear seguridad",
-                  "Respuesta rápida y consistente a señales de necesidad"
-                ]
-              }
-            ],
-            "señales_desregulacion": "Llanto intenso, dificultad para dormir, irritabilidad, problemas alimentarios",
-            "señales_regulacion": "Calma después de intervención, capacidad de dormir, interacción social básica"
-          },
-          {
-            "rango": "3-6 años: Regulación Asistida",
-            "principio_central": "El niño aprende regulación con guía y apoyo directo",
-            "desarrollo_neurologico": "Desarrollo del lenguaje y simbolización, córtex prefrontal inmaduro",
-            "tecnicas_principales": [
-              {
-                "tecnica": "Respiración con Objetos",
-                "descripcion": "Usar objetos concretos para enseñar respiración",
-                "aplicacion": [
-                  "Respirar con una pluma (inhalar suave, exhalar fuerte)",
-                  "Globos en la barriga que se inflan y desinflan",
-                  "Respirar el aroma de flores reales o imaginarias",
-                  "Soplar burbujas lentamente"
-                ]
-              },
-              {
-                "tecnica": "Movimiento de Animales",
-                "descripcion": "Usar imitación de animales para regulación",
-                "aplicacion": [
-                  "Respiración de perro (jadear) para descargar energía",
-                  "Estiramiento de gato para relajar tensión",
-                  "Caminar como tortuga para calmarse",
-                  "Volar como mariposa para alegría"
-                ]
-              },
-              {
-                "tecnica": "Cuentos Regulatorios",
-                "descripcion": "Narrativas cortas con técnicas integradas",
-                "aplicacion": [
-                  "Historias de 3-5 minutos con respiración incluida",
-                  "Personajes que enfrentan emociones similares",
-                  "Finales que muestran calma y resolución",
-                  "Participación activa del niño en la historia"
-                ]
-              }
-            ],
-            "adaptaciones": [
-              "Instrucciones muy simples y concretas",
-              "Mucha repetición y práctica",
-              "Uso de juego y fantasía",
-              "Validación constante del esfuerzo"
-            ]
-          },
-          {
-            "rango": "7-9 años: Regulación Guiada",
-            "principio_central": "El niño puede seguir instrucciones más complejas con supervisión",
-            "desarrollo_neurologico": "Mayor control ejecutivo, comprensión de causa-efecto, pensamiento concreto",
-            "tecnicas_principales": [
-              {
-                "tecnica": "Respiración Estructurada",
-                "descripcion": "Técnicas de respiración con conteo y patrones",
-                "aplicacion": [
-                  "Respiración 4-4-4 (inhalar, mantener, exhalar)",
-                  "Respiración cuadrada con visualización",
-                  "Técnicas de coherencia cardíaca simplificadas",
-                  "Respiración con mantras simples"
-                ]
-              },
-              {
-                "tecnica": "Mindfulness Corporal",
-                "descripcion": "Atención consciente a sensaciones corporales",
-                "aplicacion": [
-                  "Escaneo corporal de 5-10 minutos",
-                  "Atención a los pies en contacto con el suelo",
-                  "Observación de la respiración sin cambiarla",
-                  "Consciencia de tensión y relajación muscular"
-                ]
-              },
-              {
-                "tecnica": "Técnicas de Autocompasión",
-                "descripcion": "Desarrollar amabilidad hacia uno mismo",
-                "aplicacion": [
-                  "Frases de autocompasión: 'Este es un momento difícil'",
-                  "Colocar la mano en el corazón para consolarse",
-                  "Imaginar consolarse como lo haría con un buen amigo",
-                  "Reconocer que otros niños también sienten lo mismo"
-                ]
-              }
-            ],
-            "adaptaciones": [
-              "Explicaciones más detalladas del 'por qué'",
-              "Práctica regular y sistemática",
-              "Conexión con situaciones escolares y sociales",
-              "Desarrollo de autonomía gradual"
-            ]
-          },
-          {
-            "rango": "10-12 años: Autorregulación Consciente",
-            "principio_central": "El niño puede aplicar técnicas independientemente con entendimiento",
-            "desarrollo_neurologico": "Pensamiento abstracto emergente, mayor autoconciencia, influencia social aumentada",
-            "tecnicas_principales": [
-              {
-                "tecnica": "Regulación Cognitiva",
-                "descripcion": "Usar el pensamiento para influir en las emociones",
-                "aplicacion": [
-                  "Reevaluación cognitiva: '¿Hay otra forma de ver esto?'",
-                  "Técnicas de parada de pensamiento",
-                  "Diálogo interno compassivo",
-                  "Planificación de respuestas emocionales"
-                ]
-              },
-              {
-                "tecnica": "Mindfulness Avanzado",
-                "descripcion": "Observación consciente de pensamientos y emociones",
-                "aplicacion": [
-                  "Meditación de atención plena de 10-20 minutos",
-                  "Observación de pensamientos sin juicio",
-                  "Práctica de ecuanimidad ante emociones intensas",
-                  "Mindfulness en actividades cotidianas"
-                ]
-              },
-              {
-                "tecnica": "Regulación Social",
-                "descripcion": "Usar relaciones para apoyo emocional",
-                "aplicacion": [
-                  "Identificar red de apoyo confiable",
-                  "Habilidades de comunicación asertiva",
-                  "Búsqueda apropiada de ayuda",
-                  "Desarrollo de relaciones de apoyo mutuo"
-                ]
-              }
-            ],
-            "adaptaciones": [
-              "Respeto por la creciente independencia",
-              "Conexión con identidad y valores personales",
-              "Consideración de influencias sociales",
-              "Preparación para desafíos adolescentes"
-            ]
-          }
-        ],
-        "señales_alarma_general": [
-          "Técnicas que aumentan la ansiedad en lugar de disminuirla",
-          "Resistencia persistente a todas las técnicas ofrecidas",
-          "Empeoramiento de síntomas después de aplicar técnicas",
-          "Autolesión o pensamientos de daño",
-          "Regresión significativa en habilidades ya desarrolladas"
+        "texto": "No siempre es fácil acompañar lo que nunca nos acompañaron. Esta sección te invita a explorar tus propios límites, miedos y memorias activadas cuando un niño expresa emociones fuertes.",
+        "ejercicioReflexion": [
+          "¿Qué emociones infantiles me cuesta más sostener: la rabia, el miedo o la tristeza? ¿Por qué?",
+          "¿Qué hacía mi entorno cuando yo lloraba, me enojaba o tenía miedo?",
+          "¿Qué necesito yo para sentirme seguro en medio de una tormenta emocional?",
+          "¿Puedo ofrecer al niño lo que a mí me hubiera hecho falta?"
         ]
-      }
-    },
-    {
-      "id": "integracion-practica",
-      "titulo": "Integración y Aplicación Práctica",
-      "tipo": "actividad",
-      "contenido": {
-        "introduccion": "El conocimiento científico cobra vida cuando se aplica con sabiduría práctica. Esta sección te ayuda a integrar toda la ciencia aprendida en aplicaciones concretas y efectivas.",
-        "casos_praticos": [
-          {
-            "situacion": "Niña de 5 años con rabieta intensa",
-            "analisis_cientifico": "Amígdala activada, córtex prefrontal desconectado, necesita co-regulación",
-            "tecnicas_aplicables": [
-              "Sintonía emocional: validar la intensidad",
-              "Respiración conjunta: respirar visiblemente calmado cerca de ella",
-              "Movimiento de descarga: permitir que se mueva/sacuda",
-              "Narrativa corta cuando se calme: 'La volcancita que aprendió a respirar'"
-            ],
-            "que_evitar": "Razonar, dar consecuencias inmediatas, pedir que se calme sin apoyo"
-          },
-          {
-            "situacion": "Niño de 8 años con ansiedad antes de presentación escolar",
-            "analisis_cientifico": "Ansiedad anticipatoria, sistema nervioso simpático activado, necesita regulación + confianza",
-            "tecnicas_aplicables": [
-              "Validación: normalizar los nervios antes de presentaciones",
-              "Respiración 4-7-8 para calmar el sistema nervioso",
-              "Visualización de éxito con metáfora del árbol fuerte",
-              "Movimiento de enraizamiento para sentir estabilidad"
-            ],
-            "que_evitar": "Minimizar la ansiedad, presionar para que 'sea valiente', comparar con otros"
-          },
-          {
-            "situacion": "Preadolescente de 11 años con tristeza persistente",
-            "analisis_cientifico": "Posible procesamiento de pérdida o cambio, necesita validación + exploración segura",
-            "tecnicas_aplicables": [
-              "Validación profunda: legitimar la importancia de la tristeza",
-              "Narrativa de procesamiento: historia sobre ciclos naturales",
-              "Mindfulness corporal: sentir la tristeza sin resistencia",
-              "Movimiento de integración cuando esté lista"
-            ],
-            "que_evitar": "Intentar 'alegrarla' rápidamente, ignorar la tristeza, dar consejos prematuros"
-          }
-        ],
-        "guia_seleccion_tecnicas": {
-          "paso_1": "Evaluar el estado del sistema nervioso (activado, desactivado, regulado)",
-          "paso_2": "Considerar la edad y capacidades del niño",
-          "paso_3": "Identificar la emoción principal y su función",
-          "paso_4": "Elegir técnica que coincida con el estado y capacidades",
-          "paso_5": "Aplicar con presencia y flexibilidad",
-          "paso_6": "Observar respuesta y ajustar si es necesario"
-        }
-      }
-    },
-    {
-      "id": "reflexion-cientifica",
-      "titulo": "Reflexión: Integrando Ciencia y Sabiduría",
-      "tipo": "actividad",
-      "contenido": {
-        "instrucciones": "Reflexiona sobre cómo el conocimiento científico transforma tu comprensión y práctica del acompañamiento emocional.",
-        "preguntas": [
-          "¿Qué descubrimiento científico de este módulo te resulta más sorprendente o útil?",
-          "¿Cómo cambia tu perspectiva sobre las 'rabietas' o 'emociones difíciles' entender su base neurobiológica?",
-          "¿Qué técnicas sientes que se alinean más naturalmente con tu estilo personal?",
-          "¿En qué situaciones te sientes más confiado/a para aplicar estas técnicas? ¿En cuáles necesitas más práctica?",
-          "¿Cómo puedes integrar el conocimiento científico sin perder la calidez y espontaneidad humana?",
-          "¿Qué necesitas para sentirte completamente cómodo/a aplicando estas técnicas con los niños en tu cuidado?"
-        ],
-        "ejercicio_practico": {
-          "titulo": "Diseñando tu Caja de Herramientas Científica",
-          "instrucciones": "Crea una 'caja de herramientas' personalizada con las técnicas que mejor resuenen contigo y sean apropiadas para los niños que acompañas.",
-          "pasos": [
-            "Identifica las edades principales de los niños que acompañas",
-            "Selecciona 2-3 técnicas de respiración que te sientas cómodo/a enseñando",
-            "Elige 2-3 tipos de movimiento que puedas facilitar",
-            "Desarrolla 1-2 narrativas cortas para situaciones comunes",
-            "Practica frases de validación que fluyan naturalmente en tu comunicación",
-            "Crea un 'protocolo personal' para diferentes tipos de crisis emocionales"
-          ]
-        }
       }
     }
   ],
   "recursos_adicionales": [
     {
-      "tipo": "libro",
-      "titulo": "The Whole-Brain Child - Daniel Siegel",
-      "descripcion": "Integración práctica de neurociencia y desarrollo infantil"
-    },
-    {
-      "tipo": "investigacion",
-      "titulo": "Polyvagal Theory - Stephen Porges",
-      "descripcion": "Fundamentos científicos de la regulación del sistema nervioso"
+      "tipo": "audio",
+      "titulo": "Ejercicio guiado de regulación para el adulto",
+      "descripcion": "Respiración y visualización para recuperar tu centro en medio de un momento difícil"
     },
     {
       "tipo": "herramienta",
-      "titulo": "Tabla de Técnicas por Edad y Estado",
-      "descripcion": "Referencia rápida para seleccionar técnicas apropiadas"
-    },
-    {
-      "tipo": "video",
-      "titulo": "Neurobiología de la Regulación Emocional",
-      "descripcion": "Explicaciones visuales de los procesos cerebrales durante la regulación"
+      "titulo": "Guía rápida de acompañamiento emocional",
+      "descripcion": "Tabla resumen con frases, gestos y respuestas por emoción"
     }
   ],
   "evaluacion": {
-    "tipo": "aplicada",
+    "tipo": "reflexiva",
     "criterios": [
-      "Comprensión de los mecanismos neurobiológicos de la regulación emocional",
-      "Capacidad de seleccionar técnicas apropiadas según edad y estado",
-      "Integración del conocimiento científico con la práctica empática",
-      "Habilidad para adaptar técnicas a situaciones específicas",
-      "Desarrollo de confianza y competencia en la aplicación práctica"
+      "Comprende la función evolutiva de las emociones difíciles",
+      "Identifica estrategias concretas para acompañar cada emoción",
+      "Reconoce su propio umbral emocional y recursos para sostener el acompañamiento"
     ]
   }
 }

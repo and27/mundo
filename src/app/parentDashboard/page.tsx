@@ -1,7 +1,7 @@
 "use client";
 import { useDashboard } from "@/hooks/useDashboard";
 import Sidebar from "../../components/dashboard/Sidebar";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
 
 const FacilitatorDashboard = () => {
@@ -14,6 +14,19 @@ const FacilitatorDashboard = () => {
   } = useDashboard();
 
   const ActiveComponent = activeSection.component;
+
+  // Bloquea scroll del fondo cuando el sidebar móvil está abierto
+  useEffect(() => {
+    if (isMobileOpen) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+    };
+  }, [isMobileOpen]);
 
   return (
     <div className="bg-gradient-to-br from-[#1e1b4b] to-[#0c0a1d] min-h-screen flex">

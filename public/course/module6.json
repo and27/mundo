@@ -1,0 +1,79 @@
+{
+  "id": "modulo6",
+  "titulo": "Sabiduría Ancestral para Crianza con Alma",
+  "subtitulo": "Ritmos, Rituales y Naturaleza como Lenguaje del Vínculo",
+  "descripcion": "Este módulo invita a redescubrir saberes que no vienen de manuales ni universidades, sino de generaciones que criaban con el sol, el maíz y los silencios compartidos. No se trata de idealizar lo ancestral, sino de recuperar lo que aún puede nutrirnos: presencia, ritmo, símbolos y vínculo con la Tierra.",
+  "duracion": "2.5 horas",
+  "objetivos": [
+    "Explorar prácticas ancestrales que fortalecen el vínculo emocional",
+    "Recuperar el valor del ritmo, el silencio y los elementos como sostén de la crianza",
+    "Traducir lo simbólico en acciones sencillas y significativas para el día a día"
+  ],
+  "colorPrimario": "#3029a6",
+  "colorSecundario": "#4232cdbb",
+  "icono": "🔥",
+  "secciones": [
+    {
+      "id": "ritmo-y-ritual",
+      "titulo": "El Ritmo Sostiene Donde No Llega la Palabra",
+      "tipo": "contenido",
+      "contenido": {
+        "texto": "Las culturas ancestrales sabían que el ritmo da seguridad. No solo el ritmo del tambor, sino el de la comida, el sueño, el saludo al sol, el cierre del día. Vivir con ritmo regula. Crear rituales sencillos da sentido. Repetir con intención educa sin castigar.",
+        "ejemplos": [
+          "Un canto para recoger los juguetes",
+          "Un gesto con la mano para cerrar una conversación sin gritos",
+          "Una vela encendida al final del día para agradecer y nombrar lo vivido",
+          "Caminar descalzos juntos para 'descargar el enojo en la tierra'"
+        ]
+      }
+    },
+    {
+      "id": "elementos-como-lenguaje",
+      "titulo": "Tierra, Agua, Fuego, Aire: Acompañar con la Naturaleza",
+      "tipo": "contenido",
+      "contenido": {
+        "texto": "Los elementos no son superstición. Son símbolos vivos que ayudan a expresar lo que no sabemos decir. Podemos usarlos para acompañar emociones, crear puentes con el niño o simplemente ofrecer una forma de conexión sensorial profunda.",
+        "inspiraciones": [
+          "🌱 Tierra para calmar: jugar con barro o arena cuando hay ansiedad",
+          "🔥 Fuego para cerrar ciclos: quemar un dibujo de lo que quiero soltar",
+          "💧 Agua para limpiar tristezas: un baño consciente o una ‘lluvia’ simbólica",
+          "🌬️ Aire para soltar rabias: soplar fuerte en hojas secas o en papel"
+        ]
+      }
+    },
+    {
+      "id": "palabra-sagrada",
+      "titulo": "La Palabra que Cura: Cuentos, Rezos, Silencios",
+      "tipo": "contenido",
+      "contenido": {
+        "texto": "En muchas tradiciones, la palabra es medicina. No se dice cualquier cosa. Se nombra para sanar, no para herir. En la crianza, recuperar esa conciencia puede cambiar por completo cómo hablamos (o callamos) con un niño.",
+        "practicas": [
+          "Leer cuentos que no expliquen, sino que despierten preguntas",
+          "Usar una frase o rezo corto antes de dormir como acto de vínculo",
+          "Hacer silencio intencional: acompañar sin hablar, solo con mirada y tacto",
+          "Crear una palabra clave con el niño que signifique 'me siento inseguro/a'"
+        ]
+      }
+    }
+  ],
+  "recursos_adicionales": [
+    {
+      "tipo": "cancion",
+      "titulo": "Canción para cerrar el día con los niños",
+      "descripcion": "Letra corta que puedes adaptar, cantar o recitar antes de dormir como ritual emocional"
+    },
+    {
+      "tipo": "plantilla",
+      "titulo": "Ritual mensual para soltar y agradecer en familia",
+      "descripcion": "Una práctica simbólica simple para integrar emociones y crear momentos sagrados en lo cotidiano"
+    }
+  ],
+  "evaluacion": {
+    "tipo": "vivencial",
+    "criterios": [
+      "Integra al menos una práctica ancestral simbólica en su día a día",
+      "Reconoce el valor del ritmo y lo sensorial como formas de acompañamiento emocional",
+      "Desarrolla una sensibilidad renovada hacia el uso de la palabra y el silencio"
+    ]
+  }
+}
