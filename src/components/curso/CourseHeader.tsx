@@ -19,13 +19,13 @@ export default function CourseHeader({ stats }: CourseHeaderProps) {
       <div className="relative z-10">
         <div className="relative">
           <div className="flex-1">
-            <div className="flex gap-6">
-              <div className="w-20 h-20 bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-500 rounded-2xl flex items-center justify-center shadow-xl flex-shrink-0">
-                <Heart className="w-10 h-10 text-white" />
+            <div className="flex flex-col md:flex-row gap-3">
+              <div className="w-12 h-12 md:w-20 md:h-20 bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-500 rounded-2xl flex items-center justify-center shadow-xl flex-shrink-0">
+                <Heart className="w-5 h-5 md:w-10 md:h-10 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent mb-2">
-                  Padres, educadores y cuidadores conscientes
+                <h1 className="text-xl md:text-2xl font-bold text-slate-800">
+                  Manual para padres, educadores y cuidadores conscientes
                 </h1>
                 <p className="font-medium text-indigo-600 mb-4">
                   Fundamentos para Acompañar el Desarrollo Emocional Infantil
@@ -85,8 +85,8 @@ function InfoCard({
   highlight?: boolean;
 }) {
   return (
-    <div className={"bg-white/70 backdrop-blur-sm  rounded-xl p-3 md:p-4"}>
-      <div className="flex items-center gap-3">
+    <div className={"bg-white/70 backdrop-blur-sm rounded-xl p-3 md:p-4"}>
+      <div className="flex flex-col md:flex-row md:items-center gap-3">
         <div
           className={`
           p-0 md:p-2 rounded-lg

@@ -47,7 +47,7 @@ export default function ModuleCard({
 
           {/* Contenido del Módulo */}
           <div className="flex-1 min-w-0">
-            <h3 className="text-lg font-semibold text-slate-800 mb-1">
+            <h3 className="text-sm md:text-lg font-semibold text-slate-800 mb-1">
               Módulo {moduleNumber}: {module.titulo}
             </h3>
 

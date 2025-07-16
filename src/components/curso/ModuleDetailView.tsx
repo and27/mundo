@@ -84,10 +84,12 @@ export default function ModuleDetailView({
             <span className="text-3xl">{module.icono}</span>
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-slate-800 mb-2">
+            <h1 className="text-xl md:text-2xl font-bold text-slate-800 mb-2">
               {module.titulo}
             </h1>
-            <p className="text-xl text-indigo-600 mb-4">{module.subtitulo}</p>
+            <p className="text-base md:text-xl text-indigo-600 mb-4">
+              {module.subtitulo}
+            </p>
           </div>
         </div>
 

@@ -37,9 +37,9 @@ export default function ModuleContent({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="py-3 space-y-6">
       {/* Header con botón de regreso */}
-      <div className="flex items-center justify-between">
+      <div className="px-2 flex items-center justify-between">
         <button
           onClick={onBack}
           className="flex items-center gap-2 px-4 py-2 bg-white/90 backdrop-blur-sm border border-white/50 text-slate-600 hover:text-slate-800 rounded-lg transition-all duration-300 hover:scale-105"

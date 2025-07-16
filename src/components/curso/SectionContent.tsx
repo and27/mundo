@@ -46,7 +46,7 @@ export default function SectionContent({
           <Icon className="w-6 h-6 text-white" />
         </div>
         <div className="flex-1">
-          <h2 className="text-2xl font-bold text-slate-800 mb-2">
+          <h2 className="text-xl md:text-2xl font-bold text-slate-800 mb-2">
             {section.titulo}
           </h2>
           <div className="flex items-center gap-4 text-sm text-slate-500">
@@ -76,7 +76,7 @@ function renderContent(content: SectionContentType, module: ModuleData) {
     <div className="space-y-8">
       {/* Texto principal */}
       {content.texto && (
-        <div className="text-slate-700 leading-relaxed text-lg">
+        <div className="text-slate-700 leading-relaxed md:text-lg">
           {content.texto}
         </div>
       )}

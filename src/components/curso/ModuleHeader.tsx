@@ -15,11 +15,13 @@ export default function ModuleHeader({ module, current }: ModuleHeaderProps) {
             background: `linear-gradient(135deg, ${module.colorPrimario}, ${module.colorSecundario})`,
           }}
         >
-          <span className="text-2xl">{module.icono}</span>
+          <span className="text-xl md:text-2xl">{module.icono}</span>
         </div>
         <div>
-          <h1 className="text-2xl font-bold text-slate-800">{module.titulo}</h1>
-          <p className="text-indigo-600">{module.subtitulo}</p>
+          <h1 className="text-xl md:text-2xl font-bold text-slate-800">
+            {module.titulo}
+          </h1>
+          <p className="hidden md:flex text-indigo-600">{module.subtitulo}</p>
         </div>
       </div>
 

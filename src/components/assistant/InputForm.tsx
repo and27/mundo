@@ -67,7 +67,7 @@ export default function InputForm({
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       {!query && !isFocused && (
-        <>
+        <div className="px-3">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-8 h-8 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center">
               <Lightbulb className="w-4 h-4 text-white" />
@@ -90,7 +90,7 @@ export default function InputForm({
               />
             ))}
           </div>
-        </>
+        </div>
       )}
 
       <div>
@@ -103,18 +103,18 @@ export default function InputForm({
           } ${isLoading ? "opacity-60" : ""}`}
         >
           <div className="p-6">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <MessageCircle className="w-4 h-4 text-white" />
-              </div>
-              <div>
+            <div className="flex flex-col gap-3 mb-5">
+              <div className="flex flex-start items-center gap-3 ">
+                <div className="w-8 h-8 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
+                  <MessageCircle className="w-4 h-4 text-white" />
+                </div>
                 <h3 className="text-sm md:text-lg text-lg font-semibold text-slate-800">
                   Describe tu situación
                 </h3>
-                <p className="text-sm md:text-base text-slate-600">
-                  Comparte los detalles para recibir un cuento personalizado
-                </p>
               </div>
+              <p className="text-sm md:text-base text-slate-600">
+                Comparte los detalles para recibir un cuento personalizado
+              </p>
             </div>
 
             <TextareaWithCounter
@@ -133,7 +133,7 @@ export default function InputForm({
         <button
           onClick={handleFormSubmit}
           disabled={isLoading || !query.trim()}
-          className={`w-full mt-6 py-4 px-6 text-base font-semibold rounded-lg transition-all duration-300 relative overflow-hidden group ${
+          className={`mx-3 px-3 md:px-5 md:mx-0 md:w-full mt-6 py-4 text-base font-semibold rounded-lg transition-all duration-300 relative overflow-hidden group ${
             isLoading || !query.trim()
               ? "bg-slate-400 text-slate-600 cursor-not-allowed"
               : "bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white shadow-lg hover:shadow-xl hover:scale-105 active:scale-95"
@@ -143,7 +143,7 @@ export default function InputForm({
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
           )}
 
-          <div className="relative flex items-center justify-center gap-3">
+          <div className=" relative flex items-center justify-center gap-3">
             {isLoading ? (
               <>
                 <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />

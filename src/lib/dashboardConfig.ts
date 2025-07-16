@@ -27,7 +27,7 @@ export const dashboardSections = [
   },
   {
     id: "curso",
-    label: "Guía para acompañanes",
+    label: "Guía para tutores",
     href: "/parentDashboard?section=curso",
     icon: FiActivity,
     component: CursoSection,
