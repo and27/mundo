@@ -41,7 +41,7 @@ const InfoPanel: React.FC<InfoPanelProps> = memo(({ activeTab }) => {
   }, []);
 
   return (
-    <div className="flex-1 bg-gradient-to-br from-indigo-600/90 to-purple-700/90 backdrop-blur-sm p-6 lg:p-12 flex flex-col justify-center relative overflow-hidden h-full">
+    <div className="hidden md:flex flex-1 bg-black/50 backdrop-blur-sm p-6 lg:p-12 flex flex-col justify-center relative overflow-hidden h-full">
       <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}

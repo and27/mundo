@@ -1,5 +1,5 @@
 import React from "react";
-import { ActionableGuide } from "@/types/ai";
+import { GuideWithCharacter } from "@/types/ai";
 import {
   Target,
   CheckCircle,
@@ -9,14 +9,49 @@ import {
   Info,
   Sparkles,
 } from "lucide-react";
-import useModalStore from "@/store/useModalStore";
+import { useRouter } from "next/navigation";
 
 interface PillarContentProps {
-  guide: ActionableGuide;
+  guide: GuideWithCharacter;
+  loading?: boolean;
+  setLoading?: (loading: boolean) => void;
 }
 
-export const MetaphorContent: React.FC<PillarContentProps> = ({ guide }) => {
-  const { openExperienceModal } = useModalStore();
+export const MetaphorContent: React.FC<PillarContentProps> = ({
+  guide,
+  loading = false,
+  setLoading,
+}) => {
+  const router = useRouter();
+  const handleStartExperience = async () => {
+    if (!setLoading) return;
+    try {
+      setLoading(true);
+      const res = await fetch("/api/story/export", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          emotion: guide.emotion,
+          character: guide.character,
+        }),
+      });
+
+      if (!res.ok) {
+        const err = await res.text();
+        throw new Error(err);
+      }
+
+      const data = await res.json();
+      router.push(`/cuentos/${data.story.id}`);
+    } catch (err) {
+      console.error("Error generando experiencia digital", err);
+      alert("Ocurrió un error generando la historia.");
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div className="space-y-4">
       <div className="flex items-start gap-3">
@@ -48,13 +83,16 @@ export const MetaphorContent: React.FC<PillarContentProps> = ({ guide }) => {
 
       <div className="pt-4 border-t border-slate-200">
         <button
-          onClick={() => {
-            openExperienceModal(guide);
-          }}
-          className="w-full bg-gradient-to-r bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white px-4 py-3 rounded-xl  transition-all duration-200 shadow-lg flex items-center justify-center gap-2 font-medium"
+          onClick={handleStartExperience}
+          disabled={loading}
+          className={`w-full px-4 py-3 rounded-xl transition-all duration-200 shadow-lg flex items-center justify-center gap-2 font-medium ${
+            loading
+              ? "bg-slate-300 text-slate-500 cursor-not-allowed"
+              : "bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white"
+          }`}
         >
-          <Sparkles className="w-4 h-4" />
-          Explorar Versión Completa
+          <Sparkles className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
+          {loading ? "Generando..." : "Explorar Versión Completa"}
         </button>
       </div>
     </div>

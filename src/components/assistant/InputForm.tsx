@@ -36,9 +36,8 @@ export default function InputForm({
   const isSchoolMode = mode === "educator"; // Derived value
 
   const [context, setContext] = useState<ContextData | null>(null);
-  console.log(context);
   const setOriginalQuery = useQueryStore((state) => state.setOriginalQuery);
-
+  console.log(context);
   const suggestions = getSuggestionsByMode(isSchoolMode, 4);
 
   const placeholder = isSchoolMode
@@ -49,12 +48,10 @@ export default function InputForm({
     ? "Generar Cuento para Educadores MIM"
     : "Generar Cuento Emocional MIM";
 
-  const successMessage = isSchoolMode
-    ? "Recibirás una cuento adaptado para aplicación grupal en el aula"
-    : "Recibirás un cuento personalizado basada en la metodología MIM";
-
   const handleSuggestionClick = (suggestion: string) => {
     setQuery(suggestion);
+    setIsExpanded(false);
+    setIsFocused(true);
   };
 
   const handleFormSubmit = (event: React.FormEvent) => {
@@ -133,7 +130,7 @@ export default function InputForm({
                 </h3>
               </div>
               <p className="text-sm md:text-base text-slate-600">
-                Comparte los detalles para recibir un cuento personalizado
+                Comparte los detalles para recibir tu propio cuento
               </p>
             </div>
 
@@ -179,22 +176,6 @@ export default function InputForm({
             )}
           </div>
         </button>
-
-        {query.trim() && !isLoading && (
-          <div className="mt-4 p-4 bg-indigo-50 border border-indigo-200 rounded-xl">
-            <div className="flex items-start gap-3">
-              <div className="w-6 h-6 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                <Lightbulb className="w-3 h-3 text-indigo-600" />
-              </div>
-              <div>
-                <p className="text-sm text-indigo-800 font-medium mb-1">
-                  ¡Perfecto! Tu consulta está lista
-                </p>
-                <p className="text-xs text-indigo-600">{successMessage}</p>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

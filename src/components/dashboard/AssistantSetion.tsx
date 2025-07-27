@@ -21,7 +21,7 @@ export default function AssistantSection() {
         } catch (error) {
           console.error("Error saving and redirecting:", error);
         }
-      }, 2500);
+      }, 700);
 
       return () => clearTimeout(timer);
     }

@@ -38,7 +38,7 @@ export default function ModeToggle({
       case "child":
         return {
           icon: <Star className="w-3 h-3" />,
-          label: "Modo Explorador",
+          label: "Modo Explorador Infantil",
           bgColor: "bg-yellow-500/30 text-yellow-300",
           bgColorInline: "bg-yellow-100 text-yellow-600",
         };
@@ -133,7 +133,7 @@ export default function ModeToggle({
 
         <ModeOption
           icon={<Star className="w-4 h-4" />}
-          title="Modo Explorador"
+          title="Modo Explorador Infantil"
           description="Experiencia segura para pequeños"
           isActive={mode === "child"}
           onClick={() => handleModeSelect("child")}

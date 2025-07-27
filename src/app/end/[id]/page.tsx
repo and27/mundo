@@ -80,7 +80,7 @@ const EndPage = () => {
 
     setTimeout(() => {
       setIsSaving(false);
-      router.push("/dashboard");
+      router.push("/child/stories");
     }, 700);
   };
 

@@ -1,7 +1,7 @@
 "use client";
 import { useState, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { HiSparkles, HiHeart } from "react-icons/hi2";
+import { HiSparkles } from "react-icons/hi2";
 import { FiCheck } from "react-icons/fi";
 
 const emotionsData = [
@@ -44,7 +44,6 @@ const SelectableEmotionGrid = memo(
     emotions = emotionsData,
     initialSelected,
     onSelect,
-    mode = "before",
     className = "",
     showFeedback = true,
   }: GridProps) => {
@@ -71,34 +70,9 @@ const SelectableEmotionGrid = memo(
         initial="hidden"
         animate="visible"
       >
-        {showFeedback && (
-          <motion.div variants={itemVariants} className="text-center mb-8">
-            <p className="text-foreground/80 text-xl mb-3">
-              {mode === "before"
-                ? "¿Cómo te sientes en este momento?"
-                : "¿Cómo te sientes después de esta experiencia?"}
-            </p>
-            <AnimatePresence>
-              {selectedLabel && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  className="inline-flex items-center gap-2 glass-light rounded-full px-4 py-2"
-                >
-                  <HiHeart className="w-5 h-5 text-secondary-500" />
-                  <span className="text-foreground font-medium">
-                    {selectedLabel}
-                  </span>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-        )}
-
         <motion.div
           variants={itemVariants}
-          className={`grid ${getGridClasses()} gap-4 sm:gap-6 w-full mx-auto`}
+          className={`grid ${getGridClasses()} p-2 md:p-8 gap-4 sm:gap-6 w-full mx-auto`}
         >
           {emotions.map((emotion) => {
             const isSelected = selectedLabel === emotion.label;
@@ -167,9 +141,7 @@ const SelectableEmotionGrid = memo(
               <div className="inline-flex items-center gap-2 bg-success-500/10 rounded-xl px-4 py-2">
                 <HiSparkles className="w-5 h-5 text-success-500" />
                 <span className="text-foreground/90 font-medium">
-                  {mode === "before"
-                    ? "¡Perfecto! Continuemos"
-                    : "¡Gracias por compartir!"}
+                  {"¡Gracias por compartir!"}
                 </span>
               </div>
             </motion.div>

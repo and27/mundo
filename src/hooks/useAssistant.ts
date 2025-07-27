@@ -62,6 +62,7 @@ export function useMundoAssistant() {
 
       const finalGuide: GuideWithCharacter = {
         ...rawData,
+        id: `story_${emotion}_${character}`,
         emotion,
         character,
       };

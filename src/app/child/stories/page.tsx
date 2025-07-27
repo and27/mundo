@@ -1,193 +1,139 @@
 "use client";
 
 import { useState } from "react";
-import { Play, Heart, Clock } from "lucide-react";
 import ModeToggle from "@/components/dashboard/ModeToggle";
-
-interface Story {
-  id: string;
-  title: string;
-  guide: string;
-  duration: string;
-  thumbnail: string;
-  isDefault?: boolean;
-  isFavorite?: boolean;
-  isNew?: boolean;
-}
-
-// Data quemada para ejemplo
-const stories: Story[] = [
-  {
-    id: "1",
-    title: "El Sendero del Puma Valiente",
-    guide: "Yachay Puma",
-    duration: "8 min",
-    thumbnail: "/backgrounds/sendero-puma.jpg",
-    isDefault: true,
-    isFavorite: true,
-  },
-  {
-    id: "2",
-    title: "El Río Sagrado de las Emociones",
-    guide: "Amaru",
-    duration: "10 min",
-    thumbnail: "/backgrounds/rio-sagrado.jpg",
-    isDefault: true,
-  },
-  {
-    id: "3",
-    title: "El Vuelo del Cóndor Sabio",
-    guide: "Kuntur",
-    duration: "7 min",
-    thumbnail: "/backgrounds/vuelo-condor.jpg",
-    isDefault: true,
-    isNew: true,
-  },
-  {
-    id: "4",
-    title: "Mi cuento personalizado",
-    guide: "Yachay Puma",
-    duration: "6 min",
-    thumbnail: "/backgrounds/cuento-personalizado.jpg",
-    isFavorite: true,
-  },
-];
+import { useSavedGuides } from "@/hooks/useSavedGuides";
+import StoryCard from "@/components/dashboard/StoryCard";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function ChildStoriesPage() {
   const [activeFilter, setActiveFilter] = useState("todos");
+  const [favorites, setFavorites] = useState<Set<string>>(new Set());
 
-  const filteredStories = stories.filter((story) => {
-    if (activeFilter === "favoritos") return story.isFavorite;
-    if (activeFilter === "nuevos") return story.isNew;
+  const { savedGuides, isLoaded } = useSavedGuides();
+  const router = useRouter();
+  console.log(savedGuides);
+
+  const filteredStories = savedGuides.filter((story) => {
+    if (activeFilter === "favoritos") return favorites.has(story.id);
+    if (activeFilter === "nuevos") return false; // TODO: agregar lógica de "nuevos" basada en fecha
     return true;
   });
 
-  return (
-    <main className="min-h-screen w-full bg-gradient-to-b from-amber-100 to-yellow-200">
-      <div className="flex justify-between bg-gradient-to-l from-amber-500 to-yellow-600 px-6 py-8">
-        <div className="text-center">
-          <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
-            ¡Hola, pequeño explorador!
-          </h1>
-          <p className="text-white/90 text-lg">
-            ¿Qué cuento quieres escuchar hoy?
+  const handlePlayStory = (storyId: string) => {
+    router.push(`/cuentos/${storyId}`);
+  };
+
+  const handleToggleFavorite = (guideId: string) => {
+    setFavorites((prev) => {
+      const newFavorites = new Set(prev);
+      if (newFavorites.has(guideId)) {
+        newFavorites.delete(guideId);
+      } else {
+        newFavorites.add(guideId);
+      }
+      return newFavorites;
+    });
+  };
+
+  if (!isLoaded) {
+    return (
+      <main className="min-h-screen w-full bg-gradient-to-br from-sky-100 via-blue-50 to-cyan-100 flex items-center justify-center">
+        <div className="bg-white rounded-3xl p-12 shadow-lg">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-400 mx-auto mb-4"></div>
+          <p className="text-sky-600 font-semibold text-center">
+            Cargando tus aventuras...
           </p>
         </div>
-        <div className="bg-gray-700 h-fit rounded-md">
-          <ModeToggle variant="header" />
+      </main>
+    );
+  }
+
+  return (
+    <main className="min-h-screen w-full bg-gradient-to-br from-sky-100 via-blue-50 to-cyan-100">
+      <div className="bg-gradient-to-r from-sky-400 via-blue-400 to-cyan-400 relative">
+        <div className="w-full relative flex justify-between items-start px-6 py-12">
+          <Image
+            src={"/images/forest-bg-dark.png"}
+            alt=""
+            fill
+            className="absolute object-cover"
+          />
+          <h1 className="z-100 text-3xl md:text-4xl font-bold text-white mb-3 leading-tight">
+            Vamos por una nueva aventura
+          </h1>
+          <div className="z-100 bg-black/50 rounded-lg backdrop-blur-sm">
+            <ModeToggle variant="header" />
+          </div>
         </div>
       </div>
 
-      {/* Filters */}
-      <div className="sticky top-0 bg-white/80 backdrop-blur-sm border-b border-amber-200 px-6 py-4 z-10">
-        <div className="max-w-2xl mx-auto flex justify-center gap-2">
+      <div className="sticky top-0 bg-white/70 backdrop-blur-xl border-b border-blue-100 px-6 py-6 z-10">
+        <div className="max-w-4xl mx-auto flex justify-center gap-3">
           {[
-            { key: "todos", label: "Todos", icon: "📚" },
-            { key: "favoritos", label: "Favoritos", icon: "❤️" },
+            { key: "todos", label: "Todos", icon: "🌟" },
+            { key: "favoritos", label: "Favoritos", icon: "🤍" },
             { key: "nuevos", label: "Nuevos", icon: "✨" },
           ].map((filter) => (
             <button
               key={filter.key}
               onClick={() => setActiveFilter(filter.key)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+              className={`px-6 py-3 rounded-2xl text-sm font-bold transition-all transform hover:scale-105 ${
                 activeFilter === filter.key
-                  ? "bg-amber-400 text-white shadow-md"
-                  : "bg-white text-amber-700 hover:bg-amber-50"
+                  ? "bg-gradient-to-r from-sky-600 to-blue-600 text-white shadow-lg shadow-blue-200"
+                  : "bg-white text-sky-600 hover:bg-sky-50 shadow-md"
               }`}
             >
-              {filter.icon} {filter.label}
+              <span className="text-base">{filter.icon}</span>
+              <span className="ml-2">{filter.label}</span>
             </button>
           ))}
         </div>
       </div>
 
-      {/* Stories Feed - Single Column */}
-      <div className="max-w-2xl mx-auto px-6 py-6 space-y-4">
-        {filteredStories.map((story) => (
-          <div
-            key={story.id}
-            className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer group"
-            onClick={() => console.log(`Playing story: ${story.id}`)}
-          >
-            <div className="flex items-center p-4">
-              {/* Thumbnail */}
-              <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-xl overflow-hidden flex-shrink-0">
-                <div
-                  className="w-full h-full bg-gradient-to-br from-amber-300 to-orange-400 flex items-center justify-center"
-                  style={{
-                    backgroundImage: `url(${story.thumbnail})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }}
-                >
-                  {/* Play button overlay */}
-                  <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Play className="w-8 h-8 text-white fill-white" />
-                  </div>
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="ml-4 flex-1 min-w-0">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-bold text-gray-900 text-lg md:text-xl mb-1 line-clamp-2">
-                      {story.title}
-                    </h3>
-                    <p className="text-amber-600 text-sm font-medium mb-2">
-                      Con {story.guide}
-                    </p>
-                    <div className="flex items-center gap-3 text-gray-500 text-sm">
-                      <span className="flex items-center gap-1">
-                        <Clock className="w-4 h-4" />
-                        {story.duration}
-                      </span>
-                      {story.isDefault && (
-                        <span className="bg-amber-100 text-amber-700 px-2 py-1 rounded-full text-xs">
-                          Clásico
-                        </span>
-                      )}
-                      {story.isNew && (
-                        <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">
-                          ¡Nuevo!
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Actions */}
-                  <div className="flex flex-col items-end gap-2 ml-4">
-                    {story.isFavorite && (
-                      <Heart className="w-5 h-5 text-red-400 fill-red-400" />
-                    )}
-                    <div className="bg-amber-400 hover:bg-amber-500 text-white p-2 rounded-full transition-colors">
-                      <Play className="w-4 h-4 fill-white" />
-                    </div>
-                  </div>
-                </div>
-              </div>
+      <div className="max-w-6xl mx-auto px-6 py-8">
+        {filteredStories.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {filteredStories.map((story, index) => (
+              <StoryCard
+                key={`kids-story-${story.id}-${index}`}
+                guide={story}
+                variant="kids"
+                onPlay={() => handlePlayStory(story.id)}
+                isFavorite={favorites.has(story.id)}
+                onToggleFavorite={() => handleToggleFavorite(story.id)}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="max-w-2xl mx-auto px-6 py-12 text-center">
+            <div className="bg-white rounded-3xl p-12 shadow-lg">
+              {savedGuides.length === 0 ? (
+                <>
+                  <div className="text-8xl mb-6">📚</div>
+                  <h3 className="text-2xl font-bold text-gray-700 mb-3">
+                    ¡Aún no tienes aventuras!
+                  </h3>
+                  <p className="text-gray-500 text-lg">
+                    Pídele a papá o mamá que cree una historia especial para ti
+                  </p>
+                </>
+              ) : (
+                <>
+                  <div className="text-8xl mb-6">🔍</div>
+                  <h3 className="text-2xl font-bold text-gray-700 mb-3">
+                    No hay aventuras en esta sección
+                  </h3>
+                  <p className="text-gray-500 text-lg">
+                    Intenta con otro filtro para encontrar tus historias
+                  </p>
+                </>
+              )}
             </div>
           </div>
-        ))}
+        )}
       </div>
-
-      {/* Empty State si no hay cuentos */}
-      {filteredStories.length === 0 && (
-        <div className="max-w-2xl mx-auto px-6 py-12 text-center">
-          <div className="text-6xl mb-4">📖</div>
-          <h3 className="text-xl font-semibold text-gray-700 mb-2">
-            No hay cuentos aquí todavía
-          </h3>
-          <p className="text-gray-500">
-            Pídele a papá o mamá que cree un cuento especial para ti
-          </p>
-        </div>
-      )}
-
-      {/* Footer */}
-      <footer className="mt-12 py-6 text-center text-amber-600/60 text-sm">
-        Mundo Interior &copy; {new Date().getFullYear()}
-      </footer>
     </main>
   );
 }

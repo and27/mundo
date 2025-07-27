@@ -49,7 +49,7 @@ const DynamicBackgroundOverlay: React.FC<DynamicBackgroundOverlayProps> = ({
                 times: [0, 0.25, 0.5, 0.75, 1],
               }}
             >
-              <div className="absolute inset-0 scale-[1.05] blur-[6px]">
+              <div className="absolute inset-0 scale-[1.05] blur-[3px]">
                 <Image
                   src={currentImage}
                   alt="Fondo del viaje"

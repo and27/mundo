@@ -62,6 +62,8 @@ const LoginForm: React.FC = () => {
         type: "success",
         message: result.message,
       });
+      setIsSubmitting(false);
+      router.push("/parentDashboard");
     } catch (error) {
       if (error instanceof Error) {
         setApiFeedback({
@@ -69,9 +71,6 @@ const LoginForm: React.FC = () => {
           message: error.message || "Error al iniciar sesión.",
         });
       }
-    } finally {
-      setIsSubmitting(false);
-      router.push("/parentDashboard");
     }
   };
 

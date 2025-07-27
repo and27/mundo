@@ -5,7 +5,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
 
   return (
-    <section className="min-h-screen x-4 py-8  mx-auto text-white">
+    <section className="bg-gradient-to-br from-indigo-600/90 to-purple-700/90 min-h-screen x-4 py-8  mx-auto text-white">
       <div className="p-3 max-w-3xl mx-auto">
         <button
           onClick={() => router.back()}

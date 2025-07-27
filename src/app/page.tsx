@@ -19,9 +19,8 @@ const inspirationalQuotes = [
 type WelcomePanelType = {
   name: string;
 };
-const WelcomePanel: React.FC<WelcomePanelType> = memo(({ name }) => {
+const WelcomePanel: React.FC<WelcomePanelType> = memo(() => {
   const [currentQuote, setCurrentQuote] = useState(0);
-  console.log(name);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -101,15 +100,15 @@ const ActionPanel: React.FC<ActionPanelType> = memo(
     );
 
     return (
-      <div className="bg-color-primary-900/40 p-8 md:p-12 flex flex-col justify-center items-center text-center rounded-b-2xl lg:rounded-r-2xl lg:rounded-bl-none h-full">
+      <div className="p-3 md:p-12 flex flex-col justify-center items-center text-center rounded-b-2xl lg:rounded-r-2xl lg:rounded-bl-none h-full">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
         >
-          <div className="text-center flex gap-3">
+          <div className="hidden md:flex text-center gap-3">
             <HiSparkles className="w-10 h-10 text-color-accent-gold mb-4" />
-            <h2 className="hidden md:flex w-fit text-2xl lg:text-3xl font-bold text-foreground mb-3">
+            <h2 className="w-fit text-2xl lg:text-3xl font-bold text-foreground mb-3">
               Tu Aventura Comienza
             </h2>
           </div>
@@ -136,7 +135,7 @@ const ActionPanel: React.FC<ActionPanelType> = memo(
               className="block mb-4"
             >
               <Button
-                className="w-full transition-all duration-300 hover:shadow-lg"
+                className="text-sm md:text-base w-full transition-all duration-300 hover:shadow-lg"
                 disabled={isLoading}
               >
                 {primaryButtonContent}
@@ -147,7 +146,7 @@ const ActionPanel: React.FC<ActionPanelType> = memo(
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
             <Link
               href="/register"
-              className="w-full inline-flex items-center justify-center gap-3 px-6 py-3 font-semibold rounded-xl glass-light text-foreground/80 hover:text-foreground hover:bg-glass-bg-medium transition-all duration-300"
+              className="text-sm md:text-base w-full inline-flex items-center justify-center gap-3 px-6 py-3 font-semibold rounded-xl glass-light text-foreground/80 hover:text-foreground hover:bg-glass-bg-medium transition-all duration-300"
             >
               <FiUsers className="w-5 h-5" />
               <span>Soy padre o educador</span>
@@ -170,14 +169,14 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="text-white  min-h-screen w-full bg-gradient-background flex items-center justify-center p-3  ">
+    <main className="bg-gradient-to-br from-indigo-600/90 to-purple-700/90 text-white min-h-screen w-full flex items-center justify-center p-3  ">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="w-full max-w-5xl mx-auto"
       >
-        <div className="bg-black/50 backdrop-blur-sm grid md:grid-cols-2 py-10 rounded-2xl">
+        <div className="bg-black/50 backdrop-blur-sm grid md:grid-cols-2 py-7 md:py-10 rounded-2xl">
           <WelcomePanel name={name} />
           <ActionPanel
             name={name}

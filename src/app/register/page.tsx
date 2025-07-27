@@ -6,6 +6,8 @@ import { FiArrowRight } from "react-icons/fi";
 import LoginForm from "@/components/auth/LoginForm";
 import RegisterForm from "@/components/auth/RegisterForm";
 import InfoPanel from "@/components/auth/AuthInfoPanel";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function AuthPage() {
   const [activeTab, setActiveTab] = useState<"register" | "login">("register");
@@ -28,14 +30,24 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="p-2 md:p-6 flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
+    <div className="p-2 md:p-6 flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-indigo-600/90 to-purple-700/90 relative overflow-hidden">
+      <Link href="/">
+        <Image
+          className="p-5"
+          src={"/images/logo-mundo.png"}
+          width={200}
+          height={200}
+          alt=""
+        />
+      </Link>
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         className="w-full max-w-6xl relative z-10"
       >
-        <div className="bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 overflow-hidden">
+        <div className="rounded-3xl shadow-2xl border border-white/20 overflow-hidden">
           <div className="flex flex-col lg:flex-row min-h-[600px]">
             <InfoPanel activeTab={activeTab} />
             <div className="flex-1 bg-white/5 backdrop-blur-sm  px-4 py-8 lg:p-12 flex flex-col">

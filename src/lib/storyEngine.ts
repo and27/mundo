@@ -2,6 +2,8 @@ import { GoogleAuth } from "google-auth-library";
 import { buildImageFilename } from "@/utils/imageUtils";
 import { buildStoryPrompt } from "./buildStoryPrompt";
 import { StoryPromptOptions } from "@/types/promptGenerationTypes";
+import { performance } from "node:perf_hooks";
+import OpenAI from "openai";
 
 export type StoryStep = {
   id: string;
@@ -42,6 +44,11 @@ export type GeneratedStory = {
   coverImage?: string;
   steps: StoryStep[];
 };
+
+// Inicializar cliente OpenAI
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
 function cleanTextForTTS(text: string): string {
   return text
@@ -110,6 +117,16 @@ export async function generateAudio(
   return { buffer, filename };
 }
 
+async function timeAsync<T>(label: string, fn: () => Promise<T>): Promise<T> {
+  const start = performance.now();
+  try {
+    return await fn();
+  } finally {
+    const duration = performance.now() - start;
+    console.log(`[generateStory] ${label}: ${duration.toFixed(2)} ms`);
+  }
+}
+
 export async function generateStory(
   emotion: string,
   character: string
@@ -127,48 +144,57 @@ export async function generateStory(
     techniquePrimary: "breathing_condor",
     techniqueSecondary: null,
   };
-  const prompt2 = buildStoryPrompt(promptOptions);
-  console.log(prompt2);
 
-  const res = await fetch(process.env.DEEPSEEK_API_URL!, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.DEEPSEEK_API_KEY}`,
-    },
-    body: JSON.stringify({
-      model: "deepseek-chat",
+  const prompt2 = buildStoryPrompt(promptOptions);
+  console.log("[generateStory] Prompt generado");
+
+  // Medir fetch OpenAI API
+  const result = await timeAsync("fetch OpenAI API", async () => {
+    const response = await openai.chat.completions.create({
+      model: "gpt-4.1-nano", // Usando gpt-4o-mini que es más estable que gpt-4.1-nano
       messages: [{ role: "user", content: prompt2 }],
-    }),
+      response_format: { type: "json_object" },
+      temperature: 0.3,
+      max_tokens: 2000,
+    });
+
+    return response;
   });
 
-  const result = await res.json();
-  console.log(result);
+  console.log("[generateStory] Resultado recibido de OpenAI");
+
   const content = result?.choices?.[0]?.message?.content;
   if (!content || typeof content !== "string") {
     throw new Error("Respuesta inesperada del modelo.");
   }
 
-  const match = content.match(/\{[\s\S]*\}/);
-  if (!match) throw new Error("No se pudo extraer JSON del modelo.");
+  // Medir parseo JSON
+  const story = await timeAsync("parse JSON contenido", async () => {
+    const match = content.match(/\{[\s\S]*\}/);
+    if (!match) throw new Error("No se pudo extraer JSON del modelo.");
+    return JSON.parse(match[0]) as GeneratedStory;
+  });
 
-  const story: GeneratedStory = JSON.parse(match[0]);
   if (!story.steps || story.steps.length < 2) {
     throw new Error("Historia incompleta.");
   }
 
   story.guideId = character;
   story.initialStepId = "scene_1";
-  story.steps.forEach((step, idx) => {
-    const prompt = step.prompt_img;
-    const filename = buildImageFilename(prompt);
 
-    step.visuals = {
-      ...step.visuals,
-      backgroundImage: filename,
-    };
+  // Medir procesamiento post-parseo
+  await timeAsync("procesar steps", async () => {
+    story.steps.forEach((step, idx) => {
+      const prompt = step.prompt_img;
+      const filename = buildImageFilename(prompt);
 
-    step.id = `scene_${idx + 1}`;
+      step.visuals = {
+        ...step.visuals,
+        backgroundImage: filename,
+      };
+
+      step.id = `scene_${idx + 1}`;
+    });
   });
 
   return story;
@@ -196,7 +222,7 @@ export async function generateHiveImage(
         prompt,
         negative_prompt: "blurry, distorted, noisy, photorealistic",
         image_size: imageSize,
-        num_inference_steps: 30,
+        num_inference_steps: 20,
         guidance_scale: 4.5,
         num_images: 1,
         seed: 42,

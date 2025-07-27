@@ -27,9 +27,6 @@ export default function ChildDashboardPage() {
           </div>
 
           <div className="w-full flex flex-col gap-6 md:gap-8">
-            {/* Aquí puedes decidir si MoodTrackerPreview es prominente en el dashboard */}
-            {/* o si su contenido ya está bien representado al hacer clic en el ícono de Bitácora */}
-            {/* Si lo incluyes, asegúrate que visualmente complemente los otros bloques */}
             <MoodTracker />
           </div>
         </div>

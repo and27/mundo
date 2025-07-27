@@ -1,3 +1,4 @@
+//legacy
 "use client";
 import React, { useState } from "react";
 import { Play, Users } from "lucide-react";

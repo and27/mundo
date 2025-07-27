@@ -35,7 +35,6 @@ export default function CuentoClient({
 
   const showSubtitles = useOnboardingStore((state) => state.showSubtitles);
   const toggleSubtitles = useOnboardingStore((state) => state.toggleSubtitles);
-
   return (
     <>
       {(journeyState === "playing" || journeyState === "paused") && (
@@ -93,13 +92,15 @@ export default function CuentoClient({
       )}
 
       <section className="bg-black/50 backdrop-blur-sm w-full min-h-screen flex justify-center items-center overflow-hidden">
-        <SceneWithCharacter
-          backgroundUrl={currentStep?.visuals?.backgroundImage || ""}
-          characterUrl={getCharacterImage(
-            story.guideId || guide.id,
-            story.category ?? "emotions"
-          )}
-        />
+        {journeyState !== "idle" && (
+          <SceneWithCharacter
+            backgroundUrl={currentStep?.visuals?.backgroundImage || ""}
+            characterUrl={getCharacterImage(
+              story.guideId || guide.id,
+              story.category ?? "emotions"
+            )}
+          />
+        )}
 
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-between text-white text-center pt-5 md:pt-10 px-4 pb-24 sm:pb-28">
           {currentStep?.visuals.type === "breathing" && (

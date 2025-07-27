@@ -23,11 +23,11 @@ const SceneWithCharacter: React.FC<SceneWithCharacterProps> = ({
       : "left-1/2 -translate-x-1/2";
 
   return (
-    <div className="relative w-full h-[90vh] overflow-hidden rounded-3xl shadow-xl">
+    <div className="relative w-full h-[100vh] overflow-hidden">
       <DynamicBackgroundOverlay imageUrl={backgroundUrl} />
 
       <motion.div
-        className={`absolute -bottom-20 z-10 ${positionClass}`}
+        className={`w-[280px] md:w-[400px] absolute -bottom-5 md:-bottom-20 z-10 ${positionClass}`}
         initial={{ y: 60, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 1.2, ease: "easeOut" }}
@@ -35,9 +35,9 @@ const SceneWithCharacter: React.FC<SceneWithCharacterProps> = ({
         <Image
           src={characterUrl}
           alt="Character"
-          width={"400"}
-          height={"400"}
-          className="w-[320px] sm:w-[400px] md:w-[480px] drop-shadow-[0_15px_25px_rgba(0,0,0,0.4)]"
+          width={"560"}
+          height={"560"}
+          className="w-[280px] md:w-[400px] drop-shadow-[0_15px_25px_rgba(0,0,0,0.4)]"
         />
       </motion.div>
     </div>

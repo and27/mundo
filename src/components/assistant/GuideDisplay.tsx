@@ -4,22 +4,21 @@ import { useGuideInteraction } from "@/hooks/useGuideInteraction";
 import { GuideWithCharacter } from "@/types/ai";
 import GuideHeader from "../dashboard/ai/GuideHeader";
 import GuideActions from "../dashboard/ai/GuideActionts";
-import { MessageCircle, Sparkles, BookOpen } from "lucide-react";
+import { MessageCircle, Sparkles, BookOpen, Loader2 } from "lucide-react";
 import PillarCard from "./PillarCard";
 import {
   ActivityContent,
   ConversationContent,
   MetaphorContent,
 } from "./MethaphorContent";
-import ExperienceModal from "./ExperienceModal";
-import useModalStore from "@/store/useModalStore";
+import { useState } from "react";
 
 interface GuideDisplayProps {
   guide: GuideWithCharacter | null;
 }
 
 export default function GuideDisplay({ guide }: GuideDisplayProps) {
-  const { experienceModalOpen, closeExperienceModal } = useModalStore();
+  const [loading, setLoading] = useState(false);
   const { activePillar, rating, handlePillarChange, handleRatingChange } =
     useGuideInteraction();
 
@@ -53,7 +52,7 @@ export default function GuideDisplay({ guide }: GuideDisplayProps) {
   const pillars = [
     {
       icon: <BookOpen className="w-5 h-5" />,
-      title: "La Metáfora",
+      title: "El cuento",
       subtitle: "Una historia que conecta con su mundo interior",
       gradientFrom: "from-purple-500",
       gradientTo: "to-indigo-600",
@@ -83,7 +82,13 @@ export default function GuideDisplay({ guide }: GuideDisplayProps) {
   const renderPillarContent = (index: number) => {
     switch (index) {
       case 0:
-        return <MetaphorContent guide={guide} />;
+        return (
+          <MetaphorContent
+            guide={guide}
+            loading={loading}
+            setLoading={setLoading}
+          />
+        );
       case 1:
         return <ConversationContent guide={guide} />;
       case 2:
@@ -95,6 +100,38 @@ export default function GuideDisplay({ guide }: GuideDisplayProps) {
 
   return (
     <div className="max-w-4xl mx-auto mt-20 space-y-6">
+      {loading && (
+        <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50 flex items-center justify-center">
+          <div className="bg-white/95 backdrop-blur-[20px] border border-white/20 rounded-3xl p-8 shadow-2xl max-w-sm mx-4">
+            <div className="flex items-center justify-center gap-4 mb-6">
+              <div className="relative">
+                <div className="w-16 h-16 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center">
+                  <Sparkles className="w-8 h-8 text-white" />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl animate-ping opacity-20"></div>
+              </div>
+            </div>
+
+            <div className="text-center">
+              <h3 className="text-xl font-bold text-slate-800 mb-2">
+                Creando experiencia
+              </h3>
+              <p className="text-slate-600 mb-6">
+                Generando tu historia personalizada...
+              </p>
+
+              <div className="flex items-center justify-center gap-2 mb-4">
+                <Loader2 className="w-5 h-5 text-indigo-500 animate-spin" />
+                <span className="text-sm text-slate-500">Cargando ...</span>
+              </div>
+
+              <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
+                <div className="h-full bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full animate-pulse"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <GuideHeader guide={guide} rating={rating} onRate={handleRatingChange} />
       <GuideActions guide={guide} />
 
@@ -110,11 +147,6 @@ export default function GuideDisplay({ guide }: GuideDisplayProps) {
           </PillarCard>
         ))}
       </div>
-      <ExperienceModal
-        isOpen={experienceModalOpen}
-        onClose={closeExperienceModal}
-        guide={guide}
-      />
     </div>
   );
 }

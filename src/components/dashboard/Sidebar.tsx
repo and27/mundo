@@ -6,6 +6,8 @@ import { LogOut, User, MoreHorizontal } from "lucide-react";
 import { HiSparkles } from "react-icons/hi2";
 import { dashboardSections } from "@/lib/dashboardConfig";
 import { FaBars } from "react-icons/fa";
+import { logoutUser } from "@/services/authService";
+import { useRouter } from "next/navigation";
 
 type SidebarProps = {
   userName?: string;
@@ -99,7 +101,22 @@ const Sidebar: React.FC<SidebarProps> = ({
   currentPath = "/dashboard",
 }) => {
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const userInitial = userName.charAt(0).toUpperCase();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      setIsLoggingOut(true);
+      await logoutUser();
+      router.push("/");
+    } catch (error) {
+      console.error("Error during logout:", error);
+      alert("Error al cerrar sesión. Inténtalo de nuevo.");
+    } finally {
+      setIsLoggingOut(false);
+    }
+  };
 
   return (
     <>
@@ -213,7 +230,6 @@ const Sidebar: React.FC<SidebarProps> = ({
                     <span className="text-sm font-semibold text-white">
                       {userName}
                     </span>
-                    <span className="text-xs text-slate-400">En línea</span>
                   </div>
                   <MoreHorizontal className="w-4 h-4 text-slate-400" />
                 </>
@@ -244,31 +260,45 @@ const Sidebar: React.FC<SidebarProps> = ({
             )}
           </div>
 
-          <Link
-            href="/acceso"
-            onClick={onCloseMobile}
-            className={`flex items-center p-3 rounded-lg hover:bg-red-500/20 text-red-400 hover:text-red-300 transition-all duration-200 group ${
-              isDesktopCollapsed ? "justify-center" : ""
-            }`}
+          <button
+            onClick={handleLogout}
+            disabled={isLoggingOut}
+            className={`flex items-center w-full p-3 rounded-lg transition-all duration-200 group ${
+              isLoggingOut
+                ? "bg-slate-600/20 text-slate-500 cursor-not-allowed"
+                : "hover:bg-red-500/20 text-red-400 hover:text-red-300"
+            } ${isDesktopCollapsed ? "justify-center" : ""}`}
           >
-            <div className="w-10 h-10 bg-red-500/20 rounded-lg flex items-center justify-center group-hover:bg-red-500/30 transition-colors">
-              <LogOut className="h-4 w-4" />
+            <div
+              className={`w-10 h-10 rounded-lg flex items-center justify-center transition-colors ${
+                isLoggingOut
+                  ? "bg-slate-600/20"
+                  : "bg-red-500/20 group-hover:bg-red-500/30"
+              }`}
+            >
+              <LogOut
+                className={`h-4 w-4 ${isLoggingOut ? "animate-spin" : ""}`}
+              />
             </div>
 
             {!isDesktopCollapsed && (
               <div className="flex flex-col ml-3">
-                <span className="text-sm font-semibold">Cerrar Sesión</span>
-                <span className="text-xs text-red-400/70">Salir del panel</span>
+                <span className="text-sm font-semibold">
+                  {isLoggingOut ? "Cerrando..." : "Cerrar Sesión"}
+                </span>
+                <span className="text-xs text-red-400/70">
+                  {isLoggingOut ? "Espera un momento" : "Salir del panel"}
+                </span>
               </div>
             )}
 
             {isDesktopCollapsed && (
               <div className="absolute left-full ml-3 top-1/2 -translate-y-1/2 px-3 py-2 bg-slate-800 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none z-50 border border-slate-600">
-                Cerrar Sesión
+                {isLoggingOut ? "Cerrando..." : "Cerrar Sesión"}
                 <div className="absolute right-full top-1/2 -translate-y-1/2 w-2 h-2 bg-slate-800 rotate-45 border-l border-b border-slate-600"></div>
               </div>
             )}
-          </Link>
+          </button>
         </div>
       </aside>
     </>
