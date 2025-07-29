@@ -2,13 +2,10 @@ import { NextResponse } from "next/server";
 import { performance } from "node:perf_hooks";
 import pLimit from "p-limit";
 
-import {
-  generateStory,
-  generateAudio,
-  generateHiveImage,
-} from "@/lib/storyEngine";
+import { generateStory, generateHiveImage } from "@/lib/storyEngine";
 import { enhancePromptStyle } from "@/utils/imageUtils";
 import { supabase } from "@/lib/supabaseServer";
+import { generateAudio } from "@/lib/geminiTTS";
 
 type TimingEntry = { label: string; ms: number; stepId?: string };
 const timings: TimingEntry[] = [];
@@ -57,7 +54,7 @@ export async function POST(request: Request) {
       story.steps.map((step, i) =>
         limit(async () => {
           const stepId = step.id ?? `scene_${i + 1}`;
-          const audioFilename = `${story.id}_${stepId}.mp3`;
+          const audioFilename = `${story.id}_${stepId}.wav`;
 
           // === AUDIO ===
           const audioData = await timeAsync(
@@ -72,7 +69,7 @@ export async function POST(request: Request) {
               supabase.storage
                 .from("stories")
                 .upload(`audio/${audioFilename}`, audioData.buffer, {
-                  contentType: "audio/mpeg",
+                  contentType: "audio/wav",
                   upsert: true,
                 }),
             stepId

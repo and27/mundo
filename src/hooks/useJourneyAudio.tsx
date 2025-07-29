@@ -32,7 +32,7 @@ export function useJourneyAudio({
       const sound = new Howl({
         src: [src], // Howler espera un array de fuentes
         volume: initialVolume,
-        //html5: true, // Usar audio HTML5 (importante para PWA/Service Workers/Caching)
+        html5: true, // Usar audio HTML5 (importante para PWA/Service Workers/Caching)
         onplay: () => {
           setIsPlaying(true);
           // console.log(`Audio playing: ${src}`);

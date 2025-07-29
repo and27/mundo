@@ -1,4 +1,3 @@
-import { GoogleAuth } from "google-auth-library";
 import { buildImageFilename } from "@/utils/imageUtils";
 import { buildStoryPrompt } from "./buildStoryPrompt";
 import { StoryPromptOptions } from "@/types/promptGenerationTypes";
@@ -50,73 +49,6 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-function cleanTextForTTS(text: string): string {
-  return text
-    .replace(/\[SONIDO_[^\]]+\]/g, "") // Remover [SONIDO_X]
-    .replace(/\[SILENCIO (\d+)s\]/g, " ... ") // Pausas naturales
-    .replace(/\(\d+\.{3}\d+\.{3}\d+\.{3}\)/g, "") // Remover conteos
-    .replace(/\s+/g, " ") // Limpiar espacios múltiples
-    .trim();
-}
-
-export async function generateAudio(
-  text: string,
-  filename: string
-): Promise<{ buffer: Buffer; filename: string }> {
-  const base64 = process.env.GOOGLE_APPLICATION_CREDENTIALS_B64;
-
-  if (!base64) throw new Error("Missing GOOGLE_APPLICATION_CREDENTIALS_B64");
-
-  const jsonStr = Buffer.from(base64, "base64").toString("utf8");
-  const credentials = JSON.parse(jsonStr);
-
-  const auth = new GoogleAuth({
-    credentials,
-    scopes: ["https://www.googleapis.com/auth/cloud-platform"],
-  });
-
-  const client = await auth.getClient();
-  const token = await client.getAccessToken();
-
-  const voiceConfig = {
-    languageCode: "es-US",
-    name: "es-US-Neural2-B", //es-US-Neural2-A for femenine
-  };
-
-  const audioConfig = {
-    audioEncoding: "MP3",
-    speakingRate: 0.95,
-    pitch: -1.0,
-  };
-
-  const cleanText = cleanTextForTTS(text);
-  const res = await fetch(
-    "https://texttospeech.googleapis.com/v1/text:synthesize",
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token.token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        input: { text: cleanText },
-        voice: voiceConfig,
-        audioConfig,
-      }),
-    }
-  );
-
-  if (!res.ok) {
-    const errorText = await res.text();
-    throw new Error(`Google TTS error: ${errorText}`);
-  }
-
-  const data = await res.json();
-  const buffer = Buffer.from(data.audioContent, "base64");
-
-  return { buffer, filename };
-}
-
 async function timeAsync<T>(label: string, fn: () => Promise<T>): Promise<T> {
   const start = performance.now();
   try {
@@ -151,7 +83,7 @@ export async function generateStory(
   // Medir fetch OpenAI API
   const result = await timeAsync("fetch OpenAI API", async () => {
     const response = await openai.chat.completions.create({
-      model: "gpt-4.1-nano", // Usando gpt-4o-mini que es más estable que gpt-4.1-nano
+      model: "gpt-4.1-mini", // Usando gpt-4o-mini que es más estable que gpt-4.1-nano
       messages: [{ role: "user", content: prompt2 }],
       response_format: { type: "json_object" },
       temperature: 0.3,

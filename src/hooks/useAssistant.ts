@@ -45,7 +45,7 @@ export function useMundoAssistant() {
       const response = await fetch("/api/generate-guide", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query }),
+        body: JSON.stringify({ query, useOpenAI: true }),
       });
 
       if (!response.ok) {
