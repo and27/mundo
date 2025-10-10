@@ -5,6 +5,7 @@ import { ChevronRight, ArrowLeft, Calendar } from "lucide-react";
 import { useSavedGuides } from "@/hooks/useSavedGuides";
 import GuideDisplay from "../assistant/GuideDisplay";
 import StoryCard from "./StoryCard";
+import GuideActions from "./ai/GuideActionts";
 
 export default function GeneratedStories() {
   const searchParams = useSearchParams();
@@ -44,20 +45,23 @@ export default function GeneratedStories() {
     }
 
     return (
-      <div className="space-y-6">
-        <nav className="flex items-center space-x-2 text-sm text-slate-600">
-          <button
-            onClick={() => setSelectedGuideId(null)}
-            className="hover:text-slate-800 transition-colors flex items-center gap-1"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Guías
-          </button>
-          <ChevronRight className="w-4 h-4 text-slate-400" />
-          <span className="text-slate-800 font-medium">
-            {currentGuide.guideTitle}
-          </span>
-        </nav>
+      <div className="m-5 space-y-6">
+        <div className="flex flex-col md:flex-row gap-5 items-center justify-between">
+          <nav className="flex items-center space-x-2 text-sm text-slate-600">
+            <button
+              onClick={() => setSelectedGuideId(null)}
+              className="hover:text-slate-800 transition-colors flex items-center gap-1"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Guías
+            </button>
+            <ChevronRight className="w-4 h-4 text-slate-400" />
+            <span className="text-slate-800 font-medium">
+              {currentGuide.guideTitle}
+            </span>
+          </nav>
+          <GuideActions guide={currentGuide} />
+        </div>
 
         <GuideDisplay guide={currentGuide} />
       </div>

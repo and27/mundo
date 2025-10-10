@@ -37,6 +37,29 @@ export async function POST(request: Request) {
     );
   }
 
+  // === STEP 0: Cache lookup ===
+  const cacheKey = `generated/${character}_${emotion}.json`;
+
+  try {
+    const { data: cachedUrl } = supabase.storage
+      .from("stories")
+      .getPublicUrl(cacheKey);
+
+    const cachedRes = await fetch(cachedUrl.publicUrl);
+    if (cachedRes.ok) {
+      const cachedStory = await cachedRes.json();
+      console.log("✅ Historia encontrada en caché:", cacheKey);
+      return NextResponse.json({
+        story: cachedStory,
+        cached: true,
+        url: cachedUrl.publicUrl,
+      });
+    }
+  } catch (err) {
+    console.log("ℹ️ No se encontró caché previa:", cacheKey);
+    console.log(err);
+  }
+
   try {
     // 1. Generar historia (secuencial, no se puede paralelizar)
     const story = await timeAsync("generateStory", () =>
@@ -157,12 +180,30 @@ export async function POST(request: Request) {
       .from("stories")
       .getPublicUrl(filename);
 
+    await timeAsync("uploadStoryCache", () =>
+      supabase.storage
+        .from("stories")
+        .upload(
+          `generated/${character}_${emotion}.json`,
+          JSON.stringify(story, null, 2),
+          {
+            contentType: "application/json",
+            upsert: true,
+          }
+        )
+    );
+
     // 4. Timings
     const totalMs = performance.now() - tAll;
     timings.push({ label: "TOTAL", ms: totalMs });
     console.table(timings);
 
-    return NextResponse.json({ story, url: publicUrlData?.publicUrl, timings });
+    return NextResponse.json({
+      story,
+      url: publicUrlData?.publicUrl,
+      cached: false,
+      timings,
+    });
   } catch (error) {
     console.error("Error generando historia:", error);
     return NextResponse.json(

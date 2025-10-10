@@ -1,6 +1,6 @@
 "use client";
 import { useState, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Transition } from "framer-motion";
 import GuideCard from "@/components/GuideCard";
 import { guides } from "@/lib/guides";
 import { Guide } from "@/types/guides";
@@ -22,7 +22,11 @@ const itemVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { type: "spring", stiffness: 150, damping: 20 },
+    transition: {
+      type: "spring" as Transition["type"],
+      stiffness: 150,
+      damping: 20,
+    },
   },
 };
 
@@ -90,7 +94,11 @@ export default function Onboarding() {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -15 }}
-                transition={{ type: "spring", stiffness: 200, damping: 25 }}
+                transition={{
+                  type: "spring" as Transition["type"],
+                  stiffness: 200,
+                  damping: 25,
+                }}
                 className="glass-light rounded-xl p-4 mb-6"
                 role="status"
               >

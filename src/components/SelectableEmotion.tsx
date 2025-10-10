@@ -1,6 +1,6 @@
 "use client";
 import { useState, memo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Transition } from "framer-motion";
 import { HiSparkles } from "react-icons/hi2";
 import { FiCheck } from "react-icons/fi";
 
@@ -35,7 +35,11 @@ const itemVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { type: "spring", stiffness: 150, damping: 20 },
+    transition: {
+      type: "spring" as Transition["type"],
+      stiffness: 150,
+      damping: 20,
+    },
   },
 };
 

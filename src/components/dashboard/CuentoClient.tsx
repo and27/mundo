@@ -12,6 +12,7 @@ import JourneyControlsBar from "@/components/journey/JourneyControls";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import SceneWithCharacter from "../journey/SceneWithCharacter";
 import { getCharacterImage } from "@/lib/getCharacterImage";
+import { IoClose } from "react-icons/io5";
 
 export default function CuentoClient({
   story,
@@ -37,6 +38,21 @@ export default function CuentoClient({
   const toggleSubtitles = useOnboardingStore((state) => state.toggleSubtitles);
   return (
     <>
+      <button
+        onClick={() => router.push(`/parentDashboard?section=guides`)}
+        className="
+    fixed top-5 right-5 z-50
+    p-2 rounded-full
+    text-white/90 hover:text-white
+    bg-black/40 hover:bg-black/70
+    backdrop-blur-md shadow-md
+    transition-transform duration-300 hover:scale-110
+  "
+        aria-label="Cerrar cuento"
+      >
+        <IoClose className="w-7 h-7" />
+      </button>
+
       {(journeyState === "playing" || journeyState === "paused") && (
         <JourneyControlsBar
           isPlaying={journeyState === "playing"}

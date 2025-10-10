@@ -114,7 +114,7 @@ export default function GuideActions({ guide }: GuideActionsProps) {
         <div className="flex justify-center items-center gap-4 flex-wrap">
           <button
             onClick={() => setShowEmailModal(true)}
-            className="group w-12 h-12 backdrop-blur-sm shadow-sm border border-indigo-500 rounded-lg hover:scale-110 transition-all duration-300 flex items-center justify-center"
+            className="group w-10 h-10 backdrop-blur-sm shadow-sm border border-indigo-500 rounded-lg hover:scale-110 transition-all duration-300 flex items-center justify-center"
             title="Enviar por email"
           >
             <Mail className="w-5 h-5 text-indigo-500" />
@@ -123,7 +123,7 @@ export default function GuideActions({ guide }: GuideActionsProps) {
           <button
             onClick={handleShare}
             disabled={isSharing}
-            className="group w-12 h-12 backdrop-blur-sm shadow-sm border border-indigo-500 rounded-lg hover:scale-110 transition-all duration-300 flex items-center justify-center disabled:opacity-50"
+            className="group w-10 h-10 backdrop-blur-sm shadow-sm border border-indigo-500 rounded-lg hover:scale-110 transition-all duration-300 flex items-center justify-center disabled:opacity-50"
             title="Compartir"
           >
             {isSharing ? (
@@ -136,7 +136,7 @@ export default function GuideActions({ guide }: GuideActionsProps) {
           <button
             onClick={handleSave}
             disabled={isSaved}
-            className={`group w-12 h-12 rounded-lg transition-all duration-300 flex items-center justify-center ${
+            className={`group w-10 h-10 rounded-lg transition-all duration-300 flex items-center justify-center ${
               isSaved
                 ? "bg-green-100 border border-green-300 cursor-default"
                 : "backdrop-blur-sm shadow-sm border border-indigo-500 hover:scale-110"
@@ -152,7 +152,7 @@ export default function GuideActions({ guide }: GuideActionsProps) {
 
           <button
             onClick={handleDownload}
-            className="group w-12 h-12 backdrop-blur-sm shadow-sm border border-indigo-500 rounded-lg hover:scale-110 transition-all duration-300 flex items-center justify-center"
+            className="group w-10 h-10 backdrop-blur-sm shadow-sm border border-indigo-500 rounded-lg hover:scale-110 transition-all duration-300 flex items-center justify-center"
             title="Descargar PDF"
           >
             <Download className="w-5 h-5 text-indigo-500" />

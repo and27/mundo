@@ -18,7 +18,7 @@ export default function GuideHeader({ guide }: GuideHeaderProps) {
         </div>
 
         {guide.tags.length > 0 && (
-          <div className="flex items-center gap-3 mb-3">
+          <div className="hidden lg:flex items-center gap-3 mb-3">
             <div className="w-6 h-6 bg-indigo-100 rounded-full flex items-center justify-center">
               <Tag className="w-3 h-3 text-indigo-600" />
             </div>

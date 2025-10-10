@@ -2,10 +2,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation"; // Importar useRouter
-import { guides } from "@/lib/guides"; // Asegúrate que la ruta sea correcta
+import { useParams, useRouter } from "next/navigation";
+import { guides } from "@/lib/guides";
 import Image from "next/image";
-import { FaStar } from "react-icons/fa"; // Importar icono de estrella
+import { FaStar } from "react-icons/fa";
 import { Guide } from "@/types/guides";
 
 const LoadingIndicator = () => (

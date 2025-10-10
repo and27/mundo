@@ -178,7 +178,6 @@ const Sidebar: React.FC<SidebarProps> = ({
           <nav className="space-y-2">
             {dashboardSections.map((item) => {
               const isItemActive = currentPath === item.href;
-
               return (
                 <NavItem
                   key={item.id}

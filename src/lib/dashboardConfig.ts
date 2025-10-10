@@ -15,6 +15,16 @@ export const dashboardSections = [
     disabled: false,
     comingSoon: false,
   },
+  // {
+  //   id: "toolkit",
+  //   label: "Cuento & Toolkit",
+  //   href: "/parentDashboard?section=toolkit",
+  //   icon: HiSparkles,
+  //   component: StoryWithToolkit,
+  //   description: "",
+  //   disabled: false,
+  //   comingSoon: false,
+  // },
   {
     id: "guides",
     label: "Cuentos",

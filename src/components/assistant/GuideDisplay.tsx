@@ -3,7 +3,6 @@
 import { useGuideInteraction } from "@/hooks/useGuideInteraction";
 import { GuideWithCharacter } from "@/types/ai";
 import GuideHeader from "../dashboard/ai/GuideHeader";
-import GuideActions from "../dashboard/ai/GuideActionts";
 import { MessageCircle, Sparkles, BookOpen, Loader2 } from "lucide-react";
 import PillarCard from "./PillarCard";
 import {
@@ -133,19 +132,38 @@ export default function GuideDisplay({ guide }: GuideDisplayProps) {
         </div>
       )}
       <GuideHeader guide={guide} rating={rating} onRate={handleRatingChange} />
-      <GuideActions guide={guide} />
 
-      <div className="space-y-4">
-        {pillars.map((pillar, index) => (
-          <PillarCard
-            key={index}
-            pillar={pillar}
-            isActive={activePillar === index}
-            onClick={() => handlePillarChange(index)}
-          >
-            {renderPillarContent(index)}
-          </PillarCard>
-        ))}
+      {/* --- Tabs Header --- */}
+      <div className="flex justify-center border-b border-slate-200">
+        <div className="flex w-full md:w-auto justify-between md:gap-8 text-center">
+          {pillars.map((pillar, index) => (
+            <button
+              key={index}
+              onClick={() => handlePillarChange(index)}
+              className={`flex-1 md:flex-none relative py-3 text-lg font-medium transition-all duration-300 ${
+                activePillar === index
+                  ? "text-indigo-600"
+                  : "text-slate-500 hover:text-indigo-400"
+              }`}
+            >
+              {pillar.title}
+              {activePillar === index && (
+                <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full transition-all duration-300" />
+              )}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* --- Active Pillar Card --- */}
+      <div className="transition-all duration-500 ease-in-out">
+        <PillarCard
+          pillar={pillars[activePillar]}
+          isActive={true}
+          onClick={() => {}}
+        >
+          {renderPillarContent(activePillar)}
+        </PillarCard>
       </div>
     </div>
   );

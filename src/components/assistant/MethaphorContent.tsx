@@ -44,6 +44,12 @@ export const MetaphorContent: React.FC<PillarContentProps> = ({
       }
 
       const data = await res.json();
+      if (data.cached) {
+        console.log("♻️ Historia reutilizada desde caché:", data.url);
+      } else {
+        console.log("✨ Historia generada nueva:", data.story.id);
+      }
+
       router.push(`/cuentos/${data.story.id}`);
     } catch (err) {
       console.error("Error generando experiencia digital", err);

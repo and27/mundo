@@ -11,7 +11,7 @@ interface JourneyControlsBarProps {
   onTogglePlayPause: () => void;
   subtitlesEnabled: boolean;
   onToggleSubtitles: () => void;
-  onExitJourney: () => void; // Nueva prop para salir
+  onExitJourney: () => void;
   className?: string;
 }
 
@@ -20,7 +20,7 @@ const JourneyControlsBar: React.FC<JourneyControlsBarProps> = ({
   onTogglePlayPause,
   subtitlesEnabled,
   onToggleSubtitles,
-  onExitJourney, // Recibir la función
+  onExitJourney,
   className,
 }) => {
   return (
