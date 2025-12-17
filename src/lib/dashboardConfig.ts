@@ -3,8 +3,17 @@ import { HiSparkles } from "react-icons/hi2";
 import AssistantSection from "@/components/dashboard/AssistantSetion";
 import GeneratedStories from "@/components/dashboard/GeneratedStories";
 import CursoSection from "@/components/curso/CourseSection";
+import ProgramCatalogSection from "@/components/dashboard/ProgramCatalogSection";
 
 export const dashboardSections = [
+  {
+    id: "main-program",
+    label: "Emociones en Acción",
+    href: "/parentDashboard?section=program",
+    icon: HiSparkles,
+    component: ProgramCatalogSection,
+    description: "Aprende el lenguaje de las emociones",
+  },
   {
     id: "asistente",
     label: "Crear cuento",
@@ -35,16 +44,16 @@ export const dashboardSections = [
     disabled: false,
     comingSoon: false,
   },
-  {
-    id: "curso",
-    label: "Guía para tutores",
-    href: "/parentDashboard?section=curso",
-    icon: FiActivity,
-    component: CursoSection,
-    description: "Crea vínculos sanos y fuertes",
-    disabled: false,
-    comingSoon: false,
-  },
+  // {
+  //   id: "curso",
+  //   label: "Guía para tutores",
+  //   href: "/parentDashboard?section=curso",
+  //   icon: FiActivity,
+  //   component: CursoSection,
+  //   description: "Crea vínculos sanos y fuertes",
+  //   disabled: false,
+  //   comingSoon: false,
+  // },
   // {
   //   id: "ninos",
   //   label: "Mis Exploradores",

@@ -15,19 +15,24 @@ export default function DashboardHeader({
   showModeToggle = true,
 }: DashboardHeaderProps) {
   return (
-    <header className="backdrop-blur-md sticky top-0 z-20 border-b border-white/10 shadow-sm">
+    <header className="sticky top-0 z-30 bg-slate-900/85 backdrop-blur-md border-b border-slate-700/50">
       <div className="flex items-center justify-between h-16 px-4 md:px-6">
         <div className="flex items-center gap-4">
           <button
             onClick={onToggleSidebar}
-            className="text-white p-2.5 -ml-2 rounded-xl hover:bg-white/10 transition-all"
+            className="text-white p-2.5 -ml-2 rounded-xl hover:bg-white/10 transition-colors"
             aria-label="Toggle Menu"
           >
             <FaBars className="text-lg" />
           </button>
+
           <div className="hidden sm:block">
-            <h1 className="text-lg font-bold text-white">{sectionTitle}</h1>
-            <p className="text-xs text-white/60">{sectionDescription}</p>
+            <h1 className="text-lg font-bold text-white leading-tight">
+              {sectionTitle}
+            </h1>
+            <p className="text-xs text-white/60 leading-snug">
+              {sectionDescription}
+            </p>
           </div>
         </div>
 
