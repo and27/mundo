@@ -76,7 +76,6 @@ export default function LastJourneys() {
           Continúa tu aventura
         </h3>
 
-        {/* Flechas visibles en ≥md */}
         <div className="hidden md:flex gap-2">
           <button
             onClick={() => scrollBy("left")}
