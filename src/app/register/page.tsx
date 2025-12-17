@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiShieldCheck } from "react-icons/hi2";
@@ -14,6 +15,7 @@ export default function AuthPage() {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleTabChange = (tab: "register" | "login") => {
+    if (tab === activeTab) return;
     setIsLoading(true);
     setTimeout(() => {
       setActiveTab(tab);
@@ -26,73 +28,79 @@ export default function AuthPage() {
     setTimeout(() => {
       setActiveTab("login");
       setIsLoading(false);
-    }, 2000);
+    }, 600);
   };
 
   return (
-    <div className="p-2 md:p-6 flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-indigo-600/90 to-purple-700/90 relative overflow-hidden">
-      <Link href="/">
-        <Image
-          className="p-5"
-          src={"/images/logo-mundo.png"}
-          width={200}
-          height={200}
-          alt=""
-        />
-      </Link>
+    <main className="mi-canvas-auth min-h-screen flex items-center justify-center px-4 py-16">
+      <div className="absolute top-6 left-1/2 -translate-x-1/2">
+        <Link href="/" aria-label="Ir al inicio">
+          <Image
+            src="/images/logo-mundo.png"
+            width={160}
+            height={160}
+            alt="Mundo Interior"
+            priority
+          />
+        </Link>
+      </div>
 
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="w-full max-w-6xl relative z-10"
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="w-full max-w-6xl"
       >
-        <div className="rounded-3xl shadow-2xl border border-white/20 overflow-hidden">
-          <div className="flex flex-col lg:flex-row min-h-[600px]">
+        <div className="mi-surface-dark rounded-3xl overflow-hidden">
+          <div className="flex flex-col lg:flex-row min-h-[640px]">
             <InfoPanel activeTab={activeTab} />
-            <div className="flex-1 bg-white/5 backdrop-blur-sm  px-4 py-8 lg:p-12 flex flex-col">
-              <div className="mb-12">
-                <div className="flex bg-white/10 rounded-2xl p-1 backdrop-blur-sm">
-                  {["register", "login"].map((tab) => (
-                    <button
-                      key={tab}
-                      onClick={() =>
-                        handleTabChange(tab as "register" | "login")
-                      }
-                      disabled={isLoading}
-                      className={`flex-1 py-3 px-6 rounded-xl text-sm font-semibold transition-all duration-300 relative overflow-hidden ${
-                        activeTab === tab
-                          ? "bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg"
-                          : "text-white/70 hover:text-white hover:bg-white/10"
-                      }`}
-                    >
-                      {isLoading && activeTab === tab && (
-                        <motion.div
-                          className="absolute inset-0 bg-white/20"
-                          initial={{ x: "-100%" }}
-                          animate={{ x: "100%" }}
-                          transition={{ duration: 0.5, repeat: Infinity }}
-                        />
-                      )}
-                      <span className="relative z-10">
-                        {tab === "register" ? "Registrarme" : "Iniciar Sesión"}
-                      </span>
-                      {activeTab === tab && (
-                        <FiArrowRight className="inline-block ml-2 w-4 h-4" />
-                      )}
-                    </button>
-                  ))}
+
+            <section className="flex-1 px-6 py-10 lg:px-12 lg:py-14 flex flex-col">
+              <header className="mi-stack-md mb-12">
+                <div className="flex rounded-2xl p-1 mi-surface-soft">
+                  {(["register", "login"] as const).map((tab) => {
+                    const isActive = activeTab === tab;
+                    return (
+                      <button
+                        key={tab}
+                        onClick={() => handleTabChange(tab)}
+                        disabled={isLoading}
+                        className={[
+                          "relative flex-1 py-3 px-6 rounded-xl text-sm font-semibold transition-all",
+                          isActive
+                            ? "mi-cta-primary shadow-lg"
+                            : "text-white/70 hover:text-white hover:mi-accent-soft",
+                        ].join(" ")}
+                      >
+                        {isLoading && isActive && (
+                          <motion.span
+                            className="absolute inset-0 bg-white/20"
+                            initial={{ x: "-100%" }}
+                            animate={{ x: "100%" }}
+                            transition={{ duration: 0.5, repeat: Infinity }}
+                          />
+                        )}
+                        <span className="relative z-10 inline-flex items-center gap-2">
+                          {tab === "register"
+                            ? "Registrarme"
+                            : "Iniciar sesión"}
+                          {isActive && <FiArrowRight className="w-4 h-4" />}
+                        </span>
+                      </button>
+                    );
+                  })}
                 </div>
-              </div>
-              <div className="flex-1 flex flex-col">
+              </header>
+
+              <div className="flex-1">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={activeTab}
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.3 }}
-                    className="flex-1"
+                    exit={{ opacity: 0, y: -16 }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
+                    className="h-full"
                   >
                     {activeTab === "register" && (
                       <RegisterForm onSuccess={handleRegistrationSuccess} />
@@ -101,26 +109,20 @@ export default function AuthPage() {
                   </motion.div>
                 </AnimatePresence>
               </div>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1 }}
-                className="mt-8 pt-6 border-t border-white/10"
-              >
+
+              <footer className="mt-12 pt-6 border-t border-white/10 mi-stack-sm text-center">
                 <div className="flex items-center justify-center gap-2 text-white/60 text-sm">
                   <HiShieldCheck className="w-4 h-4" />
                   <span>Plataforma segura y confiable</span>
                 </div>
-                <div className="text-center mt-2">
-                  <span className="text-white/40 text-xs">
-                    Al continuar, aceptas nuestros términos y condiciones
-                  </span>
-                </div>
-              </motion.div>
-            </div>
+                <p className="text-white/40 text-xs">
+                  Al continuar, aceptas nuestros términos y condiciones
+                </p>
+              </footer>
+            </section>
           </div>
         </div>
       </motion.div>
-    </div>
+    </main>
   );
 }
