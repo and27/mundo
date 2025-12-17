@@ -20,7 +20,6 @@ interface InputFormProps {
   isLoading: boolean;
   onSubmit: (query: string) => void;
   maxChars?: number;
-  showLoadingDetails?: boolean;
 }
 
 export default function InputForm({
@@ -28,155 +27,139 @@ export default function InputForm({
   onSubmit,
   maxChars = 500,
 }: InputFormProps) {
-  const [query, setQuery] = useState<string>("");
+  const [query, setQuery] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [context, setContext] = useState<ContextData | null>(null);
 
   const { mode } = useModeStore();
-  const isSchoolMode = mode === "educator"; // Derived value
+  const isSchoolMode = mode === "educator";
+  const setOriginalQuery = useQueryStore((s) => s.setOriginalQuery);
 
-  const [context, setContext] = useState<ContextData | null>(null);
-  const setOriginalQuery = useQueryStore((state) => state.setOriginalQuery);
-  console.log(context);
   const suggestions = getSuggestionsByMode(isSchoolMode, 4);
 
   const placeholder = isSchoolMode
-    ? "Ejemplo: Varios estudiantes de mi clase muestran ansiedad antes de los exámenes. Algunos se quedan paralizados, otros lloran, y otros se vuelven muy inquietos..."
-    : "Ejemplo: Mi hijo de 4 años tiene miedo a la oscuridad y no quiere dormir solo. Se despierta llorando en la madrugada y viene a nuestra cama...";
+    ? "Ejemplo: Varios estudiantes de mi clase muestran ansiedad antes de los exámenes..."
+    : "Ejemplo: Mi hijo de 4 años tiene miedo a la oscuridad y no quiere dormir solo...";
 
   const buttonText = isSchoolMode
-    ? "Generar Cuento para Educadores MIM"
-    : "Generar Cuento Emocional MIM";
+    ? "Generar cuento para educadores"
+    : "Generar cuento emocional";
 
-  const handleSuggestionClick = (suggestion: string) => {
-    setQuery(suggestion);
-    setIsExpanded(false);
-    setIsFocused(true);
-  };
-
-  const handleFormSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    if (query.trim() && !isLoading) {
-      setOriginalQuery(query.trim());
-      onSubmit(query);
-    }
-  };
-
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleFormSubmit(e);
-    }
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!query.trim() || isLoading) return;
+    setOriginalQuery(query.trim());
+    onSubmit(query.trim());
   };
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <button
-        onClick={() => setIsExpanded(!isExpanded)}
-        className="flex items-center gap-2 px-3 text-sm text-slate-600 transition-all duration-200"
-      >
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-8 h-8 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center">
+    <section className="mi-section">
+      <div className="max-w-2xl mx-auto px-4 mi-stack-lg">
+        {/* Suggestions header */}
+        <button
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="flex items-center gap-3 text-sm text-neutral-600 hover:text-neutral-800 transition"
+        >
+          <div className="w-8 h-8 rounded-lg mi-accent-gradient flex items-center justify-center">
             <Lightbulb className="w-4 h-4 text-white" />
           </div>
-
-          <h3 className="text-sm md:text-lg font-semibold text-slate-800">
-            Sugerencias populares
-          </h3>
+          <span className="font-semibold">Sugerencias populares</span>
           <ChevronDown
             className={`w-4 h-4 transition-transform ${
               isExpanded ? "rotate-180" : ""
             }`}
           />
-        </div>
-      </button>
+        </button>
 
-      {isExpanded && (
-        <div className="px-3 mb-6">
-          <p className="text-slate-600 text-sm md:text-base mb-4">
-            Puedes empezar con alguna de estas consultas frecuentes o escribir
-            tu propia pregunta.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {suggestions.map((suggestion) => (
-              <SuggestionCard
-                key={suggestion.text}
-                suggestion={suggestion.text}
-                onClick={handleSuggestionClick}
-                icon={suggestion.icon}
-              />
-            ))}
-          </div>
-        </div>
-      )}
-
-      <div>
-        <ContextPanel onContextChange={setContext} />
-        <div
-          className={`bg-white/90 backdrop-blur-sm border border-white/50 rounded-xl overflow-hidden transition-all duration-300 ${
-            isFocused
-              ? "border-indigo-300 shadow-xl scale-[1.01]"
-              : "hover:border-indigo-200"
-          } ${isLoading ? "opacity-60" : ""}`}
-        >
-          <div className="p-6">
-            <div className="flex flex-col gap-3 mb-5">
-              <div className="flex flex-start items-center gap-3 ">
-                <div className="w-8 h-8 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
-                  <MessageCircle className="w-4 h-4 text-white" />
-                </div>
-                <h3 className="text-sm md:text-lg text-lg font-semibold text-slate-800">
-                  Describe tu situación
-                </h3>
-              </div>
-              <p className="text-sm md:text-base text-slate-600">
-                Comparte los detalles para recibir tu propio cuento
-              </p>
+        {isExpanded && (
+          <div className="mi-stack-md">
+            <p className="text-neutral-600">
+              Puedes comenzar con alguna de estas consultas frecuentes.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {suggestions.map((s) => (
+                <SuggestionCard
+                  key={s.text}
+                  suggestion={s.text}
+                  onClick={(t) => {
+                    setQuery(t);
+                    setIsExpanded(false);
+                  }}
+                  icon={s.icon}
+                />
+              ))}
             </div>
+          </div>
+        )}
+
+        {/* Context */}
+        <ContextPanel onContextChange={setContext} />
+
+        {/* Input card */}
+        <form
+          onSubmit={handleSubmit}
+          className={[
+            "rounded-2xl transition-all",
+            "bg-white/90 border border-white/60 backdrop-blur-sm",
+            isFocused ? "shadow-lg border-primary-300" : "",
+            isLoading ? "opacity-60" : "",
+          ].join(" ")}
+        >
+          <div className="p-6 mi-stack-md">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg mi-accent-gradient flex items-center justify-center">
+                <MessageCircle className="w-4 h-4 text-white" />
+              </div>
+              <h3 className="font-semibold text-neutral-800">
+                Describe tu situación
+              </h3>
+            </div>
+
+            <p className="text-neutral-600 text-sm">
+              Comparte los detalles para generar un cuento personalizado.
+            </p>
 
             <TextareaWithCounter
               value={query}
               onChange={setQuery}
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
-              onKeyDown={handleKeyPress}
               placeholder={placeholder}
               disabled={isLoading}
               maxChars={maxChars}
             />
           </div>
-        </div>
+        </form>
 
+        {/* CTA */}
         <button
-          onClick={handleFormSubmit}
+          onClick={handleSubmit}
           disabled={isLoading || !query.trim()}
-          className={`mx-3 px-3 md:px-5 md:mx-0 md:w-full mt-6 py-4 text-base font-semibold rounded-lg transition-all duration-300 relative overflow-hidden group ${
+          className={[
+            "w-full py-4 rounded-xl font-semibold transition-all",
             isLoading || !query.trim()
-              ? "bg-slate-400 text-slate-600 cursor-not-allowed"
-              : "bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white shadow-lg hover:shadow-xl hover:scale-105 active:scale-95"
-          }`}
+              ? "bg-neutral-300 text-neutral-500 cursor-not-allowed"
+              : "mi-cta-primary hover:shadow-lg",
+          ].join(" ")}
         >
-          {!isLoading && query.trim() && (
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-          )}
-
-          <div className=" relative flex items-center justify-center gap-3">
+          <div className="flex items-center justify-center gap-3">
             {isLoading ? (
               <>
                 <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                <span>Creando tu cuento personalizado...</span>
+                <span>Creando tu cuento…</span>
                 <Clock className="w-4 h-4 opacity-70" />
               </>
             ) : (
               <>
                 <Sparkles className="w-5 h-5" />
                 <span>{buttonText}</span>
-                <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <Send className="w-4 h-4" />
               </>
             )}
           </div>
         </button>
       </div>
-    </div>
+    </section>
   );
 }

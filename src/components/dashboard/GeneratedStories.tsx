@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { ChevronRight, ArrowLeft, Calendar } from "lucide-react";
@@ -22,21 +23,6 @@ export default function GeneratedStories() {
     }
   }, [guideIdFromUrl, selectedGuideId]);
 
-  const handlePlayStory = (guideId: string) => {
-    setSelectedGuideId(guideId);
-  };
-
-  const handleDeleteStory = (guideId: string) => {
-    deleteGuide(guideId);
-    if (selectedGuideId === guideId) {
-      setSelectedGuideId(null);
-    }
-  };
-
-  const handleEditStory = (guideId: string) => {
-    console.log("Edit story:", guideId);
-  };
-
   if (selectedGuideId) {
     const currentGuide = getGuide(selectedGuideId);
     if (!currentGuide) {
@@ -45,78 +31,88 @@ export default function GeneratedStories() {
     }
 
     return (
-      <div className="m-5 space-y-6">
-        <div className="flex flex-col md:flex-row gap-5 items-center justify-between">
-          <nav className="flex items-center space-x-2 text-sm text-slate-600">
-            <button
-              onClick={() => setSelectedGuideId(null)}
-              className="hover:text-slate-800 transition-colors flex items-center gap-1"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Guías
-            </button>
-            <ChevronRight className="w-4 h-4 text-slate-400" />
-            <span className="text-slate-800 font-medium">
-              {currentGuide.guideTitle}
-            </span>
-          </nav>
-          <GuideActions guide={currentGuide} />
-        </div>
+      <section className="mi-section">
+        <div className="max-w-4xl mx-auto px-4 mi-stack-lg">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <nav className="flex items-center gap-2 text-sm text-neutral-500">
+              <button
+                onClick={() => setSelectedGuideId(null)}
+                className="flex items-center gap-1 hover:text-neutral-800 transition"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Guías
+              </button>
+              <ChevronRight className="w-4 h-4 text-neutral-400" />
+              <span className="text-neutral-800 font-medium">
+                {currentGuide.guideTitle}
+              </span>
+            </nav>
 
-        <GuideDisplay guide={currentGuide} />
-      </div>
+            <GuideActions guide={currentGuide} />
+          </div>
+
+          <GuideDisplay guide={currentGuide} />
+        </div>
+      </section>
     );
   }
 
   if (!isLoaded) {
     return (
-      <div className="flex items-center justify-center py-12">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+      <div className="flex items-center justify-center py-16">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-neutral-300 border-t-neutral-700" />
       </div>
     );
   }
 
   return (
-    <div className="p-5 md:p-0 space-y-6">
-      <div>
-        <h1 className="text-sm md:text-lg font-semibold text-slate-800 mb-2">
-          📚 Tus Cuentos Generados
-        </h1>
-        <p className="text-sm md:text-base text-slate-600">
-          Accede a todos los cuentos emocionales que has creado (
-          {savedGuides.length})
-        </p>
-      </div>
-
-      {savedGuides.length > 0 ? (
-        <div className="grid gap-4">
-          {savedGuides.map((guide, index) => (
-            <StoryCard
-              key={`${guide.id}-${index}`}
-              guide={guide}
-              variant="parent"
-              onPlay={() => handlePlayStory(guide.id)}
-              onDelete={() => handleDeleteStory(guide.id)}
-              onEdit={() => handleEditStory(guide.id)}
-              createdAt="Generada localmente"
-            />
-          ))}
-        </div>
-      ) : (
-        <div className="text-center py-12">
-          <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Calendar className="w-8 h-8 text-slate-400" />
-          </div>
-          <h3 className="text-lg font-semibold text-slate-900 mb-2">
-            Aún no tienes cuentos guardados
-          </h3>
-          <p className="text-slate-600 max-w-md mx-auto">
-            Cuando generes tu primera guía emocional, se guardará
-            automáticamente aquí para que puedas acceder a ella cuando la
-            necesites.
+    <section className="mi-section">
+      <div className="max-w-4xl mx-auto px-4 mi-stack-lg">
+        <div className="mi-section-header">
+          <h1 className="text-xl md:text-2xl font-bold text-neutral-800 mi-section-title">
+            Tus cuentos generados
+          </h1>
+          <p className="text-neutral-600">
+            Accede a todos los cuentos emocionales que has creado (
+            {savedGuides.length})
           </p>
         </div>
-      )}
-    </div>
+
+        {savedGuides.length > 0 ? (
+          <div className="grid gap-4">
+            {savedGuides.map((guide, index) => (
+              <StoryCard
+                key={`${guide.id}-${index}`}
+                guide={guide}
+                variant="parent"
+                onPlay={() => setSelectedGuideId(guide.id)}
+                onDelete={() => {
+                  deleteGuide(guide.id);
+                  if (selectedGuideId === guide.id) {
+                    setSelectedGuideId(null);
+                  }
+                }}
+                onEdit={() => {}}
+                createdAt="Generada localmente"
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="bg-neutral-50 border border-neutral-200 rounded-2xl py-16 px-6 text-center mi-stack-md">
+            <div className="w-16 h-16 mx-auto rounded-full bg-neutral-100 flex items-center justify-center">
+              <Calendar className="w-8 h-8 text-neutral-400" />
+            </div>
+            <h3 className="text-lg font-semibold text-neutral-800">
+              Aún no tienes cuentos guardados
+            </h3>
+            <p className="text-neutral-600 max-w-md mx-auto">
+              Cuando generes tu primera guía emocional, se guardará
+              automáticamente aquí para que puedas acceder a ella cuando la
+              necesites.
+            </p>
+          </div>
+        )}
+      </div>
+    </section>
   );
 }
