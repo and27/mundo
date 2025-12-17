@@ -40,6 +40,20 @@
   --color-warning-500: #f59e0b;
   --color-error-500: #ef4444;
 
+  /* === SEMANTIC TOKENS === */
+  --canvas-marketing-from: var(--color-neutral-900);
+  --canvas-marketing-via: var(--color-primary-900);
+  --canvas-marketing-to: var(--color-neutral-900);
+
+  /* === ACTION / CTA === */
+  --color-action-400: #fde047;
+  --color-action-500: #facc15;
+  --color-action-600: #eab308;
+  --color-action-700: #ca8a04;
+
+  --surface-glass-soft: rgba(255, 255, 255, 0.06);
+  --surface-glass-strong: rgba(0, 0, 0, 0.8);
+
   /* === ESPACIADO === */
   --space-1: 4px;
   --space-2: 8px;
@@ -289,24 +303,195 @@ body {
   }
 }
 @layer utilities {
-  .glass-light {
-    background-color: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+  /* ======================================================
+     CANVAS — Fondos de página (UNO por layout)
+     ====================================================== */
+
+  .mi-canvas-base {
+    min-height: 100vh;
+    background-attachment: fixed;
+    background-size: cover;
   }
 
-  .glass-medium {
-    background-color: rgba(255, 255, 255, 0.588);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+  .mi-canvas-app {
+    background: radial-gradient(
+        900px 500px at 20% 15%,
+        rgba(255, 255, 255, 0.06),
+        transparent 60%
+      ),
+      radial-gradient(
+        700px 420px at 80% 10%,
+        rgba(0, 0, 0, 0.22),
+        transparent 55%
+      ),
+      linear-gradient(
+        135deg,
+        var(--color-neutral-900) 0%,
+        var(--color-primary-900) 45%,
+        var(--color-neutral-900) 100%
+      );
   }
 
-  .glass-strong {
-    background-color: rgba(255, 255, 255, 0.903);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+  .mi-canvas-marketing {
+    background: radial-gradient(
+        900px 500px at 18% 20%,
+        rgba(255, 255, 255, 0.08),
+        transparent 60%
+      ),
+      linear-gradient(
+        135deg,
+        var(--color-neutral-900) 0%,
+        var(--color-primary-900) 45%,
+        var(--color-neutral-900) 100%
+      );
+  }
+
+  .mi-canvas-auth {
+    /* MISMO TONO que marketing/app → consistencia */
+    background: radial-gradient(
+        900px 500px at 20% 15%,
+        rgba(255, 255, 255, 0.08),
+        transparent 60%
+      ),
+      linear-gradient(
+        135deg,
+        var(--color-neutral-900) 0%,
+        var(--color-primary-900) 45%,
+        var(--color-neutral-900) 100%
+      );
+  }
+
+  /* ======================================================
+     SURFACES — Capas sobre el canvas
+     ====================================================== */
+
+  .mi-surface-dark {
+    background-color: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .mi-surface-soft {
+    background-color: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .mi-card {
+    background-image: linear-gradient(
+      135deg,
+      var(--color-primary-700) 0%,
+      var(--color-primary-800) 20%,
+      var(--color-primary-800) 90%
+    );
+    border-radius: 1rem;
+  }
+
+  /* ======================================================
+     ACCENTS — Estados y énfasis (no layout)
+     ====================================================== */
+
+  .mi-accent-gradient {
+    background-image: linear-gradient(
+      90deg,
+      var(--color-primary-600),
+      var(--color-primary-500)
+    );
+  }
+
+  .mi-accent-soft {
+    background-color: color-mix(
+      in srgb,
+      var(--color-primary-600) 22%,
+      transparent
+    );
+  }
+
+  .mi-accent-soft-hover:hover {
+    background-color: color-mix(
+      in srgb,
+      var(--color-primary-600) 30%,
+      transparent
+    );
+  }
+
+  /* ======================================================
+     NAVIGATION — estados activos
+     ====================================================== */
+
+  .mi-nav-active {
+    background-color: color-mix(
+      in srgb,
+      var(--color-primary-600) 65%,
+      transparent
+    );
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  }
+
+  .mi-nav-active-icon {
+    background-color: color-mix(
+      in srgb,
+      var(--color-primary-600) 30%,
+      transparent
+    );
+  }
+  /* === CTA / Action === */
+  .mi-cta-primary {
+    background-color: var(--color-action-600);
+    color: var(--color-neutral-900);
+  }
+
+  .mi-cta-primary:hover {
+    background-color: var(--color-action-700);
+  }
+
+  .mi-cta-secondary {
+    background-color: transparent;
+    color: white;
+  }
+
+  .mi-cta-secondary:hover {
+    background-color: color-mix(
+      in srgb,
+      var(--color-action-500) 26%,
+      transparent
+    );
+  }
+
+  .mi-section {
+    padding-top: var(--space-24); /* 96px */
+    padding-bottom: var(--space-24);
+  }
+
+  .mi-section-header {
+    margin-bottom: var(--space-12); /* 48px */
+  }
+
+  .mi-section-title {
+    margin-bottom: var(--space-4); /* 16px */
+  }
+
+  .mi-section-subtitle {
+    margin-top: 0;
+  }
+
+  .mi-stack-lg {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6); /* 24px */
+  }
+
+  .mi-stack-md {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4); /* 16px */
+  }
+
+  .mi-stack-sm {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3); /* 12px */
   }
 }
