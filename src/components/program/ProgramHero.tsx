@@ -8,16 +8,12 @@ export default function ProgramHero({
   subtitle?: string;
 }) {
   return (
-    <div className="py-10">
-      <h1 className="text-3xl md:text-4xl font-bold text-neutral-700 mb-3 drop-shadow-xl">
-        {title}
+    <div className="mi-section-header">
+      <h1 className="text-xl md:text-3xl font-bold text-neutral-800 mi-section-title">
+        {title.toUpperCase()}
       </h1>
 
-      {subtitle && (
-        <p className="text-neutral-600 text-base md:text-lg max-w-xl leading-relaxed">
-          {subtitle}
-        </p>
-      )}
+      {subtitle && <p className="text-neutral-600">{subtitle}</p>}
     </div>
   );
 }

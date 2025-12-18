@@ -10,12 +10,10 @@ interface GuideHeaderProps {
 export default function GuideHeader({ guide }: GuideHeaderProps) {
   return (
     <div className="relative">
-      <div className="text-center flex flex-col justify-center items-center gap-3">
-        <div className="flex items-center justify-center gap-4">
-          <h2 className="text-2xl md:text-4xl font-bold text-indigo-900 leading-tight">
-            {guide.guideTitle}
-          </h2>
-        </div>
+      <div className="text-left flex flex-col justify-center items-center mi-stack-lg">
+        <h2 className="text-2xl md:text-4xl font-bold text-indigo-900 leading-tight">
+          {guide.guideTitle}
+        </h2>
 
         {guide.tags.length > 0 && (
           <div className="hidden lg:flex items-center gap-3 mb-3">

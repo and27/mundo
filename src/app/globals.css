@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
 @theme {
-  /* === VARIABLES DE COLOR === */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
@@ -347,7 +346,6 @@ body {
   }
 
   .mi-canvas-auth {
-    /* MISMO TONO que marketing/app → consistencia */
     background: radial-gradient(
         900px 500px at 20% 15%,
         rgba(255, 255, 255, 0.08),
@@ -422,11 +420,7 @@ body {
      ====================================================== */
 
   .mi-nav-active {
-    background-color: color-mix(
-      in srgb,
-      var(--color-primary-600) 65%,
-      transparent
-    );
+    background-color: var(--color-primary-800);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
   }
 

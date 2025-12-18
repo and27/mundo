@@ -30,9 +30,6 @@ export default function DashboardHeader({
             <h1 className="text-lg font-bold text-white leading-tight">
               {sectionTitle}
             </h1>
-            <p className="text-xs text-white/60 leading-snug">
-              {sectionDescription}
-            </p>
           </div>
         </div>
 
