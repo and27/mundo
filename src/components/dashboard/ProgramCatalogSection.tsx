@@ -1,12 +1,24 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import ProgramHero from "../program/ProgramHero";
 import ProgramMainCard from "../program/ProgramMainCard";
-import CreateStoryCTA from "../program/CreateStoryCTA";
+import LessonView from "../program/LessonView";
+import ProgramLessonsList from "../program/ProgramLessonList";
 
 export default function ProgramCatalogSection() {
-  const router = useRouter();
+  const params = useSearchParams();
+
+  const view = params.get("view");
+  const lessonId = params.get("lesson");
+
+  if (lessonId) {
+    return <LessonView />;
+  }
+
+  if (view === "modules") {
+    return <ProgramLessonsList />;
+  }
 
   return (
     <div className="px-20 mi-stack-lg">
@@ -14,17 +26,16 @@ export default function ProgramCatalogSection() {
         title="Emociones en Acción"
         subtitle="Desarrolla el idioma de las emociones · 8 a 12 años"
       />
+
       <ProgramMainCard
         title="Emotional Literacy"
         subtitle="Programa Central"
         description="Un viaje práctico donde los niños exploran, entienden y aprenden a expresar sus emociones con claridad, seguridad y confianza."
-        image="/images/program-cover.png"
+        image="/images/all.webp"
         onEnter={() =>
-          router.push("/parentDashboard?section=program&view=module-1")
+          (window.location.href =
+            "/parentDashboard?section=program&view=modules")
         }
-      />
-      <CreateStoryCTA
-        onClick={() => router.push("/parentDashboard?section=asistente")}
       />
     </div>
   );

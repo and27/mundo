@@ -52,30 +52,28 @@ export default function ProgramLessonsList() {
   const router = useRouter();
 
   return (
-    <section className="mi-section">
-      <div className="max-w-3xl mx-auto px-4 mi-stack-lg">
-        <header className="mi-section-header text-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-neutral-800 mi-section-title">
-            Emociones en Acción
-          </h1>
-          <p className="text-neutral-600 max-w-xl mx-auto leading-relaxed">
-            Explora cada emoción a través de cuentos interactivos y reflexiones
-            que ayudan a los niños a entender y expresar lo que sienten.
-          </p>
-        </header>
+    <div className="max-w-4xl px-20 mi-stack-lg">
+      <header className="mi-section-header">
+        <h1 className="text-3xl md:text-4xl tracking-tight font-extrabold text-neutral-800 mi-section-title">
+          Emociones en Acción
+        </h1>
+        <p className="text-neutral-600 max-w-xl leading-relaxed">
+          Explora cada emoción a través de cuentos interactivos y reflexiones
+          que ayudan a los niños a entender y expresar lo que sienten.
+        </p>
+      </header>
 
-        <div className="mi-stack-md">
-          {modules.map((mod) => (
-            <ProgramLessonItem
-              key={mod.id}
-              module={mod}
-              onClick={() =>
-                router.push(`/parentDashboard?section=program&lesson=${mod.id}`)
-              }
-            />
-          ))}
-        </div>
+      <div className="mi-stack-md">
+        {modules.map((mod) => (
+          <ProgramLessonItem
+            key={mod.id}
+            module={mod}
+            onClick={() =>
+              router.push(`/parentDashboard?section=program&lesson=${mod.id}`)
+            }
+          />
+        ))}
       </div>
-    </section>
+    </div>
   );
 }

@@ -14,7 +14,7 @@ interface ModuleDetailViewProps {
   module: ModuleData;
   onBack: () => void;
   onStartModule: () => void;
-  onSectionClick?: (sectionIndex: number) => void; // Cambio: ahora usa el índice
+  onSectionClick?: (sectionIndex: number) => void;
 }
 
 export default function ModuleDetailView({

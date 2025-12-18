@@ -9,7 +9,7 @@ export default function ProgramHero({
 }) {
   return (
     <div className="mi-section-header">
-      <h1 className="text-xl md:text-3xl font-bold text-neutral-800 mi-section-title">
+      <h1 className="text-xl md:text-3xl tracking-tight font-extrabold text-neutral-800 mi-section-title">
         {title.toUpperCase()}
       </h1>
 
