@@ -17,7 +17,7 @@ export default function ModeToggle({
   const { mode, setMode } = useModeStore();
   const router = useRouter();
 
-  const handleModeSelect = (newMode: "individual" | "educator" | "child") => {
+  const handleModeSelect = (newMode: "family" | "school" | "child") => {
     const currentMode = mode;
     setMode(newMode);
 
@@ -38,21 +38,21 @@ export default function ModeToggle({
       case "child":
         return {
           icon: <Star className="w-3 h-3" />,
-          label: "Modo Explorador Infantil",
+          label: "Kids mode",
           bgColor: "bg-yellow-500/30 text-yellow-300",
           bgColorInline: "bg-yellow-100 text-yellow-600",
         };
-      case "educator":
+      case "school":
         return {
           icon: <Users className="w-3 h-3" />,
-          label: "Educador",
+          label: "Escuela",
           bgColor: "bg-green-500/30 text-green-300",
           bgColorInline: "bg-green-100 text-green-600",
         };
       default: // individual
         return {
           icon: <User className="w-3 h-3" />,
-          label: "Individual",
+          label: "Familia",
           bgColor: "bg-blue-500/30 text-blue-300",
           bgColorInline: "bg-blue-100 text-blue-600",
         };
@@ -115,25 +115,25 @@ export default function ModeToggle({
       <div className="p-2 space-y-1">
         <ModeOption
           icon={<User className="w-4 h-4" />}
-          title="Padres & Psicólogos"
-          description="Casos individuales y familiares"
-          isActive={mode === "individual"}
-          onClick={() => handleModeSelect("individual")}
+          title="Familia"
+          description="Para padres y madres"
+          isActive={mode === "family"}
+          onClick={() => handleModeSelect("family")}
           activeColor="blue"
         />
 
         <ModeOption
           icon={<Users className="w-4 h-4" />}
-          title="Educadores"
+          title="Escuela"
           description="Gestión grupal y aula"
-          isActive={mode === "educator"}
-          onClick={() => handleModeSelect("educator")}
+          isActive={mode === "school"}
+          onClick={() => handleModeSelect("school")}
           activeColor="green"
         />
 
         <ModeOption
           icon={<Star className="w-4 h-4" />}
-          title="Modo Explorador Infantil"
+          title="Niños"
           description="Experiencia segura para pequeños"
           isActive={mode === "child"}
           onClick={() => handleModeSelect("child")}
@@ -146,9 +146,9 @@ export default function ModeToggle({
           <span className="font-medium">Modo actual:</span>{" "}
           {mode === "child"
             ? "Modo Explorador"
-            : mode === "educator"
-            ? "Educadores"
-            : "Individual"}{" "}
+            : mode === "school"
+            ? "Escuela"
+            : "Familia"}{" "}
           -
           {mode === "child"
             ? " Experiencia adaptada para niños."
