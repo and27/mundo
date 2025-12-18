@@ -2,7 +2,6 @@ import { FiActivity, FiBookOpen } from "react-icons/fi";
 import { HiSparkles } from "react-icons/hi2";
 import AssistantSection from "@/components/dashboard/AssistantSetion";
 import GeneratedStories from "@/components/dashboard/GeneratedStories";
-import CursoSection from "@/components/curso/CourseSection";
 import ProgramCatalogSection from "@/components/dashboard/ProgramCatalogSection";
 
 export const dashboardSections = [

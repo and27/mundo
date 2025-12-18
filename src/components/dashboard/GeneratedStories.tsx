@@ -66,7 +66,7 @@ export default function GeneratedStories() {
   return (
     <div className="max-w-4xl px-20 mi-stack-md">
       <div className="mi-section-header">
-        <h1 className="text-xl md:text-3xl font-bold text-neutral-800 mi-section-title">
+        <h1 className="text-xl md:text-3xl tracking-tight font-extrabold text-neutral-800 mi-section-title">
           {"Tu biblioteca de cuentos".toUpperCase()}
         </h1>
         <p className="text-neutral-600">
@@ -76,7 +76,7 @@ export default function GeneratedStories() {
       </div>
 
       {savedGuides.length > 0 ? (
-        <div className="grid gap-4">
+        <div className="grid md:grid-cols-2 gap-6">
           {savedGuides.map((guide, index) => (
             <StoryCard
               key={`${guide.id}-${index}`}
