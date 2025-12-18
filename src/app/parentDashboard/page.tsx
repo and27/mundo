@@ -29,7 +29,7 @@ const FacilitatorDashboard = () => {
   }, [isMobileOpen]);
 
   return (
-    <div className="bg-gradient-to-br from-[#1e1b4b] to-[#0c0a1d] min-h-screen flex">
+    <div className="mi-canvas-base mi-canvas-marketing min-h-screen flex">
       <Sidebar
         userName="Andrés"
         isMobileOpen={isMobileOpen}

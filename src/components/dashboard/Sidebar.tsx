@@ -72,9 +72,6 @@ const NavItem = ({
       {!isCollapsed && (
         <div className="ml-3">
           <span className="text-sm font-semibold">{item.label}</span>
-          <span className="text-xs text-white/50 block">
-            {item.description}
-          </span>
         </div>
       )}
     </Link>
@@ -107,7 +104,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   return (
     <>
       <div
-        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden ${
+        className={`fixed inset-0 z-40 md:hidden ${
           isMobileOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
         onClick={onCloseMobile}
@@ -115,15 +112,15 @@ const Sidebar: React.FC<SidebarProps> = ({
 
       <aside
         className={[
-          "fixed md:relative top-0 left-0 z-50 h-full",
-          "mi-surface-dark border-r border-white/10",
+          "fixed md:relative top-0 left-0 z-50 h-screen",
+          "border-r border-white/10",
           "flex flex-col justify-between transition-transform duration-300",
           isMobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
-          isDesktopCollapsed ? "md:w-20" : "md:w-72",
+          isDesktopCollapsed ? "md:w-24 p-4" : "md:w-72 p-6",
           "w-72",
         ].join(" ")}
       >
-        <div className="p-6">
+        <div>
           {!isDesktopCollapsed && (
             <div className="mb-8 pb-6 border-b border-white/10">
               <div className="flex items-center gap-4">
@@ -159,10 +156,10 @@ const Sidebar: React.FC<SidebarProps> = ({
           </nav>
         </div>
 
-        <div className="p-6 space-y-4">
+        <div className="mt-auto space-y-4">
           <div className="h-px bg-white/10" />
 
-          <div className="relative">
+          <div className="">
             <button
               onClick={() => setShowUserMenu((v) => !v)}
               className={[
@@ -201,44 +198,45 @@ const Sidebar: React.FC<SidebarProps> = ({
                 </>
               )}
             </button>
-
-            {showUserMenu && !isDesktopCollapsed && (
-              <div className="absolute bottom-full left-0 right-0 mb-2 mi-surface-dark rounded-xl p-2">
-                <Link
-                  href="/dashboard/perfil"
-                  onClick={() => setShowUserMenu(false)}
-                  className="flex items-center gap-3 p-2 rounded-lg hover:mi-accent-soft text-white/80 hover:text-white"
-                >
-                  <User className="w-4 h-4" />
-                  <span className="text-sm">Ver perfil</span>
-                </Link>
-              </div>
-            )}
-          </div>
-
-          <button
-            onClick={handleLogout}
-            disabled={isLoggingOut}
-            className={[
-              "flex items-center w-full p-3 rounded-lg transition-colors",
-              isLoggingOut
-                ? "opacity-50 cursor-not-allowed"
-                : "text-red-400 hover:bg-red-500/20",
-              isDesktopCollapsed ? "justify-center" : "",
-            ].join(" ")}
-          >
-            <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-red-500/20">
-              <LogOut
-                className={`w-4 h-4 ${isLoggingOut ? "animate-spin" : ""}`}
-              />
+            <div>
+              {showUserMenu && !isDesktopCollapsed && (
+                <div className="absolute bottom-full left-0 right-0 mb-2 mi-surface-dark rounded-xl p-2">
+                  <Link
+                    href="/dashboard/perfil"
+                    onClick={() => setShowUserMenu(false)}
+                    className="flex items-center gap-3 p-2 rounded-lg hover:mi-accent-soft text-white/80 hover:text-white"
+                  >
+                    <User className="w-4 h-4" />
+                    <span className="text-sm">Ver perfil</span>
+                  </Link>
+                </div>
+              )}
             </div>
 
-            {!isDesktopCollapsed && (
-              <span className="ml-3 text-sm font-semibold">
-                {isLoggingOut ? "Cerrando…" : "Cerrar sesión"}
-              </span>
-            )}
-          </button>
+            <button
+              onClick={handleLogout}
+              disabled={isLoggingOut}
+              className={[
+                "flex items-center w-full p-3 rounded-lg transition-colors",
+                isLoggingOut
+                  ? "opacity-50 cursor-not-allowed"
+                  : "text-red-400 hover:bg-red-500/20",
+                isDesktopCollapsed ? "justify-center" : "",
+              ].join(" ")}
+            >
+              <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-red-500/20">
+                <LogOut
+                  className={`w-4 h-4 ${isLoggingOut ? "animate-spin" : ""}`}
+                />
+              </div>
+
+              {!isDesktopCollapsed && (
+                <span className="ml-3 text-sm font-semibold">
+                  {isLoggingOut ? "Cerrando…" : "Cerrar sesión"}
+                </span>
+              )}
+            </button>
+          </div>
         </div>
       </aside>
     </>

@@ -7,7 +7,7 @@ import ProgramCatalogSection from "@/components/dashboard/ProgramCatalogSection"
 
 export const dashboardSections = [
   {
-    id: "main-program",
+    id: "program",
     label: "Emociones en Acción",
     href: "/parentDashboard?section=program",
     icon: FiActivity,

@@ -95,7 +95,7 @@ const ActionPanel: React.FC<ActionPanelProps> = memo(
         ) : (
           <div className="flex items-center gap-3">
             <FaPlay className="w-4 h-4" />
-            <span>Iniciar viaje</span>
+            <span>Probar demo</span>
           </div>
         ),
       [isLoading]

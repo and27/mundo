@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export type Mode = "individual" | "educator" | "child";
+export type Mode = "family" | "school" | "child";
 
 interface ModeState {
   mode: Mode;
@@ -9,7 +9,7 @@ interface ModeState {
 
   get isSchoolMode(): boolean;
   get isChildMode(): boolean;
-  get isIndividualMode(): boolean;
+  get isfamilyMode(): boolean;
 
   setSchoolMode: (isSchoolMode: boolean) => void;
   toggleMode: () => void;
@@ -23,29 +23,29 @@ type LegacyModeState = {
 export const useModeStore = create<ModeState>()(
   persist(
     (set, get) => ({
-      mode: "individual",
+      mode: "family",
 
       setMode: (mode) => set({ mode }),
 
       get isSchoolMode() {
-        return get().mode === "educator";
+        return get().mode === "school";
       },
 
       get isChildMode() {
         return get().mode === "child";
       },
 
-      get isIndividualMode() {
-        return get().mode === "individual";
+      get isfamilyMode() {
+        return get().mode === "family";
       },
 
       setSchoolMode: (isSchool) => {
-        set({ mode: isSchool ? "educator" : "individual" });
+        set({ mode: isSchool ? "school" : "family" });
       },
 
       toggleMode: () => {
         const current = get().mode;
-        set({ mode: current === "educator" ? "individual" : "educator" });
+        set({ mode: current === "school" ? "family" : "school" });
       },
     }),
     {
@@ -59,8 +59,8 @@ export const useModeStore = create<ModeState>()(
         ) {
           return {
             mode: (persistedState as LegacyModeState).isSchoolMode
-              ? "educator"
-              : "individual",
+              ? "school"
+              : "family",
           };
         }
 
@@ -75,7 +75,7 @@ export const useModeStore = create<ModeState>()(
           };
         }
 
-        return { mode: "individual" };
+        return { mode: "family" };
       },
     }
   )
@@ -83,7 +83,7 @@ export const useModeStore = create<ModeState>()(
 
 export const useIsChildMode = () =>
   useModeStore((state) => state.mode === "child");
-export const useIsEducatorMode = () =>
-  useModeStore((state) => state.mode === "educator");
-export const useIsIndividualMode = () =>
-  useModeStore((state) => state.mode === "individual");
+export const useIsschoolMode = () =>
+  useModeStore((state) => state.mode === "school");
+export const useIsfamilyMode = () =>
+  useModeStore((state) => state.mode === "family");
