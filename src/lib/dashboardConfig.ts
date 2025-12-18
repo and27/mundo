@@ -1,4 +1,4 @@
-import { FiActivity } from "react-icons/fi";
+import { FiActivity, FiBookOpen } from "react-icons/fi";
 import { HiSparkles } from "react-icons/hi2";
 import AssistantSection from "@/components/dashboard/AssistantSetion";
 import GeneratedStories from "@/components/dashboard/GeneratedStories";
@@ -10,9 +10,11 @@ export const dashboardSections = [
     id: "main-program",
     label: "Emociones en Acción",
     href: "/parentDashboard?section=program",
-    icon: HiSparkles,
+    icon: FiActivity,
     component: ProgramCatalogSection,
     description: "Aprende el lenguaje de las emociones",
+    disabled: false,
+    comingSoon: false,
   },
   {
     id: "asistente",
@@ -38,7 +40,7 @@ export const dashboardSections = [
     id: "guides",
     label: "Cuentos",
     href: "/parentDashboard?section=guides",
-    icon: FiActivity,
+    icon: FiBookOpen,
     component: GeneratedStories,
     description: "Tus cuentos generados",
     disabled: false,

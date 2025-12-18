@@ -46,11 +46,11 @@ const FacilitatorDashboard = () => {
         />
 
         <div className="flex-1 md:p-6 overflow-y-auto">
-          <div className="max-w-7xl">
+          <div className="max-w-6xl">
             <div className="bg-white/90 md:rounded-2xl shadow-sm overflow-hidden">
-              <div className="px-0 md:p-8 ">
+              <section className="mi-section">
                 <ActiveComponent />
-              </div>
+              </section>
             </div>
           </div>
         </div>

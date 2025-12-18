@@ -28,7 +28,7 @@ export default function AssistantSection() {
   }, [guide, isLoading, saveGuide, router]);
 
   return (
-    <div className="py-5 space-y-8">
+    <>
       <InputForm isLoading={isLoading} onSubmit={generateGuide} />
 
       {(isLoading || guide || error) && (
@@ -41,6 +41,6 @@ export default function AssistantSection() {
           />
         </div>
       )}
-    </div>
+    </>
   );
 }
