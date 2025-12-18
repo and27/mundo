@@ -8,6 +8,7 @@ export default function HeroSection() {
   return (
     <section
       className="
+        mt-20 md:mt-0
         my-10
         md:my-0
         min-h-screen

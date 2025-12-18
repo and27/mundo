@@ -14,7 +14,7 @@ export default function FinalCallToAction() {
           className="absolute -top-42 rounded-lg object-cover"
         />
 
-        <h2 className="text-xl md:text-3xl font-bold text-white">
+        <h2 className="text-xl md:text-3xl font-extrabold text-white">
           ¿Quieres empezar?
         </h2>
 
