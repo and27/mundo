@@ -1,7 +1,6 @@
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
-import ModuleHero from "@/components/program/ModuleHero";
 import StoryBlock from "@/components/program/StoryBlock";
 import { lessons } from "@/data/lessons";
 import ParentResources from "./ParentResources";

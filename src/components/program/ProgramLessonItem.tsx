@@ -1,7 +1,20 @@
 import Image from "next/image";
 import { FiChevronRight } from "react-icons/fi";
 
-export default function ProgramLessonItem({ module, onClick }: any) {
+interface IProgramLessonUnit {
+  module: {
+    image: string;
+    title: string;
+    subtitle: string;
+    duration: string;
+  };
+  onClick: () => void;
+}
+
+export default function ProgramLessonItem({
+  module,
+  onClick,
+}: IProgramLessonUnit) {
   return (
     <button
       onClick={onClick}

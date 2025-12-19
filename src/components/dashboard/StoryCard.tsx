@@ -37,7 +37,6 @@ export default function StoryCard({
   onDelete,
   isFavorite = false,
   onToggleFavorite,
-  createdAt,
 }: StoryCardProps) {
   const isKids = variant === "kids";
 

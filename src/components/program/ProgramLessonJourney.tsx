@@ -20,7 +20,6 @@ export default function LessonJourneyPlayer({
     journeyState,
     currentStep,
     handleStartJourney,
-    handleTogglePlayPause,
     handleGoBack,
     handleGoForward,
     canGoBack,

@@ -10,7 +10,6 @@ interface DashboardHeaderProps {
 
 export default function DashboardHeader({
   sectionTitle,
-  sectionDescription,
   onToggleSidebar,
   showModeToggle = true,
 }: DashboardHeaderProps) {
