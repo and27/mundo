@@ -3,17 +3,17 @@
 import { useJourneyPlayer } from "@/hooks/useJourneyPlayer";
 import { useOnboardingStore } from "@/store/useOnboardingStore";
 import JourneyIdleScreen from "@/components/journey/JourneyIdleScreen";
-import JourneyControlsBar from "@/components/journey/JourneyControls";
 import SubtitleDisplay from "@/components/journey/SubtitleDisplay";
 import SceneWithCharacter from "@/components/journey/SceneWithCharacter";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { getCharacterImage } from "@/lib/getCharacterImage";
+import { Story } from "@/types/story";
 
 export default function LessonJourneyPlayer({
   story,
   guideId,
 }: {
-  story: any; // luego tipas bien
+  story: Story;
   guideId: string;
 }) {
   const {
@@ -28,18 +28,18 @@ export default function LessonJourneyPlayer({
   } = useJourneyPlayer(story);
 
   const showSubtitles = useOnboardingStore((s) => s.showSubtitles);
-  const toggleSubtitles = useOnboardingStore((s) => s.toggleSubtitles);
+  // const toggleSubtitles = useOnboardingStore((s) => s.toggleSubtitles);
 
   return (
     <div className="relative bg-black/60 rounded-3xl overflow-hidden min-h-[420px]">
-      {(journeyState === "playing" || journeyState === "paused") && (
+      {/* {(journeyState === "playing" || journeyState === "paused") && (
         <JourneyControlsBar
           isPlaying={journeyState === "playing"}
           onTogglePlayPause={handleTogglePlayPause}
           subtitlesEnabled={showSubtitles}
           onToggleSubtitles={toggleSubtitles}
         />
-      )}
+      )} */}
 
       {journeyState !== "idle" && (
         <SceneWithCharacter

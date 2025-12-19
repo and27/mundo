@@ -7,8 +7,6 @@ import { FiArrowRight } from "react-icons/fi";
 import LoginForm from "@/components/auth/LoginForm";
 import RegisterForm from "@/components/auth/RegisterForm";
 import InfoPanel from "@/components/auth/AuthInfoPanel";
-import Image from "next/image";
-import Link from "next/link";
 
 export default function AuthPage() {
   const [activeTab, setActiveTab] = useState<"register" | "login">("register");

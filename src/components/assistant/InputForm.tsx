@@ -31,7 +31,8 @@ export default function InputForm({
   const [isFocused, setIsFocused] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [context, setContext] = useState<ContextData | null>(null);
-
+  //todo use context
+  if (false) console.log(context);
   const { mode } = useModeStore();
   const isSchoolMode = mode === "school";
   const setOriginalQuery = useQueryStore((s) => s.setOriginalQuery);

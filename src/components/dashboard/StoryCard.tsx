@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Play, Heart, Clock, Trash2, Calendar } from "lucide-react";
+import { Play, Heart, Clock, Trash2 } from "lucide-react";
 import { GuideWithCharacter } from "@/types/ai";
 
 interface StoryCardProps {

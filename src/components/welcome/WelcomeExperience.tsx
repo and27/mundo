@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaPlay } from "react-icons/fa";
-import { FiUsers, FiBookOpen } from "react-icons/fi";
+import { FiUsers } from "react-icons/fi";
 import Button from "@/components/ui/Button";
 import { HiSparkles } from "react-icons/hi2";
 
