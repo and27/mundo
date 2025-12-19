@@ -55,7 +55,7 @@ export default function InputForm({
   };
 
   return (
-    <div className="max-w-4xl px-20 mi-stack-md">
+    <div className="max-w-4xl px-5 md:px-20 mi-stack-md">
       {/* Suggestions header */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}

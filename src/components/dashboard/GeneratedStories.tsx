@@ -31,7 +31,7 @@ export default function GeneratedStories() {
     }
 
     return (
-      <div className="max-w-5xl px-20 mi-stack-md">
+      <div className="max-w-5xl md:px-20 mi-stack-md">
         <div className="mi-section-header flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <nav className="flex items-center gap-2 text-sm text-neutral-500">
             <button
@@ -64,7 +64,7 @@ export default function GeneratedStories() {
   }
 
   return (
-    <div className="max-w-4xl px-20 mi-stack-md">
+    <div className="max-w-4xl px-5 md:px-20 mi-stack-md">
       <div className="mi-section-header">
         <h1 className="text-xl md:text-3xl tracking-tight font-extrabold text-neutral-800 mi-section-title">
           {"Tu biblioteca de cuentos".toUpperCase()}

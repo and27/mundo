@@ -112,7 +112,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
       <aside
         className={[
-          "fixed md:relative top-0 left-0 z-50 h-screen",
+          "bg-primary-900 md:bg-transparent fixed md:relative top-0 left-0 z-50 h-screen",
           "border-r border-white/10",
           "flex flex-col justify-between transition-transform duration-300",
           isMobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
@@ -156,14 +156,14 @@ const Sidebar: React.FC<SidebarProps> = ({
           </nav>
         </div>
 
-        <div className="mt-auto space-y-4">
+        <div className="mb-5 mt-auto space-y-2 md:space-y-4">
           <div className="h-px bg-white/10" />
 
           <div className="">
             <button
               onClick={() => setShowUserMenu((v) => !v)}
               className={[
-                "flex items-center w-full p-3 rounded-lg transition-colors",
+                "flex items-center w-full p-1 md:p-3 rounded-lg transition-colors",
                 "hover:mi-accent-soft",
                 isDesktopCollapsed ? "justify-center" : "",
               ].join(" ")}
@@ -217,7 +217,7 @@ const Sidebar: React.FC<SidebarProps> = ({
               onClick={handleLogout}
               disabled={isLoggingOut}
               className={[
-                "flex items-center w-full p-3 rounded-lg transition-colors",
+                "flex items-center w-full p-1 md:p-3 rounded-lg transition-colors",
                 isLoggingOut
                   ? "opacity-50 cursor-not-allowed"
                   : "text-red-400 hover:bg-red-500/20",

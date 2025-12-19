@@ -78,7 +78,7 @@ const LoginForm: React.FC = () => {
     <form onSubmit={handleSubmit} className="flex flex-col gap-5">
       {apiFeedback && (
         <div
-          className={`p-3 rounded-md text-sm ${
+          className={`my-5 p-3 rounded-md text-sm ${
             apiFeedback.type === "success"
               ? "bg-green-100 border border-green-400 text-green-700"
               : "bg-red-100 border border-red-400 text-red-700"
@@ -89,7 +89,7 @@ const LoginForm: React.FC = () => {
         </div>
       )}
       <InputWithLabel
-        label="Correo Electrónico o Usuario"
+        label="Correo Electrónico"
         name="email"
         type="text"
         value={loginData.email}

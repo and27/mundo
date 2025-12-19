@@ -457,6 +457,11 @@ body {
   .mi-section {
     padding-top: var(--space-24); /* 96px */
     padding-bottom: var(--space-24);
+
+    @media screen and (max-width: 600px) {
+      padding-top: var(--space-10);
+      padding-bottom: var(--space-10);
+    }
   }
 
   .mi-section-header {

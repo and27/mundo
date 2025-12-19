@@ -21,7 +21,7 @@ export default function ProgramCatalogSection() {
   }
 
   return (
-    <div className="px-20 mi-stack-lg">
+    <div className="px-5 md:px-20 mi-stack-lg">
       <ProgramHero
         title="Emociones en Acción"
         subtitle="Desarrolla el idioma de las emociones · 8 a 12 años"

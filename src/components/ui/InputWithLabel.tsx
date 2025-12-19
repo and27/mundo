@@ -29,7 +29,7 @@ const InputWithLabel: React.FC<InputLabelProps> = ({
   return (
     <div className="relative w-full mb-4">
       <input
-        className={`text-sm md:text-base peer border text-white  py-2.5 px-4 rounded-md w-full placeholder-transparent focus:outline-none focus:ring-2 focus:ring-yellow-500 ${
+        className={`text-sm md:text-base peer border text-white py-3.5 px-4 rounded-md w-full placeholder-transparent focus:outline-none focus:ring-2 focus:ring-yellow-500 ${
           error ? "border-red-500" : ""
         } ${className}`}
         type={inputType}
@@ -43,7 +43,7 @@ const InputWithLabel: React.FC<InputLabelProps> = ({
         htmlFor={name}
         className={`
           px-2 rounded absolute -left-2 -top-6 text-sm text-white transition-all
-          peer-placeholder-shown:top-2 peer-placeholder-shown:left-2 md:peer-placeholder-shown:text-base 
+          peer-placeholder-shown:top-3 peer-placeholder-shown:left-2 md:peer-placeholder-shown:text-base 
           peer-focus:-top-6 peer-focus:-left-2 peer-focus:text-sm 
            peer-focus:text-white peer-placeholder-shown:text-white/60
 
@@ -53,11 +53,11 @@ const InputWithLabel: React.FC<InputLabelProps> = ({
       </label>
       {type === "password" && (
         <button
-          type="button" // Important: type="button" to prevent form submission
-          className="bg-transparent p-0 absolute right-4 top-3 text-icon-color" // text-icon-color is a placeholder
-          onClick={togglePasswordVisibility} // Call the toggle function
+          type="button"
+          className="bg-transparent p-0 absolute right-4 top-3.5 text-icon-color"
+          onClick={togglePasswordVisibility}
         >
-          <FaEye />
+          <FaEye color="white" />
         </button>
       )}
       {error && (

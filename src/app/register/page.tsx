@@ -7,6 +7,8 @@ import { FiArrowRight } from "react-icons/fi";
 import LoginForm from "@/components/auth/LoginForm";
 import RegisterForm from "@/components/auth/RegisterForm";
 import InfoPanel from "@/components/auth/AuthInfoPanel";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function AuthPage() {
   const [activeTab, setActiveTab] = useState<"register" | "login">("register");
@@ -37,11 +39,22 @@ export default function AuthPage() {
         transition={{ duration: 0.5, ease: "easeOut" }}
         className="w-full max-w-6xl"
       >
-        <div className="rounded-3xl border border-white/10 overflow-hidden">
+        <div className="mx-auto flex justify-center mb-2 md:mb-5 md:-mt-10">
+          <Link href="/" aria-label="Ir al inicio">
+            <Image
+              src="/images/logo-mundo.png"
+              width={140}
+              height={140}
+              alt="Mundo Interior"
+              priority
+            />
+          </Link>
+        </div>
+        <div className="rounded-3xl md:border border-white/10 overflow-hidden">
           <div className="flex flex-col lg:flex-row min-h-[640px]">
             <InfoPanel activeTab={activeTab} />
 
-            <section className="flex-1 px-6 py-10 lg:px-12 lg:py-14 flex flex-col">
+            <section className="flex-1 px-0 md:px-6 py-10 lg:px-12 lg:py-14 flex flex-col">
               <header className="mi-stack-md mb-12">
                 <div className="flex rounded-2xl p-1 mi-surface-soft">
                   {(["register", "login"] as const).map((tab) => {
@@ -52,7 +65,7 @@ export default function AuthPage() {
                         onClick={() => handleTabChange(tab)}
                         disabled={isLoading}
                         className={[
-                          "relative flex-1 py-3 px-6 rounded-xl text-sm font-semibold transition-all",
+                          "relative flex-1 py-3 px-2 md:px-6 rounded-xl text-sm font-semibold transition-all",
                           isActive
                             ? "mi-cta-primary shadow-lg"
                             : "text-white/70 hover:text-white hover:mi-accent-soft",
@@ -99,7 +112,7 @@ export default function AuthPage() {
               <footer className="mt-12 pt-6 border-t border-white/10 mi-stack-sm text-center">
                 <div className="flex items-center justify-center gap-2 text-white/60 text-sm">
                   <HiShieldCheck className="w-4 h-4" />
-                  <span>Plataforma segura y confiable</span>
+                  <span>Mundo es una plataforma confiable.</span>
                 </div>
                 <p className="text-white/40 text-xs">
                   Al continuar, aceptas nuestros términos y condiciones

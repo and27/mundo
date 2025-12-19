@@ -52,7 +52,7 @@ export default function ProgramLessonsList() {
   const router = useRouter();
 
   return (
-    <div className="max-w-4xl px-20 mi-stack-lg">
+    <div className="max-w-4xl px-5 md:px-20 mi-stack-lg">
       <header className="mi-section-header">
         <h1 className="text-3xl md:text-4xl tracking-tight font-extrabold text-neutral-800 mi-section-title">
           Emociones en Acción

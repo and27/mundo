@@ -147,11 +147,11 @@ const ActionPanel: React.FC<ActionPanelProps> = memo(
                 w-full inline-flex items-center justify-center gap-3
                 px-6 py-3 rounded-xl font-semibold
                 glass-light text-white/80 hover:text-white
-                transition-colors
+                transition-colors underline
               "
             >
               <FiUsers className="w-5 h-5" />
-              <span>Soy padre o educador</span>
+              <span>Iniciar sesión</span>
             </Link>
           </motion.div>
         </motion.div>
@@ -177,7 +177,7 @@ export default function WelcomeExperience() {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="w-full max-w-5xl mx-auto"
       >
-        <div className="mi-surface-dark grid md:grid-cols-2 rounded-2xl">
+        <div className="border border-white/20 grid md:grid-cols-2 rounded-2xl">
           <WelcomePanel />
           <ActionPanel
             name={name}

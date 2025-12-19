@@ -40,7 +40,7 @@ export default function LessonView() {
   const story = rioEmocionesAmaruStory;
 
   return (
-    <div className="max-w-3xl px-20 mi-stack-lg">
+    <div className="max-w-3xl px-5 md:px-20 mi-stack-lg">
       <button
         onClick={() =>
           router.push("/parentDashboard?section=program&view=modules")
