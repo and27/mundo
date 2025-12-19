@@ -89,7 +89,6 @@ export default function GeneratedStories() {
                   setSelectedGuideId(null);
                 }
               }}
-              onEdit={() => {}}
               createdAt="Generada localmente"
             />
           ))}

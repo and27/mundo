@@ -33,14 +33,13 @@ const WelcomePanel: React.FC = memo(() => {
 
   return (
     <div className="relative flex flex-col items-center justify-center text-center px-8 py-16">
-      {/* Avatar */}
-      <div className="absolute -top-28 md:-top-36">
+      <div className="absolute -top-30 md:-top-40 max-w-32 md:max-w-48">
         <Image
           priority
           src="/images/yachwithkuntur.png"
           alt="Yachay, guía de Mundo Interior"
-          width={280}
-          height={280}
+          width={180}
+          height={180}
           className="rounded-full object-contain"
         />
       </div>
@@ -49,12 +48,12 @@ const WelcomePanel: React.FC = memo(() => {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="mt-32 md:mt-40 text-3xl md:text-4xl font-bold text-white"
+        className="text-3xl md:text-4xl font-bold text-white tracking-tight"
       >
         Bienvenidos a <br /> Mundo Interior
       </motion.h1>
 
-      <div className="mt-6 hidden md:flex h-12 items-center justify-center">
+      <div className="md:mt-6 hidden md:flex h-12 items-center justify-center">
         <AnimatePresence mode="wait">
           <motion.p
             key={currentQuote}
@@ -102,7 +101,7 @@ const ActionPanel: React.FC<ActionPanelProps> = memo(
     );
 
     return (
-      <div className="flex flex-col items-center justify-center text-center px-8 py-12">
+      <div className="flex flex-col items-center justify-center text-center px-8 md:py-12">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -153,7 +152,6 @@ const ActionPanel: React.FC<ActionPanelProps> = memo(
             >
               <FiUsers className="w-5 h-5" />
               <span>Soy padre o educador</span>
-              <FiBookOpen className="w-5 h-5" />
             </Link>
           </motion.div>
         </motion.div>
@@ -179,7 +177,7 @@ export default function WelcomeExperience() {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="w-full max-w-5xl mx-auto"
       >
-        <div className="mi-surface-dark grid md:grid-cols-2 rounded-2xl overflow-hidden">
+        <div className="mi-surface-dark grid md:grid-cols-2 rounded-2xl">
           <WelcomePanel />
           <ActionPanel
             name={name}

@@ -33,7 +33,7 @@ export default function InputForm({
   const [context, setContext] = useState<ContextData | null>(null);
 
   const { mode } = useModeStore();
-  const isSchoolMode = mode === "educator";
+  const isSchoolMode = mode === "school";
   const setOriginalQuery = useQueryStore((s) => s.setOriginalQuery);
 
   const suggestions = getSuggestionsByMode(isSchoolMode, 4);

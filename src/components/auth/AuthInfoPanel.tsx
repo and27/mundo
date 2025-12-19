@@ -2,6 +2,8 @@ import { memo, useEffect, useState } from "react";
 import { HiHeart, HiLightBulb, HiShieldCheck } from "react-icons/hi2";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiCheck } from "react-icons/fi";
+import Link from "next/link";
+import Image from "next/image";
 
 const benefits = [
   {
@@ -38,7 +40,16 @@ const InfoPanel: React.FC<InfoPanelProps> = memo(({ activeTab }) => {
   }, []);
 
   return (
-    <div className="hidden md:flex flex-1 mi-surface-dark p-12 flex-col justify-center gap-10">
+    <div className="hidden md:flex flex-1 p-12 flex-col justify-center gap-10">
+      <Link href="/" aria-label="Ir al inicio">
+        <Image
+          src="/images/logo-mundo.png"
+          width={140}
+          height={140}
+          alt="Mundo Interior"
+          priority
+        />
+      </Link>
       <motion.header
         initial={{ opacity: 0, x: -16 }}
         animate={{ opacity: 1, x: 0 }}
