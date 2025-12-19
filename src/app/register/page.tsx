@@ -33,25 +33,13 @@ export default function AuthPage() {
 
   return (
     <main className="mi-canvas-auth min-h-screen flex items-center justify-center px-4 py-16">
-      <div className="absolute top-6 left-1/2 -translate-x-1/2">
-        <Link href="/" aria-label="Ir al inicio">
-          <Image
-            src="/images/logo-mundo.png"
-            width={160}
-            height={160}
-            alt="Mundo Interior"
-            priority
-          />
-        </Link>
-      </div>
-
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
         className="w-full max-w-6xl"
       >
-        <div className="mi-surface-dark rounded-3xl overflow-hidden">
+        <div className="rounded-3xl border border-white/10 overflow-hidden">
           <div className="flex flex-col lg:flex-row min-h-[640px]">
             <InfoPanel activeTab={activeTab} />
 

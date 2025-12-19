@@ -45,7 +45,7 @@ export default function StoryCard({
     <article className="bg-white border border-neutral-200 rounded-2xl overflow-hidden transition hover:shadow-sm">
       <div className="relative h-24">
         <Image
-          src={guide.coverImage || "/images/all.webp"}
+          src={"/images/all.webp"}
           alt={guide.guideTitle}
           fill
           className="object-cover"

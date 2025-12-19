@@ -29,7 +29,7 @@ export default function ModeToggle({
       // Salir de child mode
       router.push("/parentDashboard");
     }
-    // Si cambio entre individual ↔ educator: no redirect, solo cambio de modo
+    // Si cambio entre individual ↔ school: no redirect, solo cambio de modo
   };
 
   // Configuración de cada modo

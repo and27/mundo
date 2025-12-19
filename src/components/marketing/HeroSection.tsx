@@ -36,8 +36,15 @@ export default function HeroSection() {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 items-center md:items-start">
-          <Button variant="primary">Acceder ahora</Button>
-          <Button variant="secondary">Conocer el enfoque</Button>
+          <Button asChild>
+            <Link href="/welcome">Acceder ahora</Link>
+          </Button>
+          <Link
+            href="#enfoque"
+            className="inline-flex items-center justify-center px-6 py-3 font-semibold text-white/70 hover:text-white underline underline-offset-4"
+          >
+            Conocer el enfoque
+          </Link>
         </div>
       </div>
 
