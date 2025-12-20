@@ -32,8 +32,8 @@ const WelcomePanel: React.FC = memo(() => {
   }, []);
 
   return (
-    <div className="relative flex flex-col items-center justify-center text-center px-8 py-16">
-      <div className="absolute -top-30 md:-top-40 max-w-32 md:max-w-48">
+    <div className="relative flex flex-col items-center justify-center text-center px-8 py-10">
+      <div className="absolute -top-40 md:-top-50 max-w-32 md:max-w-48">
         <Image
           priority
           src="/images/yachwithkuntur.png"
@@ -50,7 +50,7 @@ const WelcomePanel: React.FC = memo(() => {
         transition={{ delay: 0.4 }}
         className="text-3xl md:text-4xl font-bold text-white tracking-tight"
       >
-        Bienvenidos a <br /> Mundo Interior
+        Bienvenido a <br /> Mundo Interior
       </motion.h1>
 
       <div className="md:mt-6 hidden md:flex h-12 items-center justify-center">
@@ -94,7 +94,7 @@ const ActionPanel: React.FC<ActionPanelProps> = memo(
         ) : (
           <div className="flex items-center gap-3">
             <FaPlay className="w-4 h-4" />
-            <span>Probar demo</span>
+            <span>Esuchar historia</span>
           </div>
         ),
       [isLoading]
@@ -108,16 +108,8 @@ const ActionPanel: React.FC<ActionPanelProps> = memo(
           transition={{ delay: 0.6 }}
           className="mi-stack-md"
         >
-          <div className="hidden md:flex items-center justify-center gap-3">
-            <HiSparkles className="w-8 h-8 text-yellow-400" />
-            <h2 className="text-2xl lg:text-3xl font-bold text-white">
-              Tu aventura comienza
-            </h2>
-          </div>
-
           <p className="text-white/70 max-w-sm">
-            Estás a un solo clic de explorar un universo de emociones, calma y
-            autoconocimiento.
+            Un espacio para escuchar historias y acompañar emociones.
           </p>
         </motion.div>
 
@@ -177,7 +169,7 @@ export default function WelcomeExperience() {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="w-full max-w-5xl mx-auto"
       >
-        <div className="border border-white/20 grid md:grid-cols-2 rounded-2xl">
+        <div className="border border-white/20 grid md:grid-cols-2 rounded-2xl py-5">
           <WelcomePanel />
           <ActionPanel
             name={name}
