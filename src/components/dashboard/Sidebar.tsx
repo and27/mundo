@@ -156,7 +156,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           </nav>
         </div>
 
-        <div className="mb-5 mt-auto space-y-2 md:space-y-4">
+        <div className="pg-safe">
           <div className="h-px bg-white/10" />
 
           <div className="">
