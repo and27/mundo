@@ -47,7 +47,7 @@ const JourneyNavigation = ({
         className={`
           fixed right-0 top-1/2 -translate-y-1/2 z-20
           h-32 w-16 flex items-center justify-center
-          bg-gradient-to-l from-black/80 via-black/40 to-transparent
+              bg-gradient-to-br from-indigo-600/90 via-purple-700/90 to-transparent
           text-white/70 hover:text-white
           transition-all duration-300
           ${

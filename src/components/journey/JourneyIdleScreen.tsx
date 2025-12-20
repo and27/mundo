@@ -1,12 +1,12 @@
 import React from "react";
 import { FaPlay } from "react-icons/fa";
-import Button from "@/components/ui/Button"; // Asumiendo que Button está en ui
+import Button from "@/components/ui/Button";
 import Image from "next/image";
 
 interface JourneyIdleScreenProps {
   title: string;
   description: string;
-  onStartJourney: () => void; // La función a llamar al hacer clic en el botón
+  onStartJourney: () => void;
 }
 
 const JourneyIdleScreen: React.FC<JourneyIdleScreenProps> = ({
@@ -14,7 +14,7 @@ const JourneyIdleScreen: React.FC<JourneyIdleScreenProps> = ({
   onStartJourney,
 }) => {
   return (
-    <div className="flex flex-col items-center gap-3 text-center animate-fade-in">
+    <div className="mi-surface-dark p-10 rounded-lg flex flex-col items-center gap-3 text-center animate-fade-in">
       <Image
         src={"/images/childrenHero.webp"}
         height={200}

@@ -27,7 +27,7 @@ const JourneyControlsBar: React.FC<JourneyControlsBarProps> = ({
     <div
       className={clsx(
         "fixed bottom-0 left-0 right-0 z-50",
-        "bg-black/50 backdrop-blur-md",
+        "bg-gradient-to-br from-indigo-600/90 to-purple-700/90",
         "px-4 py-3 sm:px-6",
         className
       )}

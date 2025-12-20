@@ -71,7 +71,7 @@ export default function CuentoClient({
             className={`
               fixed left-0 top-1/2 -translate-y-1/2 z-20
               h-32 w-16 flex items-center justify-center
-              bg-gradient-to-r from-black/80 via-black/40 to-transparent
+              bg-gradient-to-br from-indigo-600/90 via-purple-700/90 to-transparent
               text-white/70 hover:text-white
               transition-all duration-300
               ${
@@ -91,7 +91,7 @@ export default function CuentoClient({
             className={`
               fixed right-0 top-1/2 -translate-y-1/2 z-20
               h-32 w-16 flex items-center justify-center
-              bg-gradient-to-l from-black/80 via-black/40 to-transparent
+              bg-gradient-to-br from-indigo-600/90 via-purple-700/90 to-transparent
               text-white/70 hover:text-white
               transition-all duration-300
               ${
@@ -107,7 +107,7 @@ export default function CuentoClient({
         </>
       )}
 
-      <section className="bg-black/50 backdrop-blur-sm w-full min-h-screen flex justify-center items-center overflow-hidden">
+      <section className="bg-gradient-to-br from-indigo-600/90 to-purple-700/90 w-full min-h-screen flex justify-center items-center overflow-hidden">
         {journeyState !== "idle" && (
           <SceneWithCharacter
             backgroundUrl={currentStep?.visuals?.backgroundImage || ""}
@@ -129,7 +129,7 @@ export default function CuentoClient({
             />
           )}
 
-          <div className="-mt-12 w-full max-w-2xl flex flex-col items-center justify-end flex-grow gap-5 rounded-2xl text-white p-4 sm:p-6 overflow-y-auto">
+          <div className="min-h-screen w-full max-w-2xl flex flex-col items-center justify-center flex-grow gap-5 rounded-2xl text-white overflow-y-auto">
             {journeyState === "idle" && (
               <JourneyIdleScreen
                 title={story.title}

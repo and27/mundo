@@ -493,4 +493,8 @@ body {
     flex-direction: column;
     gap: var(--space-3); /* 12px */
   }
+
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 }

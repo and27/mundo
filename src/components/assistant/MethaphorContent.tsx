@@ -64,27 +64,6 @@ export const MetaphorContent: React.FC<PillarContentProps> = ({
         <p className="text-slate-700 leading-relaxed flex-1">
           {guide.metaphorStory ?? "Contenido no disponible."}
         </p>
-
-        <div className="group relative flex-shrink-0">
-          <button className="w-6 h-6 bg-amber-100 hover:bg-amber-200 rounded-full flex items-center justify-center transition-colors">
-            <Info className="w-3.5 h-3.5 text-amber-600" />
-          </button>
-
-          {/* Tooltip más grande */}
-          <div className="absolute right-0 top-8 w-80 bg-slate-800 text-white text-sm rounded-lg p-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 shadow-xl">
-            <div className="absolute -top-2 right-3 w-4 h-4 bg-slate-800 rotate-45"></div>
-            <div className="space-y-2">
-              <div className="font-medium text-amber-200">
-                Inspiración Andina
-              </div>
-              <div className="leading-relaxed">
-                Esta narrativa se inspira en la tradición oral andina, donde los
-                cuentos transmiten enseñanzas profundas sobre el equilibrio
-                emocional y la conexión con la naturaleza.
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
 
       <div className="pt-4 border-t border-slate-200">
