@@ -35,7 +35,7 @@ export default function HeroSection() {
           historias guiadas.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-3 items-center md:items-start">
+        <div className="flex flex-col md:flex-row gap-3 items-center md:items-start">
           <Button asChild>
             <Link href="/welcome">Acceder ahora</Link>
           </Button>
@@ -54,8 +54,10 @@ export default function HeroSection() {
           relative
           w-[270px]
           h-[270px]
-          md:w-[620px]
-          md:h-[380px]
+          md:min-w-[320px]
+          md:h-[320px]
+          lg:w-[620px]
+          lg:h-[380px]
           rounded-full
           overflow-hidden
           mi-surface-soft

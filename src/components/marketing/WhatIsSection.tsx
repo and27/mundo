@@ -25,7 +25,7 @@ export default function WhatIsSection() {
       <div className="mx-auto max-w-4xl grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div className="relative w-full flex justify-center lg:justify-start">
           <div className="w-full max-w-sm rounded-3xl overflow-hidden mi-card">
-            <div className="relative w-full aspect-[4/6]">
+            <div className="relative w-full aspect-[3/2] md:aspect-[4/6]">
               <Image
                 src="/images/kidWithYachay.png"
                 alt="Mundo Interior"
@@ -37,9 +37,7 @@ export default function WhatIsSection() {
           </div>
         </div>
 
-        {/* Contenido */}
-        <div className="max-w-xl">
-          {/* Header */}
+        <div className="max-w-xl mx-auto">
           <div className="mi-section-header">
             <h2 className="mi-section-title text-2xl md:text-4xl font-bold text-white">
               ¿Qué es Mundo Interior?

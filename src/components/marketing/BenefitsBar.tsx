@@ -24,17 +24,17 @@ const BenefitsBar = () => (
     aria-labelledby="benefits-title"
     className="
       mi-surface-dark
-      mx-auto
       -mt-5
       mb-15
       max-w-4xl
       rounded-xl
-      px-6
+      px-5
+      mx-3 md:mx-auto
       py-7
       flex
       flex-col
       md:flex-row
-      items-center
+      items-start sm:items-center
       justify-center
       gap-6
       md:gap-10
