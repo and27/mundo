@@ -28,8 +28,8 @@ export default function ProgramCatalogSection() {
       />
 
       <ProgramMainCard
-        title="Emotional Literacy"
-        subtitle="Programa Central"
+        title="Aprende el lenguaje de las emociones"
+        subtitle="Programa Guiado"
         description="Un viaje práctico donde los niños exploran, entienden y aprenden a expresar sus emociones con claridad, seguridad y confianza."
         image="/images/all.webp"
         onEnter={() =>

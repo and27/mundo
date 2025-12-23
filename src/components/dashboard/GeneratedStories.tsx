@@ -67,7 +67,7 @@ export default function GeneratedStories() {
     <div className="max-w-4xl px-5 md:px-20 mi-stack-md">
       <div className="mi-section-header">
         <h1 className="text-xl md:text-3xl tracking-tight font-extrabold text-neutral-800 mi-section-title">
-          {"Tu biblioteca de cuentos".toUpperCase()}
+          {"Tu biblioteca de cuentos"}
         </h1>
         <p className="text-neutral-600">
           Accede a todos los cuentos emocionales que has creado (

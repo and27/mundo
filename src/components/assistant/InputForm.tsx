@@ -59,42 +59,15 @@ export default function InputForm({
 
   return (
     <div className="max-w-4xl px-5 md:px-20 mi-stack-md">
-      {/* Suggestions header */}
-      <button
-        onClick={() => setIsExpanded(!isExpanded)}
-        className="ml-3 flex items-center gap-3 text-sm text-neutral-600 hover:text-neutral-800 transition"
-      >
-        <div className="w-8 h-8 rounded-lg mi-accent-gradient flex items-center justify-center">
-          <Lightbulb className="w-4 h-4 text-white" />
-        </div>
-        <span className="font-semibold">Ideas para empezar</span>
-        <ChevronDown
-          className={`w-4 h-4 transition-transform ${
-            isExpanded ? "rotate-180" : ""
-          }`}
-        />
-      </button>
-
-      {isExpanded && (
-        <div className="mi-stack-md">
-          <p className="text-neutral-600">
-            Puedes comenzar con alguna de estas consultas frecuentes.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {suggestions.map((s) => (
-              <SuggestionCard
-                key={s.text}
-                suggestion={s.text}
-                onClick={(t) => {
-                  setQuery(t);
-                  setIsExpanded(false);
-                }}
-                icon={s.icon}
-              />
-            ))}
-          </div>
-        </div>
-      )}
+      <header className="mi-section-header">
+        <h1 className="text-xl md:text-3xl tracking-tight font-extrabold text-neutral-800 mi-section-title">
+          Crea un cuento personalizado
+        </h1>
+        <p className="text-neutral-600">
+          A partir de lo que nos cuentes, crearemos una historia para acompañar
+          esa emoción.
+        </p>
+      </header>
 
       {/* Input card */}
       <form
@@ -107,19 +80,42 @@ export default function InputForm({
         ].join(" ")}
       >
         <div className="p-6 mi-stack-md">
-          <div className="flex items-center gap-3">
+          {/* Suggestions header */}
+          <button
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="flex items-center gap-3 text-sm text-neutral-600 hover:text-neutral-800 transition"
+          >
             <div className="w-8 h-8 rounded-lg mi-accent-gradient flex items-center justify-center">
-              <MessageCircle className="w-4 h-4 text-white" />
+              <Lightbulb className="w-4 h-4 text-white" />
             </div>
-            <h3 className="font-semibold text-neutral-800">
-              Crea un cuento personalizado
-            </h3>
-          </div>
+            <span className="font-semibold">Ideas para empezar</span>
+            <ChevronDown
+              className={`w-4 h-4 transition-transform ${
+                isExpanded ? "rotate-180" : ""
+              }`}
+            />
+          </button>
 
-          <p className="text-neutral-600 text-sm">
-            A partir de lo que nos cuentes, crearemos una historia para
-            acompañar esa emoción.
-          </p>
+          {isExpanded && (
+            <div className="mi-stack-md">
+              <p className="text-neutral-600">
+                Puedes comenzar con alguna de estas consultas frecuentes.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {suggestions.map((s) => (
+                  <SuggestionCard
+                    key={s.text}
+                    suggestion={s.text}
+                    onClick={(t) => {
+                      setQuery(t);
+                      setIsExpanded(false);
+                    }}
+                    icon={s.icon}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
 
           <div>
             <TextareaWithCounter

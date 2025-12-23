@@ -52,7 +52,7 @@ export default function ModeToggle({
       default: // individual
         return {
           icon: <User className="w-3 h-3" />,
-          label: "Familia",
+          label: "Modo padres",
           bgColor: "bg-blue-500/30 text-blue-300",
           bgColorInline: "bg-blue-100 text-blue-600",
         };
