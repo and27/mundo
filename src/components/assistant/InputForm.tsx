@@ -8,6 +8,7 @@ import {
   Send,
   Clock,
   ChevronDown,
+  Settings,
 } from "lucide-react";
 import { SuggestionCard } from "./SuggestionCard";
 import { getSuggestionsByMode } from "../../lib/suggestionsConfig";
@@ -15,6 +16,8 @@ import { TextareaWithCounter } from "./TextAreaWithCounter";
 import { useQueryStore } from "@/store/useQueryStore";
 import { useModeStore } from "@/store/useModeState";
 import ContextPanel, { ContextData } from "./ContextPanel";
+import { BaseModal } from "../ui/BaseModal";
+import Button from "../ui/Button";
 
 interface InputFormProps {
   isLoading: boolean;
@@ -36,7 +39,7 @@ export default function InputForm({
   const { mode } = useModeStore();
   const isSchoolMode = mode === "school";
   const setOriginalQuery = useQueryStore((s) => s.setOriginalQuery);
-
+  const [isContextOpen, setIsContextOpen] = useState(false);
   const suggestions = getSuggestionsByMode(isSchoolMode, 4);
 
   const placeholder = isSchoolMode
@@ -64,7 +67,7 @@ export default function InputForm({
         <div className="w-8 h-8 rounded-lg mi-accent-gradient flex items-center justify-center">
           <Lightbulb className="w-4 h-4 text-white" />
         </div>
-        <span className="font-semibold">Sugerencias populares</span>
+        <span className="font-semibold">Ideas para empezar</span>
         <ChevronDown
           className={`w-4 h-4 transition-transform ${
             isExpanded ? "rotate-180" : ""
@@ -109,26 +112,34 @@ export default function InputForm({
               <MessageCircle className="w-4 h-4 text-white" />
             </div>
             <h3 className="font-semibold text-neutral-800">
-              Describe tu situación
+              Crea un cuento personalizado
             </h3>
           </div>
 
           <p className="text-neutral-600 text-sm">
-            Comparte los detalles para generar un cuento personalizado.
+            A partir de lo que nos cuentes, crearemos una historia para
+            acompañar esa emoción.
           </p>
 
-          <TextareaWithCounter
-            value={query}
-            onChange={setQuery}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
-            placeholder={placeholder}
-            disabled={isLoading}
-            maxChars={maxChars}
-          />
+          <div>
+            <TextareaWithCounter
+              value={query}
+              onChange={setQuery}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+              placeholder={placeholder}
+              disabled={isLoading}
+              maxChars={maxChars}
+            />
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => setIsContextOpen(true)}
+            >
+              <span className="font-semibold">Agregar detalles (opcional)</span>
+            </Button>
+          </div>
         </div>
-        {/* Context */}
-        <ContextPanel onContextChange={setContext} />
       </form>
 
       {/* CTA */}
@@ -151,13 +162,29 @@ export default function InputForm({
             </>
           ) : (
             <>
-              <Sparkles className="w-5 h-5" />
               <span>{buttonText}</span>
-              <Send className="w-4 h-4" />
             </>
           )}
         </div>
       </button>
+      <BaseModal open={isContextOpen} onOpenChange={setIsContextOpen}>
+        <div className="bg-white rounded-2xl p-6 mi-stack-md">
+          <header className="mi-stack-sm">
+            <h3 className="text-lg font-semibold text-neutral-800">
+              Contexto adicional
+            </h3>
+            <p className="text-sm text-neutral-600">
+              Esta información ayuda a personalizar mejor el cuento.
+            </p>
+          </header>
+
+          <ContextPanel onContextChange={setContext} />
+
+          <div className="flex justify-end gap-3 pt-4">
+            <Button onClick={() => setIsContextOpen(false)}>Cerrar</Button>
+          </div>
+        </div>
+      </BaseModal>
     </div>
   );
 }

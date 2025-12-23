@@ -55,21 +55,22 @@ export const TextareaWithCounter: React.FC<TextareaWithCounterProps> = ({
             maxHeight: maxHeight,
           }}
         />
-      </div>
-
-      {/* Counter and stats */}
-      <div className="flex items-center justify-end gap-3">
-        {value.length > 0 && (
-          <span className="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded-full">
-            {wordCount} palabras
-          </span>
-        )}
-        <div
-          className={`text-xs font-medium transition-colors ${
-            value.length > maxChars * 0.9 ? "text-amber-600" : "text-slate-500"
-          } ${value.length >= maxChars ? "text-red-600" : ""}`}
-        >
-          {value.length}/{maxChars}
+        {/* Counter and stats */}
+        <div className="flex items-center justify-end gap-3">
+          {value.length > 0 && (
+            <span className="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded-full">
+              {wordCount} palabras
+            </span>
+          )}
+          <div
+            className={`text-xs font-medium transition-colors ${
+              value.length > maxChars * 0.9
+                ? "text-amber-600"
+                : "text-slate-500"
+            } ${value.length >= maxChars ? "text-red-600" : ""}`}
+          >
+            {value.length}/{maxChars}
+          </div>
         </div>
       </div>
     </div>
