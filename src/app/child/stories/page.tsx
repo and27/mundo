@@ -1,5 +1,6 @@
 "use client";
 
+import { KidsFeaturedCard } from "@/components/kids/KidsFeaturedCard";
 import { KidsFilters } from "@/components/kids/KidsFilters";
 import { KidsHeader } from "@/components/kids/KidsHeader";
 import { KidsStoriesSection } from "@/components/kids/KidsStoriesSection";
@@ -24,6 +25,12 @@ export default function ChildStoriesPage() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-indigo-600/90 via-purple-700/90">
       <KidsHeader />
+      <KidsFeaturedCard
+        title="Aventura del Miedo"
+        subtitle="Paso 2 de 4"
+        imageUrl="/images/all.webp"
+        onContinue={() => router.push("/cuentos/miedo-paso-2")}
+      />
 
       <div className="max-w-6xl mx-auto">
         <KidsFilters active={activeFilter} onChange={setActiveFilter} />

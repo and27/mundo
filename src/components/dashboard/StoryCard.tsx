@@ -21,7 +21,7 @@ const getSummary = (guide: GuideWithCharacter) => {
   return parts.join(" · ");
 };
 
-const getDuration = (guide: GuideWithCharacter) => {
+export const getDuration = (guide: GuideWithCharacter) => {
   let words = 0;
   words += guide.metaphorStory?.split(" ").length || 0;
   words +=

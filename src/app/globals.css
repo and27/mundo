@@ -305,7 +305,6 @@ body {
   /* ======================================================
      CANVAS — Fondos de página (UNO por layout)
      ====================================================== */
-
   .mi-canvas-base {
     min-height: 100vh;
     background-attachment: fixed;

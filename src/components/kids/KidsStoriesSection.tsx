@@ -1,6 +1,7 @@
 "use client";
 
 import StoryCard from "@/components/dashboard/StoryCard";
+import { KidsStoryTile } from "./KidsStoryTile";
 
 type Guide = {
   id: string;
@@ -30,14 +31,14 @@ export function KidsStoriesSection({
         <h2 className="text-white text-2xl mi-section-title">Subtitle</h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {stories.map((story, index) => (
-            <StoryCard
-              key={`kids-story-${story.id}-${index}`}
-              guide={story as any}
-              variant="kids"
-              onPlay={() => onPlay(story.id)}
-              isFavorite={favorites.has(story.id)}
-              onToggleFavorite={() => onToggleFavorite(story.id)}
+          {stories.map((guide) => (
+            <KidsStoryTile
+              key={guide.id}
+              guide={guide}
+              onPlay={() => play(guide.id)}
+              isCompleted={guide.progress?.completed}
+              currentStep={guide.progress?.current}
+              totalSteps={guide.progress?.total}
             />
           ))}
         </div>
