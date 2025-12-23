@@ -1,0 +1,103 @@
+[33m7856a91[m[33m ([m[1;36mHEAD -> [m[1;32mfeat/base-modal[m[33m)[m fixup! feat(modal): create base modal
+[33m5b17556[m fixup! feat(ui): extend base button variants and sizes
+[33m67279d7[m feat(studio): integrate base modal to add additional details in story creation mode
+[33mea222cb[m feat(ui): extend base button variants and sizes
+[33m7579331[m feat(modal): create base modal
+[33m5dac4f4[m[33m ([m[1;32mmain[m[33m, [m[1;32mfeat/kidsMode[m[33m)[m feat(kids): add featured card and kids tile card
+[33mfdd67cd[m feat(kids): modify palette and layout of kids mode section
+[33m9dea425[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mchore/polish-ui[m[33m)[m chore(ui): modify journey control and welcome screen colors to purple palette
+[33m6760788[m chore(sidebar): fix ui bottom padding
+[33m8d7b0ce[m chore(ui): adjust welcome screen content and spaces
+[33m1537f70[m chore(ui): polish marketing page responsive spaces
+[33m00962f7[m fix(ui): fix sidebar mobile colors and spacing
+[33mcc98a51[m chore: update next js
+[33m1ea5bbb[m fix linter issues
+[33me124b4b[m feat(ui): modify favicon
+[33mb9e0c02[m Merge branch 'main' of https://github.com/and27/mundo
+[33m35015ef[m chore(linter): fix linter unused imports
+[33m1229b86[m feat(ui): add logo to auth and home
+[33m7e12431[m feat(marketing): improve hero and final CTA sections
+[33m4a696d4[m chore(dashboard): refine stories UI and navigation
+[33m24fd338[m feat(program): improve program flow and lesson structure
+[33m3c34339[m fix sidebar styles and active links
+[33m3f3d326[m chore(ui): polish spacing and styling consistency
+[33m5dadbd3[m chore(assets): add Mundo Interior images and guides
+[33mbb7b312[m feat(assistant): input, generated stories and journeys
+[33me151d78[m feat(ui): add logo to auth and home
+[33m6ac9939[m[33m ([m[1;32mwip/ui-cleanup-snapshot[m[33m)[m feat(marketing): improve hero and final CTA sections
+[33m7f2c77e[m chore(dashboard): refine stories UI and navigation
+[33meba0cea[m feat(program): improve program flow and lesson structure
+[33m8448113[m[33m ([m[1;32mfix/sidebar-polish[m[33m)[m fix sidebar styles and active links
+[33m88d5577[m[33m ([m[1;32mchore/style-polish[m[33m, [m[1;32mchore/sidebar-polish[m[33m)[m chore(ui): polish spacing and styling consistency
+[33m75db354[m Merge branch 'chore/assets'
+[33m39af893[m Merge branch 'feat/assistant-stories'
+[33m36ec738[m Merge branch 'feat/auth-flow'
+[33m6e6ac9a[m Merge branch 'feat/program-lessons'
+[33mb532c01[m Merge branch 'feat/marketing-pages'
+[33mc5b4f04[m Merge branch 'feat/dashboard-shell'
+[33m410cd1d[m Merge branch 'feat/design-system-tokens'
+[33m45d8897[m[33m ([m[1;32mchore/assets[m[33m)[m chore(assets): add Mundo Interior images and guides
+[33m7ec4a0f[m[33m ([m[1;32mfeat/marketing-pages[m[33m)[m feat(marketing): landing and welcome experience
+[33m1f1d193[m[33m ([m[1;32mfeat/assistant-stories[m[33m)[m feat(assistant): input, generated stories and journeys
+[33ma23347f[m[33m ([m[1;32mfeat/program-lessons[m[33m)[m feat(program): lessons structure and Mundo Interior content
+[33ma6d9d97[m[33m ([m[1;32mfeat/dashboard-shell[m[33m)[m feat(dashboard): sidebar, header and navigation structure
+[33m18e9be8[m[33m ([m[1;32mfeat/auth-flow[m[33m)[m feat(auth): register/login flow with info panel
+[33m21111b9[m modify gitignore
+[33mea54ffa[m[33m ([m[1;32mfeat/design-system-tokens[m[33m)[m feat(design-system): add tokens, spacing system and base button
+[33m0ff6784[m feat: refactor story container
+[33m282f19c[m feat: migrate from classic tts to gemini tts
+[33m8b9145d[m feat: add children stories section
+[33m03e4c32[m feat: make popular suggestions collapsible
+[33m3058617[m feat: improve mobile responsive layout
+[33mcf62097[m Merge branch 'main' of https://github.com/and27/mundo
+[33m5e0f749[m feat: upload images and audios to supabase bucket
+[33m07de321[m feat: upload images and audios to supabase bucket
+[33m1101367[m feat: upload stories to supabase storage
+[33mb1cc855[m Merge branch 'main' of https://github.com/and27/mundo
+[33m442f0a4[m feat: fix linter errors
+[33m41c3239[m feat: fix linter errors
+[33m52e894b[m fix story loader
+[33m75e3dd3[m feat: add course for parents first version
+[33m84129a1[m feat: add generated stories tab with results display
+[33mb9145ce[m feat: add child mode
+[33m4bd3861[m Merge branch 'main' of https://github.com/and27/mundo
+[33m508766f[m feat: implement automated story creation
+[33m2568866[m feat: implement automated story creation
+[33mc3ec70d[m fix(login): fix user login and registration
+[33m0d5a896[m feat: enhance register styles for mobile
+[33m947c5c5[m feat: add modal to select journey type
+[33m571f919[m fea: add journey 4 and controls
+[33m68b55b4[m feat: add school/individual mode toggle with context panel and suggestions adaptation
+[33m5dc6cca[m Revert route generate guide optimization
+[33m1bae458[m fix: correct API response format to match ActionableGuide interface
+[33m048bf5f[m feat: adapt mvp to fear identification proposal
+[33m7558c2d[m feat: adapt register and parent dashboard to mobile (responsive)
+[33mbcaa70d[m feat(dashboard): Implement AI Guide Assistant MVP with Activity Guidelines
+[33m3e3ca80[m feat: modify mobile home styles
+[33md037f0f[m feat: enhance parent dashboard ui with new colors
+[33md9811ac[m feat(auth): Implementar flujo completo de autenticación de usuarios
+[33m6c37616[m Merge branch 'main' of https://github.com/and27/mundo
+[33m1ce73d5[m feat: implement parent dashboard
+[33m5e0470a[m feat: implement parent dashboard
+[33m6d68b37[m feat: integrate login and register tabs for parents
+[33m0b01097[m feat: configure register api with supabase
+[33m535fc05[m feat: modify register content
+[33m1992847[m feat: modify home and onboarding flow
+[33mf7d0def[m feat: add account, routes, and tasks pages for student dashboard
+[33ma00af87[m refactor emotion selection
+[33m5d370eb[m feat: add webp guide images
+[33m18344b4[m feat: improve horizontal slider styles
+[33m999ad6a[m feat: modify footer and faqs content
+[33m7fa6227[m feat: modify landing hero copy and images
+[33mf241793[m feat: adapt guide player to support multiple choice paths and add background images for amaru story
+[33m7cdf357[m feat: add umami for analytics
+[33md5bd47d[m feat: add legal documents
+[33m45f10b3[m feat: add journey controls
+[33m58e5550[m feat(ui): Add dynamic backgrounds, emotion tints & UX polish
+[33m1bea31d[m feat(journey): Extract player logic to hook & core components
+[33m45be3a4[m refactor: Update UI components (Button, GuideCard) and onboarding flow
+[33mae495f7[m feat: Refactor story player with Howler.js and step-based structure
+[33m53191b9[m fix linter errores
+[33m78a449f[m feat: added guided forest home with dialogue flow, mode selector, interactive story layout, breathing exercise and persistent background
+[33m6f889b5[m Initial mundo version
+[33m9c0bf95[m Initial commit from Create Next App

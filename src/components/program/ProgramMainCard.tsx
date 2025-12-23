@@ -62,8 +62,7 @@ export default function ProgramMainCard({
                 hover:shadow-md
               "
             >
-              <HiSparkles className="w-5 h-5" />
-              Empezar el programa
+              Empezar ahora
             </button>
           </div>
         </div>
