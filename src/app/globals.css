@@ -441,7 +441,7 @@ body {
   }
 
   .mi-cta-secondary {
-    background-color: transparent;
+    background-color: var(--color-primary-600);
     color: white;
   }
 
