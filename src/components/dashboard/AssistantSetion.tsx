@@ -15,12 +15,16 @@ export default function AssistantSection() {
   useEffect(() => {
     if (guide && !isLoading) {
       const timer = setTimeout(() => {
-        try {
-          const savedId = saveGuide(guide);
-          router.push(`/parentDashboard?section=guides&guideId=${savedId}`);
-        } catch (error) {
-          console.error("Error saving and redirecting:", error);
-        }
+        const persistAndRedirect = async () => {
+          try {
+            const savedId = await saveGuide(guide);
+            router.push(`/parentDashboard?section=guides&guideId=${savedId}`);
+          } catch (error) {
+            console.error("Error saving and redirecting:", error);
+          }
+        };
+
+        persistAndRedirect();
       }, 700);
 
       return () => clearTimeout(timer);

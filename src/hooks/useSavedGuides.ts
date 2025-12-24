@@ -1,53 +1,83 @@
 import { GuideWithCharacter } from "@/types/ai";
 import { useEffect, useState } from "react";
-
-const STORAGE_KEY = "mundo-interior-saved-guides";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export function useSavedGuides() {
   const [savedGuides, setSavedGuides] = useState<GuideWithCharacter[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const user = useAuthStore((state) => state.user);
 
-  // Load from localStorage
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        const guides = JSON.parse(stored) as GuideWithCharacter[];
-        setSavedGuides(guides);
+    const load = async () => {
+      if (!user?.id) {
+        setSavedGuides([]);
+        setIsLoaded(true);
+        return;
       }
-    } catch (error) {
-      console.error("Error loading saved guides:", error);
-    } finally {
-      setIsLoaded(true);
-    }
-  }, []);
 
-  // Save to localStorage
-  useEffect(() => {
-    if (isLoaded) {
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(savedGuides));
+        const res = await fetch(`/api/saved-guides?userId=${user.id}`);
+        if (!res.ok) {
+          throw new Error("Error loading saved guides");
+        }
+        const data = await res.json();
+        setSavedGuides((data.guides || []) as GuideWithCharacter[]);
       } catch (error) {
-        console.error("Error saving guides:", error);
+        console.error("Error loading saved guides:", error);
+      } finally {
+        setIsLoaded(true);
       }
-    }
-  }, [savedGuides, isLoaded]);
+    };
 
-  const saveGuide = (guide: GuideWithCharacter) => {
-    setSavedGuides((prev) => [guide, ...prev]);
+    load();
+  }, [user?.id]);
+
+  const saveGuide = async (guide: GuideWithCharacter) => {
+    if (!user?.id) {
+      throw new Error("User not authenticated");
+    }
+    const res = await fetch("/api/saved-guides", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId: user.id, guide }),
+    });
+
+    if (!res.ok) {
+      throw new Error("Error saving guide");
+    }
+
+    const data = await res.json();
+    setSavedGuides((prev) => {
+      const next = prev.filter((g) => g.id !== guide.id);
+      return [data.guide as GuideWithCharacter, ...next];
+    });
     return guide.id;
   };
 
-  const deleteGuide = (id: string) => {
+  const deleteGuide = async (id: string) => {
+    if (!user?.id) {
+      throw new Error("User not authenticated");
+    }
+    const res = await fetch("/api/saved-guides", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId: user.id, storyId: id }),
+    });
+
+    if (!res.ok) {
+      throw new Error("Error deleting guide");
+    }
+
     setSavedGuides((prev) => prev.filter((g) => g.id !== id));
   };
 
   const getGuide = (id: string) => savedGuides.find((g) => g.id === id) || null;
 
-  const updateGuideTitle = (id: string, newTitle: string) => {
-    setSavedGuides((prev) =>
-      prev.map((g) => (g.id === id ? { ...g, guideTitle: newTitle } : g))
-    );
+  const updateGuideTitle = async (id: string, newTitle: string) => {
+    const current = savedGuides.find((g) => g.id === id);
+    if (!current) return;
+    const updated = { ...current, guideTitle: newTitle };
+    await saveGuide(updated);
   };
 
   return {
