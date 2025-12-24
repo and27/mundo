@@ -12,9 +12,11 @@ import { Story } from "@/types/story";
 export default function LessonJourneyPlayer({
   story,
   guideId,
+  className = "",
 }: {
   story: Story;
   guideId: string;
+  className?: string;
 }) {
   const {
     journeyState,
@@ -30,7 +32,12 @@ export default function LessonJourneyPlayer({
   // const toggleSubtitles = useOnboardingStore((s) => s.toggleSubtitles);
 
   return (
-    <div className="relative bg-black/60 rounded-3xl overflow-hidden min-h-[420px]">
+    <div
+      className={[
+        "relative bg-black/60 rounded-3xl overflow-hidden min-h-[240px] md:min-h-[300px]",
+        className,
+      ].join(" ")}
+    >
       {/* {(journeyState === "playing" || journeyState === "paused") && (
         <JourneyControlsBar
           isPlaying={journeyState === "playing"}
@@ -47,7 +54,7 @@ export default function LessonJourneyPlayer({
         />
       )}
 
-      <div className="relative z-10 p-6 flex flex-col items-center justify-center min-h-[420px] text-white">
+      <div className="relative z-10 p-6 flex flex-col items-center justify-center min-h-[240px] md:min-h-[300px] text-white">
         {journeyState === "idle" && (
           <JourneyIdleScreen
             title={story.title}

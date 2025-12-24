@@ -30,7 +30,7 @@ const TabNavigation: React.FC<TabNavigationProps> = ({
             ${
               activeTab === tab.id
                 ? "border-b-2 border-jaguar text-jaguar"
-                : "text-condor/70 hover:text-white hover:border-b-2 hover:border-condor/50"
+                : "text-condor/70 hover:border-b-2 hover:border-condor/50"
             }
           `}
           aria-current={activeTab === tab.id ? "page" : undefined}

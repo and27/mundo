@@ -177,7 +177,9 @@ export default function InputForm({
           <ContextPanel onContextChange={setContext} />
 
           <div className="flex justify-end gap-3 pt-4">
-            <Button onClick={() => setIsContextOpen(false)}>Cerrar</Button>
+            <Button size="sm" onClick={() => setIsContextOpen(false)}>
+              Cerrar
+            </Button>
           </div>
         </div>
       </BaseModal>
