@@ -30,6 +30,18 @@ export const getDuration = (guide: GuideWithCharacter) => {
   return `${Math.max(1, Math.ceil(words / 200))} min`;
 };
 
+const formatShortDate = (value: string) => {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return value;
+  }
+  return new Intl.DateTimeFormat("es-ES", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  }).format(date);
+};
+
 export default function StoryCard({
   guide,
   variant,
@@ -37,6 +49,7 @@ export default function StoryCard({
   onDelete,
   isFavorite = false,
   onToggleFavorite,
+  createdAt,
 }: StoryCardProps) {
   const isKids = variant === "kids";
 
@@ -67,7 +80,7 @@ export default function StoryCard({
         )}
       </div>
 
-      <div className="p-5 space-y-4">
+      <div className="p-5 space-y-2">
         <header className="space-y-1">
           <h3 className="text-base font-semibold text-neutral-800 line-clamp-1">
             {guide.guideTitle}
@@ -78,6 +91,11 @@ export default function StoryCard({
         <p className="text-sm text-neutral-600 line-clamp-2">
           {getSummary(guide)}
         </p>
+        {createdAt && (
+          <div className="text-xs text-neutral-400">
+            Guardado: {formatShortDate(createdAt)}
+          </div>
+        )}
 
         <footer className="flex items-center justify-between pt-2">
           <button

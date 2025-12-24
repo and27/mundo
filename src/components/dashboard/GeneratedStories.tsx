@@ -15,7 +15,8 @@ export default function GeneratedStories() {
   const [selectedGuideId, setSelectedGuideId] = useState<string | null>(
     guideIdFromUrl
   );
-  const { savedGuides, isLoaded, deleteGuide, getGuide } = useSavedGuides();
+  const { savedGuides, createdAtById, isLoaded, deleteGuide, getGuide } =
+    useSavedGuides();
 
   useEffect(() => {
     if (guideIdFromUrl && guideIdFromUrl !== selectedGuideId) {
@@ -89,7 +90,7 @@ export default function GeneratedStories() {
                   setSelectedGuideId(null);
                 }
               }}
-              createdAt="Generada localmente"
+              createdAt={createdAtById[guide.id] || "Generada en la nube"}
             />
           ))}
         </div>

@@ -30,7 +30,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  const guides: GuideWithCharacter[] = [];
+  const items: { guide: GuideWithCharacter; createdAt: string | null }[] = [];
   for (const row of data || []) {
     if (!row.story_url) {
       continue;
@@ -41,13 +41,13 @@ export async function GET(request: Request) {
         continue;
       }
       const guide = (await res.json()) as GuideWithCharacter;
-      guides.push(guide);
+      items.push({ guide, createdAt: row.created_at ?? null });
     } catch (err) {
       console.error("Error loading guide JSON:", err);
     }
   }
 
-  return NextResponse.json({ guides });
+  return NextResponse.json({ items });
 }
 
 export async function POST(request: Request) {
@@ -122,7 +122,21 @@ export async function POST(request: Request) {
     }
   }
 
-  return NextResponse.json({ guide });
+  const { data: savedRow, error: readError } = await supabase
+    .from("saved_guides")
+    .select("created_at")
+    .eq("user_id", userId)
+    .eq("story_id", guide.id)
+    .maybeSingle();
+
+  if (readError) {
+    return NextResponse.json({ error: readError.message }, { status: 500 });
+  }
+
+  return NextResponse.json({
+    guide,
+    createdAt: savedRow?.created_at ?? null,
+  });
 }
 
 export async function DELETE(request: Request) {

@@ -4,6 +4,9 @@ import { useAuthStore } from "@/store/useAuthStore";
 
 export function useSavedGuides() {
   const [savedGuides, setSavedGuides] = useState<GuideWithCharacter[]>([]);
+  const [createdAtById, setCreatedAtById] = useState<Record<string, string>>(
+    {}
+  );
   const [isLoaded, setIsLoaded] = useState(false);
   const user = useAuthStore((state) => state.user);
 
@@ -21,7 +24,19 @@ export function useSavedGuides() {
           throw new Error("Error loading saved guides");
         }
         const data = await res.json();
-        setSavedGuides((data.guides || []) as GuideWithCharacter[]);
+        const items = (data.items || []) as {
+          guide: GuideWithCharacter;
+          createdAt: string | null;
+        }[];
+        setSavedGuides(items.map((item) => item.guide));
+        setCreatedAtById(
+          items.reduce<Record<string, string>>((acc, item) => {
+            if (item.createdAt) {
+              acc[item.guide.id] = item.createdAt;
+            }
+            return acc;
+          }, {})
+        );
       } catch (error) {
         console.error("Error loading saved guides:", error);
       } finally {
@@ -51,6 +66,12 @@ export function useSavedGuides() {
       const next = prev.filter((g) => g.id !== guide.id);
       return [data.guide as GuideWithCharacter, ...next];
     });
+    if (data.createdAt) {
+      setCreatedAtById((prev) => ({
+        ...prev,
+        [guide.id]: data.createdAt as string,
+      }));
+    }
     return guide.id;
   };
 
@@ -69,6 +90,11 @@ export function useSavedGuides() {
     }
 
     setSavedGuides((prev) => prev.filter((g) => g.id !== id));
+    setCreatedAtById((prev) => {
+      const next = { ...prev };
+      delete next[id];
+      return next;
+    });
   };
 
   const getGuide = (id: string) => savedGuides.find((g) => g.id === id) || null;
@@ -82,6 +108,7 @@ export function useSavedGuides() {
 
   return {
     savedGuides,
+    createdAtById,
     isLoaded,
     saveGuide,
     deleteGuide,
