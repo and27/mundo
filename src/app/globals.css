@@ -437,7 +437,7 @@ body {
   }
 
   .mi-cta-primary:hover {
-    background-color: var(--color-action-700);
+    background-color: var(--color-action-500);
   }
 
   .mi-cta-secondary {
@@ -446,11 +446,7 @@ body {
   }
 
   .mi-cta-secondary:hover {
-    background-color: color-mix(
-      in srgb,
-      var(--color-action-500) 26%,
-      transparent
-    );
+    background-color: var(--color-primary-700);
   }
 
   .mi-section {
