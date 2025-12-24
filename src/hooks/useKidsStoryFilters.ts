@@ -1,7 +1,7 @@
-import { Guide } from "@/types/guides";
+import { GuideWithCharacter } from "@/types/ai";
 import { useMemo, useState } from "react";
 
-export function useKidsStoryFilters(stories: Guide[]) {
+export function useKidsStoryFilters(stories: GuideWithCharacter[]) {
   const [activeFilter, setActiveFilter] = useState<
     "todos" | "favoritos" | "nuevos"
   >("todos");

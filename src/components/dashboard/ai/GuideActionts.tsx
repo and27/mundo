@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ActionableGuide } from "@/types/ai";
+import { SavedGuide } from "@/types/ai";
 import { EmailModal } from "../../assistant/EmailModal";
 import { AccountPrompt } from "../../assistant/AccountPrompt";
 import SpecialistModal from "../../assistant/SpecialistModal";
@@ -17,7 +17,7 @@ import { RiskAlertBanner } from "@/components/assistant/RiskAlertBanner";
 import { useSavedGuides } from "@/hooks/useSavedGuides";
 
 interface GuideActionsProps {
-  guide: ActionableGuide | null;
+  guide: SavedGuide | null;
 }
 
 export default function GuideActions({ guide }: GuideActionsProps) {

@@ -49,9 +49,11 @@ export interface ActionableGuide {
   emotion: "miedo" | "ira";
 }
 
-export type GuideWithCharacter = ActionableGuide & {
+export type SavedGuide = ActionableGuide & {
   character: "yachay" | "amaru";
 };
+
+export type GuideWithCharacter = SavedGuide;
 
 export interface RiskAssessment {
   riskLevel: "normal" | "attention" | "professional_required";

@@ -1,13 +1,7 @@
 "use client";
 
-import StoryCard from "@/components/dashboard/StoryCard";
 import { KidsStoryTile } from "./KidsStoryTile";
-
-type Guide = {
-  id: string;
-  // agrega aquí los campos que StoryCard realmente usa (title, imageUrl, etc.)
-  // el tipo mínimo solo necesita id para favoritos/play
-};
+import { GuideWithCharacter } from "@/types/ai";
 
 export function KidsStoriesSection({
   stories,
@@ -16,8 +10,8 @@ export function KidsStoriesSection({
   onPlay,
   onToggleFavorite,
 }: {
-  stories: Guide[];
-  allStories: Guide[];
+  stories: GuideWithCharacter[];
+  allStories: GuideWithCharacter[];
   favorites: Set<string>;
   onPlay: (id: string) => void;
   onToggleFavorite: (id: string) => void;
@@ -35,10 +29,7 @@ export function KidsStoriesSection({
             <KidsStoryTile
               key={guide.id}
               guide={guide}
-              onPlay={() => play(guide.id)}
-              isCompleted={guide.progress?.completed}
-              currentStep={guide.progress?.current}
-              totalSteps={guide.progress?.total}
+              onPlay={() => onPlay(guide.id)}
             />
           ))}
         </div>
