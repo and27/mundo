@@ -24,10 +24,12 @@ const NavItem = ({
   item,
   isCollapsed,
   isActive,
+  onSelect,
 }: {
   item: (typeof dashboardSections)[0];
   isCollapsed: boolean;
   isActive: boolean;
+  onSelect?: () => void;
 }) => {
   if (item.disabled) {
     return (
@@ -53,6 +55,7 @@ const NavItem = ({
   return (
     <Link
       href={item.href}
+      onClick={onSelect}
       className={[
         "relative flex items-center p-3 rounded-lg transition-colors",
         isActive
@@ -107,15 +110,18 @@ const Sidebar: React.FC<SidebarProps> = ({
   return (
     <>
       <div
-        className={`fixed inset-0 z-40 md:hidden ${
-          isMobileOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        className={`fixed inset-0 z-40 md:hidden transition-opacity ${
+          isMobileOpen
+            ? "opacity-100 bg-black/50 backdrop-blur-[2px]"
+            : "opacity-0 pointer-events-none"
         }`}
         onClick={onCloseMobile}
+        aria-hidden="true"
       />
 
       <aside
         className={[
-          "bg-primary-900 md:bg-transparent fixed md:relative top-0 left-0 z-50 h-screen",
+          "bg-primary-900 md:bg-transparent fixed md:relative top-0 left-0 z-50 h-[100dvh]",
           "border-r border-white/10",
           "flex flex-col justify-between transition-transform duration-300",
           isMobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
@@ -141,7 +147,6 @@ const Sidebar: React.FC<SidebarProps> = ({
                   <h1 className="text-lg font-bold text-white">
                     Mundo Interior
                   </h1>
-                  <p className="text-sm text-white/50">Panel de Guía</p>
                 </div>
               </div>
             </div>
@@ -154,12 +159,13 @@ const Sidebar: React.FC<SidebarProps> = ({
                 item={item}
                 isCollapsed={isDesktopCollapsed}
                 isActive={currentPath === item.href}
+                onSelect={isMobileOpen ? onCloseMobile : undefined}
               />
             ))}
           </nav>
         </div>
 
-        <div className="pg-safe">
+        <div className="pb-safe">
           <div className="h-px bg-white/10" />
 
           <div className="">
