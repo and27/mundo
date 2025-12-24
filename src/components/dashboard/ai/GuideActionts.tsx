@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { ActionableGuide } from "@/types/ai";
-import { saveGuideToLocal, getSavedGuidesFromLocal } from "@/lib/storage";
 import { EmailModal } from "../../assistant/EmailModal";
 import { AccountPrompt } from "../../assistant/AccountPrompt";
 import SpecialistModal from "../../assistant/SpecialistModal";
@@ -15,13 +14,14 @@ import {
   Mail,
 } from "lucide-react";
 import { RiskAlertBanner } from "@/components/assistant/RiskAlertBanner";
+import { useSavedGuides } from "@/hooks/useSavedGuides";
 
 interface GuideActionsProps {
   guide: ActionableGuide | null;
 }
 
 export default function GuideActions({ guide }: GuideActionsProps) {
-  const user = "Andres";
+  const { savedGuides, saveGuide } = useSavedGuides();
   const [isSaved, setIsSaved] = useState(false);
   const [showAccountPrompt, setShowAccountPrompt] = useState(false);
   const [showEmailModal, setShowEmailModal] = useState(false);
@@ -31,11 +31,10 @@ export default function GuideActions({ guide }: GuideActionsProps) {
 
   useEffect(() => {
     if (!guide) return;
-    const savedGuides = getSavedGuidesFromLocal();
     const alreadySaved = savedGuides.some((g) => g.id === guide.id);
     setIsSaved(alreadySaved);
     setShowAccountPrompt(false);
-  }, [guide?.id, guide]);
+  }, [guide?.id, guide, savedGuides]);
 
   if (!guide) return null;
 
@@ -43,12 +42,11 @@ export default function GuideActions({ guide }: GuideActionsProps) {
     guide.riskAssessment && guide.riskAssessment.riskLevel !== "normal";
 
   const handleSave = async () => {
-    if (user) {
-      console.log("Guardando en DB para el usuario:", user);
+    try {
+      await saveGuide(guide);
       setIsSaved(true);
-    } else {
-      saveGuideToLocal(guide);
-      setIsSaved(true);
+    } catch (error) {
+      console.error("Error saving guide:", error);
       setShowAccountPrompt(true);
     }
   };
