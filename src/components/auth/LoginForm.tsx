@@ -4,6 +4,7 @@ import { useState, FormEvent, ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
 import Button from "../ui/Button";
 import { loginUser } from "@/services/authService";
+import { useAuthStore } from "@/store/useAuthStore";
 
 interface LoginData {
   email: string;
@@ -17,6 +18,7 @@ interface LoginErrors {
 
 const LoginForm: React.FC = () => {
   const router = useRouter();
+  const setUser = useAuthStore((state) => state.setUser);
   const [loginData, setLoginData] = useState<LoginData>({
     email: "",
     password: "",
@@ -61,6 +63,13 @@ const LoginForm: React.FC = () => {
       setApiFeedback({
         type: "success",
         message: result.message,
+      });
+      setUser({
+        id: result.userId,
+        email: result.email,
+        displayName: result.display_name,
+        role: result.role,
+        onboardingCompleted: result.onboarding_completed,
       });
       setIsSubmitting(false);
       router.push("/parentDashboard");

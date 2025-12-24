@@ -9,6 +9,7 @@ import { dashboardSections } from "@/lib/dashboardConfig";
 import { FaBars } from "react-icons/fa";
 import { logoutUser } from "@/services/authService";
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/store/useAuthStore";
 
 type SidebarProps = {
   userName?: string;
@@ -89,12 +90,14 @@ const Sidebar: React.FC<SidebarProps> = ({
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const router = useRouter();
+  const clearUser = useAuthStore((state) => state.clearUser);
   const userInitial = userName.charAt(0).toUpperCase();
 
   const handleLogout = async () => {
     try {
       setIsLoggingOut(true);
       await logoutUser();
+      clearUser();
       router.push("/");
     } finally {
       setIsLoggingOut(false);
