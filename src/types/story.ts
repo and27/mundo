@@ -1,3 +1,8 @@
+/**
+ * Tipos para runtime (reproducción/consumo en UI).
+ * Estos modelos deben estar completos y listos para usar.
+ */
+
 export interface JourneyStep {
   id: string;
   audioSrc: string;
@@ -8,7 +13,7 @@ export interface JourneyStep {
     backgroundImage?: string;
     foregroundImage?: string;
     breathingCueType?: "pulse_circle" | "expand_contract";
-    choices?: { id: string; icon: string; label: string }[];
+    choices?: { id: string; icon?: string | undefined; label: string }[];
     gameComponentId?: string;
   };
   interaction: {
@@ -27,10 +32,10 @@ export interface JourneyStep {
 export interface Story {
   id: string;
   title: string;
-  guideId: string;
   description: string;
-  coverImage?: string;
   category?: "breathing" | "emotions" | "focus" | "sleep";
+  guideId: string;
+  coverImage?: string;
   initialStepId: string;
   steps: JourneyStep[];
 }

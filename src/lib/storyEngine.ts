@@ -1,50 +1,12 @@
 import { buildImageFilename } from "@/utils/imageUtils";
 import { buildStoryPrompt } from "./buildStoryPrompt";
-import { StoryPromptOptions } from "@/types/promptGenerationTypes";
+import type {
+  PromptGeneratedStory,
+  StoryPromptOptions,
+} from "@/types/promptGenerationTypes";
 import { performance } from "node:perf_hooks";
 import OpenAI from "openai";
 
-export type StoryStep = {
-  id: string;
-  subtitle: string;
-  prompt_img: string;
-  audioSrc?: string;
-  isNarration?: boolean;
-
-  visuals?: {
-    type?: string;
-    backgroundImage?: string;
-    choices?: {
-      id: string;
-      label: string;
-      icon?: string;
-    }[];
-  };
-
-  interaction?: {
-    type: "auto_proceed" | "wait_for_tap";
-    nextStepId?: string;
-    defaultNextStepId?: string;
-    tappableTarget?: string;
-    branching?: {
-      choiceId: string;
-      nextStepId: string;
-    }[];
-  };
-};
-
-export type GeneratedStory = {
-  id: string;
-  title: string;
-  description: string;
-  category: string;
-  guideId: string;
-  initialStepId: string;
-  coverImage?: string;
-  steps: StoryStep[];
-};
-
-// Inicializar cliente OpenAI
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -62,7 +24,7 @@ async function timeAsync<T>(label: string, fn: () => Promise<T>): Promise<T> {
 export async function generateStory(
   emotion: string,
   character: string
-): Promise<GeneratedStory> {
+): Promise<PromptGeneratedStory> {
   const storyId = `story_${emotion}_${character}`
     .toLowerCase()
     .replace(/\s+/g, "_");
@@ -104,7 +66,7 @@ export async function generateStory(
   const story = await timeAsync("parse JSON contenido", async () => {
     const match = content.match(/\{[\s\S]*\}/);
     if (!match) throw new Error("No se pudo extraer JSON del modelo.");
-    return JSON.parse(match[0]) as GeneratedStory;
+    return JSON.parse(match[0]) as PromptGeneratedStory;
   });
 
   if (!story.steps || story.steps.length < 2) {
