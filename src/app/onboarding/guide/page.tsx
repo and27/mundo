@@ -2,8 +2,8 @@
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence, Transition } from "framer-motion";
 import GuideCard from "@/components/GuideCard";
-import { guides } from "@/lib/guides";
-import { Guide } from "@/types/guides";
+import { characters } from "@/lib/characters";
+import { Character } from "@/types/characters";
 import Button from "@/components/ui/Button";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { HiSparkles } from "react-icons/hi2";
@@ -31,10 +31,10 @@ const itemVariants = {
 };
 
 export default function Onboarding() {
-  const [selectedGuide, setSelectedGuide] = useState<Guide | null>(null);
+  const [selectedGuide, setSelectedGuide] = useState<Character | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSelectGuide = useCallback((guide: Guide) => {
+  const handleSelectGuide = useCallback((guide: Character) => {
     setSelectedGuide(guide);
     setIsLoading(false);
   }, []);

@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
-import { guides } from "@/lib/guides";
-import { Guide } from "@/types/guides";
+import { characters } from "@/lib/characters";
+import { Character } from "@/types/characters";
 import SelectableEmotionGrid from "@/components/SelectableEmotion";
 import Button from "@/components/ui/Button";
 import { emotionsAfterJourney_9_11 } from "@/lib/emotionsData";
@@ -24,7 +24,7 @@ const ErrorMessage = ({ message }: { message: string }) => (
 const EndPage = () => {
   const { id } = useParams();
   const router = useRouter();
-  const [guide, setGuide] = useState<Guide | null>(null);
+  const [guide, setGuide] = useState<Character | null>(null);
   const [selectedEmotionId, setSelectedEmotionId] = useState<string | null>(
     null
   );
@@ -36,7 +36,7 @@ const EndPage = () => {
     setIsLoading(true);
     setError(null);
     setTimeout(() => {
-      const foundGuide = guides.find((g) => g.id === id);
+      const foundGuide = characters.find((g) => g.id === id);
       if (foundGuide) {
         setGuide(foundGuide);
       } else {

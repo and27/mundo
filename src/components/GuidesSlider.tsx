@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { guides } from "@/lib/guides";
+import { guides } from "@/lib/characters";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 

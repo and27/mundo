@@ -1,4 +1,4 @@
-export type Guide = {
+export type Character = {
   id: string;
   name: string;
   subtitle: string;

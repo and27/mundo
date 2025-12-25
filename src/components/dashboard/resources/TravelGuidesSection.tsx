@@ -235,7 +235,7 @@ const TravelGuidesSection = () => {
       <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-6 shadow-sm border border-condor/10 min-h-96">
         {filteredAndSortedStories.length > 0 ? (
           <>
-            {/* Featured Guide - Mostrar el primero como destacado si hay búsqueda */}
+            {/* Featured Character - Mostrar el primero como destacado si hay búsqueda */}
             {searchTerm && filteredAndSortedStories.length > 0 && (
               <div className="mb-8">
                 <div className="flex items-center gap-2 mb-4">

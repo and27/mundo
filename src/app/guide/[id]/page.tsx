@@ -1,12 +1,11 @@
-// src/components/guides/InteractiveGuidePage.tsx
 "use client";
 
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { guides } from "@/lib/guides";
+import { characters } from "@/lib/characters";
 import Image from "next/image";
 import { FaStar } from "react-icons/fa";
-import { Guide } from "@/types/guides";
+import { Character } from "@/types/characters";
 
 const LoadingIndicator = () => (
   <div className="flex justify-center items-center min-h-screen">
@@ -97,7 +96,7 @@ type BreathingPhase = "idle" | "inhale" | "hold" | "exhale"; // Añadir 'pause' 
 const InteractiveGuidePage = () => {
   const { id } = useParams();
   const router = useRouter(); // Para navegar al final
-  const [guide, setGuide] = useState<Guide | null>(null);
+  const [guide, setGuide] = useState<Character | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -167,7 +166,7 @@ const InteractiveGuidePage = () => {
     setIsComplete(false);
 
     setTimeout(() => {
-      const foundGuide = guides.find((g) => g.id === id);
+      const foundGuide = characters.find((g) => g.id === id);
       if (foundGuide) {
         setGuide(foundGuide);
         // Iniciar automáticamente la respiración al cargar la guía

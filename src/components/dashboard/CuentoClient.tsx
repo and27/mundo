@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useJourneyPlayer } from "@/hooks/useJourneyPlayer";
 import { useOnboardingStore } from "@/store/useOnboardingStore";
 import { Story } from "@/types/story";
-import { Guide } from "@/lib/guides";
+import { Character } from "@/lib/characters";
 import SubtitleDisplay from "@/components/journey/SubtitleDisplay";
 import GuideVisualDisplay from "@/components/journey/GuideVisualDisplay";
 import JourneyIdleScreen from "@/components/journey/JourneyIdleScreen";
@@ -19,7 +19,7 @@ export default function CuentoClient({
   guide,
 }: {
   story: Story;
-  guide: Guide;
+  guide: Character;
 }) {
   const router = useRouter();
 
