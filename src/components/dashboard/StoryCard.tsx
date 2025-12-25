@@ -85,7 +85,7 @@ export default function StoryCard({
           <h3 className="text-base font-semibold text-neutral-800 line-clamp-1">
             {guide.guideTitle}
           </h3>
-          <p className="text-sm text-neutral-500">Con {guide.character}</p>
+          <p className="text-sm text-neutral-500">Con {guide.characterId}</p>
         </header>
 
         <p className="text-sm text-neutral-600 line-clamp-2">

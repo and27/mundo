@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { guides } from "@/lib/characters";
+import { characters } from "@/lib/characters";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
@@ -35,7 +35,7 @@ export default function GuideSliderStep() {
       });
 
       setCenteredIndex(closestIndex);
-      setSelectedGuide(guides[closestIndex].id);
+      setSelectedGuide(characters[closestIndex].id);
     };
 
     handleScroll(); // initial run
@@ -51,7 +51,7 @@ export default function GuideSliderStep() {
         ref={containerRef}
         className="overflow-x-scroll scroll-smooth flex gap-6 px-4 pb-4 snap-x snap-mandatory scrollbar-hide"
       >
-        {guides.map((g, i) => (
+        {characters.map((g, i) => (
           <div
             key={g.id}
             className={`snap-center shrink-0 w-52 transition-transform duration-300 ease-in-out cursor-pointer ${

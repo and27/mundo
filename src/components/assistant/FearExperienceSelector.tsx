@@ -37,7 +37,7 @@ const FearExperienceSelector: React.FC<FearExperienceSelectorProps> = ({
           },
           body: JSON.stringify({
             emotion: guide.emotion,
-            character: guide.character,
+            character: guide.characterId,
           }),
         });
 

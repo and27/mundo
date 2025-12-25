@@ -34,7 +34,7 @@ export const MetaphorContent: React.FC<PillarContentProps> = ({
         },
         body: JSON.stringify({
           emotion: guide.emotion,
-          character: guide.character,
+          character: guide.characterId,
         }),
       });
 

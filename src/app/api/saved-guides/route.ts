@@ -72,7 +72,10 @@ export async function POST(request: Request) {
     });
 
   if (uploadRes.error) {
-    return NextResponse.json({ error: uploadRes.error.message }, { status: 500 });
+    return NextResponse.json(
+      { error: uploadRes.error.message },
+      { status: 500 }
+    );
   }
 
   const { data: publicUrlData } = supabase.storage
@@ -97,8 +100,8 @@ export async function POST(request: Request) {
       .update({
         title: guide.guideTitle,
         emotion: guide.emotion,
-        character: guide.character,
-        guide_id: guide.character,
+        character: guide.characterId,
+        guide_id: guide.characterId,
         story_url: storyUrl,
       })
       .eq("id", existing.id);
@@ -112,9 +115,9 @@ export async function POST(request: Request) {
       story_id: guide.id,
       story_url: storyUrl,
       title: guide.guideTitle,
-      guide_id: guide.character,
+      guide_id: guide.characterId,
       emotion: guide.emotion,
-      character: guide.character,
+      character: guide.characterId,
     });
 
     if (insertError) {

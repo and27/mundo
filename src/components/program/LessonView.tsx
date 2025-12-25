@@ -1,30 +1,95 @@
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
-import { useState } from "react";
-import Image from "next/image";
-import StoryBlock from "@/components/program/StoryBlock";
-import { lessons } from "@/data/lessons";
-import ParentResources from "./ParentResources";
-import SelTechniqueBlock from "./SelTechniqueBlock";
-import InteractiveActivity from "./InteractiveActivity";
-import LessonJourneyPlayer from "./ProgramLessonJourney";
-import { rioEmocionesAmaruStory } from "@/lib/stories/definitions/rio-emociones-amaru.story";
+import { ReactNode, useMemo, useState } from "react";
 import TabNavigation from "@/components/ui/TabNavigation";
+import ParentResources from "@/components/program/ParentResources";
+import { program } from "@/data/program";
+import { guides } from "@/lib/guides";
 
-export default function LessonView() {
+type TabId = "resumen" | "experiencia" | "acompanamiento";
+
+type GuideDetails = {
+  guideTitle: string;
+  emotionId?: string;
+  tags?: string[];
+  understanding?: { title: string; content: string };
+  normalization?: string[];
+  metaphorStory?: string;
+  conversationPlan?: {
+    phrasesToValidate: string[];
+    questionsToExplore: string[];
+  };
+  strategies?: { title: string; items: string[] }[];
+  suggestedActivity?: {
+    title: string;
+    description: string;
+    materials: string;
+  };
+  reflectionPrompts?: string[];
+  resources?: string[];
+};
+
+function SectionCard({
+  title,
+  description,
+  children,
+}: {
+  title: string;
+  description?: string;
+  children?: ReactNode;
+}) {
+  return (
+    <div className="bg-neutral-50 border border-neutral-200 rounded-2xl p-4 space-y-2">
+      <div className="space-y-1">
+        <h3 className="text-sm font-semibold text-neutral-700">{title}</h3>
+        {description && (
+          <p className="text-xs text-neutral-500">{description}</p>
+        )}
+      </div>
+      {children && <div className="text-sm text-neutral-600">{children}</div>}
+    </div>
+  );
+}
+
+function PillList({ items }: { items: string[] }) {
+  return (
+    <div className="flex flex-wrap gap-2">
+      {items.map((item) => (
+        <span
+          key={item}
+          className="px-2.5 py-1 rounded-full text-xs font-medium bg-neutral-200/70 text-neutral-700"
+        >
+          {item}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function BulletList({ items }: { items: string[] }) {
+  return (
+    <ul className="list-disc list-inside text-sm text-neutral-600 space-y-1">
+      {items.map((item) => (
+        <li key={item}>{item}</li>
+      ))}
+    </ul>
+  );
+}
+
+export default function ProgramLessonView() {
   const params = useSearchParams();
   const router = useRouter();
 
-  const id = params.get("lesson");
-  const lesson = id && lessons[id] ? lessons[id] : null;
+  const lessonId = params.get("lesson");
+  const programLesson = program.lessons.find((l) => l.id === lessonId);
 
-  if (!lesson) {
+  if (!programLesson) {
     return (
       <section className="mi-section">
         <div className="max-w-3xl mx-auto px-4 text-center mi-stack-md">
           <p className="text-neutral-600 text-lg">
-            Esta lección no existe o no se pudo cargar.
+            Este módulo no existe o no se pudo cargar.
           </p>
           <button
             onClick={() => router.push("/parentDashboard?section=program")}
@@ -37,10 +102,13 @@ export default function LessonView() {
     );
   }
 
-  const story = rioEmocionesAmaruStory;
-  const [activeTab, setActiveTab] = useState<
-    "resumen" | "historia" | "técnica" | "actividad" | "recursos"
-  >("resumen");
+  const guide = guides[programLesson.guideId] as GuideDetails | undefined;
+  const [activeTab, setActiveTab] = useState<TabId>("resumen");
+
+  const emotionLabel = useMemo(() => {
+    if (!guide?.emotionId) return "—";
+    return guide.emotionId;
+  }, [guide?.emotionId]);
 
   return (
     <div className="max-w-5xl px-5 md:px-10 mi-stack-lg">
@@ -53,156 +121,131 @@ export default function LessonView() {
         >
           ← Volver al Programa
         </button>
+
         <span className="text-xs uppercase tracking-[0.2em] text-neutral-400">
-          Lección {lesson.id}
+          Módulo {programLesson.order}
         </span>
       </div>
 
-      <h1 className="text-2xl md:text-3xl font-bold text-neutral-800">
-        {lesson.title}
-      </h1>
-
-      <div className="max-h-[50vh] overflow-hidden bg-neutral-900 rounded-3xl p-4 md:p-6 shadow-xl">
-        <LessonJourneyPlayer story={story} guideId="yachay" />
+      <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm space-y-4">
+        <h1 className="text-2xl md:text-3xl font-bold text-neutral-800">
+          {programLesson.title}
+        </h1>
+        <p className="text-neutral-600">
+          {guide?.guideTitle || "Guía de acompañamiento emocional"}
+        </p>
+        {guide?.tags?.length ? <PillList items={guide.tags} /> : null}
       </div>
 
       <section className="bg-white border border-neutral-200 rounded-3xl p-6 shadow-sm">
         <TabNavigation
           tabs={[
             { id: "resumen", label: "Resumen" },
-            { id: "historia", label: "Historia" },
-            { id: "tecnica", label: "Técnica" },
-            { id: "actividad", label: "Actividad" },
-            { id: "recursos", label: "Recursos" },
+            { id: "experiencia", label: "Experiencia del niño" },
+            { id: "acompanamiento", label: "Acompañamiento adulto" },
           ]}
           activeTab={activeTab}
-          onTabChange={(tabId) =>
-            setActiveTab(
-              tabId as
-                | "resumen"
-                | "historia"
-                | "técnica"
-                | "actividad"
-                | "recursos"
-            )
-          }
+          onTabChange={(tabId) => setActiveTab(tabId as TabId)}
           className="border-neutral-200"
         />
 
-        <div className="mt-6">
+        <div className="mt-6 space-y-6">
           {activeTab === "resumen" && (
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-neutral-50 border border-neutral-200 rounded-2xl p-4 space-y-2">
-                <h3 className="text-sm font-semibold text-neutral-700">
-                  Historia principal
-                </h3>
-                {lesson.story.length > 0 ? (
-                  <p className="text-sm text-neutral-600 line-clamp-3">
-                    {lesson.story[0]}
-                  </p>
-                ) : (
-                  <p className="text-sm text-neutral-500">
-                    Contenido en preparaci¢n.
-                  </p>
-                )}
-              </div>
+              <SectionCard title="Enfoque emocional">
+                <span className="capitalize">{emotionLabel}</span>
+              </SectionCard>
 
-              <div className="bg-neutral-50 border border-neutral-200 rounded-2xl p-4 space-y-2">
-                <h3 className="text-sm font-semibold text-neutral-700">
-                  Práctica guiada
-                </h3>
-                {lesson.technique ? (
-                  <p className="text-sm text-neutral-600">
-                    {lesson.technique.title} · {lesson.technique.steps.length}{" "}
-                    pasos
-                  </p>
+              <SectionCard title="Práctica sugerida">
+                {guide?.suggestedActivity ? (
+                  guide.suggestedActivity.title
                 ) : (
-                  <p className="text-sm text-neutral-500">
-                    T‚cnica en desarrollo.
-                  </p>
+                  <span className="text-neutral-500">
+                    Práctica en preparación.
+                  </span>
                 )}
-              </div>
+              </SectionCard>
 
-              <div className="bg-neutral-50 border border-neutral-200 rounded-2xl p-4 space-y-2">
-                <h3 className="text-sm font-semibold text-neutral-700">
-                  Actividad interactiva
-                </h3>
-                {lesson.activity ? (
-                  <p className="text-sm text-neutral-600">
-                    {lesson.activity.question}
-                  </p>
-                ) : (
-                  <p className="text-sm text-neutral-500">
-                    Actividad en camino.
-                  </p>
-                )}
-              </div>
+              {guide?.understanding && (
+                <SectionCard title={guide.understanding.title}>
+                  {guide.understanding.content}
+                </SectionCard>
+              )}
 
-              <div className="bg-neutral-50 border border-neutral-200 rounded-2xl p-4 space-y-2">
-                <h3 className="text-sm font-semibold text-neutral-700">
-                  Recursos para padres
-                </h3>
-                {lesson.resources.length > 0 ? (
-                  <p className="text-sm text-neutral-600">
-                    {lesson.resources.length} recomendaciones clave.
-                  </p>
-                ) : (
-                  <p className="text-sm text-neutral-500">
-                    Recursos pr¢ximamente.
-                  </p>
-                )}
-              </div>
+              {guide?.normalization?.length ? (
+                <SectionCard title="Normalizar">
+                  <BulletList items={guide.normalization} />
+                </SectionCard>
+              ) : null}
             </div>
           )}
 
-          {activeTab === "historia" && (
-            <>
-              {lesson.story.length > 0 ? (
-                <StoryBlock story={lesson.story} />
-              ) : (
-                <div className="bg-neutral-50 border border-dashed border-neutral-300 rounded-2xl p-6 text-center">
-                  <p className="text-neutral-600">
-                    Esta emoci¢n estar  disponible pronto.
+          {activeTab === "experiencia" && (
+            <div className="grid md:grid-cols-2 gap-4">
+              <SectionCard title="Experiencia vivencial" description="Para el niño">
+                <p>
+                  El niño vive esta experiencia directamente a través del cuento
+                  interactivo.
+                </p>
+                <p className="mt-2 text-neutral-500">
+                  No es necesario explicar ni corregir durante el proceso.
+                </p>
+              </SectionCard>
+              <SectionCard title="Tiempo sugerido" description="Sesiones breves">
+                8-12 minutos en un espacio tranquilo.
+              </SectionCard>
+            </div>
+          )}
+
+          {activeTab === "acompanamiento" && guide && (
+            <div className="mi-stack-lg">
+              {guide.metaphorStory && (
+                <SectionCard title="Lectura simbólica">
+                  {guide.metaphorStory}
+                </SectionCard>
+              )}
+
+              {guide.conversationPlan?.phrasesToValidate?.length ? (
+                <SectionCard title="Lenguaje para acompañar">
+                  <BulletList items={guide.conversationPlan.phrasesToValidate} />
+                </SectionCard>
+              ) : null}
+
+              {guide.conversationPlan?.questionsToExplore?.length ? (
+                <SectionCard title="Preguntas para explorar">
+                  <BulletList items={guide.conversationPlan.questionsToExplore} />
+                </SectionCard>
+              ) : null}
+
+              {guide.strategies?.length ? (
+                <div className="grid md:grid-cols-2 gap-4">
+                  {guide.strategies.map((strategy) => (
+                    <SectionCard key={strategy.title} title={strategy.title}>
+                      <BulletList items={strategy.items} />
+                    </SectionCard>
+                  ))}
+                </div>
+              ) : null}
+
+              {guide.suggestedActivity && (
+                <SectionCard title={guide.suggestedActivity.title}>
+                  <p>{guide.suggestedActivity.description}</p>
+                  <p className="mt-2 text-xs text-neutral-500">
+                    Materiales: {guide.suggestedActivity.materials}
                   </p>
-                </div>
+                </SectionCard>
               )}
-            </>
-          )}
 
-          {activeTab === "técnica" && (
-            <>
-              {lesson.technique ? (
-                <SelTechniqueBlock technique={lesson.technique} />
-              ) : (
-                <div className="bg-neutral-50 border border-dashed border-neutral-300 rounded-2xl p-6 text-center">
-                  <p className="text-neutral-600">T‚cnica en preparaci¢n.</p>
-                </div>
-              )}
-            </>
-          )}
+              {guide.reflectionPrompts?.length ? (
+                <SectionCard title="Reflexión adulta">
+                  <BulletList items={guide.reflectionPrompts} />
+                </SectionCard>
+              ) : null}
 
-          {activeTab === "actividad" && (
-            <>
-              {lesson.activity ? (
-                <InteractiveActivity activity={lesson.activity} />
-              ) : (
-                <div className="bg-neutral-50 border border-dashed border-neutral-300 rounded-2xl p-6 text-center">
-                  <p className="text-neutral-600">Actividad en camino.</p>
-                </div>
-              )}
-            </>
-          )}
-
-          {activeTab === "recursos" && (
-            <>
-              {lesson.resources.length > 0 ? (
-                <ParentResources resources={lesson.resources} />
-              ) : (
-                <div className="bg-neutral-50 border border-dashed border-neutral-300 rounded-2xl p-6 text-center">
-                  <p className="text-neutral-600">Recursos pr¢ximamente.</p>
-                </div>
-              )}
-            </>
+              {guide.resources?.length ? (
+                <ParentResources resources={guide.resources} />
+              ) : null}
+            </div>
           )}
         </div>
       </section>

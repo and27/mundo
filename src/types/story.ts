@@ -1,6 +1,10 @@
 /**
- * Tipos para runtime (reproducción/consumo en UI).
- * Estos modelos deben estar completos y listos para usar.
+ * MODELOS DE RUNTIME — EXPERIENCIA NIÑO
+ *
+ * Representan historias listas para ser reproducidas
+ * por el Story Player (audio + visual + interacción).
+ *
+ *  No contienen guías adultas ni lógica de generación IA.
  */
 
 export interface JourneyStep {
@@ -39,3 +43,5 @@ export interface Story {
   initialStepId: string;
   steps: JourneyStep[];
 }
+
+export type ChildStory = Story;
