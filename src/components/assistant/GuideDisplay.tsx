@@ -60,17 +60,8 @@ export default function GuideDisplay({ guide }: GuideDisplayProps) {
     },
     {
       icon: <MessageCircle className="w-5 h-5" />,
-      title: "La Conversación",
-      subtitle: "Preguntas y frases para facilitar el diálogo",
-      gradientFrom: "from-blue-500",
-      gradientTo: "to-cyan-600",
-      bgAccent: "bg-blue-50",
-      borderAccent: "border-purple-200",
-    },
-    {
-      icon: <Sparkles className="w-5 h-5" />,
-      title: "La Actividad",
-      subtitle: "Una experiencia práctica para fortalecer el aprendizaje",
+      title: "Acompañamiento",
+      subtitle: "Guia para padres: conversacion y actividad",
       gradientFrom: "from-green-500",
       gradientTo: "to-emerald-600",
       bgAccent: "bg-green-50",
@@ -89,9 +80,12 @@ export default function GuideDisplay({ guide }: GuideDisplayProps) {
           />
         );
       case 1:
-        return <ConversationContent guide={guide} />;
-      case 2:
-        return <ActivityContent guide={guide} />;
+        return (
+          <>
+            <ConversationContent guide={guide} />
+            <ActivityContent guide={guide} />
+          </>
+        );
       default:
         return null;
     }
