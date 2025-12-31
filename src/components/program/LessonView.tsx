@@ -2,12 +2,12 @@
 
 import { useSearchParams, useRouter } from "next/navigation";
 import { ReactNode, useMemo, useState } from "react";
-import TabNavigation from "@/components/ui/TabNavigation";
+import ChipTabs from "@/components/ui/ChipTabs";
 import ParentResources from "@/components/program/ParentResources";
 import { program } from "@/data/program";
 import { guides } from "@/lib/guides";
 
-type TabId = "resumen" | "experiencia" | "acompanamiento";
+type TabId = "cuento" | "Acompañamiento";
 
 type GuideDetails = {
   guideTitle: string;
@@ -103,7 +103,7 @@ export default function ProgramLessonView() {
   }
 
   const guide = guides[programLesson.guideId] as GuideDetails | undefined;
-  const [activeTab, setActiveTab] = useState<TabId>("resumen");
+  const [activeTab, setActiveTab] = useState<TabId>("cuento");
 
   const emotionLabel = useMemo(() => {
     if (!guide?.emotionId) return "—";
@@ -132,25 +132,24 @@ export default function ProgramLessonView() {
           {programLesson.title}
         </h1>
         <p className="text-neutral-600">
-          {guide?.guideTitle || "Guía de acompañamiento emocional"}
+          {guide?.guideTitle || "Guía de Acompanamiento emocional"}
         </p>
         {guide?.tags?.length ? <PillList items={guide.tags} /> : null}
       </div>
 
       <section className="bg-white border border-neutral-200 rounded-3xl p-6 shadow-sm">
-        <TabNavigation
+        <ChipTabs
           tabs={[
-            { id: "resumen", label: "Resumen" },
-            { id: "experiencia", label: "Experiencia del niño" },
-            { id: "acompanamiento", label: "Acompañamiento adulto" },
+            { id: "cuento", label: "Cuento" },
+            { id: "Acompañamiento", label: "Acompañamiento" },
           ]}
           activeTab={activeTab}
           onTabChange={(tabId) => setActiveTab(tabId as TabId)}
-          className="border-neutral-200"
+          className="mb-6"
         />
 
         <div className="mt-6 space-y-6">
-          {activeTab === "resumen" && (
+          {activeTab === "cuento" && (
             <div className="grid md:grid-cols-2 gap-4">
               <SectionCard title="Enfoque emocional">
                 <span className="capitalize">{emotionLabel}</span>
@@ -180,9 +179,12 @@ export default function ProgramLessonView() {
             </div>
           )}
 
-          {activeTab === "experiencia" && (
+          {activeTab === "cuento" && (
             <div className="grid md:grid-cols-2 gap-4">
-              <SectionCard title="Experiencia vivencial" description="Para el niño">
+              <SectionCard
+                title="Experiencia vivencial"
+                description="Para el niño"
+              >
                 <p>
                   El niño vive esta experiencia directamente a través del cuento
                   interactivo.
@@ -191,13 +193,16 @@ export default function ProgramLessonView() {
                   No es necesario explicar ni corregir durante el proceso.
                 </p>
               </SectionCard>
-              <SectionCard title="Tiempo sugerido" description="Sesiones breves">
+              <SectionCard
+                title="Tiempo sugerido"
+                description="Sesiones breves"
+              >
                 8-12 minutos en un espacio tranquilo.
               </SectionCard>
             </div>
           )}
 
-          {activeTab === "acompanamiento" && guide && (
+          {activeTab === "Acompañamiento" && guide && (
             <div className="mi-stack-lg">
               {guide.metaphorStory && (
                 <SectionCard title="Lectura simbólica">
@@ -207,13 +212,17 @@ export default function ProgramLessonView() {
 
               {guide.conversationPlan?.phrasesToValidate?.length ? (
                 <SectionCard title="Lenguaje para acompañar">
-                  <BulletList items={guide.conversationPlan.phrasesToValidate} />
+                  <BulletList
+                    items={guide.conversationPlan.phrasesToValidate}
+                  />
                 </SectionCard>
               ) : null}
 
               {guide.conversationPlan?.questionsToExplore?.length ? (
                 <SectionCard title="Preguntas para explorar">
-                  <BulletList items={guide.conversationPlan.questionsToExplore} />
+                  <BulletList
+                    items={guide.conversationPlan.questionsToExplore}
+                  />
                 </SectionCard>
               ) : null}
 
@@ -252,3 +261,4 @@ export default function ProgramLessonView() {
     </div>
   );
 }
+

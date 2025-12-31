@@ -11,6 +11,7 @@ import {
   MetaphorContent,
 } from "./MethaphorContent";
 import { useState } from "react";
+import ChipTabs from "../ui/ChipTabs";
 
 interface GuideDisplayProps {
   guide: GuideWithCharacter | null;
@@ -119,31 +120,14 @@ export default function GuideDisplay({ guide }: GuideDisplayProps) {
       )}
       <GuideHeader guide={guide} rating={rating} onRate={handleRatingChange} />
 
-      {/* --- Tabs Header --- */}
-      <div className="flex justify-center">
-        <div className="relative flex w-full md:w-auto justify-between md:gap-2 rounded-2xl bg-slate-100 p-1 text-center">
-          <div
-            className="pointer-events-none absolute inset-1 w-1/2 rounded-xl mi-card shadow-sm transition-transform duration-300 ease-out"
-            style={{
-              transform:
-                activePillar === 0 ? "translateX(0%)" : "translateX(100%)",
-            }}
-          />
-          {pillars.map((pillar, index) => (
-            <button
-              key={index}
-              onClick={() => handlePillarChange(index)}
-              className={`w-xs xl:w-sm text-xs md:text-sm relative z-10 flex-1 md:flex-none rounded-xl px-4 py-2 text-sm font-semibold transition-all duration-300 ${
-                activePillar === index
-                  ? "text-white"
-                  : "text-slate-500 hover:text-primary-700"
-              }`}
-            >
-              {pillar.title}
-            </button>
-          ))}
-        </div>
-      </div>
+      <ChipTabs
+        tabs={pillars.map((pillar, index) => ({
+          id: String(index),
+          label: pillar.title,
+        }))}
+        activeTab={String(activePillar)}
+        onTabChange={(tabId) => handlePillarChange(Number(tabId))}
+      />
 
       {/* --- Active Pillar Card --- */}
       <div className="transition-all duration-500 ease-in-out">

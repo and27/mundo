@@ -26,7 +26,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { fichas } from "@/lib/fichas";
 import { useRotatingTips } from "@/hooks/useRotationTips";
 import { tabs } from "@/lib/fichaTabs";
-import TabNavigation from "@/components/ui/TabNavigation";
+import UnderlineTabs from "@/components/ui/UnderlineTabs";
 import ShareModal from "@/components/ui/ShareModal";
 
 const FichaTutorPage: React.FC = () => {
@@ -169,7 +169,7 @@ const FichaTutorPage: React.FC = () => {
             )}
           </div>
 
-          <TabNavigation
+          <UnderlineTabs
             tabs={tabs}
             activeTab={activeTab}
             onTabChange={setActiveTab}

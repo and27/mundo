@@ -7,14 +7,14 @@ interface TabOption {
   label: string;
 }
 
-interface TabNavigationProps {
+interface UnderlineTabsProps {
   tabs: TabOption[];
   activeTab: string;
   onTabChange: (tabId: string) => void;
   className?: string;
 }
 
-const TabNavigation: React.FC<TabNavigationProps> = ({
+const UnderlineTabs: React.FC<UnderlineTabsProps> = ({
   tabs,
   activeTab,
   onTabChange,
@@ -42,4 +42,4 @@ const TabNavigation: React.FC<TabNavigationProps> = ({
   );
 };
 
-export default TabNavigation;
+export default UnderlineTabs;
