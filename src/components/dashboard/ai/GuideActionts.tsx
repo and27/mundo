@@ -38,6 +38,11 @@ export default function GuideActions({ guide }: GuideActionsProps) {
 
   if (!guide) return null;
 
+  const iconSizeClass = "w-3 h-3 md:w-4 md:h-4";
+  const actionButtonBase =
+    "mi-accent-gradient group w-8 h-8 md:w-10 md:h-10 rounded-md transition-all duration-300 flex items-center justify-center";
+  const actionButtonInteractive = "backdrop-blur-sm shadow-sm hover:scale-110";
+
   const shouldShowRiskAlert =
     guide.riskAssessment && guide.riskAssessment.riskLevel !== "normal";
 
@@ -109,36 +114,34 @@ export default function GuideActions({ guide }: GuideActionsProps) {
       )}
 
       <div className="text-center">
-        <div className="flex justify-center items-center gap-4 flex-wrap">
+        <div className="flex justify-center items-center gap-3 flex-wrap">
           <button
             onClick={() => setShowEmailModal(true)}
-            className="mi-accent-gradient group w-10 h-10 backdrop-blur-sm shadow-sm rounded-md hover:scale-110 transition-all duration-300 flex items-center justify-center"
+            className={`${actionButtonBase} ${actionButtonInteractive}`}
             title="Enviar por email"
           >
-            <Mail className="w-4 h-4 text-white" />
+            <Mail className={`${iconSizeClass} text-white`} />
           </button>
 
           <button
             onClick={handleShare}
             disabled={isSharing}
-            className="mi-accent-gradient group w-10 h-10 backdrop-blur-sm shadow-sm rounded-md hover:scale-110 transition-all duration-300 flex items-center justify-center disabled:opacity-50"
+            className={`${actionButtonBase} ${actionButtonInteractive} disabled:opacity-50`}
             title="Compartir"
           >
             {isSharing ? (
-              <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-md animate-spin text-white" />
+              <div
+                className={`${iconSizeClass} border-2 border-current border-t-transparent rounded-md animate-spin text-white`}
+              />
             ) : (
-              <Share2 className="w-4 h-4 text-white" />
+              <Share2 className={`${iconSizeClass} text-white`} />
             )}
           </button>
 
           <button
             onClick={handleSave}
             disabled={isSaved}
-            className={`mi-accent-gradient group w-10 h-10 rounded-md transition-all duration-300 flex items-center justify-center ${
-              isSaved
-                ? "bg-green-100 cursor-default"
-                : "backdrop-blur-sm shadow-sm hover:scale-110"
-            }`}
+            className={`${actionButtonBase} ${actionButtonInteractive} disabled:opacity-50`}
             title={isSaved ? "Guardado" : "Guardar guía"}
           >
             {isSaved ? (
@@ -150,7 +153,7 @@ export default function GuideActions({ guide }: GuideActionsProps) {
 
           <button
             onClick={handleDownload}
-            className="mi-accent-gradient group w-10 h-10 backdrop-blur-sm shadow-sm rounded-md hover:scale-110 transition-all duration-300 flex items-center justify-center"
+            className={`${actionButtonBase} ${actionButtonInteractive} disabled:opacity-50`}
             title="Descargar PDF"
           >
             <Download className="w-4 h-4 text-white" />

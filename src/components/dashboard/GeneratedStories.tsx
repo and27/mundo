@@ -43,7 +43,7 @@ export default function GeneratedStories() {
               Biblioteca
             </button>
             <ChevronRight className="w-4 h-4 text-neutral-400" />
-            <span className="text-neutral-800 font-medium">
+            <span className="text-neutral-800 font-medium line-clamp-1">
               {currentGuide.guideTitle}
             </span>
           </nav>

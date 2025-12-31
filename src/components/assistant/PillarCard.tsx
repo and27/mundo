@@ -22,14 +22,14 @@ const PillarCard: React.FC<PillarCardProps> = ({
   return (
     <div className="group">
       <div
-        className={`bg-white border border-neutral-200 rounded-3xl p-6 shadow-sm" transition-all duration-300 cursor-pointer ${
+        className={`bg-white overflow-hidden border border-neutral-200 rounded-3xl shadow-sm" transition-all duration-300 cursor-pointer ${
           isActive
             ? `shadow-xl scale-[1.01]`
             : "hover:border-primary-200 hover:shadow-lg"
         }`}
         onClick={onClick}
       >
-        <div className={`p-4 md:p-8`}>
+        <div className={`mi-accent-soft mb-4 p-3 md:p-5`}>
           <div className="flex items-center gap-4">
             <div
               className={`w-10 h-10 border border-primary-300 rounded-xl flex items-center justify-center shadow-sm`}
@@ -46,7 +46,7 @@ const PillarCard: React.FC<PillarCardProps> = ({
         </div>
 
         {isActive && (
-          <div className="p-6 pt-0 duration-300">
+          <div className="md:p-3 pt-0 duration-300">
             <div className="pt-2">{children}</div>
           </div>
         )}

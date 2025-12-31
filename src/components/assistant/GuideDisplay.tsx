@@ -84,7 +84,7 @@ export default function GuideDisplay({ guide }: GuideDisplayProps) {
   };
 
   return (
-    <div className="max-w-4xl mi-stack-lg">
+    <div className="max-w-4xl mi-stack-md">
       {loading && (
         <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50 flex items-center justify-center">
           <div className="bg-white/95 backdrop-blur-[20px] border border-white/20 rounded-3xl p-8 shadow-2xl max-w-sm mx-4">
