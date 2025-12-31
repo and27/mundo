@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Play, Heart, Clock, Trash2 } from "lucide-react";
+import { Heart, Clock, Trash2 } from "lucide-react";
 import { GuideWithCharacter } from "@/types/ai";
 
 interface StoryCardProps {
@@ -106,8 +106,7 @@ export default function StoryCard({
                 : "bg-violet-100 text-violet-700 hover:bg-violet-200"
             }`}
           >
-            <Play size={16} />
-            Escuchar cuento
+            Ver cuento
           </button>
 
           <span className="text-xs text-neutral-500 flex items-center gap-1">

@@ -112,48 +112,48 @@ export default function GuideActions({ guide }: GuideActionsProps) {
         <div className="flex justify-center items-center gap-4 flex-wrap">
           <button
             onClick={() => setShowEmailModal(true)}
-            className="group w-10 h-10 backdrop-blur-sm shadow-sm border border-indigo-500 rounded-lg hover:scale-110 transition-all duration-300 flex items-center justify-center"
+            className="mi-accent-gradient group w-10 h-10 backdrop-blur-sm shadow-sm rounded-md hover:scale-110 transition-all duration-300 flex items-center justify-center"
             title="Enviar por email"
           >
-            <Mail className="w-5 h-5 text-indigo-500" />
+            <Mail className="w-4 h-4 text-white" />
           </button>
 
           <button
             onClick={handleShare}
             disabled={isSharing}
-            className="group w-10 h-10 backdrop-blur-sm shadow-sm border border-indigo-500 rounded-lg hover:scale-110 transition-all duration-300 flex items-center justify-center disabled:opacity-50"
+            className="mi-accent-gradient group w-10 h-10 backdrop-blur-sm shadow-sm rounded-md hover:scale-110 transition-all duration-300 flex items-center justify-center disabled:opacity-50"
             title="Compartir"
           >
             {isSharing ? (
-              <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-lg animate-spin text-indigo-500" />
+              <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-md animate-spin text-white" />
             ) : (
-              <Share2 className="w-5 h-5 text-indigo-500" />
+              <Share2 className="w-4 h-4 text-white" />
             )}
           </button>
 
           <button
             onClick={handleSave}
             disabled={isSaved}
-            className={`group w-10 h-10 rounded-lg transition-all duration-300 flex items-center justify-center ${
+            className={`mi-accent-gradient group w-10 h-10 rounded-md transition-all duration-300 flex items-center justify-center ${
               isSaved
-                ? "bg-green-100 border border-green-300 cursor-default"
-                : "backdrop-blur-sm shadow-sm border border-indigo-500 hover:scale-110"
+                ? "bg-green-100 cursor-default"
+                : "backdrop-blur-sm shadow-sm hover:scale-110"
             }`}
             title={isSaved ? "Guardado" : "Guardar guía"}
           >
             {isSaved ? (
-              <CheckCircle2 className="w-5 h-5 text-green-600" />
+              <CheckCircle2 className="w-4 h-4 text-green-300" />
             ) : (
-              <Bookmark className="w-5 h-5 text-indigo-500" />
+              <Bookmark className="w-4 h-4 text-white" />
             )}
           </button>
 
           <button
             onClick={handleDownload}
-            className="group w-10 h-10 backdrop-blur-sm shadow-sm border border-indigo-500 rounded-lg hover:scale-110 transition-all duration-300 flex items-center justify-center"
+            className="mi-accent-gradient group w-10 h-10 backdrop-blur-sm shadow-sm rounded-md hover:scale-110 transition-all duration-300 flex items-center justify-center"
             title="Descargar PDF"
           >
-            <Download className="w-5 h-5 text-indigo-500" />
+            <Download className="w-4 h-4 text-white" />
           </button>
         </div>
       </div>

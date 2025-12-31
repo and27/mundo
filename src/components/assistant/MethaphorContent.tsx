@@ -8,8 +8,10 @@ import {
   Users,
   Info,
   Sparkles,
+  Play,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Button from "../ui/Button";
 
 interface PillarContentProps {
   guide: GuideWithCharacter;
@@ -60,25 +62,20 @@ export const MetaphorContent: React.FC<PillarContentProps> = ({
   };
   return (
     <div className="space-y-4">
-      <div className="flex items-start gap-3">
-        <p className="text-slate-700 leading-relaxed flex-1">
-          {guide.metaphorStory ?? "Contenido no disponible."}
-        </p>
-      </div>
-
-      <div className="pt-4 border-t border-slate-200">
-        <button
+      <div className="">
+        <Button
           onClick={handleStartExperience}
           disabled={loading}
-          className={`w-full px-4 py-3 rounded-xl transition-all duration-200 shadow-lg flex items-center justify-center gap-2 font-medium ${
-            loading
-              ? "bg-slate-300 text-slate-500 cursor-not-allowed"
-              : "bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white"
-          }`}
+          className="flex items-center gap-5"
         >
-          <Sparkles className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
-          {loading ? "Generando..." : "Explorar Versión Completa"}
-        </button>
+          <Play size="16" />
+          {loading ? "Generando..." : "Escuchar cuento"}
+        </Button>
+      </div>
+      <div className="flex items-start gap-3 border border-primary-200 p-5">
+        <p className="text-sm md:text-md text-neutral-700 leading-relaxed flex-1">
+          {guide.metaphorStory ?? "Contenido no disponible."}
+        </p>
       </div>
     </div>
   );
@@ -91,10 +88,10 @@ export const ConversationContent: React.FC<PillarContentProps> = ({
   return (
     <div className="space-y-6">
       {guide.conversationPlan?.questionsToExplore?.length > 0 && (
-        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+        <div className="border border-primary-200 rounded-xl p-4">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
-              <Target className="w-3 h-3 text-blue-600" />
+            <div className="w-6 h-6 bg-primary-100 rounded-full flex items-center justify-center">
+              <Target className="w-3 h-3 text-primary-400" />
             </div>
             <h4 className="font-semibold text-slate-800">
               Preguntas para Explorar
@@ -103,7 +100,7 @@ export const ConversationContent: React.FC<PillarContentProps> = ({
           <div className="space-y-2">
             {guide.conversationPlan.questionsToExplore.map((q, i) => (
               <div key={i} className="flex items-start gap-2">
-                <CheckCircle className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                <CheckCircle className="w-4 h-4 text-primary-500 mt-0.5 flex-shrink-0" />
                 <p className="text-sm text-slate-700">{q}</p>
               </div>
             ))}
@@ -112,10 +109,10 @@ export const ConversationContent: React.FC<PillarContentProps> = ({
       )}
 
       {guide.conversationPlan?.phrasesToValidate?.length > 0 && (
-        <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-4">
+        <div className="border border-primary-200 rounded-xl p-4">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-6 h-6 bg-indigo-100 rounded-full flex items-center justify-center">
-              <Heart className="w-3 h-3 text-indigo-600" />
+            <div className="w-6 h-6 bg-primary-100 rounded-full flex items-center justify-center">
+              <Heart className="w-3 h-3 text-primary-600" />
             </div>
             <h4 className="font-semibold text-slate-800">
               Frases para Validar
@@ -125,7 +122,7 @@ export const ConversationContent: React.FC<PillarContentProps> = ({
             {guide.conversationPlan.phrasesToValidate.map((p, i) => (
               <div
                 key={i}
-                className="bg-white/70 rounded-lg p-3 border border-indigo-100"
+                className="bg-white/70 rounded-lg p-3 border border-primary-200"
               >
                 <p className="text-sm text-slate-700 italic">{`"${p}"`}</p>
               </div>
@@ -140,20 +137,20 @@ export const ConversationContent: React.FC<PillarContentProps> = ({
 // ACTIVITY CONTENT
 export const ActivityContent: React.FC<PillarContentProps> = ({ guide }) => {
   return (
-    <div className="space-y-4">
-      <div className="bg-green-50 border border-green-200 rounded-xl p-4">
+    <div className="mt-5 space-y-4">
+      <div className="border border-primary-200 rounded-xl p-4">
         <h4 className="font-semibold text-slate-800 mb-2 flex items-center gap-2">
-          <Star className="w-4 h-4 text-green-600" />
+          <Star className="w-4 h-4" />
           {guide.suggestedActivity?.title ?? "Actividad Sugerida"}
         </h4>
         <p className="text-slate-700 mb-4 leading-relaxed">
           {guide.suggestedActivity?.description ?? ""}
         </p>
 
-        <div className="bg-white/70 rounded-lg p-3 border border-green-100">
+        <div className="bg-white/70 rounded-lg p-3 border border-primary-200">
           <p className="text-sm">
             <span className="font-semibold text-slate-800 flex items-center gap-2 mb-2">
-              <Users className="w-4 h-4 text-green-600" />
+              <Users className="w-4 h-4" />
               Materiales necesarios:
             </span>
             <span className="text-slate-700">

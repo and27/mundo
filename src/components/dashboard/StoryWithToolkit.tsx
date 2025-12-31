@@ -8,6 +8,7 @@ import {
   Share2,
   Bookmark,
   Download,
+  Play,
 } from "lucide-react";
 
 interface StoryData {
@@ -238,7 +239,7 @@ const StoryWithToolkit: React.FC<StoryWithToolkitProps> = ({ story }) => {
     <div className="max-w-4xl mx-auto space-y-6">
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-sm text-gray-600">
-        <span className="cursor-pointer hover:text-indigo-600">{`← Guías`}</span>
+        <span className="cursor-pointer hover:text-indigo-600">{`← Biblioteca`}</span>
         <span>›</span>
         <span className="text-gray-900">
           {story?.title || `El Cuento Generado`}
@@ -337,7 +338,8 @@ const StoryWithToolkit: React.FC<StoryWithToolkitProps> = ({ story }) => {
               onClick={handleStartTogether}
               className="w-full mt-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-medium py-3 rounded-lg hover:opacity-90 transition-opacity"
             >
-              {`✨ Explorar Versión Completa`}
+              <Play size={16} />
+              Escuchar cuento
             </button>
           </div>
         </div>

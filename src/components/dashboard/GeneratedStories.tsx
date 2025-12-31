@@ -32,7 +32,7 @@ export default function GeneratedStories() {
     }
 
     return (
-      <div className="max-w-5xl md:px-20 mi-stack-md">
+      <div className="max-w-5xl px-4 md:px-20 mi-stack-md">
         <div className="mi-section-header flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <nav className="flex items-center gap-2 text-sm text-neutral-500">
             <button
@@ -40,7 +40,7 @@ export default function GeneratedStories() {
               className="flex items-center gap-1 hover:text-neutral-800 transition"
             >
               <ArrowLeft className="w-4 h-4" />
-              Guías
+              Biblioteca
             </button>
             <ChevronRight className="w-4 h-4 text-neutral-400" />
             <span className="text-neutral-800 font-medium">

@@ -53,19 +53,11 @@ export default function GuideDisplay({ guide }: GuideDisplayProps) {
       icon: <BookOpen className="w-5 h-5" />,
       title: "El cuento",
       subtitle: "Una historia que conecta con su mundo interior",
-      gradientFrom: "from-purple-500",
-      gradientTo: "to-indigo-600",
-      bgAccent: "bg-purple-50",
-      borderAccent: "border-blue-200",
     },
     {
       icon: <MessageCircle className="w-5 h-5" />,
       title: "Acompañamiento",
       subtitle: "Guia para padres: conversacion y actividad",
-      gradientFrom: "from-green-500",
-      gradientTo: "to-emerald-600",
-      bgAccent: "bg-green-50",
-      borderAccent: "border-green-200",
     },
   ];
 
@@ -98,10 +90,10 @@ export default function GuideDisplay({ guide }: GuideDisplayProps) {
           <div className="bg-white/95 backdrop-blur-[20px] border border-white/20 rounded-3xl p-8 shadow-2xl max-w-sm mx-4">
             <div className="flex items-center justify-center gap-4 mb-6">
               <div className="relative">
-                <div className="w-16 h-16 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center">
+                <div className="w-16 h-16 rounded-2xl flex items-center justify-center">
                   <Sparkles className="w-8 h-8 text-white" />
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl animate-ping opacity-20"></div>
+                <div className="absolute inset-0 rounded-2xl animate-ping opacity-20"></div>
               </div>
             </div>
 
@@ -128,22 +120,26 @@ export default function GuideDisplay({ guide }: GuideDisplayProps) {
       <GuideHeader guide={guide} rating={rating} onRate={handleRatingChange} />
 
       {/* --- Tabs Header --- */}
-      <div className="flex justify-center border-b border-slate-200">
-        <div className="flex w-full md:w-auto justify-between md:gap-8 text-center">
+      <div className="flex justify-center">
+        <div className="relative flex w-full md:w-auto justify-between md:gap-2 rounded-2xl bg-slate-100 p-1 text-center">
+          <div
+            className="pointer-events-none absolute inset-1 w-1/2 rounded-xl mi-card shadow-sm transition-transform duration-300 ease-out"
+            style={{
+              transform:
+                activePillar === 0 ? "translateX(0%)" : "translateX(100%)",
+            }}
+          />
           {pillars.map((pillar, index) => (
             <button
               key={index}
               onClick={() => handlePillarChange(index)}
-              className={`flex-1 md:flex-none relative py-3 text-lg font-medium transition-all duration-300 ${
+              className={`w-xs xl:w-sm text-xs md:text-sm relative z-10 flex-1 md:flex-none rounded-xl px-4 py-2 text-sm font-semibold transition-all duration-300 ${
                 activePillar === index
-                  ? "text-indigo-600"
-                  : "text-slate-500 hover:text-indigo-400"
+                  ? "text-white"
+                  : "text-slate-500 hover:text-primary-700"
               }`}
             >
               {pillar.title}
-              {activePillar === index && (
-                <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full transition-all duration-300" />
-              )}
             </button>
           ))}
         </div>
