@@ -2,9 +2,9 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "El Bosque Interior",
-    short_name: "Bosque Interior",
-    description: "Meditaciones con guias sagrados para ninos y ninas.",
+    name: "Mundo Interior",
+    short_name: "Mundo",
+    description: "Meditaciones con guias sagrados para niños y niñas.",
     start_url: "/",
     display: "standalone",
     background_color: "#ffffff",
