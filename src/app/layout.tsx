@@ -20,7 +20,9 @@ const quicksand = Quicksand({
 
 export const metadata: Metadata = {
   title: "El Bosque Interior",
-  description: "Meditaciones con guías sagrados para niños y niñas.",
+  description: "Meditaciones con guias sagrados para ninos y ninas.",
+  manifest: "/manifest.webmanifest",
+  themeColor: "#667eea",
 };
 
 export default function RootLayout({
@@ -32,6 +34,9 @@ export default function RootLayout({
     <html lang="es" className={`${chakra.variable} ${quicksand.variable}`}>
       <body className="font-sans antialiased bg-emotion-default">
         <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
+        <Script id="register-sw" strategy="afterInteractive">
+          {`if ("serviceWorker" in navigator) { window.addEventListener("load", () => { navigator.serviceWorker.register("/sw.js", { scope: "/", updateViaCache: "none" }).catch(() => {}); }); }`}
+        </Script>
         <Script
           src="https://cloud.umami.is/script.js"
           data-website-id="d2ec5e44-b861-4240-bc4d-1fac30b30535"
@@ -41,3 +46,5 @@ export default function RootLayout({
     </html>
   );
 }
+
+
