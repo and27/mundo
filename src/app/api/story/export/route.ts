@@ -29,6 +29,9 @@ export async function POST(request: Request) {
   const tAll = performance.now();
   const body = await request.json();
   const { emotion, character, orientation } = body;
+  console.log("[story/export] body:", body);
+  console.log("[story/export] emotion:", emotion);
+  console.log("[story/export] character:", character);
 
   if (!emotion || !character) {
     return NextResponse.json(

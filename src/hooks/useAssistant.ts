@@ -64,8 +64,14 @@ export function useMundoAssistant() {
         ...rawData,
         id: `story_${emotion}_${character}`,
         emotion,
+        emotionId: emotion,
         character,
+        characterId: character,
       };
+      console.log("[useAssistant] rawData:", rawData);
+      console.log("[useAssistant] emotion:", emotion);
+      console.log("[useAssistant] character:", character);
+      console.log("[useAssistant] finalGuide:", finalGuide);
 
       setGuide(finalGuide);
     } catch (err) {
