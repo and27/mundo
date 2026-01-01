@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { LogOut, User, MoreHorizontal } from "lucide-react";
-import { HiSparkles } from "react-icons/hi2";
 import { dashboardSections } from "@/lib/dashboardConfig";
 import { FaBars } from "react-icons/fa";
 import { logoutUser } from "@/services/authService";
@@ -133,14 +132,20 @@ const Sidebar: React.FC<SidebarProps> = ({
           {!isDesktopCollapsed && (
             <div className="mb-8 pb-6 border-b border-white/10">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 mi-accent-gradient rounded-xl flex items-center justify-center">
+                <div className="w-12 h-12 mi-accent-soft  rounded-xl flex items-center justify-center">
                   <span
                     className="md:hidden cursor-pointer"
                     onClick={onCloseMobile}
                   >
-                    <FaBars />
+                    <FaBars color="white" />
                   </span>
-                  <HiSparkles className="hidden md:block w-6 h-6 text-white" />
+                  <Image
+                    src="/images/logo_simple.png"
+                    alt="Mundo Interior"
+                    width={40}
+                    height={40}
+                    className="hidden md:block"
+                  />
                 </div>
 
                 <div>
