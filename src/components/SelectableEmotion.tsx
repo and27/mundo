@@ -87,7 +87,7 @@ const SelectableEmotionGrid = memo(
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 onClick={() => handleClick(emotion.label)}
-                className={`text-black relative rounded-2xl p-6 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-primary-400 min-h-[140px] flex flex-col items-center justify-center text-center ${
+                className={`bg-white text-black relative rounded-2xl p-6 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-primary-400 min-h-[140px] flex flex-col items-center justify-center text-center ${
                   isSelected
                     ? "glass-strong"
                     : "glass-medium hover:glass-strong/80"
@@ -141,14 +141,7 @@ const SelectableEmotionGrid = memo(
               animate={{ opacity: 1, y: 0, transition: { delay: 0.2 } }}
               exit={{ opacity: 0, y: 20 }}
               className="mt-8 text-center"
-            >
-              <div className="inline-flex items-center gap-2 bg-success-500/10 rounded-xl px-4 py-2">
-                <HiSparkles className="w-5 h-5 text-success-500" />
-                <span className="text-foreground/90 font-medium">
-                  {"¡Gracias por compartir!"}
-                </span>
-              </div>
-            </motion.div>
+            ></motion.div>
           )}
         </AnimatePresence>
       </motion.div>
