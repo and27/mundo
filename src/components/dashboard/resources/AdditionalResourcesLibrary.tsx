@@ -12,6 +12,7 @@ import {
   BookOpen,
 } from "lucide-react";
 import Image from "next/image";
+import ChipTabs from "@/components/ui/ChipTabs";
 
 interface Resource {
   id: string;
@@ -36,12 +37,6 @@ interface FilterOption {
 
 interface ResourceCardProps {
   resource: Resource;
-}
-
-interface TabNavigationProps {
-  tabs: Tab[];
-  activeTab: string;
-  onTabChange: (tabId: string) => void;
 }
 
 interface SearchAndFilterBarProps {
@@ -166,30 +161,6 @@ const ResourceCard: React.FC<ResourceCardProps> = ({ resource }) => {
           )}
         </button>
       </div>
-    </div>
-  );
-};
-
-const TabNavigation: React.FC<TabNavigationProps> = ({
-  tabs,
-  activeTab,
-  onTabChange,
-}) => {
-  return (
-    <div className="flex flex-wrap gap-1 p-1 bg-white/20 backdrop-blur-sm rounded-xl border border-white/30">
-      {tabs.map((tab) => (
-        <button
-          key={tab.id}
-          onClick={() => onTabChange(tab.id)}
-          className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300 ${
-            activeTab === tab.id
-              ? "bg-white text-indigo-600 shadow-lg"
-              : "text-white hover:bg-white/20 hover:text-white"
-          }`}
-        >
-          {tab.label}
-        </button>
-      ))}
     </div>
   );
 };
@@ -396,10 +367,11 @@ const AdditionalResourcesLibrary: React.FC = () => {
         </div>
       </div>
 
-      <TabNavigation
+      <ChipTabs
         tabs={tabOptionsForLibrary}
         activeTab={activeTab}
         onTabChange={setActiveTab}
+        className="justify-start"
       />
 
       <SearchAndFilterBar

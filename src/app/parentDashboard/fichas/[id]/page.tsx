@@ -176,26 +176,6 @@ const FichaTutorPage: React.FC = () => {
             className="flex-none"
           />
 
-          <div className="flex border-b border-white/10">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`flex-1 flex items-center justify-center gap-2 py-4 px-3 transition-colors ${
-                  activeTab === tab.id
-                    ? "bg-white/10 text-white border-b-2 border-purple-400"
-                    : "text-white/70 hover:text-white hover:bg-white/5"
-                }`}
-              >
-                {/* Asumiendo que `tabs` de lib/fichaTabs.ts ahora tiene la propiedad `icon` de vuelta */}
-                {tab.icon && <tab.icon className="w-4 h-4" />}
-                <span className="text-sm font-medium hidden sm:inline">
-                  {tab.label}
-                </span>
-              </button>
-            ))}
-          </div>
-
           <div className="p-6">
             <AnimatePresence mode="wait">
               {activeTab === "overview" && (

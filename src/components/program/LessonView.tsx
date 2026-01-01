@@ -7,7 +7,7 @@ import ParentResources from "@/components/program/ParentResources";
 import { program } from "@/data/program";
 import { guides } from "@/lib/guides";
 
-type TabId = "cuento" | "Acompañamiento";
+type TabId = "cuento" | "acompanamiento";
 
 type GuideDetails = {
   guideTitle: string;
@@ -132,7 +132,7 @@ export default function ProgramLessonView() {
           {programLesson.title}
         </h1>
         <p className="text-neutral-600">
-          {guide?.guideTitle || "Guía de Acompanamiento emocional"}
+          {guide?.guideTitle || "Guia de acompanamiento emocional"}
         </p>
         {guide?.tags?.length ? <PillList items={guide.tags} /> : null}
       </div>
@@ -141,7 +141,7 @@ export default function ProgramLessonView() {
         <ChipTabs
           tabs={[
             { id: "cuento", label: "Cuento" },
-            { id: "Acompañamiento", label: "Acompañamiento" },
+            { id: "acompanamiento", label: "Acompanamiento" },
           ]}
           activeTab={activeTab}
           onTabChange={(tabId) => setActiveTab(tabId as TabId)}
@@ -150,59 +150,52 @@ export default function ProgramLessonView() {
 
         <div className="mt-6 space-y-6">
           {activeTab === "cuento" && (
-            <div className="grid md:grid-cols-2 gap-4">
-              <SectionCard title="Enfoque emocional">
-                <span className="capitalize">{emotionLabel}</span>
-              </SectionCard>
+            <div className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-4">
+                <SectionCard title="Enfoque emocional">
+                  <span className="capitalize">{emotionLabel}</span>
+                </SectionCard>
 
-              <SectionCard title="Práctica sugerida">
-                {guide?.suggestedActivity ? (
-                  guide.suggestedActivity.title
-                ) : (
-                  <span className="text-neutral-500">
-                    Práctica en preparación.
-                  </span>
+                <SectionCard title="Practica sugerida">
+                  {guide?.suggestedActivity ? (
+                    guide.suggestedActivity.title
+                  ) : (
+                    <span className="text-neutral-500">
+                      Practica en preparacion.
+                    </span>
+                  )}
+                </SectionCard>
+
+                {guide?.understanding && (
+                  <SectionCard title={guide.understanding.title}>
+                    {guide.understanding.content}
+                  </SectionCard>
                 )}
-              </SectionCard>
 
-              {guide?.understanding && (
-                <SectionCard title={guide.understanding.title}>
-                  {guide.understanding.content}
-                </SectionCard>
-              )}
+                {guide?.normalization?.length ? (
+                  <SectionCard title="Normalizar">
+                    <BulletList items={guide.normalization} />
+                  </SectionCard>
+                ) : null}
+              </div>
 
-              {guide?.normalization?.length ? (
-                <SectionCard title="Normalizar">
-                  <BulletList items={guide.normalization} />
+              <div className="grid md:grid-cols-2 gap-4">
+                <SectionCard title="Experiencia vivencial" description="Para el nino">
+                  <p>
+                    El nino vive esta experiencia directamente a traves del
+                    cuento interactivo.
+                  </p>
+                  <p className="mt-2 text-neutral-500">
+                    No es necesario explicar ni corregir durante el proceso.
+                  </p>
                 </SectionCard>
-              ) : null}
+                <SectionCard title="Tiempo sugerido" description="Sesiones breves">
+                  8-12 minutos en un espacio tranquilo.
+                </SectionCard>
+              </div>
             </div>
           )}
-
-          {activeTab === "cuento" && (
-            <div className="grid md:grid-cols-2 gap-4">
-              <SectionCard
-                title="Experiencia vivencial"
-                description="Para el niño"
-              >
-                <p>
-                  El niño vive esta experiencia directamente a través del cuento
-                  interactivo.
-                </p>
-                <p className="mt-2 text-neutral-500">
-                  No es necesario explicar ni corregir durante el proceso.
-                </p>
-              </SectionCard>
-              <SectionCard
-                title="Tiempo sugerido"
-                description="Sesiones breves"
-              >
-                8-12 minutos en un espacio tranquilo.
-              </SectionCard>
-            </div>
-          )}
-
-          {activeTab === "Acompañamiento" && guide && (
+          {activeTab === "acompanamiento" && guide && (
             <div className="mi-stack-lg">
               {guide.metaphorStory && (
                 <SectionCard title="Lectura simbólica">
@@ -261,4 +254,7 @@ export default function ProgramLessonView() {
     </div>
   );
 }
+
+
+
 
