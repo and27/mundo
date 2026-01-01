@@ -44,6 +44,11 @@
   --canvas-marketing-via: var(--color-primary-900);
   --canvas-marketing-to: var(--color-neutral-900);
 
+  /* === KIDS THEME === */
+  --kids-bg-from: #4f46e5;
+  --kids-bg-via: #7c3aed;
+  --kids-bg-to: #6d28d9;
+
   /* === ACTION / CTA === */
   --color-action-400: #fde047;
   --color-action-500: #facc15;
@@ -356,6 +361,15 @@ body {
         var(--color-primary-900) 45%,
         var(--color-neutral-900) 100%
       );
+  }
+
+  .mi-canvas-kids {
+    background: linear-gradient(
+      135deg,
+      var(--kids-bg-from) 0%,
+      var(--kids-bg-via) 45%,
+      var(--kids-bg-to) 100%
+    );
   }
 
   /* ======================================================

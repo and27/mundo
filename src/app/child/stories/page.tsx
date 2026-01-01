@@ -23,7 +23,7 @@ export default function ChildStoriesPage() {
   // if (!isLoaded) return <KidsLoading />;
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-indigo-600/90 via-purple-700/90">
+    <main className="min-h-screen mi-canvas-base mi-canvas-kids">
       <KidsHeader />
       <KidsFeaturedCard
         title="Aventura del Miedo"

@@ -8,6 +8,7 @@ import { Character } from "@/types/characters";
 import SelectableEmotionGrid from "@/components/SelectableEmotion";
 import Button from "@/components/ui/Button";
 import { emotionsAfterJourney_9_11 } from "@/lib/emotionsData";
+import { useModeStore } from "@/store/useModeState";
 
 const LoadingIndicator = () => (
   <div className="flex justify-center items-center min-h-screen">
@@ -24,6 +25,7 @@ const ErrorMessage = ({ message }: { message: string }) => (
 const EndPage = () => {
   const { id } = useParams();
   const router = useRouter();
+  const setMode = useModeStore((state) => state.setMode);
   const [guide, setGuide] = useState<Character | null>(null);
   const [selectedEmotionId, setSelectedEmotionId] = useState<string | null>(
     null
@@ -80,6 +82,7 @@ const EndPage = () => {
 
     setTimeout(() => {
       setIsSaving(false);
+      setMode("child");
       router.push("/child/stories");
     }, 700);
   };
@@ -101,7 +104,7 @@ const EndPage = () => {
   )?.label;
 
   return (
-    <section className="bg-black/30 backdrop-blur-md text-center flex flex-col gap-4 justify-start items-center min-h-screen mx-auto p-4">
+    <section className="mi-canvas-base mi-canvas-kids text-center flex flex-col gap-4 justify-start items-center min-h-screen mx-auto p-4">
       <div className="w-full max-w-xl flex flex-col items-center">
         <div className="mb-4 relative w-28 h-28 mx-auto rounded-full overflow-hidden border-2 border-white/30 shadow-md">
           <Image
@@ -134,7 +137,7 @@ const EndPage = () => {
           mode="after"
           onSelect={handleEmotionSelect}
           initialSelected={initialSelectedLabel}
-          className="w-full mb-10 "
+          className="w-full"
         />
 
         <Button
@@ -147,7 +150,7 @@ const EndPage = () => {
              ${isSaving ? "opacity-75 cursor-wait" : ""}
            `}
         >
-          {isSaving ? "Guardando..." : "Volver al bosque"}
+          {isSaving ? "Guardando..." : "Seguir explorando"}
         </Button>
       </div>
     </section>
