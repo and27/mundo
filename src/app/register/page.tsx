@@ -82,7 +82,7 @@ export default function AuthPage() {
                         <span className="relative z-10 inline-flex items-center gap-2">
                           {tab === "register"
                             ? "Registrarme"
-                            : "Iniciar sesión"}
+                            : "Iniciar sesion"}
                           {isActive && <FiArrowRight className="w-4 h-4" />}
                         </span>
                       </button>
@@ -125,3 +125,4 @@ export default function AuthPage() {
     </main>
   );
 }
+

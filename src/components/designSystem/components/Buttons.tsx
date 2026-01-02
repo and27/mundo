@@ -271,10 +271,7 @@ const Buttons = () => {
 
               <button className="bg-transparent text-indigo-400 border-2 border-indigo-400 hover:bg-indigo-500 hover:text-white hover:border-indigo-500 font-semibold py-2.5 px-4 rounded-lg transition-all duration-200 flex items-center gap-2">
                 <ExternalLink className="w-4 h-4" />
-                Ver Más
-              </button>
-
-              <button className="bg-transparent text-green-400 border-2 border-green-400 hover:bg-green-500 hover:text-white hover:border-green-500 font-semibold py-2.5 px-4 rounded-lg transition-all duration-200">
+                Ver mas"bg-transparent text-green-400 border-2 border-green-400 hover:bg-green-500 hover:text-white hover:border-green-500 font-semibold py-2.5 px-4 rounded-lg transition-all duration-200">
                 Success
               </button>
 
@@ -786,3 +783,4 @@ const Buttons = () => {
 };
 
 export default Buttons;
+

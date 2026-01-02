@@ -140,7 +140,7 @@ export default function Onboarding() {
                   ) : (
                     <span className="flex items-center justify-center gap-3">
                       <HiSparkles className="w-5 h-5" />
-                      Empezar meditación
+                      Escuchar cuento
                     </span>
                   )}
                 </Button>

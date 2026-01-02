@@ -50,7 +50,7 @@ const Login = () => {
             href={name ? "/onboarding/emotion" : "/onboarding/name"}
             className="bg-yellow-400 text-black font-bold py-3 px-8 rounded-full hover:bg-yellow-300 transition"
           >
-            Iniciar Mi Viaje
+            Iniciar mi viaje
           </Link>
         </div>
       </div>
@@ -71,3 +71,4 @@ const Login = () => {
 };
 
 export default Login;
+

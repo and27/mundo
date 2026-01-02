@@ -150,7 +150,7 @@ const EndPage = () => {
              ${isSaving ? "opacity-75 cursor-wait" : ""}
            `}
         >
-          {isSaving ? "Guardando..." : "Seguir explorando"}
+          {isSaving ? "Guardando..." : "Continuar explorando"}
         </Button>
       </div>
     </section>
@@ -158,3 +158,4 @@ const EndPage = () => {
 };
 
 export default EndPage;
+

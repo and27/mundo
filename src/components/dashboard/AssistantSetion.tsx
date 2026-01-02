@@ -34,17 +34,6 @@ export default function AssistantSection() {
   return (
     <>
       <InputForm isLoading={isLoading} onSubmit={generateGuide} />
-
-      {(isLoading || guide || error) && (
-        <div className="mt-12">
-          <ResultsDisplay
-            isLoading={isLoading}
-            error={error}
-            guide={guide}
-            loadingMessage={loadingMessage}
-          />
-        </div>
-      )}
     </>
   );
 }

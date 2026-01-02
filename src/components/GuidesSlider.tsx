@@ -84,7 +84,7 @@ export default function GuideSliderStep() {
               : "bg-white/10 text-white/30 cursor-not-allowed"
           }`}
         >
-          Empezar meditación
+          Escuchar cuento
         </button>
       </div>
     </section>

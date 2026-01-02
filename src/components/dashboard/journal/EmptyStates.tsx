@@ -24,7 +24,7 @@ export function ExplorerNotFound() {
           className="group inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-medium py-2.5 px-5 rounded-lg transition-all duration-200 hover:scale-105 active:scale-95"
         >
           <Eye className="w-4 h-4" />
-          Volver a Mis Exploradores
+          Volver a mis exploradores
         </Link>
       </div>
     </div>

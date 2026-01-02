@@ -78,7 +78,7 @@ const LoginForm: React.FC = () => {
       if (error instanceof Error) {
         setApiFeedback({
           type: "error",
-          message: error.message || "Error al iniciar sesión.",
+          message: error.message || "Error al iniciar sesion",
         });
       }
     }
@@ -119,10 +119,12 @@ const LoginForm: React.FC = () => {
         className="w-full mt-5 transition focus:outline-none focus:ring-2 focus:ring-yellow-500 disabled:opacity-50"
         disabled={isSubmitting}
       >
-        {isSubmitting ? "Iniciando Sesión..." : "Iniciar Sesión"}
+        {isSubmitting ? "Iniciando sesion..." : "Iniciar sesion"}
       </Button>
     </form>
   );
 };
 
 export default LoginForm;
+
+

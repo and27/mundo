@@ -143,7 +143,7 @@ const ActionPanel: React.FC<ActionPanelProps> = memo(
               "
             >
               <FiUsers className="w-5 h-5" />
-              <span>Iniciar sesión</span>
+              <span>Iniciar sesion</span>
             </Link>
           </motion.div>
         </motion.div>
@@ -181,3 +181,4 @@ export default function WelcomeExperience() {
     </main>
   );
 }
+

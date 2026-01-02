@@ -11,7 +11,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           onClick={() => router.back()}
           className="py-5 flex items-center text-white/70 hover:text-white transition"
         >
-          ← <span className="ml-1 text-sm">Volver</span>
+          ← <span className="ml-1 text-sm">Volver al inicio</span>
         </button>
         {children}
       </div>

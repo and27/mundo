@@ -119,7 +119,7 @@ export default function ProgramLessonView() {
           }
           className="text-neutral-500 text-sm font-medium w-fit"
         >
-          ← Volver al Programa
+          ← Volver al programa
         </button>
 
         <span className="text-xs uppercase tracking-[0.2em] text-neutral-400">

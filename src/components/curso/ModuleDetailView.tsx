@@ -162,7 +162,7 @@ export default function ModuleDetailView({
             className="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2 shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
             <Play className="w-5 h-5" />
-            Comenzar desde el inicio
+            Iniciar desde el inicio
           </button>
           <p className="text-xs text-slate-500 text-center">
             También puedes hacer click en cualquier sección arriba para ir
@@ -173,3 +173,4 @@ export default function ModuleDetailView({
     </div>
   );
 }
+

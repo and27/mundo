@@ -223,7 +223,7 @@ const ResourcesPageLayout: React.FC = () => {
                 </div>
                 <div className="flex items-center gap-2 text-white/90">
                   <HiPlay className="w-4 h-4" />
-                  <span className="text-sm font-medium">Comenzar ahora</span>
+                  <span className="text-sm font-medium">Iniciar ahora</span>
                 </div>
               </div>
               <div className="p-8">{/* <MethodologySection /> */}</div>
@@ -316,7 +316,7 @@ const ResourcesPageLayout: React.FC = () => {
             </p>
             <button className="inline-flex items-center gap-2 px-8 py-4 bg-white text-indigo-600 font-bold rounded-2xl hover:bg-white/90 transition-all duration-300 hover:scale-105 shadow-lg">
               <HiPlay className="w-5 h-5" />
-              Comenzar mi Formación
+              Iniciar mi formacion
             </button>
           </div>
         </div>
@@ -326,3 +326,4 @@ const ResourcesPageLayout: React.FC = () => {
 };
 
 export default ResourcesPageLayout;
+

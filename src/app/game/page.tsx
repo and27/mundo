@@ -10,7 +10,7 @@ const TOTAL_PATH_SEGMENTS = 10;
 
 // --- Componente para dibujar el Camino Iluminado ---
 // (Debería estar fuera del canvas principal o dibujado DENTRO del canvas por el hook)
-// Opción A: Componente React fuera del canvas (más fácil para empezar)
+// Opción A: Componente React fuera del canvas (más fácil para Iniciar)
 const IlluminatedPath: React.FC<{
   totalSegments: number;
   litSegments: number;
@@ -383,7 +383,7 @@ export default function Game() {
         )}
 
       {/* --- NUEVO: Indicador Visual de Progreso --- */}
-      {!isInitialMessageVisible && ( // Mostrar solo después de empezar
+      {!isInitialMessageVisible && ( // Mostrar solo después de Iniciar
         <IlluminatedPath
           totalSegments={TOTAL_PATH_SEGMENTS}
           litSegments={currentLitSegments}
@@ -408,13 +408,13 @@ export default function Game() {
             </p>
             <button
               onClick={() => {
-                initializeAudio(); // Asegurar audio al empezar
+                initializeAudio(); // Asegurar audio al Iniciar
                 startGameLogic();
                 setIsInitialMessageVisible(false);
               }}
               className="font-sans font-semibold px-6 py-3 rounded-lg border-none bg-gradient-to-r from-yellow-400 to-amber-500 text-gray-800 cursor-pointer transition-all duration-200 ease-in-out shadow-md hover:shadow-lg hover:from-amber-500 hover:to-yellow-500 hover:-translate-y-0.5 active:translate-y-0 active:shadow-sm text-lg"
             >
-              Empezar
+              Iniciar
             </button>
           </div>
         )}
@@ -447,3 +447,4 @@ export default function Game() {
     </div>
   );
 }
+

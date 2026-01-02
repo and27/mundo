@@ -156,8 +156,7 @@ const ResourceCard: React.FC<ResourceCardProps> = ({ resource }) => {
           ) : (
             <>
               <Eye className="w-4 h-4" />
-              Leer Más
-            </>
+              Ver mas</>
           )}
         </button>
       </div>
@@ -435,3 +434,4 @@ const AdditionalResourcesLibrary: React.FC = () => {
 };
 
 export default AdditionalResourcesLibrary;
+

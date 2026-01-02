@@ -88,7 +88,7 @@ const FichaTutorPage: React.FC = () => {
           className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold rounded-lg hover:brightness-110 transition-all"
         >
           <HiOutlineArrowLeft className="w-5 h-5" />
-          Volver
+          Volver a fichas
         </button>
       </div>
     );
@@ -108,7 +108,7 @@ const FichaTutorPage: React.FC = () => {
             className="flex items-center gap-2 text-white/70 hover:text-white transition-colors group"
           >
             <HiOutlineArrowLeft className="w-5 h-5 group-hover:text-purple-400 transition-colors" />
-            Volver
+            Volver a fichas
           </button>
         </div>
 
