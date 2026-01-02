@@ -128,6 +128,7 @@ export default function InputForm({
               maxChars={maxChars}
             />
             <Button
+              type="button"
               variant="secondary"
               size="sm"
               onClick={() => setIsContextOpen(true)}
