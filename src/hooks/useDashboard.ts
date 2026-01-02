@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { dashboardSections } from "@/lib/dashboardConfig";
 
@@ -26,21 +26,18 @@ export function useDashboard() {
     return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
 
-  const toggleSidebar = () => {
-    if (isMobile) {
-      setIsMobileOpen((prev) => !prev);
-    } else {
-      setIsDesktopCollapsed((prev) => !prev);
-    }
-  };
+  const toggleSidebar = useCallback(() => {
+    if (isMobile) setIsMobileOpen((prev) => !prev);
+    else setIsDesktopCollapsed((prev) => !prev);
+  }, [isMobile]);
 
-  const closeMobileSidebar = () => {
+  const closeMobileSidebar = useCallback(() => {
     setIsMobileOpen(false);
-  };
+  }, []);
 
-  const toggleMobileSidebar = () => {
+  const toggleMobileSidebar = useCallback(() => {
     setIsMobileOpen((prev) => !prev);
-  };
+  }, []);
 
   const toggleDesktopCollapse = () => {
     setIsDesktopCollapsed((prev) => !prev);
