@@ -3,6 +3,7 @@ import { create3PillarGuidePrompt } from "@/lib/prompts";
 // import { createAuditorPrompt } from "@/lib/prompts"; // COMENTADO PARA DEMO - Reactivar en producción
 import { ActionableGuide } from "@/types/ai";
 import OpenAI from "openai";
+import { getAuthUser } from "@/lib/apiAuth";
 
 // ✅ FUNCIÓN ORIGINAL - DeepSeek
 async function callDeepSeek(prompt: string): Promise<string> {
@@ -52,6 +53,10 @@ async function callOpenAI(prompt: string): Promise<string> {
 
 export async function POST(request: Request) {
   try {
+    const { user, error } = await getAuthUser(request);
+    if (!user) {
+      return NextResponse.json({ error }, { status: 401 });
+    }
     const body = await request.json();
     const userQuery = body.query;
 
@@ -103,3 +108,5 @@ export async function POST(request: Request) {
     }
   }
 }
+
+

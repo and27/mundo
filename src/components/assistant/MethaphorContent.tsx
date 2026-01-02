@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Button from "../ui/Button";
+import { useAuthStore } from "@/store/useAuthStore";
 
 interface PillarContentProps {
   guide: GuideWithCharacter;
@@ -25,6 +26,7 @@ export const MetaphorContent: React.FC<PillarContentProps> = ({
   setLoading,
 }) => {
   const router = useRouter();
+  const accessToken = useAuthStore((state) => state.user?.accessToken);
   const handleStartExperience = async () => {
     if (!setLoading) return;
     try {
@@ -37,6 +39,7 @@ export const MetaphorContent: React.FC<PillarContentProps> = ({
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
         },
         body: JSON.stringify({
           emotion: guide.emotion,

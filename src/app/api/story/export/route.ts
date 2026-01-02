@@ -6,6 +6,7 @@ import { generateStory, generateHiveImage } from "@/lib/storyEngine";
 import { enhancePromptStyle } from "@/utils/imageUtils";
 import { supabase } from "@/lib/supabaseServer";
 import { generateAudio } from "@/lib/geminiTTS";
+import { getAuthUser } from "@/lib/apiAuth";
 
 type TimingEntry = { label: string; ms: number; stepId?: string };
 const timings: TimingEntry[] = [];
@@ -26,6 +27,10 @@ async function timeAsync<T>(
 }
 
 export async function POST(request: Request) {
+  const { user, error } = await getAuthUser(request);
+  if (!user) {
+    return NextResponse.json({ error }, { status: 401 });
+  }
   const tAll = performance.now();
   const body = await request.json();
   const { emotion, character, orientation } = body;
@@ -215,3 +220,5 @@ export async function POST(request: Request) {
     );
   }
 }
+
+

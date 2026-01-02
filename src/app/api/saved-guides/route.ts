@@ -1,28 +1,13 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabaseServer";
 import { GuideWithCharacter } from "@/types/ai";
+import { getAuthUser } from "@/lib/apiAuth";
 
 type DeleteGuidePayload = {
   storyId: string;
 };
 
-const getAuthUser = async (request: Request) => {
-  const authHeader = request.headers.get("authorization") || "";
-  const token = authHeader.startsWith("Bearer ")
-    ? authHeader.slice("Bearer ".length)
-    : "";
-
-  if (!token) {
-    return { user: null, error: "Missing auth token" };
-  }
-
-  const { data, error } = await supabase.auth.getUser(token);
-  if (error || !data?.user) {
-    return { user: null, error: "Invalid auth token" };
-  }
-
-  return { user: data.user, error: null };
-};
+ 
 
 export async function GET(request: Request) {
   const { user, error: authError } = await getAuthUser(request);
