@@ -9,6 +9,9 @@ export function useSavedGuides() {
   );
   const [isLoaded, setIsLoaded] = useState(false);
   const user = useAuthStore((state) => state.user);
+  const authHeaders = user?.accessToken
+    ? { Authorization: `Bearer ${user.accessToken}` }
+    : {};
   const normalizeGuide = (guide: GuideWithCharacter): GuideWithCharacter => {
     const emotionId =
       guide.emotionId ||
@@ -36,7 +39,9 @@ export function useSavedGuides() {
       }
 
       try {
-        const res = await fetch(`/api/saved-guides?userId=${user.id}`);
+        const res = await fetch(`/api/saved-guides`, {
+          headers: authHeaders,
+        });
         if (!res.ok) {
           throw new Error("Error loading saved guides");
         }
@@ -71,8 +76,8 @@ export function useSavedGuides() {
     const normalizedGuide = normalizeGuide(guide);
     const res = await fetch("/api/saved-guides", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId: user.id, guide: normalizedGuide }),
+      headers: { "Content-Type": "application/json", ...authHeaders },
+      body: JSON.stringify({ guide: normalizedGuide }),
     });
 
     if (!res.ok) {
@@ -99,8 +104,8 @@ export function useSavedGuides() {
     }
     const res = await fetch("/api/saved-guides", {
       method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId: user.id, storyId: id }),
+      headers: { "Content-Type": "application/json", ...authHeaders },
+      body: JSON.stringify({ storyId: id }),
     });
 
     if (!res.ok) {

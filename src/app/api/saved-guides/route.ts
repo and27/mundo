@@ -2,28 +2,38 @@ import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabaseServer";
 import { GuideWithCharacter } from "@/types/ai";
 
-type SaveGuidePayload = {
-  userId: string;
-  guide: GuideWithCharacter;
-};
-
 type DeleteGuidePayload = {
-  userId: string;
   storyId: string;
 };
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const userId = searchParams.get("userId");
+const getAuthUser = async (request: Request) => {
+  const authHeader = request.headers.get("authorization") || "";
+  const token = authHeader.startsWith("Bearer ")
+    ? authHeader.slice("Bearer ".length)
+    : "";
 
-  if (!userId) {
-    return NextResponse.json({ error: "userId is required" }, { status: 400 });
+  if (!token) {
+    return { user: null, error: "Missing auth token" };
+  }
+
+  const { data, error } = await supabase.auth.getUser(token);
+  if (error || !data?.user) {
+    return { user: null, error: "Invalid auth token" };
+  }
+
+  return { user: data.user, error: null };
+};
+
+export async function GET(request: Request) {
+  const { user, error: authError } = await getAuthUser(request);
+  if (!user) {
+    return NextResponse.json({ authError }, { status: 401 });
   }
 
   const { data, error } = await supabase
     .from("saved_guides")
     .select("*")
-    .eq("user_id", userId)
+    .eq("user_id", user.id)
     .order("created_at", { ascending: false });
 
   if (error) {
@@ -51,18 +61,20 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  const body = (await request.json()) as SaveGuidePayload;
-  const { userId, guide } = body;
+  const { user, error } = await getAuthUser(request);
+  if (!user) {
+    return NextResponse.json({ error }, { status: 401 });
+  }
 
-  if (!userId || !guide) {
-    return NextResponse.json(
-      { error: "userId and guide are required" },
-      { status: 400 }
-    );
+  const body = (await request.json()) as { guide?: GuideWithCharacter };
+  const { guide } = body;
+
+  if (!guide) {
+    return NextResponse.json({ error: "guide is required" }, { status: 400 });
   }
 
   const bucketName = "stories";
-  const storagePath = `guides/${userId}/${guide.id}.json`;
+  const storagePath = `guides/${user.id}/${guide.id}.json`;
 
   const uploadRes = await supabase.storage
     .from(bucketName)
@@ -86,7 +98,7 @@ export async function POST(request: Request) {
   const { data: existing, error: findError } = await supabase
     .from("saved_guides")
     .select("id")
-    .eq("user_id", userId)
+    .eq("user_id", user.id)
     .eq("story_id", guide.id)
     .maybeSingle();
 
@@ -111,7 +123,7 @@ export async function POST(request: Request) {
     }
   } else {
     const { error: insertError } = await supabase.from("saved_guides").insert({
-      user_id: userId,
+      user_id: user.id,
       story_id: guide.id,
       story_url: storyUrl,
       title: guide.guideTitle,
@@ -128,7 +140,7 @@ export async function POST(request: Request) {
   const { data: savedRow, error: readError } = await supabase
     .from("saved_guides")
     .select("created_at")
-    .eq("user_id", userId)
+    .eq("user_id", user.id)
     .eq("story_id", guide.id)
     .maybeSingle();
 
@@ -143,20 +155,22 @@ export async function POST(request: Request) {
 }
 
 export async function DELETE(request: Request) {
-  const body = (await request.json()) as DeleteGuidePayload;
-  const { userId, storyId } = body;
+  const { user, error: authError } = await getAuthUser(request);
+  if (!user) {
+    return NextResponse.json({ authError }, { status: 401 });
+  }
 
-  if (!userId || !storyId) {
-    return NextResponse.json(
-      { error: "userId and storyId are required" },
-      { status: 400 }
-    );
+  const body = (await request.json()) as DeleteGuidePayload;
+  const { storyId } = body;
+
+  if (!storyId) {
+    return NextResponse.json({ error: "storyId is required" }, { status: 400 });
   }
 
   const { data: existing, error: findError } = await supabase
     .from("saved_guides")
     .select("story_url")
-    .eq("user_id", userId)
+    .eq("user_id", user.id)
     .eq("story_id", storyId)
     .maybeSingle();
 
@@ -185,7 +199,7 @@ export async function DELETE(request: Request) {
   const { error } = await supabase
     .from("saved_guides")
     .delete()
-    .eq("user_id", userId)
+    .eq("user_id", user.id)
     .eq("story_id", storyId);
 
   if (error) {

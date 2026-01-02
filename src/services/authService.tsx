@@ -21,6 +21,7 @@ interface LoginSuccessResponse {
   onboarding_completed: boolean;
   role: string;
   display_name?: string;
+  accessToken?: string | null;
 }
 
 interface ApiErrorResponse {
@@ -62,7 +63,6 @@ export async function loginUser(
   });
 
   const result = await response.json();
-  console.log(result);
 
   if (!response.ok) {
     const errorMessage =

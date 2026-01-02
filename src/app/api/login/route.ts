@@ -64,6 +64,7 @@ export async function POST(req: NextRequest) {
         email: data.user.email,
         role: profile?.role || "parent",
         display_name: profile?.display_name || data.user.email?.split("@")[0],
+        accessToken: data.session?.access_token ?? null,
       },
       { status: 200 }
     );
@@ -75,3 +76,5 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
+

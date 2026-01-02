@@ -29,10 +29,6 @@ export const MetaphorContent: React.FC<PillarContentProps> = ({
     if (!setLoading) return;
     try {
       setLoading(true);
-      console.log("[MetaphorContent] guide:", guide);
-      console.log("[MetaphorContent] emotion:", guide.emotion);
-      console.log("[MetaphorContent] characterId:", guide.characterId);
-      console.log("[MetaphorContent] character:", guide.character);
       const characterId = guide.characterId ?? guide.character;
       if (!characterId) {
         throw new Error("characterId missing for story export");
