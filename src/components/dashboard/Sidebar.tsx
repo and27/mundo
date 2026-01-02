@@ -16,7 +16,7 @@ type SidebarProps = {
   isMobileOpen: boolean;
   isDesktopCollapsed: boolean;
   onCloseMobile: () => void;
-  currentPath?: string;
+  activeSectionId: string;
 };
 
 const NavItem = ({
@@ -87,7 +87,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   isMobileOpen,
   isDesktopCollapsed,
   onCloseMobile,
-  currentPath = "/dashboard",
+  activeSectionId,
 }) => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
@@ -163,7 +163,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 key={item.id}
                 item={item}
                 isCollapsed={isDesktopCollapsed}
-                isActive={currentPath === item.href}
+                isActive={activeSectionId === item.id}
                 onSelect={isMobileOpen ? onCloseMobile : undefined}
               />
             ))}

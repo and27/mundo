@@ -35,7 +35,7 @@ const FacilitatorDashboard = () => {
         isMobileOpen={isMobileOpen}
         isDesktopCollapsed={isDesktopCollapsed}
         onCloseMobile={closeMobileSidebar}
-        currentPath={`/parentDashboard?section=${activeSection.id}`}
+        activeSectionId={activeSection.id}
       />
 
       <main className="flex-1 flex flex-col w-full overflow-x-hidden">
