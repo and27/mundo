@@ -9,17 +9,12 @@ export function useSavedGuides() {
   );
   const [isLoaded, setIsLoaded] = useState(false);
   const user = useAuthStore((state) => state.user);
-  const authHeaders = user?.accessToken
+  const authHeaders: Record<string, string> = user?.accessToken
     ? { Authorization: `Bearer ${user.accessToken}` }
     : {};
   const normalizeGuide = (guide: GuideWithCharacter): GuideWithCharacter => {
     const emotionId = guide.emotionId;
-    const characterId =
-      guide.characterId ||
-      // @ts-expect-error legacy guides might have a "character" field
-      guide.character ||
-      // @ts-expect-error fallback for older data
-      guide.guideId;
+    const characterId = guide.characterId || guide.character;
 
     return {
       ...guide,
@@ -118,8 +113,7 @@ export function useSavedGuides() {
     });
   };
 
-  const getGuide = (id: string) =>
-    savedGuides.find((g) => g.id === id) || null;
+  const getGuide = (id: string) => savedGuides.find((g) => g.id === id) || null;
 
   const updateGuideTitle = async (id: string, newTitle: string) => {
     const current = savedGuides.find((g) => g.id === id);

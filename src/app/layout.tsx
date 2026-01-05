@@ -22,7 +22,6 @@ export const metadata: Metadata = {
   title: "El Bosque Interior",
   description: "Meditaciones con guias sagrados para ninos y ninas.",
   manifest: "/manifest.webmanifest",
-  themeColor: "#667eea",
 };
 
 export default function RootLayout({
@@ -46,5 +45,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-

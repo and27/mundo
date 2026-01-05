@@ -56,10 +56,16 @@ function normalizeFromV2(input: ParentGuideV2): ActionableGuide {
   };
 }
 
+function isParentGuideV2(
+  input: ParentGuideV1 | ParentGuideV2
+): input is ParentGuideV2 {
+  return input.schema_version === "parent_guide.v2";
+}
+
 export function normalizeParentGuide(
   input: ParentGuideV1 | ParentGuideV2
 ): ActionableGuide {
-  if ("sections" in input) {
+  if (isParentGuideV2(input)) {
     return normalizeFromV2(input);
   }
   return normalizeFromV1(input);
