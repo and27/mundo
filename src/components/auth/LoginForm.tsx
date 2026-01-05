@@ -6,6 +6,7 @@ import Button from "../ui/Button";
 import { loginUser } from "@/services/authService";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useAsyncSubmit } from "@/hooks/useAsyncSubmit";
+import { toast } from "sonner";
 
 interface LoginData {
   email: string;
@@ -26,29 +27,23 @@ const LoginForm: React.FC = () => {
   });
   const [errors, setErrors] = useState<LoginErrors>({});
   const { isSubmitting, run } = useAsyncSubmit();
-  const [apiFeedback, setApiFeedback] = useState<{
-    type: "success" | "error";
-    message: string;
-  } | null>(null);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setLoginData((prev) => ({ ...prev, [name]: value }));
     setErrors((prev) => ({ ...prev, [name]: undefined }));
-    setApiFeedback(null);
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrors({});
-    setApiFeedback(null);
 
     const newErrors: LoginErrors = {};
     if (!loginData.email) {
       newErrors.email = "El correo es obligatorio.";
     }
     if (!loginData.password) {
-      newErrors.password = "La contraseña es obligatoria.";
+      newErrors.password = "La contrase兀 es obligatoria.";
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -60,10 +55,7 @@ const LoginForm: React.FC = () => {
       try {
         const result = await loginUser(loginData);
 
-        setApiFeedback({
-          type: "success",
-          message: result.message,
-        });
+        toast.success(result.message);
         setUser({
           id: result.userId,
           email: result.email,
@@ -75,10 +67,7 @@ const LoginForm: React.FC = () => {
         router.push("/parentDashboard");
       } catch (error) {
         if (error instanceof Error) {
-          setApiFeedback({
-            type: "error",
-            message: error.message || "Error al iniciar sesion",
-          });
+          toast.error(error.message || "Error al iniciar sesion");
         }
       }
     });
@@ -86,20 +75,8 @@ const LoginForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-      {apiFeedback && (
-        <div
-          className={`my-5 p-3 rounded-md text-sm ${
-            apiFeedback.type === "success"
-              ? "bg-green-100 border border-green-400 text-green-700"
-              : "bg-red-100 border border-red-400 text-red-700"
-          }`}
-          role="alert"
-        >
-          {apiFeedback.message}
-        </div>
-      )}
       <InputWithLabel
-        label="Correo Electrónico"
+        label="Correo Electr▋ico"
         name="email"
         type="text"
         value={loginData.email}
@@ -107,7 +84,7 @@ const LoginForm: React.FC = () => {
         error={errors.email}
       />
       <InputWithLabel
-        label="Contraseña"
+        label="Contrase兀"
         name="password"
         type="password"
         value={loginData.password}
@@ -126,5 +103,3 @@ const LoginForm: React.FC = () => {
 };
 
 export default LoginForm;
-
-

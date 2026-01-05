@@ -3,6 +3,7 @@ import { Chakra_Petch, Quicksand } from "next/font/google";
 import "./globals.css";
 import { ClientLayoutWrapper } from "./layout/ClientLayoutWrapper";
 import Script from "next/script";
+import { Toaster } from "sonner";
 
 const chakra = Chakra_Petch({
   variable: "--font-chakra",
@@ -33,6 +34,7 @@ export default function RootLayout({
     <html lang="es" className={`${chakra.variable} ${quicksand.variable}`}>
       <body className="font-sans antialiased bg-emotion-default">
         <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
+        <Toaster richColors position="top-right" />
         <Script id="register-sw" strategy="afterInteractive">
           {`if ("serviceWorker" in navigator) { window.addEventListener("load", () => { navigator.serviceWorker.register("/sw.js", { scope: "/", updateViaCache: "none" }).catch(() => {}); }); }`}
         </Script>
