@@ -13,6 +13,8 @@ import {
 import { useRouter } from "next/navigation";
 import Button from "../ui/Button";
 import { useAuthStore } from "@/store/useAuthStore";
+import type { ParentGuideSection } from "@/types/ai";
+import { getGuideSections } from "@/lib/guideSections";
 
 interface PillarContentProps {
   guide: GuideWithCharacter;
@@ -27,13 +29,25 @@ export const MetaphorContent: React.FC<PillarContentProps> = ({
 }) => {
   const router = useRouter();
   const accessToken = useAuthStore((state) => state.user?.accessToken);
+  const sections = getGuideSections(guide);
+  const metaphorSection = sections.find(
+    (section) => section.kind === "metaphor"
+  ) as ParentGuideSection | undefined;
+  const metaphorContent =
+    metaphorSection && "content" in metaphorSection
+      ? metaphorSection.content
+      : undefined;
   const handleStartExperience = async () => {
     if (!setLoading) return;
     try {
       setLoading(true);
-      const characterId = guide.characterId ?? guide.character;
+      const characterId = guide.characterId;
       if (!characterId) {
         throw new Error("characterId missing for story export");
+      }
+      const emotionId = guide.emotionId;
+      if (!emotionId) {
+        throw new Error("emotionId missing for story export");
       }
       const res = await fetch("/api/story/export", {
         method: "POST",
@@ -42,7 +56,7 @@ export const MetaphorContent: React.FC<PillarContentProps> = ({
           ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
         },
         body: JSON.stringify({
-          emotion: guide.emotion,
+          emotion: emotionId,
           character: characterId,
         }),
       });
@@ -81,7 +95,7 @@ export const MetaphorContent: React.FC<PillarContentProps> = ({
       </div>
       <div className="flex items-start gap-3 border border-primary-200 p-5">
         <p className="text-sm md:text-md text-neutral-700 leading-relaxed flex-1">
-          {guide.metaphorStory ?? "Contenido no disponible."}
+          {metaphorContent ?? "Contenido no disponible."}
         </p>
       </div>
     </div>
@@ -92,9 +106,21 @@ export const MetaphorContent: React.FC<PillarContentProps> = ({
 export const ConversationContent: React.FC<PillarContentProps> = ({
   guide,
 }) => {
+  const sections = getGuideSections(guide);
+  const languageSection = sections.find(
+    (section) => section.kind === "language"
+  ) as ParentGuideSection | undefined;
+  const questions =
+    languageSection && "questions" in languageSection
+      ? languageSection.questions ?? []
+      : [];
+  const phrases =
+    languageSection && "phrases" in languageSection
+      ? languageSection.phrases ?? []
+      : [];
   return (
     <div className="space-y-6">
-      {guide.conversationPlan?.questionsToExplore?.length > 0 && (
+      {questions.length > 0 && (
         <div className="border border-primary-200 rounded-xl p-4">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-6 h-6 bg-primary-100 rounded-full flex items-center justify-center">
@@ -105,7 +131,7 @@ export const ConversationContent: React.FC<PillarContentProps> = ({
             </h4>
           </div>
           <div className="space-y-2">
-            {guide.conversationPlan.questionsToExplore.map((q, i) => (
+            {questions.map((q, i) => (
               <div key={i} className="flex items-start gap-2">
                 <CheckCircle className="w-4 h-4 text-primary-500 mt-0.5 flex-shrink-0" />
                 <p className="text-sm text-slate-700">{q}</p>
@@ -115,7 +141,7 @@ export const ConversationContent: React.FC<PillarContentProps> = ({
         </div>
       )}
 
-      {guide.conversationPlan?.phrasesToValidate?.length > 0 && (
+      {phrases.length > 0 && (
         <div className="border border-primary-200 rounded-xl p-4">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-6 h-6 bg-primary-100 rounded-full flex items-center justify-center">
@@ -126,7 +152,7 @@ export const ConversationContent: React.FC<PillarContentProps> = ({
             </h4>
           </div>
           <div className="space-y-2">
-            {guide.conversationPlan.phrasesToValidate.map((p, i) => (
+            {phrases.map((p, i) => (
               <div
                 key={i}
                 className="bg-white/70 rounded-lg p-3 border border-primary-200"
@@ -143,15 +169,31 @@ export const ConversationContent: React.FC<PillarContentProps> = ({
 
 // ACTIVITY CONTENT
 export const ActivityContent: React.FC<PillarContentProps> = ({ guide }) => {
+  const sections = getGuideSections(guide);
+  const practiceSection = sections.find(
+    (section) => section.kind === "practice"
+  ) as ParentGuideSection | undefined;
+  const activityTitle =
+    practiceSection && "title" in practiceSection
+      ? practiceSection.title
+      : undefined;
+  const activityDescription =
+    practiceSection && "description" in practiceSection
+      ? practiceSection.description
+      : undefined;
+  const activityMaterials =
+    practiceSection && "materials" in practiceSection
+      ? practiceSection.materials
+      : undefined;
   return (
     <div className="mt-5 space-y-4">
       <div className="border border-primary-200 rounded-xl p-4">
         <h4 className="font-semibold text-slate-800 mb-2 flex items-center gap-2">
           <Star className="w-4 h-4" />
-          {guide.suggestedActivity?.title ?? "Actividad Sugerida"}
+          {activityTitle ?? "Actividad Sugerida"}
         </h4>
         <p className="text-slate-700 mb-4 leading-relaxed">
-          {guide.suggestedActivity?.description ?? ""}
+          {activityDescription ?? ""}
         </p>
 
         <div className="bg-white/70 rounded-lg p-3 border border-primary-200">
@@ -161,7 +203,7 @@ export const ActivityContent: React.FC<PillarContentProps> = ({ guide }) => {
               Materiales necesarios:
             </span>
             <span className="text-slate-700">
-              {guide.suggestedActivity?.materials ?? "No especificados."}
+              {activityMaterials ?? "No especificados."}
             </span>
           </p>
         </div>

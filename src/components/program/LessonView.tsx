@@ -6,29 +6,12 @@ import ChipTabs from "@/components/ui/ChipTabs";
 import ParentResources from "@/components/program/ParentResources";
 import { program } from "@/data/program";
 import { guides } from "@/lib/guides";
+import { getGuideSections } from "@/lib/guideSections";
+import type { ActionableGuide, ParentGuideSection } from "@/types/ai";
 
 type TabId = "cuento" | "acompanamiento";
 
-type GuideDetails = {
-  guideTitle: string;
-  emotionId?: string;
-  tags?: string[];
-  understanding?: { title: string; content: string };
-  normalization?: string[];
-  metaphorStory?: string;
-  conversationPlan?: {
-    phrasesToValidate: string[];
-    questionsToExplore: string[];
-  };
-  strategies?: { title: string; items: string[] }[];
-  suggestedActivity?: {
-    title: string;
-    description: string;
-    materials: string;
-  };
-  reflectionPrompts?: string[];
-  resources?: string[];
-};
+type GuideDetails = ActionableGuide;
 
 function SectionCard({
   title,
@@ -89,13 +72,13 @@ export default function ProgramLessonView() {
       <section className="mi-section">
         <div className="max-w-3xl mx-auto px-4 text-center mi-stack-md">
           <p className="text-neutral-600 text-lg">
-            Este módulo no existe o no se pudo cargar.
+            Este modulo no existe o no se pudo cargar.
           </p>
           <button
             onClick={() => router.push("/parentDashboard?section=program")}
             className="text-primary-600 hover:text-primary-700 underline font-medium"
           >
-            Regresar al Programa
+            Regresar al programa
           </button>
         </div>
       </section>
@@ -104,11 +87,50 @@ export default function ProgramLessonView() {
 
   const guide = guides[programLesson.guideId] as GuideDetails | undefined;
   const [activeTab, setActiveTab] = useState<TabId>("cuento");
+  const sections = guide ? getGuideSections(guide) : [];
 
   const emotionLabel = useMemo(() => {
-    if (!guide?.emotionId) return "—";
+    if (!guide?.emotionId) return "-";
     return guide.emotionId;
   }, [guide?.emotionId]);
+
+  const getSection = (kind: ParentGuideSection["kind"]) =>
+    sections.find((section) => section.kind === kind) as
+      | ParentGuideSection
+      | undefined;
+
+  const metaphor = getSection("metaphor");
+  const language = getSection("language");
+  const practice = getSection("practice");
+  const understanding = getSection("understanding");
+  const normalization = getSection("normalization");
+  const reflection = getSection("reflection");
+  const notes = getSection("notes");
+  const strategies = sections.filter(
+    (section) => section.kind === "strategies"
+  ) as ParentGuideSection[];
+
+  const metaphorContent =
+    metaphor && "content" in metaphor ? metaphor.content : undefined;
+  const languagePhrases =
+    language && "phrases" in language ? language.phrases : [];
+  const languageQuestions =
+    language && "questions" in language ? language.questions ?? [] : [];
+  const practiceTitle =
+    practice && "title" in practice ? practice.title : undefined;
+  const practiceDescription =
+    practice && "description" in practice ? practice.description : undefined;
+  const practiceMaterials =
+    practice && "materials" in practice ? practice.materials : undefined;
+  const understandingContent =
+    understanding && "content" in understanding
+      ? understanding.content
+      : undefined;
+  const normalizationItems =
+    normalization && "bullets" in normalization ? normalization.bullets : [];
+  const reflectionItems =
+    reflection && "prompts" in reflection ? reflection.prompts : [];
+  const notesItems = notes && "items" in notes ? notes.items : [];
 
   return (
     <div className="max-w-5xl px-5 md:px-10 mi-stack-lg">
@@ -119,11 +141,11 @@ export default function ProgramLessonView() {
           }
           className="text-neutral-500 text-sm font-medium w-fit"
         >
-          ← Volver al programa
+           Volver al programa
         </button>
 
         <span className="text-xs uppercase tracking-[0.2em] text-neutral-400">
-          Módulo {programLesson.order}
+          Modulo {programLesson.order}
         </span>
       </div>
 
@@ -157,8 +179,8 @@ export default function ProgramLessonView() {
                 </SectionCard>
 
                 <SectionCard title="Practica sugerida">
-                  {guide?.suggestedActivity ? (
-                    guide.suggestedActivity.title
+                  {practiceTitle ? (
+                    practiceTitle
                   ) : (
                     <span className="text-neutral-500">
                       Practica en preparacion.
@@ -166,21 +188,24 @@ export default function ProgramLessonView() {
                   )}
                 </SectionCard>
 
-                {guide?.understanding && (
-                  <SectionCard title={guide.understanding.title}>
-                    {guide.understanding.content}
+                {understandingContent && (
+                  <SectionCard title="Comprender">
+                    {understandingContent}
                   </SectionCard>
                 )}
 
-                {guide?.normalization?.length ? (
+                {normalizationItems.length > 0 ? (
                   <SectionCard title="Normalizar">
-                    <BulletList items={guide.normalization} />
+                    <BulletList items={normalizationItems} />
                   </SectionCard>
                 ) : null}
               </div>
 
               <div className="grid md:grid-cols-2 gap-4">
-                <SectionCard title="Experiencia vivencial" description="Para el nino">
+                <SectionCard
+                  title="Experiencia vivencial"
+                  description="Para el nino"
+                >
                   <p>
                     El nino vive esta experiencia directamente a traves del
                     cuento interactivo.
@@ -189,7 +214,10 @@ export default function ProgramLessonView() {
                     No es necesario explicar ni corregir durante el proceso.
                   </p>
                 </SectionCard>
-                <SectionCard title="Tiempo sugerido" description="Sesiones breves">
+                <SectionCard
+                  title="Tiempo sugerido"
+                  description="Sesiones breves"
+                >
                   8-12 minutos en un espacio tranquilo.
                 </SectionCard>
               </div>
@@ -197,55 +225,58 @@ export default function ProgramLessonView() {
           )}
           {activeTab === "acompanamiento" && guide && (
             <div className="mi-stack-lg">
-              {guide.metaphorStory && (
-                <SectionCard title="Lectura simbólica">
-                  {guide.metaphorStory}
+              {metaphorContent && (
+                <SectionCard title="Lectura simbolica">
+                  {metaphorContent}
                 </SectionCard>
               )}
 
-              {guide.conversationPlan?.phrasesToValidate?.length ? (
-                <SectionCard title="Lenguaje para acompañar">
-                  <BulletList
-                    items={guide.conversationPlan.phrasesToValidate}
-                  />
+              {languagePhrases.length > 0 ? (
+                <SectionCard title="Lenguaje para acompanar">
+                  <BulletList items={languagePhrases} />
                 </SectionCard>
               ) : null}
 
-              {guide.conversationPlan?.questionsToExplore?.length ? (
+              {languageQuestions.length > 0 ? (
                 <SectionCard title="Preguntas para explorar">
-                  <BulletList
-                    items={guide.conversationPlan.questionsToExplore}
-                  />
+                  <BulletList items={languageQuestions} />
                 </SectionCard>
               ) : null}
 
-              {guide.strategies?.length ? (
+              {strategies.length > 0 ? (
                 <div className="grid md:grid-cols-2 gap-4">
-                  {guide.strategies.map((strategy) => (
-                    <SectionCard key={strategy.title} title={strategy.title}>
-                      <BulletList items={strategy.items} />
+                  {strategies.map((strategy) => (
+                    <SectionCard
+                      key={strategy.title}
+                      title={strategy.title || ""}
+                    >
+                      {"items" in strategy ? (
+                        <BulletList items={strategy.items} />
+                      ) : null}
                     </SectionCard>
                   ))}
                 </div>
               ) : null}
 
-              {guide.suggestedActivity && (
-                <SectionCard title={guide.suggestedActivity.title}>
-                  <p>{guide.suggestedActivity.description}</p>
-                  <p className="mt-2 text-xs text-neutral-500">
-                    Materiales: {guide.suggestedActivity.materials}
-                  </p>
+              {practiceTitle && practiceDescription && (
+                <SectionCard title={practiceTitle}>
+                  <p>{practiceDescription}</p>
+                  {practiceMaterials && (
+                    <p className="mt-2 text-xs text-neutral-500">
+                      Materiales: {practiceMaterials}
+                    </p>
+                  )}
                 </SectionCard>
               )}
 
-              {guide.reflectionPrompts?.length ? (
-                <SectionCard title="Reflexión adulta">
-                  <BulletList items={guide.reflectionPrompts} />
+              {reflectionItems.length > 0 ? (
+                <SectionCard title="Reflexion adulta">
+                  <BulletList items={reflectionItems} />
                 </SectionCard>
               ) : null}
 
-              {guide.resources?.length ? (
-                <ParentResources resources={guide.resources} />
+              {notesItems.length > 0 ? (
+                <ParentResources resources={notesItems} />
               ) : null}
             </div>
           )}
@@ -254,7 +285,3 @@ export default function ProgramLessonView() {
     </div>
   );
 }
-
-
-
-

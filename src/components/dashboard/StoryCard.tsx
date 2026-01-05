@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Heart, Clock, Trash2 } from "lucide-react";
-import { GuideWithCharacter } from "@/types/ai";
+import type { GuideWithCharacter, ParentGuideSection } from "@/types/ai";
+import { getGuideSections } from "@/lib/guideSections";
 
 interface StoryCardProps {
   guide: GuideWithCharacter;
@@ -12,22 +13,43 @@ interface StoryCardProps {
   createdAt?: string;
 }
 
-const getSummary = (guide: GuideWithCharacter) => {
-  const parts: string[] = [];
-  if (guide.metaphorStory) parts.push("Metáfora");
-  if (guide.conversationPlan?.phrasesToValidate?.length)
-    parts.push("Validación emocional");
-  if (guide.suggestedActivity?.title) parts.push("Actividad guiada");
-  return parts.join(" · ");
+const getMetaphorContent = (sections: ParentGuideSection[]) => {
+  const metaphor = sections.find((section) => section.kind === "metaphor");
+  return metaphor && "content" in metaphor ? metaphor.content : "";
 };
 
 export const getDuration = (guide: GuideWithCharacter) => {
-  let words = 0;
-  words += guide.metaphorStory?.split(" ").length || 0;
-  words +=
-    guide.conversationPlan?.questionsToExplore.join(" ").split(" ").length || 0;
-  words += guide.suggestedActivity?.description?.split(" ").length || 0;
-  return `${Math.max(1, Math.ceil(words / 200))} min`;
+  const sections = getGuideSections(guide);
+  const wordCount = sections.reduce((acc, section) => {
+    if (section.kind === "metaphor") {
+      return acc + section.content.split(" ").length;
+    }
+    if (section.kind === "language") {
+      const phrases = section.phrases.join(" ");
+      const questions = section.questions?.join(" ") ?? "";
+      return acc + phrases.split(" ").length + questions.split(" ").length;
+    }
+    if (section.kind === "practice") {
+      return acc + section.description.split(" ").length;
+    }
+    if (section.kind === "understanding") {
+      return acc + section.content.split(" ").length;
+    }
+    if (section.kind === "normalization") {
+      return acc + section.bullets.join(" ").split(" ").length;
+    }
+    if (section.kind === "strategies") {
+      return acc + section.items.join(" ").split(" ").length;
+    }
+    if (section.kind === "reflection") {
+      return acc + section.prompts.join(" ").split(" ").length;
+    }
+    if (section.kind === "notes") {
+      return acc + section.items.join(" ").split(" ").length;
+    }
+    return acc;
+  }, 0);
+  return `${Math.max(1, Math.ceil(wordCount / 200))} min`;
 };
 
 const formatShortDate = (value: string) => {
@@ -52,6 +74,8 @@ export default function StoryCard({
   createdAt,
 }: StoryCardProps) {
   const isKids = variant === "kids";
+  const sections = getGuideSections(guide);
+  const description = getMetaphorContent(sections);
 
   return (
     <article className="bg-white border border-neutral-200 rounded-2xl overflow-hidden transition hover:shadow-sm">
@@ -88,9 +112,11 @@ export default function StoryCard({
           <p className="text-sm text-neutral-500">Con {guide.characterId}</p>
         </header>
 
-        <p className="text-sm text-neutral-600 line-clamp-2">
-          {getSummary(guide)}
-        </p>
+        {description && (
+          <p className="text-sm text-neutral-600 line-clamp-2">
+            {description}
+          </p>
+        )}
         {createdAt && (
           <div className="text-xs text-neutral-400">
             Guardado: {formatShortDate(createdAt)}
@@ -118,7 +144,7 @@ export default function StoryCard({
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                if (window.confirm("¿Eliminar este cuento?")) {
+                if (window.confirm("Eliminar este cuento?")) {
                   onDelete();
                 }
               }}
