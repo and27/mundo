@@ -15,6 +15,7 @@ import Button from "../ui/Button";
 import { useAuthStore } from "@/store/useAuthStore";
 import type { ParentGuideSection } from "@/types/ai";
 import { getGuideSections } from "@/lib/guideSections";
+import { toast } from "sonner";
 
 interface PillarContentProps {
   guide: GuideWithCharacter;
@@ -41,7 +42,7 @@ export const MetaphorContent: React.FC<PillarContentProps> = ({
     if (!setLoading) return;
     try {
       setLoading(true);
-      const characterId = guide.characterId;
+      const characterId = guide.characterId ?? guide.character;
       if (!characterId) {
         throw new Error("characterId missing for story export");
       }
@@ -68,15 +69,15 @@ export const MetaphorContent: React.FC<PillarContentProps> = ({
 
       const data = await res.json();
       if (data.cached) {
-        console.log("♻️ Historia reutilizada desde caché:", data.url);
+        console.log("?? Historia reutilizada desde cach‚:", data.url);
       } else {
-        console.log("✨ Historia generada nueva:", data.story.id);
+        console.log("? Historia generada nueva:", data.story.id);
       }
 
       router.push(`/cuentos/${data.story.id}`);
     } catch (err) {
       console.error("Error generando experiencia digital", err);
-      alert("Ocurrió un error generando la historia.");
+      toast.error("Ocurrio un error generando la historia.");
     } finally {
       setLoading(false);
     }

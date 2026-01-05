@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Heart, Clock, Trash2 } from "lucide-react";
 import type { GuideWithCharacter, ParentGuideSection } from "@/types/ai";
 import { getGuideSections } from "@/lib/guideSections";
+import { toast } from "sonner";
 
 interface StoryCardProps {
   guide: GuideWithCharacter;
@@ -77,6 +78,20 @@ export default function StoryCard({
   const sections = getGuideSections(guide);
   const description = getMetaphorContent(sections);
 
+  const handleDelete = () => {
+    if (!onDelete) return;
+    toast("Eliminar este cuento?", {
+      action: {
+        label: "Eliminar",
+        onClick: () => onDelete(),
+      },
+      cancel: {
+        label: "Cancelar",
+      },
+      duration: 5000,
+    });
+  };
+
   return (
     <article className="bg-white border border-neutral-200 rounded-2xl overflow-hidden transition hover:shadow-sm">
       <div className="relative h-24">
@@ -144,9 +159,7 @@ export default function StoryCard({
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                if (window.confirm("Eliminar este cuento?")) {
-                  onDelete();
-                }
+                handleDelete();
               }}
               className="p-2 rounded-lg text-neutral-400 hover:text-red-500 hover:bg-red-50 transition"
               aria-label="Eliminar"
