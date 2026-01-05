@@ -13,9 +13,7 @@ export function useSavedGuides() {
     ? { Authorization: `Bearer ${user.accessToken}` }
     : {};
   const normalizeGuide = (guide: GuideWithCharacter): GuideWithCharacter => {
-    const emotionId =
-      guide.emotionId ||
-      (typeof guide.emotion === "string" ? guide.emotion : guide.emotion?.id);
+    const emotionId = guide.emotionId;
     const characterId =
       guide.characterId ||
       // @ts-expect-error legacy guides might have a "character" field
@@ -25,7 +23,7 @@ export function useSavedGuides() {
 
     return {
       ...guide,
-      emotionId: emotionId ?? guide.emotionId,
+      emotionId: emotionId,
       characterId: characterId ?? guide.characterId,
     };
   };

@@ -96,7 +96,7 @@ export async function POST(request: Request) {
       .from("saved_guides")
       .update({
         title: guide.guideTitle,
-        emotion: guide.emotion,
+        emotion: guide.emotionId,
         character: guide.characterId,
         guide_id: guide.characterId,
         story_url: storyUrl,
@@ -113,7 +113,7 @@ export async function POST(request: Request) {
       story_url: storyUrl,
       title: guide.guideTitle,
       guide_id: guide.characterId,
-      emotion: guide.emotion,
+      emotion: guide.emotionId,
       character: guide.characterId,
     });
 
