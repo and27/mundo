@@ -1,4 +1,8 @@
-import type { ActionableGuide, EmotionId } from "@/types/ai";
+import type {
+  ActionableGuide,
+  EmotionId,
+  ParentGuideSection,
+} from "@/types/ai";
 import type { ParentGuideV1 } from "@/schemas/parentGuide.v1";
 import type { ParentGuideV2 } from "@/schemas/parentGuide.v2";
 
@@ -12,53 +16,43 @@ function normalizeEmotionId(value: string): EmotionId | undefined {
 }
 
 function normalizeFromV1(input: ParentGuideV1): ActionableGuide {
+  const sections: ParentGuideSection[] = [
+    {
+      kind: "metaphor",
+      title: "Cuento",
+      content: input.metaphorStory,
+    },
+    {
+      kind: "language",
+      title: "Acompanamiento",
+      phrases: input.conversationPlan.phrasesToValidate,
+      questions: input.conversationPlan.questionsToExplore,
+    },
+    {
+      kind: "practice",
+      title: input.suggestedActivity.title,
+      description: input.suggestedActivity.description,
+      materials: input.suggestedActivity.materials,
+    },
+  ];
   return {
     id: input.id,
     guideTitle: input.guideTitle,
     emotionId: normalizeEmotionId(input.emotion),
     tags: input.tags ?? [],
-    metaphorStory: input.metaphorStory,
-    conversationPlan: input.conversationPlan,
-    suggestedActivity: input.suggestedActivity,
     riskAssessment: input.riskAssessment,
+    sections,
   };
 }
 
 function normalizeFromV2(input: ParentGuideV2): ActionableGuide {
-  const metaphor = input.sections.find((s) => s.kind === "metaphor");
-  const language = input.sections.find((s) => s.kind === "language");
-  const practice = input.sections.find((s) => s.kind === "practice");
-  const understanding = input.sections.find((s) => s.kind === "understanding");
-  const normalization = input.sections.find((s) => s.kind === "normalization");
-  const strategies = input.sections.find((s) => s.kind === "strategies");
-  const reflection = input.sections.find((s) => s.kind === "reflection");
-  const notes = input.sections.find((s) => s.kind === "notes");
-
   return {
     id: input.id,
     guideTitle: input.guideTitle,
     emotionId: normalizeEmotionId(input.emotion),
     tags: input.tags ?? [],
-    understanding: understanding
-      ? { title: understanding.title, content: understanding.content }
-      : undefined,
-    normalization: normalization ? normalization.bullets : undefined,
-    metaphorStory: metaphor ? metaphor.content : "",
-    conversationPlan: {
-      phrasesToValidate: language?.phrases ?? [],
-      questionsToExplore: language?.questions ?? [],
-    },
-    strategies: strategies
-      ? [{ title: strategies.title, items: strategies.items }]
-      : undefined,
-    suggestedActivity: {
-      title: practice?.title ?? "",
-      description: practice?.description ?? "",
-      materials: practice?.materials ?? "",
-    },
-    reflectionPrompts: reflection ? reflection.prompts : undefined,
-    resources: notes ? notes.items : undefined,
     riskAssessment: input.riskAssessment,
+    sections: input.sections,
   };
 }
 

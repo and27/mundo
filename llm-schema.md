@@ -1,7 +1,8 @@
 # LLM Schema Guide (Parent Guide)
 
 This project uses explicit schemas for LLM outputs. The goal is to keep the
-runtime model stable while allowing the LLM output shape to evolve safely.
+runtime model stable around `sections[]` while allowing the LLM output shape to
+evolve safely.
 
 ## Current output contract
 
@@ -37,7 +38,7 @@ The API route `src/app/api/generate-guide/route.ts`:
 
 4) Update normalization
    - File: `src/lib/llm/normalize/parentGuide.ts`
-   - Map the new output shape to the stable runtime model.
+   - Map the new output shape to the runtime `sections[]` model.
 
 5) Update API fallback
    - File: `src/app/api/generate-guide/route.ts`
@@ -81,6 +82,6 @@ Optional section kinds:
 
 ## Runtime model stability
 
-UI code should depend on the runtime model (`ActionableGuide`) and not on the
-raw LLM output. When the prompt changes, only the schema and normalizer should
-need updates.
+UI code should depend on `sections[]` (via `ActionableGuide.sections`) and not
+on the raw LLM output. When the prompt changes, only the schema and normalizer
+should need updates.
