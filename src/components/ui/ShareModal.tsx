@@ -10,7 +10,7 @@ import {
   HiOutlineChevronDown,
   HiOutlineUserCircle,
   HiOutlineChatAlt,
-  HiOutlineCheckCircle, // Importado para el mensaje de éxito
+  HiOutlineCheckCircle,
 } from "react-icons/hi";
 import { motion, AnimatePresence } from "framer-motion";
 

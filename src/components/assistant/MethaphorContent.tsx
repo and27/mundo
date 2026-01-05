@@ -16,6 +16,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import type { ParentGuideSection } from "@/types/ai";
 import { getGuideSections } from "@/lib/guideSections";
 import { toast } from "sonner";
+import { authFetch } from "@/lib/authFetch";
 
 interface PillarContentProps {
   guide: GuideWithCharacter;
@@ -29,7 +30,6 @@ export const MetaphorContent: React.FC<PillarContentProps> = ({
   setLoading,
 }) => {
   const router = useRouter();
-  const accessToken = useAuthStore((state) => state.user?.accessToken);
   const sections = getGuideSections(guide);
   const metaphorSection = sections.find(
     (section) => section.kind === "metaphor"
@@ -50,11 +50,10 @@ export const MetaphorContent: React.FC<PillarContentProps> = ({
       if (!emotionId) {
         throw new Error("emotionId missing for story export");
       }
-      const res = await fetch("/api/story/export", {
+      const res = await authFetch("/api/story/export", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
         },
         body: JSON.stringify({
           emotion: emotionId,

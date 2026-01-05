@@ -1,6 +1,7 @@
 import { GuideWithCharacter } from "@/types/ai";
 import { useEffect, useState } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
+import { authFetch } from "@/lib/authFetch";
 
 export function useSavedGuides() {
   const [savedGuides, setSavedGuides] = useState<GuideWithCharacter[]>([]);
@@ -9,9 +10,6 @@ export function useSavedGuides() {
   );
   const [isLoaded, setIsLoaded] = useState(false);
   const user = useAuthStore((state) => state.user);
-  const authHeaders: Record<string, string> = user?.accessToken
-    ? { Authorization: `Bearer ${user.accessToken}` }
-    : {};
   const normalizeGuide = (guide: GuideWithCharacter): GuideWithCharacter => {
     const emotionId = guide.emotionId;
     const characterId = guide.characterId || guide.character;
@@ -32,9 +30,7 @@ export function useSavedGuides() {
       }
 
       try {
-        const res = await fetch(`/api/saved-guides`, {
-          headers: authHeaders,
-        });
+        const res = await authFetch(`/api/saved-guides`);
         if (!res.ok) {
           throw new Error("Error loading saved guides");
         }
@@ -67,9 +63,9 @@ export function useSavedGuides() {
       throw new Error("User not authenticated");
     }
     const normalizedGuide = normalizeGuide(guide);
-    const res = await fetch("/api/saved-guides", {
+    const res = await authFetch("/api/saved-guides", {
       method: "POST",
-      headers: { "Content-Type": "application/json", ...authHeaders },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ guide: normalizedGuide }),
     });
 
@@ -95,9 +91,9 @@ export function useSavedGuides() {
     if (!user?.id) {
       throw new Error("User not authenticated");
     }
-    const res = await fetch("/api/saved-guides", {
+    const res = await authFetch("/api/saved-guides", {
       method: "DELETE",
-      headers: { "Content-Type": "application/json", ...authHeaders },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ storyId: id }),
     });
 

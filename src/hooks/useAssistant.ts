@@ -1,15 +1,16 @@
 import { GuideWithCharacter } from "@/types/ai";
 import { useState, useEffect } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
+import { authFetch } from "@/lib/authFetch";
 
 const loadingMessages = [
   "Contactando a Aynia...",
   "Analizando tu consulta...",
   "Paso 1: Generando el borrador creativo...",
-  "Consultando el libro de sabiduría...",
+  "Consultando el libro de sabidur｛...",
   "Paso 2: Auditando con Ayni Guard...",
   "Verificando la calidad y seguridad...",
-  "¡Casi listo! Preparando tu guía...",
+  "耶asi listo! Preparando tu gu｛...",
 ];
 
 export function useMundoAssistant() {
@@ -19,7 +20,6 @@ export function useMundoAssistant() {
   const [loadingMessage, setLoadingMessage] = useState<string>(
     loadingMessages[0]
   );
-  const accessToken = useAuthStore((state) => state.user?.accessToken);
 
   useEffect(() => {
     if (isLoading) {
@@ -44,11 +44,10 @@ export function useMundoAssistant() {
     setLoadingMessage(loadingMessages[0]);
 
     try {
-      const response = await fetch("/api/generate-guide", {
+      const response = await authFetch("/api/generate-guide", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
         },
         body: JSON.stringify({ query, useOpenAI: true }),
       });

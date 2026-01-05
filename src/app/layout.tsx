@@ -34,7 +34,7 @@ export default function RootLayout({
     <html lang="es" className={`${chakra.variable} ${quicksand.variable}`}>
       <body className="font-sans antialiased bg-emotion-default">
         <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
-        <Toaster richColors position="top-center" />
+        <Toaster richColors position="top-right" />
         <Script id="register-sw" strategy="afterInteractive">
           {`if ("serviceWorker" in navigator) { window.addEventListener("load", () => { navigator.serviceWorker.register("/sw.js", { scope: "/", updateViaCache: "none" }).catch(() => {}); }); }`}
         </Script>
