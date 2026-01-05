@@ -22,6 +22,12 @@ export async function authFetch(
   if (response.status === 401 && requireAuth) {
     clearUser();
     toast.error("Sesion expirada. Inicia sesion nuevamente.");
+    if (typeof window !== "undefined") {
+      const path = window.location.pathname;
+      if (path !== "/register") {
+        window.location.href = "/register?tab=login";
+      }
+    }
   }
 
   return response;

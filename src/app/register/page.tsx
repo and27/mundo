@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiShieldCheck } from "react-icons/hi2";
 import { FiArrowRight } from "react-icons/fi";
@@ -9,10 +9,18 @@ import RegisterForm from "@/components/auth/RegisterForm";
 import InfoPanel from "@/components/auth/AuthInfoPanel";
 import Link from "next/link";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 
 export default function AuthPage() {
+  const searchParams = useSearchParams();
+  const initialTab =
+    searchParams.get("tab") === "login" ? "login" : "register";
   const [activeTab, setActiveTab] = useState<"register" | "login">("register");
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setActiveTab(initialTab);
+  }, [initialTab]);
 
   const handleTabChange = (tab: "register" | "login") => {
     if (tab === activeTab) return;
