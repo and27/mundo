@@ -61,7 +61,7 @@ const parentGuideSectionSchema = z.discriminatedUnion("kind", [
   notesSection,
 ]);
 
-export const parentGuideV2Schema = z
+const baseParentGuideV2Schema = z
   .object({
     schema_version: z.literal("parent_guide.v2"),
     id: z.string().min(1),
@@ -79,7 +79,10 @@ export const parentGuideV2Schema = z
       .optional(),
     characterId: z.string().optional(),
   })
-  .superRefine((val, ctx) => {
+  .passthrough();
+
+export const parentGuideV2Schema = baseParentGuideV2Schema.superRefine(
+  (val, ctx) => {
     const kinds = new Set(val.sections.map((s) => s.kind));
     const required: Array<typeof val.sections[number]["kind"]> = [
       "metaphor",
@@ -95,7 +98,7 @@ export const parentGuideV2Schema = z
         });
       }
     });
-  })
-  .passthrough();
+  }
+);
 
 export type ParentGuideV2 = z.infer<typeof parentGuideV2Schema>;
