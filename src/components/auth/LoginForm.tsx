@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Button from "../ui/Button";
 import { loginUser } from "@/services/authService";
 import { useAuthStore } from "@/store/useAuthStore";
+import { useAsyncSubmit } from "@/hooks/useAsyncSubmit";
 
 interface LoginData {
   email: string;
@@ -24,7 +25,7 @@ const LoginForm: React.FC = () => {
     password: "",
   });
   const [errors, setErrors] = useState<LoginErrors>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { isSubmitting, run } = useAsyncSubmit();
   const [apiFeedback, setApiFeedback] = useState<{
     type: "success" | "error";
     message: string;
@@ -39,7 +40,6 @@ const LoginForm: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSubmitting(true);
     setErrors({});
     setApiFeedback(null);
 
@@ -53,35 +53,35 @@ const LoginForm: React.FC = () => {
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      setIsSubmitting(false);
       return;
     }
 
-    try {
-      const result = await loginUser(loginData);
+    await run(async () => {
+      try {
+        const result = await loginUser(loginData);
 
-      setApiFeedback({
-        type: "success",
-        message: result.message,
-      });
-      setUser({
-        id: result.userId,
-        email: result.email,
-        displayName: result.display_name,
-        role: result.role,
-        onboardingCompleted: result.onboarding_completed,
-        accessToken: result.accessToken ?? null,
-      });
-      setIsSubmitting(false);
-      router.push("/parentDashboard");
-    } catch (error) {
-      if (error instanceof Error) {
         setApiFeedback({
-          type: "error",
-          message: error.message || "Error al iniciar sesion",
+          type: "success",
+          message: result.message,
         });
+        setUser({
+          id: result.userId,
+          email: result.email,
+          displayName: result.display_name,
+          role: result.role,
+          onboardingCompleted: result.onboarding_completed,
+          accessToken: result.accessToken ?? null,
+        });
+        router.push("/parentDashboard");
+      } catch (error) {
+        if (error instanceof Error) {
+          setApiFeedback({
+            type: "error",
+            message: error.message || "Error al iniciar sesion",
+          });
+        }
       }
-    }
+    });
   };
 
   return (
