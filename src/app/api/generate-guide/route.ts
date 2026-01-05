@@ -1,9 +1,12 @@
 import { NextResponse } from "next/server";
-import { create3PillarGuidePrompt } from "@/lib/prompts";
+import { createParentGuidePromptV2 } from "@/lib/prompts";
 // import { createAuditorPrompt } from "@/lib/prompts"; // COMENTADO PARA DEMO - Reactivar en producción
-import { ActionableGuide } from "@/types/ai";
 import OpenAI from "openai";
 import { getAuthUser } from "@/lib/apiAuth";
+import { parseLlmJson } from "@/lib/llm/parse";
+import { normalizeParentGuide } from "@/lib/llm/normalize/parentGuide";
+import type { ParentGuideV1 } from "@/schemas/parentGuide.v1";
+import type { ParentGuideV2 } from "@/schemas/parentGuide.v2";
 
 // ✅ FUNCIÓN ORIGINAL - DeepSeek
 async function callDeepSeek(prompt: string): Promise<string> {
@@ -71,7 +74,7 @@ export async function POST(request: Request) {
       `Aynia (${aiProvider}) - Generando cuento personalizado con metodología MIM...`
     );
 
-    const generatorPrompt = create3PillarGuidePrompt(userQuery);
+    const generatorPrompt = createParentGuidePromptV2(userQuery);
 
     // 🎯 USAR LA FUNCIÓN SEGÚN EL PARÁMETRO
     const guideString = useOpenAI
@@ -92,11 +95,23 @@ export async function POST(request: Request) {
     */
 
     // Usar directamente la respuesta de Aynia para demo
-    const finalGuide: ActionableGuide = JSON.parse(guideString);
+    const parsed = parseLlmJson<ParentGuideV1 | ParentGuideV2>(
+      guideString,
+      "parent_guide.v2"
+    );
+    if (!parsed.ok) {
+      console.error("Invalid LLM response:", parsed.error);
+      return NextResponse.json(
+        { error: "Invalid AI response.", details: parsed.error },
+        { status: 502 }
+      );
+    }
+
+    const finalGuide = normalizeParentGuide(parsed.data);
 
     return NextResponse.json({
       ...finalGuide,
-      _metadata: { aiProvider }, // Para saber cuál se usó
+      _metadata: { aiProvider, schemaVersion: parsed.schemaVersion }, // Para saber cuál se usó
     });
   } catch (error) {
     if (error instanceof Error) {
@@ -108,5 +123,3 @@ export async function POST(request: Request) {
     }
   }
 }
-
-
