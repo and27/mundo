@@ -86,7 +86,11 @@ export default function ModeToggle({
   };
 
   const trigger = (
-    <button className={`${getTriggerStyles()} ${className}`}>
+    <button
+      className={`${getTriggerStyles()} ${className}`}
+      aria-label="Cambiar modo"
+      aria-haspopup="menu"
+    >
       <div className={getIconStyles()}>{modeConfig.icon}</div>
       <span className={`hidden sm:inline ${getTextColor()}`}>
         {modeConfig.label}
