@@ -39,6 +39,8 @@ export default function ModeOption({
   return (
     <button
       onClick={onClick}
+      role="menuitem"
+      tabIndex={-1}
       className={`w-full flex items-center gap-3 p-3 rounded-lg text-left transition-all duration-200 ${
         isActive
           ? `${colors.bg} border ${colors.border} ${colors.text}`

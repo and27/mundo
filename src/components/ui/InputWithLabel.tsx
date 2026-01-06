@@ -25,6 +25,7 @@ const InputWithLabel: React.FC<InputLabelProps> = ({
   const togglePasswordVisibility = () => {
     setInputType((prevType) => (prevType === "password" ? "text" : "password"));
   };
+  const isPasswordVisible = inputType === "text";
 
   return (
     <div className="relative w-full mb-4">
@@ -56,6 +57,10 @@ const InputWithLabel: React.FC<InputLabelProps> = ({
           type="button"
           className="bg-transparent p-0 absolute right-4 top-3.5 text-icon-color"
           onClick={togglePasswordVisibility}
+          aria-label={
+            isPasswordVisible ? "Ocultar contraseña" : "Mostrar contraseña"
+          }
+          aria-pressed={isPasswordVisible}
         >
           <FaEye color="white" />
         </button>
