@@ -11,11 +11,33 @@ import Button from "@/components/ui/Button";
 import { HiSparkles } from "react-icons/hi2";
 
 const inspirationalQuotes = [
-  "Cada emoción es un tesoro por descubrir.",
-  "Tu mundo interior está lleno de magia.",
+  "Cada emoci¢n es un tesoro por descubrir.",
+  "Tu mundo interior est  lleno de magia.",
   "Descubre la fortaleza que llevas dentro.",
   "Un viaje de mil emociones empieza con un solo paso.",
 ];
+
+const containerVariants = {
+  hidden: { opacity: 0, y: 18 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.85,
+      ease: [0.16, 1, 0.3, 1],
+      staggerChildren: 0.12,
+    },
+  },
+} as const;
+
+const panelVariants = {
+  hidden: { opacity: 0, y: 10 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+  },
+} as const;
 
 /* ======================================================
    WELCOME PANEL
@@ -32,42 +54,44 @@ const WelcomePanel: React.FC = memo(() => {
   }, []);
 
   return (
-    <div className="relative flex flex-col items-center justify-center text-center px-8 py-10">
-      <div className="absolute -top-40 md:-top-50 max-w-32 md:max-w-48">
-        <Image
-          priority
-          src="/images/yachwithkuntur.png"
-          alt="Yachay, guía de Mundo Interior"
-          width={180}
-          height={180}
-          className="rounded-full object-contain"
-        />
-      </div>
+    <motion.div variants={panelVariants}>
+      <div className="relative flex flex-col items-center justify-center text-center px-8 py-10">
+        <div className="absolute -top-40 md:-top-50 max-w-32 md:max-w-48">
+          <Image
+            priority
+            src="/images/yachwithkuntur.png"
+            alt="Yachay, gu¡a de Mundo Interior"
+            width={180}
+            height={180}
+            className="rounded-full object-contain"
+          />
+        </div>
 
-      <motion.h1
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-        className="text-3xl md:text-4xl font-bold text-white tracking-tight"
-      >
-        Bienvenido a <br /> Mundo Interior
-      </motion.h1>
+        <motion.h1
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="text-3xl md:text-4xl font-bold text-white tracking-tight"
+        >
+          Bienvenido a <br /> Mundo Interior
+        </motion.h1>
 
-      <div className="md:mt-6 hidden md:flex h-12 items-center justify-center">
-        <AnimatePresence mode="wait">
-          <motion.p
-            key={currentQuote}
-            initial={{ opacity: 0, y: -6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 6 }}
-            transition={{ duration: 0.4 }}
-            className="text-white/70 italic"
-          >
-            “{inspirationalQuotes[currentQuote]}”
-          </motion.p>
-        </AnimatePresence>
+        <div className="md:mt-6 hidden md:flex h-12 items-center justify-center">
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={currentQuote}
+              initial={{ opacity: 0, y: -6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 6 }}
+              transition={{ duration: 0.4 }}
+              className="text-white/70 italic"
+            >
+              "{inspirationalQuotes[currentQuote]}"
+            </motion.p>
+          </AnimatePresence>
+        </div>
       </div>
-    </div>
+    </motion.div>
   );
 });
 WelcomePanel.displayName = "WelcomePanel";
@@ -89,7 +113,7 @@ const ActionPanel: React.FC<ActionPanelProps> = memo(
         isLoading ? (
           <div className="flex items-center gap-3">
             <AiOutlineLoading3Quarters className="w-5 h-5 animate-spin" />
-            <span>Preparando…</span>
+            <span>Preparando.</span>
           </div>
         ) : (
           <div className="flex items-center gap-3">
@@ -101,53 +125,45 @@ const ActionPanel: React.FC<ActionPanelProps> = memo(
     );
 
     return (
-      <div className="flex flex-col items-center justify-center text-center px-8 md:py-12">
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="mi-stack-md"
-        >
-          <p className="text-white/70 max-w-sm">
-            Un espacio para escuchar historias y acompañar emociones.
-          </p>
-        </motion.div>
+      <motion.div variants={panelVariants}>
+        <div className="flex flex-col items-center justify-center text-center px-8 md:py-12">
+          <motion.div className="mi-stack-md">
+            <p className="text-white/70 max-w-sm">
+              Un espacio para escuchar historias y acompa¤ar emociones.
+            </p>
+          </motion.div>
 
-        <motion.div
-          className="w-full max-w-xs mt-8"
-          initial={{ opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.8 }}
-        >
-          <Link href={name ? "/onboarding/emotion" : "/onboarding/name"}>
-            <motion.div
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.96 }}
-              onClick={onStartJourney}
-              className="mb-4"
-            >
-              <Button className="w-full" disabled={isLoading} variant="primary">
-                {primaryButtonContent}
-              </Button>
-            </motion.div>
-          </Link>
+          <div className="w-full max-w-xs mt-8">
+            <Link href={name ? "/onboarding/emotion" : "/onboarding/name"}>
+              <motion.div
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.96 }}
+                onClick={onStartJourney}
+                className="mb-4"
+              >
+                <Button className="w-full" disabled={isLoading} variant="primary">
+                  {primaryButtonContent}
+                </Button>
+              </motion.div>
+            </Link>
 
-          <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
-            <Link
-              href="/register"
-              className="
+            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
+              <Link
+                href="/register?tab=login"
+                className="
                 w-full inline-flex items-center justify-center gap-3
                 px-6 py-3 rounded-xl font-semibold
                 glass-light text-white/80 hover:text-white
                 transition-colors underline
               "
-            >
-              <FiUsers className="w-5 h-5" />
-              <span>Iniciar sesion</span>
-            </Link>
-          </motion.div>
-        </motion.div>
-      </div>
+              >
+                <FiUsers className="w-5 h-5" />
+                <span>Iniciar sesion</span>
+              </Link>
+            </motion.div>
+          </div>
+        </div>
+      </motion.div>
     );
   }
 );
@@ -164,9 +180,9 @@ export default function WelcomeExperience() {
   return (
     <main className="mi-canvas-app min-h-screen flex items-center justify-center px-4 py-16">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        variants={containerVariants}
+        initial="hidden"
+        animate="show"
         className="w-full max-w-5xl mx-auto"
       >
         <div className="border border-white/20 grid md:grid-cols-2 rounded-2xl py-5">
@@ -181,4 +197,3 @@ export default function WelcomeExperience() {
     </main>
   );
 }
-

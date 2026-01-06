@@ -30,7 +30,7 @@ const ChipTabs: React.FC<ChipTabsProps> = ({
 
   return (
     <div className={`flex justify-center ${className}`}>
-      <div className="relative flex w-full md:w-auto justify-between md:gap-2 rounded-2xl bg-slate-100 p-1 text-center">
+      <div className="relative flex w-full max-w-md justify-between rounded-2xl bg-slate-100 p-1 text-center">
         <div
           className="pointer-events-none absolute inset-1 rounded-xl mi-card shadow-sm transition-transform duration-300 ease-out"
           style={{
@@ -42,7 +42,7 @@ const ChipTabs: React.FC<ChipTabsProps> = ({
           <button
             key={tab.id}
             onClick={() => onTabChange(tab.id)}
-            className={`w-xs xl:w-sm text-xs md:text-sm relative z-10 flex-1 md:flex-none rounded-xl px-4 py-2 font-semibold transition-all duration-300 ${
+            className={`text-xs md:text-sm relative z-10 flex-1 rounded-xl px-3 md:px-4 py-2 font-semibold transition-all duration-300 ${
               activeTab === tab.id
                 ? "text-white"
                 : "text-slate-500 hover:text-primary-700"

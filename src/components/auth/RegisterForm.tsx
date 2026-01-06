@@ -51,17 +51,17 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
     const newErrors: RegistrationErrors = {};
 
     if (!email) {
-      newErrors.email = "El correo electr½nico es obligatorio.";
+      newErrors.email = "El correo electrónico es obligatorio.";
     } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = "Formato de correo electr½nico invÿlido.";
+      newErrors.email = "Formato de correo electrónico invÿlido.";
     }
     if (!password) {
-      newErrors.password = "La contraseÏa es obligatoria.";
+      newErrors.password = "La contraseña es obligatoria.";
     } else if (password.length < 6) {
-      newErrors.password = "La contraseÏa debe tener al menos 6 caracteres.";
+      newErrors.password = "La contraseña debe tener al menos 6 caracteres.";
     }
     if (password !== confirmPassword) {
-      newErrors.confirmPassword = "Las contraseÏas no coinciden.";
+      newErrors.confirmPassword = "Las contraseñas no coinciden.";
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -83,7 +83,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
         if (onSuccess) onSuccess();
       } catch (error) {
         if (error instanceof Error)
-          toast.error(error.message || "Ocurri½ un error en el registro.");
+          toast.error(error.message || "Ocurrió un error en el registro.");
       }
     });
   };
@@ -91,7 +91,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-5">
       <InputWithLabel
-        label="Correo Electr½nico"
+        label="Correo Electrónico"
         name="email"
         type="email"
         value={registrationData.email}
@@ -99,7 +99,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
         error={errors.email}
       />
       <InputWithLabel
-        label="ContraseÏa"
+        label="Contraseña"
         name="password"
         type="password"
         value={registrationData.password}
@@ -107,7 +107,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
         error={errors.password}
       />
       <InputWithLabel
-        label="Confirmar ContraseÏa"
+        label="Confirmar Contraseña"
         name="confirmPassword"
         type="password"
         value={registrationData.confirmPassword}
@@ -141,7 +141,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
             Educador/Maestro
           </option>
           <option value="therapist" className="text-gray-700 bg-white">
-            Terapeuta/Psic½logo
+            Terapeuta/Psicólogo
           </option>
           <option value="other" className="text-gray-700 bg-white">
             Otro

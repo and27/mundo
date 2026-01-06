@@ -3,18 +3,53 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiShieldCheck } from "react-icons/hi2";
-import { FiArrowRight } from "react-icons/fi";
 import LoginForm from "@/components/auth/LoginForm";
 import RegisterForm from "@/components/auth/RegisterForm";
 import InfoPanel from "@/components/auth/AuthInfoPanel";
 import Link from "next/link";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
+import ChipTabs from "@/components/ui/ChipTabs";
+
+const containerVariants = {
+  hidden: { opacity: 0, y: 18 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.85,
+      ease: [0.16, 1, 0.3, 1],
+      staggerChildren: 0.12,
+    },
+  },
+} as const;
+
+const panelVariants = {
+  hidden: { opacity: 0, y: 10 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+  },
+} as const;
+
+const formVariants = {
+  hidden: { opacity: 0, y: 12 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] },
+  },
+  exit: {
+    opacity: 0,
+    y: -8,
+    transition: { duration: 0.25, ease: [0.16, 1, 0.3, 1] },
+  },
+} as const;
 
 export default function AuthPage() {
   const searchParams = useSearchParams();
-  const initialTab =
-    searchParams.get("tab") === "login" ? "login" : "register";
+  const initialTab = searchParams.get("tab") === "login" ? "login" : "register";
   const [activeTab, setActiveTab] = useState<"register" | "login">("register");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -24,11 +59,7 @@ export default function AuthPage() {
 
   const handleTabChange = (tab: "register" | "login") => {
     if (tab === activeTab) return;
-    setIsLoading(true);
-    setTimeout(() => {
-      setActiveTab(tab);
-      setIsLoading(false);
-    }, 150);
+    setActiveTab(tab);
   };
 
   const handleRegistrationSuccess = () => {
@@ -42,9 +73,9 @@ export default function AuthPage() {
   return (
     <main className="mi-canvas-auth min-h-screen flex items-center justify-center px-4 py-16">
       <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
+        variants={containerVariants}
+        initial="hidden"
+        animate="show"
         className="w-full max-w-6xl"
       >
         <div className="mx-auto flex justify-center mb-2 md:mb-5 md:-mt-10">
@@ -60,53 +91,43 @@ export default function AuthPage() {
         </div>
         <div className="rounded-3xl md:border border-white/10 overflow-hidden">
           <div className="flex flex-col lg:flex-row min-h-[640px]">
-            <InfoPanel activeTab={activeTab} />
+            <motion.div variants={panelVariants} className="flex-1 min-w-0">
+              <InfoPanel activeTab={activeTab} />
+            </motion.div>
 
-            <section className="flex-1 px-0 md:px-6 py-10 lg:px-12 lg:py-14 flex flex-col">
+            <motion.section
+              variants={panelVariants}
+              className="flex-1 min-w-0 min-w-0 px-0 md:px-6 py-10 lg:px-12 lg:py-14 flex flex-col"
+            >
               <header className="mi-stack-md mb-12">
-                <div className="flex rounded-2xl p-1 mi-surface-soft">
-                  {(["register", "login"] as const).map((tab) => {
-                    const isActive = activeTab === tab;
-                    return (
-                      <button
-                        key={tab}
-                        onClick={() => handleTabChange(tab)}
-                        disabled={isLoading}
-                        className={[
-                          "relative flex-1 py-3 px-2 md:px-6 rounded-xl text-sm font-semibold transition-all",
-                          isActive
-                            ? "mi-cta-primary shadow-lg"
-                            : "text-white/70 hover:text-white hover:mi-accent-soft",
-                        ].join(" ")}
-                      >
-                        {isLoading && isActive && (
-                          <motion.span
-                            className="absolute inset-0 bg-white/20"
-                            initial={{ x: "-100%" }}
-                            animate={{ x: "100%" }}
-                            transition={{ duration: 0.5, repeat: Infinity }}
-                          />
-                        )}
-                        <span className="relative z-10 inline-flex items-center gap-2">
-                          {tab === "register"
-                            ? "Registrarme"
-                            : "Iniciar sesion"}
-                          {isActive && <FiArrowRight className="w-4 h-4" />}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
+                <ChipTabs
+                  tabs={[
+                    { id: "register", label: "Registrarme" },
+                    { id: "login", label: "Iniciar sesion" },
+                  ]}
+                  activeTab={activeTab}
+                  onTabChange={(tabId) =>
+                    handleTabChange(tabId as "register" | "login")
+                  }
+                />
+                {isLoading && (
+                  <motion.span
+                    className="mt-3 block h-1 w-full rounded-full bg-white/20"
+                    initial={{ x: "-100%" }}
+                    animate={{ x: "100%" }}
+                    transition={{ duration: 0.5, repeat: Infinity }}
+                  />
+                )}
               </header>
 
               <div className="flex-1">
-                <AnimatePresence mode="wait">
+                <AnimatePresence mode="sync">
                   <motion.div
                     key={activeTab}
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -16 }}
-                    transition={{ duration: 0.25, ease: "easeOut" }}
+                    variants={formVariants}
+                    initial="hidden"
+                    animate="show"
+                    exit="exit"
                     className="h-full"
                   >
                     {activeTab === "register" && (
@@ -123,14 +144,13 @@ export default function AuthPage() {
                   <span>Mundo es una plataforma confiable.</span>
                 </div>
                 <p className="text-white/40 text-xs">
-                  Al continuar, aceptas nuestros términos y condiciones
+                  Al continuar, aceptas nuestros tＳminos y condiciones
                 </p>
               </footer>
-            </section>
+            </motion.section>
           </div>
         </div>
       </motion.div>
     </main>
   );
 }
-

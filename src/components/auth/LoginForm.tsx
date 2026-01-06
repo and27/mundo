@@ -43,7 +43,7 @@ const LoginForm: React.FC = () => {
       newErrors.email = "El correo es obligatorio.";
     }
     if (!loginData.password) {
-      newErrors.password = "La contrase兀 es obligatoria.";
+      newErrors.password = "La contraseña es obligatoria.";
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -76,7 +76,7 @@ const LoginForm: React.FC = () => {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-5">
       <InputWithLabel
-        label="Correo Electr▋ico"
+        label="Correo Electrónico"
         name="email"
         type="text"
         value={loginData.email}
@@ -84,7 +84,7 @@ const LoginForm: React.FC = () => {
         error={errors.email}
       />
       <InputWithLabel
-        label="Contrase兀"
+        label="Contraseña"
         name="password"
         type="password"
         value={loginData.password}
