@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useId } from "react";
 
 interface DropdownProps {
   trigger: React.ReactElement<
@@ -18,9 +18,7 @@ export default function Dropdown({
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
-  const menuId = useRef(
-    `dropdown-${Math.random().toString(36).slice(2)}`
-  ).current;
+  const menuId = useId();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

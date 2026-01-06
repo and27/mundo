@@ -87,6 +87,7 @@ export default function StoryCard({
       },
       cancel: {
         label: "Cancelar",
+        onClick: () => {},
       },
       duration: 5000,
     });
@@ -128,9 +129,7 @@ export default function StoryCard({
         </header>
 
         {description && (
-          <p className="text-sm text-neutral-600 line-clamp-2">
-            {description}
-          </p>
+          <p className="text-sm text-neutral-600 line-clamp-2">{description}</p>
         )}
         {createdAt && (
           <div className="text-xs text-neutral-400">

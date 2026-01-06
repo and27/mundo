@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiShieldCheck } from "react-icons/hi2";
 import LoginForm from "@/components/auth/LoginForm";
@@ -47,9 +47,10 @@ const formVariants = {
   },
 } as const;
 
-export default function AuthPage() {
+function AuthPageContent() {
   const searchParams = useSearchParams();
-  const initialTab = searchParams.get("tab") === "login" ? "login" : "register";
+  const initialTab =
+    searchParams.get("tab") === "login" ? "login" : "register";
   const [activeTab, setActiveTab] = useState<"register" | "login">("register");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -91,13 +92,13 @@ export default function AuthPage() {
         </div>
         <div className="rounded-3xl md:border border-white/10 overflow-hidden">
           <div className="flex flex-col lg:flex-row min-h-[640px]">
-            <motion.div variants={panelVariants} className="flex-1 min-w-0">
+            <motion.div variants={panelVariants} className="flex-1">
               <InfoPanel activeTab={activeTab} />
             </motion.div>
 
             <motion.section
               variants={panelVariants}
-              className="flex-1 min-w-0 min-w-0 px-0 md:px-6 py-10 lg:px-12 lg:py-14 flex flex-col"
+              className="flex-1 px-0 md:px-6 py-10 lg:px-12 lg:py-14 flex flex-col"
             >
               <header className="mi-stack-md mb-12">
                 <ChipTabs
@@ -152,5 +153,13 @@ export default function AuthPage() {
         </div>
       </motion.div>
     </main>
+  );
+}
+
+export default function AuthPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen" />}>
+      <AuthPageContent />
+    </Suspense>
   );
 }
