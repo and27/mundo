@@ -456,9 +456,7 @@ body {
   .mi-cta-secondary {
     background-color: var(--color-primary-600);
     color: white;
-  }
-
-  .mi-cta-secondary:hover {
+  }\n  .mi-cta-secondary:hover {
     background-color: var(--color-primary-700);
   }
 
