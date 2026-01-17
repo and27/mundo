@@ -310,6 +310,19 @@ export default function ProgramLessonView() {
     (tab) => tab.id === resolvedCompanionTabId,
   );
 
+  const orderedLessons = [...program.lessons].sort(
+    (a, b) => a.order - b.order
+  );
+  const currentIndex = orderedLessons.findIndex(
+    (lesson) => lesson.id === programLesson.id
+  );
+  const prevLesson =
+    currentIndex > 0 ? orderedLessons[currentIndex - 1] : null;
+  const nextLesson =
+    currentIndex >= 0 && currentIndex < orderedLessons.length - 1
+      ? orderedLessons[currentIndex + 1]
+      : null;
+
   return (
     <div className="max-w-5xl px-5 md:px-10 mi-stack-lg">
       <div className="flex flex-wrap items-center justify-between gap-3">
@@ -468,6 +481,52 @@ export default function ProgramLessonView() {
           )}
         </div>
       </section>
+
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <button
+          onClick={() =>
+            prevLesson &&
+            router.push(
+              `/parentDashboard?section=program&lesson=${prevLesson.order}`
+            )
+          }
+          disabled={!prevLesson}
+          className={`rounded-2xl border px-5 py-3 text-left text-sm transition ${
+            prevLesson
+              ? "border-neutral-200 bg-white text-neutral-700 hover:border-neutral-300 hover:shadow-sm"
+              : "border-neutral-100 bg-neutral-50 text-neutral-300 cursor-not-allowed"
+          }`}
+        >
+          <span className="text-xs uppercase tracking-[0.24em] text-neutral-400 block">
+            Anterior
+          </span>
+          <span className="font-semibold">
+            {prevLesson?.title ?? "Sin modulo anterior"}
+          </span>
+        </button>
+
+        <button
+          onClick={() =>
+            nextLesson &&
+            router.push(
+              `/parentDashboard?section=program&lesson=${nextLesson.order}`
+            )
+          }
+          disabled={!nextLesson}
+          className={`rounded-2xl border px-5 py-3 text-left text-sm transition ${
+            nextLesson
+              ? "border-neutral-200 bg-white text-neutral-700 hover:border-neutral-300 hover:shadow-sm"
+              : "border-neutral-100 bg-neutral-50 text-neutral-300 cursor-not-allowed"
+          }`}
+        >
+          <span className="text-xs uppercase tracking-[0.24em] text-neutral-400 block">
+            Siguiente
+          </span>
+          <span className="font-semibold">
+            {nextLesson?.title ?? "Sin modulo siguiente"}
+          </span>
+        </button>
+      </div>
     </div>
   );
 }
