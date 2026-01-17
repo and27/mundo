@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { LogOut, Mail, User } from "lucide-react";
+import Link from "next/link";
+import { LogOut, Mail, User, Wand2, BookOpenCheck, Sparkles } from "lucide-react";
 import { logoutUser } from "@/services/authService";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useOnboardingStore } from "@/store/useOnboardingStore";
@@ -9,13 +10,15 @@ export default function SettingsSection() {
   const router = useRouter();
   const user = useAuthStore((state) => state.user);
   const clearUser = useAuthStore((state) => state.clearUser);
+  const name = useOnboardingStore((state) => state.name);
+  const setName = useOnboardingStore((state) => state.setName);
   const showSubtitles = useOnboardingStore((state) => state.showSubtitles);
   const toggleSubtitles = useOnboardingStore((state) => state.toggleSubtitles);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const displayName = useMemo(
-    () => user?.displayName || user?.email || "Explorador",
-    [user]
+    () => name || user?.displayName || user?.email || "Explorador",
+    [name, user]
   );
 
   const handleLogout = async () => {
@@ -30,11 +33,13 @@ export default function SettingsSection() {
   };
 
   return (
-    <div className="space-y-6">
-      <header className="space-y-2">
-        <h2 className="mi-text-title text-neutral-800">Ajustes</h2>
+    <div className="max-w-4xl px-5 md:px-20 mi-stack-md">
+      <header className="mi-section-header">
+        <h1 className="mi-text-title-lg text-neutral-800 mi-section-title">
+          Ajustes
+        </h1>
         <p className="mi-text-body text-neutral-600">
-          Configura tu perfil, preferencias y opciones de seguridad.
+          Configura tu perfil, personaliza la experiencia y gestiona tu cuenta.
         </p>
       </header>
 
@@ -47,18 +52,21 @@ export default function SettingsSection() {
             <div>
               <h3 className="mi-text-subtitle text-neutral-800">Perfil</h3>
               <p className="mi-text-body-sm text-neutral-500">
-                Datos principales de la cuenta.
+                Personaliza los datos principales.
               </p>
             </div>
           </div>
 
           <div className="space-y-3">
-            <div className="flex items-center justify-between">
+            <label className="space-y-1 block">
               <span className="mi-text-body-sm text-neutral-500">Nombre</span>
-              <span className="mi-text-body text-neutral-700">
-                {displayName}
-              </span>
-            </div>
+              <input
+                value={displayName}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full rounded-xl border border-neutral-200 px-3 py-2 mi-text-body text-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary-200"
+                placeholder="Escribe tu nombre"
+              />
+            </label>
             <div className="flex items-center justify-between">
               <span className="mi-text-body-sm text-neutral-500">Correo</span>
               <span className="mi-text-body text-neutral-700">
@@ -106,6 +114,42 @@ export default function SettingsSection() {
       </section>
 
       <section className="bg-white border border-neutral-200 rounded-2xl p-5 space-y-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h3 className="mi-text-subtitle text-neutral-800">
+              Accesos rapidos
+            </h3>
+            <p className="mi-text-body-sm text-neutral-500">
+              Atajos a las secciones principales.
+            </p>
+          </div>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-3">
+          <Link
+            href="/parentDashboard?section=program"
+            className="flex items-center gap-2 rounded-xl border border-neutral-200 px-4 py-3 mi-text-label text-neutral-700 hover:border-neutral-300 hover:shadow-sm transition"
+          >
+            <BookOpenCheck className="w-4 h-4 text-neutral-500" />
+            Emociones en accion
+          </Link>
+          <Link
+            href="/parentDashboard?section=asistente"
+            className="flex items-center gap-2 rounded-xl border border-neutral-200 px-4 py-3 mi-text-label text-neutral-700 hover:border-neutral-300 hover:shadow-sm transition"
+          >
+            <Sparkles className="w-4 h-4 text-neutral-500" />
+            Crear cuento
+          </Link>
+          <Link
+            href="/parentDashboard?section=guides"
+            className="flex items-center gap-2 rounded-xl border border-neutral-200 px-4 py-3 mi-text-label text-neutral-700 hover:border-neutral-300 hover:shadow-sm transition"
+          >
+            <Wand2 className="w-4 h-4 text-neutral-500" />
+            Mis cuentos
+          </Link>
+        </div>
+      </section>
+
+      <section className="bg-white border border-neutral-200 rounded-2xl p-5 space-y-4">
         <h3 className="mi-text-subtitle text-neutral-800">Seguridad</h3>
         <p className="mi-text-body-sm text-neutral-600">
           Controla el acceso a tu cuenta.
@@ -121,7 +165,7 @@ export default function SettingsSection() {
           }`}
         >
           <LogOut className="w-4 h-4" />
-          {isLoggingOut ? "Cerrando sesión..." : "Cerrar sesión"}
+          {isLoggingOut ? "Cerrando sesion..." : "Cerrar sesion"}
         </button>
       </section>
     </div>

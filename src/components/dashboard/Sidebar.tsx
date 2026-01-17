@@ -220,7 +220,7 @@ const Sidebar: React.FC<SidebarProps> = ({
               </button>
             )}
           </div>
-                    <button
+          <button
             onClick={handleLogout}
             disabled={isLoggingOut}
             className={[
@@ -239,7 +239,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
             {!isDesktopCollapsed && (
               <span className="ml-3 text-sm font-semibold">
-                {isLoggingOut ? "Cerrando." : "Cerrar sesión"}
+                {isLoggingOut ? "Cerrando." : "Cerrar sesion"}
               </span>
             )}
           </button>
@@ -250,6 +250,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 };
 
 export default Sidebar;
+
 
 
 
