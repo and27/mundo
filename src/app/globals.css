@@ -120,6 +120,19 @@
   --ease-out: cubic-bezier(0, 0, 0.2, 1);
   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* === TYPOGRAPHY SCALE === */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --leading-tight: 1.2;
+  --leading-snug: 1.35;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.7;
 }
 
 /* === RESET BÁSICO === */
@@ -535,6 +548,51 @@ body {
     display: flex;
     flex-direction: column;
     gap: var(--space-3); /* 12px */
+  }
+
+  /* ======================================================
+     TYPOGRAPHY - Semantic text styles
+     ====================================================== */
+
+  .mi-text-title {
+    font-size: var(--text-2xl);
+    line-height: var(--leading-tight);
+    font-weight: 700;
+  }
+
+  .mi-text-title-lg {
+    font-size: var(--text-3xl);
+    line-height: var(--leading-tight);
+    font-weight: 700;
+  }
+
+  .mi-text-subtitle {
+    font-size: var(--text-lg);
+    line-height: var(--leading-snug);
+    font-weight: 600;
+  }
+
+  .mi-text-body {
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
+  }
+
+  .mi-text-body-sm {
+    font-size: var(--text-sm);
+    line-height: var(--leading-normal);
+  }
+
+  .mi-text-label {
+    font-size: var(--text-sm);
+    line-height: var(--leading-snug);
+    font-weight: 600;
+  }
+
+  .mi-text-caption {
+    font-size: var(--text-xs);
+    line-height: var(--leading-snug);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
   }
 
   .pb-safe {

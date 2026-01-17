@@ -122,17 +122,21 @@ export default function StoryCard({
 
       <div className="p-5 space-y-2">
         <header className="space-y-1">
-          <h3 className="text-base font-semibold text-neutral-800 line-clamp-1">
+          <h3 className="mi-text-subtitle text-neutral-800 line-clamp-1">
             {guide.guideTitle}
           </h3>
-          <p className="text-sm text-neutral-500">Con {guide.characterId}</p>
+          <p className="mi-text-body-sm text-neutral-500">
+            Con {guide.characterId}
+          </p>
         </header>
 
         {description && (
-          <p className="text-sm text-neutral-600 line-clamp-2">{description}</p>
+          <p className="mi-text-body-sm text-neutral-600 line-clamp-2">
+            {description}
+          </p>
         )}
         {createdAt && (
-          <div className="text-xs text-neutral-400">
+          <div className="mi-text-caption text-neutral-400">
             Guardado: {formatShortDate(createdAt)}
           </div>
         )}
@@ -149,7 +153,7 @@ export default function StoryCard({
             Ver cuento
           </button>
 
-          <span className="text-xs text-neutral-500 flex items-center gap-1">
+          <span className="mi-text-caption text-neutral-500 flex items-center gap-1">
             <Clock size={14} />
             {getDuration(guide)}
           </span>

@@ -335,16 +335,16 @@ export default function ProgramLessonView() {
            Volver al programa
         </button>
 
-        <span className="text-xs uppercase tracking-[0.2em] text-neutral-400">
+        <span className="mi-text-caption text-neutral-400">
           Modulo {programLesson.order}
         </span>
       </div>
 
       <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm space-y-4">
-        <h1 className="text-2xl md:text-3xl font-bold text-neutral-800">
+        <h1 className="mi-text-title md:mi-text-title-lg text-neutral-800">
           {programLesson.title}
         </h1>
-        <p className="text-neutral-600">
+        <p className="mi-text-body text-neutral-600">
           {guide?.guideTitle || "Guia de acompanamiento emocional"}
         </p>
         {guide?.tags?.length ? <PillList items={guide.tags} /> : null}
