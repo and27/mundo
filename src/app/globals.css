@@ -55,6 +55,15 @@
   --color-action-600: #eab308;
   --color-action-700: #ca8a04;
 
+  /* === BREATHING / GUIDED VISUALS === */
+  --color-breath-warm: #ffda63;
+  --color-breath-warm-strong: #ffe082;
+  --color-breath-cool: #aed5f5;
+  --color-breath-glow-warm: rgba(255, 218, 99, 0.5);
+  --color-breath-glow-warm-strong: rgba(255, 224, 130, 0.6);
+  --color-breath-glow-warm-soft: rgba(255, 224, 130, 0.4);
+  --color-breath-glow-cool: rgba(174, 213, 245, 0.5);
+
   --surface-glass-soft: rgba(255, 255, 255, 0.06);
   --surface-glass-strong: rgba(0, 0, 0, 0.8);
 

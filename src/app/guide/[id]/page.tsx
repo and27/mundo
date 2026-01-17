@@ -23,24 +23,28 @@ const InteractiveBreathingVisual = ({ phase }: { phase: BreathingPhase }) => {
   // Determina el estilo basado en la fase actual (inhale, hold, exhale)
   // Usaremos clases de Tailwind y quizás alguna variable de estilo inline para la animación
   let scale = 1;
-  let color = "#FFDA63"; // Dorado base cálido
+  let color = "var(--color-breath-warm)"; // Dorado base cálido
+  let glow = "var(--color-breath-glow-warm)";
   let opacity = 0.8;
   const internalPatternClass = "pattern-water-subtle"; // Clase CSS para el patrón
 
   switch (phase) {
     case "inhale":
       scale = 1.25;
-      color = "#FFE082";
+      color = "var(--color-breath-warm-strong)";
+      glow = "var(--color-breath-glow-warm-strong)";
       opacity = 1;
       break;
     case "hold":
       scale = 1.25;
-      color = "#FFE082";
+      color = "var(--color-breath-warm-strong)";
+      glow = "var(--color-breath-glow-warm-soft)";
       opacity = 0.9;
       break;
     case "exhale":
       scale = 1;
-      color = "#AED5F5";
+      color = "var(--color-breath-cool)";
+      glow = "var(--color-breath-glow-cool)";
       opacity = 0.7;
       break;
     // case "pause": // Si tienes una pausa entre ciclos
@@ -59,7 +63,7 @@ const InteractiveBreathingVisual = ({ phase }: { phase: BreathingPhase }) => {
         transform: `scale(${scale})`,
         backgroundColor: color,
         opacity: opacity,
-        boxShadow: `0 0 30px 10px ${color}60`,
+        boxShadow: `0 0 30px 10px ${glow}`,
       }}
     >
       <div
@@ -83,7 +87,9 @@ const ProgressDots = ({
         <div
           key={index}
           className={`w-3 h-3 rounded-full transition-colors duration-300 ${
-            index <= completed ? "bg-[#FFDA63]" : "bg-gray-600" // Dorado si completado, gris si no
+            index <= completed
+              ? "bg-[var(--color-breath-warm)]"
+              : "bg-neutral-600" // Dorado si completado, gris si no
           }`}
         />
       ))}

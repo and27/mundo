@@ -6,24 +6,24 @@ type Props = {
 
 const BreathingVisual = ({ phase }: Props) => {
   let scale = 1;
-  let color = "#FFDA63";
-  let glow = "#FFDA6380";
+  let color = "var(--color-breath-warm)";
+  let glow = "var(--color-breath-glow-warm)";
 
   switch (phase) {
     case "inhale":
       scale = 1.25;
-      color = "#FFE082";
-      glow = "#FFE08299";
+      color = "var(--color-breath-warm-strong)";
+      glow = "var(--color-breath-glow-warm-strong)";
       break;
     case "hold":
       scale = 1.25;
-      color = "#FFE082";
-      glow = "#FFE08266";
+      color = "var(--color-breath-warm-strong)";
+      glow = "var(--color-breath-glow-warm-soft)";
       break;
     case "exhale":
       scale = 1;
-      color = "#AED5F5";
-      glow = "#AED5F580";
+      color = "var(--color-breath-cool)";
+      glow = "var(--color-breath-glow-cool)";
       break;
     default:
       break;
