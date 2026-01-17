@@ -79,8 +79,8 @@ export function ExplorerJournalCard({
           </div>
 
           <div>
-            <h3 className="text-xl font-bold text-slate-800">{child.name}</h3>
-            <p className="text-slate-600 text-sm font-medium">
+            <h3 className="mi-text-subtitle text-slate-800">{child.name}</h3>
+            <p className="mi-text-body-sm text-slate-600 font-medium">
               {child.lastActivity}
             </p>
             {child.lastActivityDetail && (
@@ -101,7 +101,7 @@ export function ExplorerJournalCard({
               >
                 {child.emotionalScore}
               </div>
-              <div className="text-xs text-slate-500 font-medium">
+              <div className="mi-text-caption text-slate-500 font-medium">
                 Bienestar
               </div>
             </div>
@@ -109,10 +109,10 @@ export function ExplorerJournalCard({
 
           {child.totalActivities && (
             <div className="text-center">
-              <div className="text-2xl font-bold text-slate-700">
+              <div className="mi-text-subtitle text-slate-700">
                 {child.totalActivities}
               </div>
-              <div className="text-xs text-slate-500 font-medium">Viajes</div>
+              <div className="mi-text-caption text-slate-500 font-medium">Viajes</div>
             </div>
           )}
 
@@ -160,7 +160,7 @@ export function ExplorerJournalCard({
               <p className="text-sm font-semibold text-green-900 mb-2">
                 💡 Mundo Interior IA sugiere para {child.name}:
               </p>
-              <p className="text-sm text-slate-700 mb-3 leading-relaxed">
+              <p className="mi-text-body-sm text-slate-700 mb-3 leading-relaxed">
                 Considera narrativas andinas de{" "}
                 {child.favoriteEmotion?.toLowerCase() || "calma"} y expresión
                 creativa. Su bienestar emocional es{" "}
@@ -186,3 +186,4 @@ export function ExplorerJournalCard({
     </article>
   );
 }
+

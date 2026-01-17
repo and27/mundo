@@ -46,10 +46,10 @@ export default function SectionContent({
           <Icon className="w-6 h-6 text-white" />
         </div>
         <div className="flex-1">
-          <h2 className="text-xl md:text-2xl font-bold text-slate-800 mb-2">
+          <h2 className="mi-text-title md:mi-text-title-lg text-slate-800 mb-2">
             {section.titulo}
           </h2>
-          <div className="flex items-center gap-4 text-sm text-slate-500">
+          <div className="flex items-center gap-4 mi-text-body-sm text-slate-500">
             <span className="capitalize">{section.tipo}</span>
             {isCompleted && (
               <div className="flex items-center gap-1 text-green-600">
@@ -76,7 +76,7 @@ function renderContent(content: SectionContentType, module: ModuleData) {
     <div className="space-y-8">
       {/* Texto principal */}
       {content.texto && (
-        <div className="text-slate-700 leading-relaxed md:text-lg">
+        <div className="mi-text-body text-slate-700 leading-relaxed">
           {content.texto}
         </div>
       )}
@@ -84,7 +84,7 @@ function renderContent(content: SectionContentType, module: ModuleData) {
       {/* Puntos clave */}
       {content.puntosClave && (
         <div className="bg-white/60 border border-white/30 rounded-xl p-6">
-          <h4 className="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
+          <h4 className="mi-text-subtitle text-slate-800 mb-4 flex items-center gap-2">
             <Lightbulb className="w-5 h-5 text-amber-500" />
             Puntos Clave
           </h4>
@@ -111,7 +111,7 @@ function renderContent(content: SectionContentType, module: ModuleData) {
               className="border-l-4 pl-6"
               style={{ borderColor: module.colorPrimario }}
             >
-              <h4 className="text-lg font-semibold text-slate-800 mb-3">
+              <h4 className="mi-text-subtitle text-slate-800 mb-3">
                 {sub.subtitulo}
               </h4>
               <p className="text-slate-700 leading-relaxed">{sub.texto}</p>
@@ -135,7 +135,7 @@ function renderContent(content: SectionContentType, module: ModuleData) {
                 >
                   {etapa.rango}
                 </div>
-                <h4 className="text-lg font-semibold text-slate-800">
+                <h4 className="mi-text-subtitle text-slate-800">
                   {etapa.titulo}
                 </h4>
               </div>
@@ -150,7 +150,7 @@ function renderContent(content: SectionContentType, module: ModuleData) {
                     {etapa.hitos.map((hito: string, hitoIndex: number) => (
                       <li
                         key={hitoIndex}
-                        className="flex items-start gap-2 text-sm text-slate-700"
+                        className="flex items-start gap-2 mi-text-body-sm text-slate-700"
                       >
                         <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
                         {hito}
@@ -170,7 +170,7 @@ function renderContent(content: SectionContentType, module: ModuleData) {
                       (desafio: string, desafioIndex: number) => (
                         <li
                           key={desafioIndex}
-                          className="flex items-start gap-2 text-sm text-slate-700"
+                          className="flex items-start gap-2 mi-text-body-sm text-slate-700"
                         >
                           <div className="w-4 h-4 bg-amber-100 rounded-full flex-shrink-0 mt-0.5"></div>
                           {desafio}
@@ -193,7 +193,7 @@ function renderContent(content: SectionContentType, module: ModuleData) {
               key={index}
               className="bg-white/60 border border-white/30 rounded-xl p-6"
             >
-              <h4 className="text-lg font-semibold text-slate-800 mb-3">
+              <h4 className="mi-text-subtitle text-slate-800 mb-3">
                 {emocion.emocion}
               </h4>
               <p className="text-slate-700 mb-4">{emocion.funcion}</p>
@@ -206,7 +206,7 @@ function renderContent(content: SectionContentType, module: ModuleData) {
                         <h6 className="font-medium text-slate-800 mb-2">
                           {edad.replace("_", "-")} años
                         </h6>
-                        <p className="text-sm text-slate-700">
+                        <p className="mi-text-body-sm text-slate-700">
                           {manifestacion as string}
                         </p>
                       </div>
@@ -225,7 +225,7 @@ function renderContent(content: SectionContentType, module: ModuleData) {
                       (señal: string, señalIndex: number) => (
                         <li
                           key={señalIndex}
-                          className="text-sm text-red-700 flex items-start gap-2"
+                          className="mi-text-body-sm text-red-700 flex items-start gap-2"
                         >
                           <div className="w-1.5 h-1.5 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
                           {señal}
@@ -249,7 +249,7 @@ function renderActivity(content: SectionContentType) {
       {/* Instrucciones */}
       {content.instrucciones && (
         <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
-          <h4 className="text-lg font-semibold text-slate-800 mb-3 flex items-center gap-2">
+          <h4 className="mi-text-subtitle text-slate-800 mb-3 flex items-center gap-2">
             <Activity className="w-5 h-5 text-blue-500" />
             Instrucciones
           </h4>
@@ -260,7 +260,7 @@ function renderActivity(content: SectionContentType) {
       {/* Preguntas de reflexión */}
       {content.preguntas && (
         <div className="space-y-4">
-          <h4 className="text-lg font-semibold text-slate-800">
+          <h4 className="mi-text-subtitle text-slate-800">
             Preguntas de Reflexión
           </h4>
           <div className="space-y-4">
@@ -284,7 +284,7 @@ function renderActivity(content: SectionContentType) {
       {/* Ejercicio práctico */}
       {content.ejercicio_practico && (
         <div className="bg-white/60 border border-white/30 rounded-xl p-6">
-          <h4 className="text-lg font-semibold text-slate-800 mb-4">
+          <h4 className="mi-text-subtitle text-slate-800 mb-4">
             {content.ejercicio_practico.titulo}
           </h4>
           <p className="text-slate-700 mb-4">
@@ -323,3 +323,4 @@ function renderActivity(content: SectionContentType) {
     </div>
   );
 }
+

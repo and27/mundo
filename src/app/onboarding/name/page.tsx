@@ -9,7 +9,7 @@ export default function Name() {
 
   return (
     <div className="flex flex-col fade-in mt-20">
-      <h2 className="text-2xl font-bold mb-6">¿Cómo te llamas?</h2>
+      <h2 className="mi-text-title mb-6">¿Cómo te llamas?</h2>
       <input
         value={name}
         onChange={(e) => setName(e.target.value)}
@@ -18,7 +18,7 @@ export default function Name() {
       />
       <Link
         href="emotion"
-        className="w-fit mt-6 bg-yellow-400 text-black px-6 py-2 rounded-lg font-semibold hover:bg-yellow-300 transition"
+        className="w-fit mt-6 bg-yellow-400 text-black px-6 py-2 rounded-lg mi-text-label hover:bg-yellow-300 transition"
       >
         Continuar
       </Link>

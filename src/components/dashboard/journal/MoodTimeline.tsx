@@ -22,7 +22,7 @@ export function MoodTimeline({ moods, childName }: MoodTimelineProps) {
         <p className="text-slate-600 font-medium">
           Sin registros emocionales para {childName}
         </p>
-        <p className="text-xs text-slate-500 mt-1">
+        <p className="mi-text-caption text-slate-500 mt-1">
           Los registros aparecerán al completar viajes interiores
         </p>
       </div>
@@ -35,7 +35,7 @@ export function MoodTimeline({ moods, childName }: MoodTimelineProps) {
         {moods.map((mood, index) => (
           <div
             key={index}
-            className="flex flex-col items-center text-xs text-slate-600 group cursor-help"
+            className="flex flex-col items-center mi-text-body-sm text-slate-600 group cursor-help"
             title={`${mood.day}: ${mood.emotionName || "Sin registro"} ${
               mood.intensity ? `(${mood.intensity}/5)` : ""
             }`}
@@ -45,14 +45,14 @@ export function MoodTimeline({ moods, childName }: MoodTimelineProps) {
               style={{ backgroundColor: mood.color }}
             >
               {mood.intensity && (
-                <span className="text-white font-bold text-xs">
+                <span className="mi-text-body-sm text-white font-bold">
                   {mood.intensity}
                 </span>
               )}
             </div>
             <span className="font-medium">{mood.day}</span>
             {mood.emotionName && (
-              <span className="text-xs text-slate-500 text-center max-w-16 truncate">
+              <span className="mi-text-caption text-slate-500 text-center max-w-16 truncate">
                 {mood.emotionName}
               </span>
             )}
@@ -62,3 +62,4 @@ export function MoodTimeline({ moods, childName }: MoodTimelineProps) {
     </div>
   );
 }
+

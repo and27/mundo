@@ -121,13 +121,13 @@ const TravelGuidesSection = () => {
             <FiCompass className="w-6 h-6 text-white" />
           </div>
           <div className="flex-1">
-            <h2 className="text-2xl md:text-3xl font-bold text-condor mb-2">
+            <h2 className="mi-text-title md:mi-text-title-lg text-condor mb-2">
               Guías para Acompañar los{" "}
               <span className="bg-gradient-to-r from-jaguar to-jaguar/80 bg-clip-text text-transparent">
                 Viajes Interiores
               </span>
             </h2>
-            <p className="text-condor/70 text-base leading-relaxed">
+            <p className="mi-text-body text-condor/70 leading-relaxed">
               Encuentra aquí el material de apoyo para facilitar cada historia y
               actividad de Mundo Interior con tus niños o estudiantes.
             </p>
@@ -140,28 +140,28 @@ const TravelGuidesSection = () => {
             <div className="w-8 h-8 bg-gradient-to-br from-jaguar/20 to-jaguar/10 rounded-lg flex items-center justify-center mx-auto mb-2">
               <FiBookOpen className="w-4 h-4 text-jaguar" />
             </div>
-            <div className="text-xl font-bold text-condor">
+            <div className="mi-text-subtitle text-condor">
               {stats.totalGuides}
             </div>
-            <div className="text-xs text-condor/60">Guías Totales</div>
+            <div className="mi-text-caption text-condor/60">Guías Totales</div>
           </div>
           <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-condor/10 text-center">
             <div className="w-8 h-8 bg-gradient-to-br from-jaguar/20 to-jaguar/10 rounded-lg flex items-center justify-center mx-auto mb-2">
               <FiFilter className="w-4 h-4 text-jaguar" />
             </div>
-            <div className="text-xl font-bold text-condor">
+            <div className="mi-text-subtitle text-condor">
               {stats.categories}
             </div>
-            <div className="text-xs text-condor/60">Categorías</div>
+            <div className="mi-text-caption text-condor/60">Categorías</div>
           </div>
           <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-condor/10 text-center">
             <div className="w-8 h-8 bg-gradient-to-br from-jaguar/20 to-jaguar/10 rounded-lg flex items-center justify-center mx-auto mb-2">
               <FiUsers className="w-4 h-4 text-jaguar" />
             </div>
-            <div className="text-xl font-bold text-condor">
+            <div className="mi-text-subtitle text-condor">
               {stats.characters}
             </div>
-            <div className="text-xs text-condor/60">Personajes</div>
+            <div className="mi-text-caption text-condor/60">Personajes</div>
           </div>
         </div>
       </div>
@@ -188,13 +188,13 @@ const TravelGuidesSection = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 px-1">
         {/* Sort Options */}
         <div className="flex items-center gap-3">
-          <span className="text-sm font-medium text-condor/70">
+          <span className="mi-text-label text-condor/70">
             Ordenar por:
           </span>
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="px-3 py-2 rounded-lg border border-condor/20 bg-white/60 backdrop-blur-sm text-condor text-sm focus:outline-none focus:ring-2 focus:ring-jaguar/50 focus:border-jaguar/50 transition-all duration-200"
+            className="px-3 py-2 rounded-lg border border-condor/20 bg-white/60 backdrop-blur-sm text-condor mi-text-body-sm focus:outline-none focus:ring-2 focus:ring-jaguar/50 focus:border-jaguar/50 transition-all duration-200"
           >
             {sortOptions.map((option) => (
               <option key={option.value} value={option.value}>

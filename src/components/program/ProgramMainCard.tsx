@@ -57,7 +57,7 @@ export default function ProgramMainCard({
           <header className="space-y-1">
             <h2
               className="
-                text-xl md:text-2xl font-bold text-neutral-800
+                mi-text-title text-neutral-800
                 transition-colors duration-300
                 group-hover:text-primary
               "
@@ -66,13 +66,13 @@ export default function ProgramMainCard({
             </h2>
 
             {subtitle && (
-              <p className="text-sm md:text-base text-neutral-500">
+              <p className="mi-text-body-sm text-neutral-500">
                 {subtitle}
               </p>
             )}
           </header>
 
-          <p className="text-neutral-600 leading-relaxed max-w-2xl">
+          <p className="mi-text-body text-neutral-600 leading-relaxed max-w-2xl">
             {description}
           </p>
 
@@ -86,7 +86,7 @@ export default function ProgramMainCard({
             "
           >
             <HiSparkles className="text-lg" />
-            <span>Entrar al programa</span>
+            <span className="mi-text-label">Entrar al programa</span>
           </div>
         </div>
       </div>

@@ -30,10 +30,10 @@ export function JournalHeader({
             <Heart className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h1 className="text-2xl md:text-3xl font-bold text-slate-800">
+            <h1 className="mi-text-title md:mi-text-title-lg text-slate-800">
               Bitácora Emocional
             </h1>
-            <p className="text-slate-600">
+            <p className="mi-text-body text-slate-600">
               {selectedChildId && childName
                 ? `Seguimiento de ${childName}`
                 : `${totalExplorers} exploradores en su viaje interior`}
@@ -45,7 +45,7 @@ export function JournalHeader({
           <select
             value={selectedPeriod}
             onChange={(e) => onPeriodChange(e.target.value)}
-            className="bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+            className="bg-white border border-slate-300 rounded-lg px-3 py-2 mi-text-body-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
           >
             <option value="week">Esta semana</option>
             <option value="month">Este mes</option>
@@ -76,7 +76,7 @@ export function JournalHeader({
       {selectedChildId && (
         <Link
           href="/parentDashboard?section=bitacora"
-          className="inline-flex items-center gap-2 text-sm text-indigo-600 hover:text-indigo-800 mt-4 font-medium transition-colors"
+          className="inline-flex items-center gap-2 mi-text-body-sm text-indigo-600 hover:text-indigo-800 mt-4 font-medium transition-colors"
         >
           <ChevronLeft className="w-4 h-4" />
           Ver todos los exploradores

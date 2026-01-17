@@ -47,21 +47,21 @@ export default function ModuleCard({
 
           {/* Contenido del Módulo */}
           <div className="flex-1 min-w-0">
-            <h3 className="text-sm md:text-lg font-semibold text-slate-800 mb-1">
+            <h3 className="mi-text-subtitle text-slate-800 mb-1">
               Módulo {moduleNumber}: {module.titulo}
             </h3>
 
-            <p className="hidden md:flex text-indigo-600 text-sm font-medium mb-2">
+            <p className="hidden md:flex mi-text-body-sm text-indigo-600 font-medium mb-2">
               {module.subtitulo}
             </p>
 
-            <p className="hidden md:flex text-slate-600 text-sm mb-4 line-clamp-2">
+            <p className="hidden md:flex mi-text-body-sm text-slate-600 mb-4 line-clamp-2">
               {module.descripcion}
             </p>
 
             {/* Barra de Progreso */}
             <div className="space-y-2">
-              <div className="flex items-center justify-between text-xs">
+              <div className="flex items-center justify-between mi-text-caption">
                 <span className="text-slate-500">Progreso</span>
                 <span className="text-slate-700">
                   {Math.round(moduleProgress)}%
@@ -99,7 +99,7 @@ function StatusBadge({
     return (
       <div className="flex items-center gap-2 px-3 py-1 bg-green-100 rounded-full">
         <CheckCircle className="w-3 h-3 text-green-600" />
-        <span className="text-xs text-green-600">Completado</span>
+        <span className="mi-text-caption text-green-600">Completado</span>
       </div>
     );
   }
@@ -108,14 +108,15 @@ function StatusBadge({
     return (
       <div className="flex items-center gap-2 px-3 py-1 bg-indigo-100 rounded-full">
         <Play className="w-3 h-3 text-indigo-600" />
-        <span className="text-xs text-indigo-600">Actual</span>
+        <span className="mi-text-caption text-indigo-600">Actual</span>
       </div>
     );
   }
 
   return (
     <div className="flex items-center gap-2 px-3 py-1 bg-blue-100 rounded-full">
-      <span className="text-xs text-blue-600">Disponible</span>
+      <span className="mi-text-caption text-blue-600">Disponible</span>
     </div>
   );
 }
+

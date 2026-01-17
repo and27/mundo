@@ -25,7 +25,7 @@ export default function ModuleContent({
   if (!mod) {
     return (
       <div className="bg-white/90 backdrop-blur-sm border border-white/50 rounded-xl p-8 text-center">
-        <p className="text-slate-600">Módulo no encontrado</p>
+        <p className="mi-text-body text-slate-600">Módulo no encontrado</p>
       </div>
     );
   }
@@ -48,7 +48,7 @@ export default function ModuleContent({
           Volver al curso
         </button>
 
-        <div className="text-sm text-slate-500">
+        <div className="mi-text-body-sm text-slate-500">
           Sección {currentSectionIndex + 1} de {mod.secciones.length}
         </div>
       </div>

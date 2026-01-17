@@ -54,10 +54,10 @@ export default function ProgramLessonsList() {
   return (
     <div className="max-w-4xl px-5 md:px-20 mi-stack-lg">
       <header className="mi-section-header">
-        <h1 className="text-3xl md:text-4xl tracking-tight font-extrabold text-neutral-800 mi-section-title">
+        <h1 className="mi-text-title-lg tracking-tight text-neutral-800 mi-section-title">
           Aprende el lenguaje de las emociones
         </h1>
-        <p className="text-neutral-600 max-w-xl leading-relaxed">
+        <p className="mi-text-body text-neutral-600 max-w-xl leading-relaxed">
           Explora cada emoción a través de cuentos interactivos y reflexiones
           que ayudan a los niños a entender y expresar lo que sienten.
         </p>

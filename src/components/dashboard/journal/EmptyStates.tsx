@@ -11,10 +11,10 @@ export function ExplorerNotFound() {
             <User className="w-6 h-6 text-red-700" />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-red-900">
+            <h2 className="mi-text-subtitle text-red-900">
               Explorador no encontrado
             </h2>
-            <p className="text-red-700">
+            <p className="mi-text-body text-red-700">
               No se encontró información para el explorador seleccionado.
             </p>
           </div>
@@ -38,10 +38,10 @@ export function NoExplorers() {
         <div className="w-16 h-16 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg">
           <Heart className="w-8 h-8 text-white" />
         </div>
-        <h2 className="text-2xl font-bold text-slate-800 mb-3">
+        <h2 className="mi-text-title text-slate-800 mb-3">
           ¡Comienza el viaje emocional!
         </h2>
-        <p className="text-slate-600 mb-6 leading-relaxed">
+        <p className="mi-text-body text-slate-600 mb-6 leading-relaxed">
           Aún no hay exploradores registrados para ver su bitácora emocional.
           Crea perfiles para comenzar a seguir el crecimiento emocional.
         </p>

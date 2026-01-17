@@ -45,13 +45,13 @@ export default function ProgramLessonItem({
       </div>
 
       <div className="flex-1 min-w-0 flex flex-col gap-1">
-        <h3 className="text-neutral-800 text-base font-semibold leading-snug">
+        <h3 className="mi-text-label text-neutral-800 leading-snug">
           {module.title}
         </h3>
 
-        <p className="text-neutral-700 text-sm">{module.subtitle}</p>
+        <p className="mi-text-body-sm text-neutral-700">{module.subtitle}</p>
 
-        <p className="text-neutral-600 text-xs">{module.duration}</p>
+        <p className="mi-text-caption text-neutral-600">{module.duration}</p>
       </div>
 
       <FiChevronRight className="w-5 h-5 text-neutral-400 flex-shrink-0 transition-transform duration-300 group-hover:translate-x-0.5" />
