@@ -7,7 +7,7 @@ export default function PersonalizedHeader() {
 
   return (
     <header className="w-full flex flex-col md:flex-row items-center justify-center md:justify-between">
-      <h1 className="md:text-left text-xl md:text-3xl font-bold text-white">
+      <h1 className="md:text-left mi-text-title md:mi-text-title-lg text-white">
         Que bueno verte <br /> de nuevo, {userName}. 🌱
       </h1>
     </header>

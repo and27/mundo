@@ -39,10 +39,10 @@ const MoodTracker = () => {
   return (
     <div className="p-6 space-y-6 bg-white/70 rounded-lg shadow-lg">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-xl font-bold text-condor">Mi Bitácora Emocional</h3>
+        <h3 className="mi-text-subtitle text-condor">Mi Bitácora Emocional</h3>
         <Link
           href="/nino/bitacora/historial"
-          className="text-blue-600 hover:underline text-sm font-medium"
+          className="text-blue-600 hover:underline mi-text-body-sm font-medium"
         >
           Ver historial
         </Link>
@@ -58,14 +58,14 @@ const MoodTracker = () => {
               >
                 {entry.symbol}
               </div>
-              <span className="text-condor text-sm font-medium">
+              <span className="text-condor mi-text-body-sm font-medium">
                 {entry.date}
               </span>
             </div>
           ))}
         </div>
       ) : (
-        <p className="text-condor/60 italic text-center">
+        <p className="text-condor/60 italic text-center mi-text-body-sm">
           Aún no tienes registros en tu Bitácora. ¡Completa un Viaje para
           empezar!
         </p>
@@ -82,3 +82,4 @@ const MoodTracker = () => {
 };
 
 export default MoodTracker;
+

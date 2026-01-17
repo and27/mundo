@@ -26,7 +26,7 @@ const quickOptions = [
 const QuickStartButtons = () => {
   return (
     <section className="my-12">
-      <h3 className="text-xl font-bold mb-4">¿Qué necesitas hoy?</h3>
+      <h3 className="mi-text-subtitle mb-4">¿Qué necesitas hoy?</h3>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {quickOptions.map((o) => (
           <Link
@@ -34,10 +34,10 @@ const QuickStartButtons = () => {
             href={o.href}
             className="bg-white/5 hover:bg-white/10 transition p-5 rounded-2xl text-center"
           >
-            <h4 className="text-lg font-semibold mb-1">
+            <h4 className="mi-text-label mb-1">
               {o.icon} {o.title}
             </h4>
-            <p className="text-sm text-white/60">{o.desc}</p>
+            <p className="mi-text-body-sm text-white/60">{o.desc}</p>
           </Link>
         ))}
       </div>
@@ -46,3 +46,4 @@ const QuickStartButtons = () => {
 };
 
 export default QuickStartButtons;
+

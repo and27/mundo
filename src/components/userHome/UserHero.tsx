@@ -20,7 +20,7 @@ export default function UserHero() {
 
   return (
     <section className="flex flex-col">
-      <h2 className="pt-5 text-center text-xl md:text-3xl font-bold mt-5 text-white">
+      <h2 className="pt-5 text-center mi-text-title md:mi-text-title-lg mt-5 text-white">
         Que bueno verte de nuevo, {name}. 🌱
       </h2>
       {/*  <p className="text-white/70 max-w-xl px-4 mb-6">
@@ -32,7 +32,7 @@ export default function UserHero() {
         <div className="w-full  flex flex-col items-start md:text-center justify-center z-10 px-5 md:px-10 py-4 md:py-6 w-[90%] max-w-xl bg-white/10 backdrop-blur-md rounded-2xl text-white shadow-2xl space-y-4 animate-fade-in transition-all ">
           {stage === "intro" && (
             <>
-              <p className="leading-6 text-lg md:text-xl font-semibold">
+              <p className="mi-text-subtitle">
                 ¿Quieres escuchar una historia sobre cómo calmar tu corazón? 🌟
               </p>
               <div className="flex flex-wrap gap-3">
@@ -44,7 +44,7 @@ export default function UserHero() {
 
           {stage === "select_mode" && (
             <>
-              <p className="text-xl font-semibold leading-relaxed">
+              <p className="mi-text-subtitle">
                 Este cuento puede contarse como una aventura… o como una
                 historia para dormir. <br />
                 ¿Cómo prefieres vivirlo?

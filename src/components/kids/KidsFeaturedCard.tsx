@@ -23,10 +23,10 @@ export function KidsFeaturedCard({
 
           <div className="flex-1 mi-stack-sm">
             <div>
-              <h2 className="text-base md:text-lg font-semibold text-white">
+              <h2 className="mi-text-subtitle text-white">
                 {title}
               </h2>
-              <p className="text-sm text-white/70">{subtitle}</p>
+              <p className="mi-text-body-sm text-white/70">{subtitle}</p>
             </div>
 
             <button

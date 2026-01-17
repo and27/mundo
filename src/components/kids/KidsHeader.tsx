@@ -5,7 +5,7 @@ export function KidsHeader() {
   return (
     <header className="relative mi-surface-dark">
       <div className="flex items-center justify-center px-6 py-6 md:py-7">
-        <h1 className="text-center text-xl md:text-2xl font-bold text-white">
+        <h1 className="text-center mi-text-title text-white">
           {`Hola, ${userName}`}
         </h1>
 

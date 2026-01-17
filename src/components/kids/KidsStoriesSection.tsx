@@ -22,7 +22,7 @@ export function KidsStoriesSection({
   if (hasFiltered) {
     return (
       <div className="max-w-6xl mx-auto px-4 py-8">
-        <h2 className="text-white text-2xl mi-section-title">Subtitle</h2>
+        <h2 className="text-white mi-text-title mi-section-title">Subtitle</h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {stories.map((guide) => (
@@ -45,20 +45,20 @@ export function KidsStoriesSection({
           {!hasAnyStories ? (
             <>
               <div className="text-8xl mb-6">📚</div>
-              <h3 className="text-2xl font-bold text-gray-700 mb-3">
+              <h3 className="mi-text-title text-gray-700 mb-3">
                 ¡Aún no tienes aventuras!
               </h3>
-              <p className="text-gray-500 text-lg">
+              <p className="mi-text-body text-gray-500">
                 Pídele a papá o mamá que cree una historia especial para ti
               </p>
             </>
           ) : (
             <>
               <div className="text-8xl mb-6">🔍</div>
-              <h3 className="text-2xl font-bold text-gray-700 mb-3">
+              <h3 className="mi-text-title text-gray-700 mb-3">
                 No hay aventuras en esta sección
               </h3>
-              <p className="text-gray-500 text-lg">
+              <p className="mi-text-body text-gray-500">
                 Intenta con otro filtro para encontrar tus historias
               </p>
             </>
@@ -68,3 +68,4 @@ export function KidsStoriesSection({
     </div>
   );
 }
+

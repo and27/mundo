@@ -22,7 +22,7 @@ const Forest = () => {
 
   return (
     <section className="my-12">
-      <h3 className="text-xl font-bold mb-2 text-white">Tu bosque interior</h3>
+      <h3 className="mi-text-subtitle mb-2 text-white">Tu bosque interior</h3>
       {isLoading ? (
         <div className="animate-pulse">
           <div className="h-4 bg-white/10 rounded w-3/4 mb-4"></div>
@@ -30,7 +30,7 @@ const Forest = () => {
         </div>
       ) : (
         <>
-          <p className="text-sm text-white/60 mb-4">
+          <p className="mi-text-body-sm text-white/60 mb-4">
             Crece contigo en cada meditación. Hoy estás en 🌿 etapa de {stage}.
           </p>
           <div className="relative bg-white/5 h-4 rounded-full overflow-hidden">

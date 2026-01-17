@@ -102,7 +102,7 @@ export default function OverallProgress() {
     >
       <h3
         id="overall-progress-heading"
-        className="text-md md:text-lg font-semibold text-center md:text-left"
+        className="mi-text-subtitle text-center md:text-left"
       >
         {missionTitle}:
       </h3>
@@ -111,7 +111,7 @@ export default function OverallProgress() {
         aria-label="Progreso de la misión"
       >
         {journeyIcons}
-        <span className="mx-1 text-white/50 text-xl">+</span>
+        <span className="mx-1 text-white/50 mi-text-title">+</span>
         <ProgressIcon
           isComplete={logbookReflectionCompleted}
           isLogbookTask={true}
@@ -121,15 +121,16 @@ export default function OverallProgress() {
         />
       </div>
       {allTasksComplete ? (
-        <p className="text-sm text-yellow-300 font-semibold text-center md:text-left flex items-center justify-center md:justify-start">
+        <p className="mi-text-body-sm text-yellow-300 font-semibold text-center md:text-left flex items-center justify-center md:justify-start">
           <FiAward className="w-5 h-5 mr-2 inline-block" /> ¡Has revelado la
           recompensa!
         </p>
       ) : (
-        <p className="text-sm text-white/70 text-center md:text-left">
+        <p className="mi-text-body-sm text-white/70 text-center md:text-left">
           Completa todas las tareas para la gran sorpresa.
         </p>
       )}
     </section>
   );
 }
+

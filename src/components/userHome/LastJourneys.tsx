@@ -71,7 +71,7 @@ export default function LastJourneys() {
       <div className="flex items-center justify-between mb-4">
         <h3
           id="recent-journeys-heading"
-          className="text-xl font-bold text-white"
+          className="mi-text-subtitle text-white"
         >
           Continúa tu aventura
         </h3>
@@ -127,12 +127,12 @@ export default function LastJourneys() {
                   className="w-10 h-10 mb-2 rounded-md object-cover"
                 />
               )}
-              <h4 className="font-semibold text-white truncate">{j.title}</h4>
-              <p className="text-sm text-white/70">{j.desc}</p>
+              <h4 className="mi-text-label text-white truncate">{j.title}</h4>
+              <p className="mi-text-body-sm text-white/70">{j.desc}</p>
             </Link>
           ))
         ) : (
-          <p className="text-sm text-white/60 bg-white/5 p-4 rounded-lg">
+          <p className="mi-text-body-sm text-white/60 bg-white/5 p-4 rounded-lg">
             Aún no has iniciado ningún viaje. ¡Explora el bosque!
           </p>
         )}
@@ -140,3 +140,4 @@ export default function LastJourneys() {
     </section>
   );
 }
+
