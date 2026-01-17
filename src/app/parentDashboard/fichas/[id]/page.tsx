@@ -455,7 +455,7 @@ const FichaTutorPage: React.FC = () => {
                 className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-white/10 border border-white/20 text-white font-medium rounded-lg transition-all"
                 whileHover={{
                   scale: 1.05,
-                  backgroundColor: "rgba(255,255,255,0.2)",
+                  backgroundColor: "var(--surface-glass-medium)",
                 }}
                 whileTap={{ scale: 0.95 }}
               >

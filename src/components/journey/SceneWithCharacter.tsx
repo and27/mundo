@@ -37,7 +37,7 @@ const SceneWithCharacter: React.FC<SceneWithCharacterProps> = ({
           alt="Character"
           width={"560"}
           height={"560"}
-          className="w-[280px] md:w-[400px] drop-shadow-[0_15px_25px_rgba(0,0,0,0.4)]"
+          className="w-[280px] md:w-[400px] drop-shadow-[var(--shadow-character-drop)]"
         />
       </motion.div>
     </div>

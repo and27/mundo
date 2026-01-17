@@ -43,11 +43,36 @@ const mockChildren: ChildSummary[] = [
     totalActivities: 12,
     favoriteEmotion: "Feliz",
     recentMoods: [
-      { day: "Lun", color: "#6B7280", emotionName: "Neutral", intensity: 3 },
-      { day: "Mar", color: "#F59E0B", emotionName: "Contenta", intensity: 4 },
-      { day: "Mié", color: "#3B82F6", emotionName: "Tranquila", intensity: 4 },
-      { day: "Jue", color: "#8B5CF6", emotionName: "Curiosa", intensity: 5 },
-      { day: "Hoy", color: "#10B981", emotionName: "Feliz", intensity: 5 },
+      {
+        day: "Lun",
+        color: "var(--color-mood-neutral)",
+        emotionName: "Neutral",
+        intensity: 3,
+      },
+      {
+        day: "Mar",
+        color: "var(--color-mood-content)",
+        emotionName: "Contenta",
+        intensity: 4,
+      },
+      {
+        day: "Mié",
+        color: "var(--color-mood-calm)",
+        emotionName: "Tranquila",
+        intensity: 4,
+      },
+      {
+        day: "Jue",
+        color: "var(--color-mood-curious)",
+        emotionName: "Curiosa",
+        intensity: 5,
+      },
+      {
+        day: "Hoy",
+        color: "var(--color-mood-happy)",
+        emotionName: "Feliz",
+        intensity: 5,
+      },
     ],
   },
   {
@@ -61,11 +86,21 @@ const mockChildren: ChildSummary[] = [
     totalActivities: 8,
     favoriteEmotion: "Concentrado",
     recentMoods: [
-      { day: "Mié", color: "#EF4444", emotionName: "Frustrado", intensity: 2 },
-      { day: "Jue", color: "#3B82F6", emotionName: "En Paz", intensity: 4 },
+      {
+        day: "Mié",
+        color: "var(--color-mood-angry)",
+        emotionName: "Frustrado",
+        intensity: 2,
+      },
+      {
+        day: "Jue",
+        color: "var(--color-mood-peace)",
+        emotionName: "En Paz",
+        intensity: 4,
+      },
       {
         day: "Hoy",
-        color: "#1D4ED8",
+        color: "var(--color-mood-peace)",
         emotionName: "Concentrado",
         intensity: 4,
       },

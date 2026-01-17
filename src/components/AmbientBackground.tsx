@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const AmbientBackground = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="relative min-h-screen bg-gradient-to-b from-[#1B1C2B] to-[#161924] text-white overflow-hidden">
+    <div className="relative min-h-screen mi-ambient-bg text-white overflow-hidden">
       {/* Partículas mágicas (puedes cambiar a estrellas, niebla, etc.) */}
       <motion.div
         className="absolute top-0 left-0 w-full h-full bg-[url('/textures/stars.svg')] opacity-10 bg-cover"

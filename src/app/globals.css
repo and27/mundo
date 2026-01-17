@@ -38,6 +38,9 @@
   --color-success-500: #22c55e;
   --color-warning-500: #f59e0b;
   --color-error-500: #ef4444;
+  --color-info-500: #3b82f6;
+  --color-info-700: #1d4ed8;
+  --color-accent-500: #8b5cf6;
 
   /* === SEMANTIC TOKENS === */
   --canvas-marketing-from: var(--color-neutral-900);
@@ -64,8 +67,25 @@
   --color-breath-glow-warm-soft: rgba(255, 224, 130, 0.4);
   --color-breath-glow-cool: rgba(174, 213, 245, 0.5);
 
+  /* === MOOD / EMOTION TOKENS === */
+  --color-mood-neutral: var(--color-neutral-500);
+  --color-mood-content: var(--color-warning-500);
+  --color-mood-calm: var(--color-info-500);
+  --color-mood-curious: var(--color-accent-500);
+  --color-mood-happy: var(--color-success-500);
+  --color-mood-angry: var(--color-error-500);
+  --color-mood-peace: var(--color-info-700);
+  --color-mood-night: #9f7aea;
+
   --surface-glass-soft: rgba(255, 255, 255, 0.06);
+  --surface-glass-medium: rgba(255, 255, 255, 0.2);
   --surface-glass-strong: rgba(0, 0, 0, 0.8);
+
+  /* === AMBIENT / SHADOW TOKENS === */
+  --color-ambient-from: #1b1c2b;
+  --color-ambient-to: #161924;
+  --shadow-choice-glow: 0 0 20px rgba(255, 217, 102, 0.4);
+  --shadow-character-drop: 0 15px 25px rgba(0, 0, 0, 0.4);
 
   /* === ESPACIADO === */
   --space-1: 4px;
@@ -450,6 +470,14 @@ body {
       in srgb,
       var(--color-primary-600) 30%,
       transparent
+    );
+  }
+  /* === Ambient Background === */
+  .mi-ambient-bg {
+    background: linear-gradient(
+      to bottom,
+      var(--color-ambient-from),
+      var(--color-ambient-to)
     );
   }
   /* === CTA / Action === */

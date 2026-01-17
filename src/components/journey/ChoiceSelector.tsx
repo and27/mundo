@@ -39,7 +39,7 @@ const ChoiceButton = memo(
           isSelected
             ? [
                 "border-yellow-400 border-2 scale-105 brightness-110",
-                "shadow-[0_0_20px_rgba(255,217,102,0.4)]",
+                "shadow-[var(--shadow-choice-glow)]",
                 "bg-yellow-400/10",
               ]
             : [

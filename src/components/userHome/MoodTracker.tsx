@@ -3,11 +3,36 @@ import Link from "next/link";
 
 // Placeholder data for recent Bitácora entries for a child
 const childBitacoraEntries = [
-  { date: "Lun", color: "#A0AEC0", symbol: "😌", journeyId: "viaje-puma" },
-  { date: "Mar", color: "#ECC94B", symbol: "💛", journeyId: "viaje-kuntur" },
-  { date: "Mié", color: "#FC8181", symbol: "😠", journeyId: "viaje-amaru" },
-  { date: "Jue", color: "#4299E1", symbol: "💧", journeyId: null },
-  { date: "Hoy", color: "#9F7AEA", symbol: "🌙", journeyId: "viaje-tortuga" },
+  {
+    date: "Lun",
+    color: "var(--color-mood-neutral)",
+    symbol: "😌",
+    journeyId: "viaje-puma",
+  },
+  {
+    date: "Mar",
+    color: "var(--color-mood-content)",
+    symbol: "💛",
+    journeyId: "viaje-kuntur",
+  },
+  {
+    date: "Mié",
+    color: "var(--color-mood-angry)",
+    symbol: "😠",
+    journeyId: "viaje-amaru",
+  },
+  {
+    date: "Jue",
+    color: "var(--color-mood-calm)",
+    symbol: "💧",
+    journeyId: null,
+  },
+  {
+    date: "Hoy",
+    color: "var(--color-mood-night)",
+    symbol: "🌙",
+    journeyId: "viaje-tortuga",
+  },
 ];
 
 const MoodTracker = () => {
