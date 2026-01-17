@@ -1,8 +1,9 @@
-import { FiActivity, FiBookOpen } from "react-icons/fi";
+import { FiActivity, FiBookOpen, FiSettings } from "react-icons/fi";
 import { HiSparkles } from "react-icons/hi2";
 import AssistantSection from "@/components/dashboard/AssistantSetion";
 import GeneratedStories from "@/components/dashboard/GeneratedStories";
 import ProgramCatalogSection from "@/components/dashboard/ProgramCatalogSection";
+import SettingsSection from "@/components/dashboard/SettingsSection";
 
 export const dashboardSections = [
   {
@@ -42,6 +43,16 @@ export const dashboardSections = [
     icon: FiBookOpen,
     component: GeneratedStories,
     description: "Tus cuentos generados",
+    disabled: false,
+    comingSoon: false,
+  },
+  {
+    id: "settings",
+    label: "Ajustes",
+    href: "/parentDashboard?section=settings",
+    icon: FiSettings,
+    component: SettingsSection,
+    description: "Preferencias y seguridad",
     disabled: false,
     comingSoon: false,
   },

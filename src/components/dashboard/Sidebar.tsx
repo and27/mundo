@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import { LogOut, User, MoreHorizontal } from "lucide-react";
+import { LogOut, User, Settings } from "lucide-react";
 import { dashboardSections } from "@/lib/dashboardConfig";
 import { FaBars } from "react-icons/fa";
 import { logoutUser } from "@/services/authService";
@@ -89,7 +89,6 @@ const Sidebar: React.FC<SidebarProps> = ({
   onCloseMobile,
   activeSectionId,
 }) => {
-  const [showUserMenu, setShowUserMenu] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const router = useRouter();
   const clearUser = useAuthStore((state) => state.clearUser);
@@ -173,84 +172,77 @@ const Sidebar: React.FC<SidebarProps> = ({
         <div className="pb-safe">
           <div className="h-px bg-white/10" />
 
-          <div className="">
-            <button
-              onClick={() => setShowUserMenu((v) => !v)}
+          <div
+            className={[
+              "flex items-center w-full p-1 md:p-3 rounded-lg transition-colors",
+              "hover:mi-accent-soft",
+              isDesktopCollapsed ? "justify-center" : "",
+            ].join(" ")}
+          >
+            <div
               className={[
-                "flex items-center w-full p-1 md:p-3 rounded-lg transition-colors",
-                "hover:mi-accent-soft",
-                isDesktopCollapsed ? "justify-center" : "",
+                "w-10 h-10 mi-accent-gradient rounded-lg flex items-center justify-center",
+                !isDesktopCollapsed && "mr-3",
               ].join(" ")}
             >
-              <div
-                className={[
-                  "w-10 h-10 mi-accent-gradient rounded-lg flex items-center justify-center",
-                  !isDesktopCollapsed && "mr-3",
-                ].join(" ")}
-              >
-                {userImageUrl ? (
-                  <Image
-                    src={userImageUrl}
-                    alt="Avatar"
-                    width={32}
-                    height={32}
-                    className="rounded-lg object-cover"
-                  />
-                ) : (
-                  <span className="text-white font-semibold text-sm">
-                    {userInitial}
-                  </span>
-                )}
-              </div>
-
-              {!isDesktopCollapsed && (
-                <>
-                  <span className="flex-1 text-left text-sm font-semibold text-white">
-                    {userName}
-                  </span>
-                  <MoreHorizontal className="w-4 h-4 text-white/50" />
-                </>
-              )}
-            </button>
-            <div>
-              {showUserMenu && !isDesktopCollapsed && (
-                <div className="absolute bottom-full left-0 right-0 mb-2 mi-surface-dark rounded-xl p-2">
-                  <Link
-                    href="/dashboard/perfil"
-                    onClick={() => setShowUserMenu(false)}
-                    className="flex items-center gap-3 p-2 rounded-lg hover:mi-accent-soft text-white/80 hover:text-white"
-                  >
-                    <User className="w-4 h-4" />
-                    <span className="text-sm">Ver perfil</span>
-                  </Link>
-                </div>
+              {userImageUrl ? (
+                <Image
+                  src={userImageUrl}
+                  alt="Avatar"
+                  width={32}
+                  height={32}
+                  className="rounded-lg object-cover"
+                />
+              ) : (
+                <span className="text-white font-semibold text-sm">
+                  {userInitial}
+                </span>
               )}
             </div>
 
-            <button
-              onClick={handleLogout}
-              disabled={isLoggingOut}
-              className={[
-                "flex items-center w-full p-1 md:p-3 rounded-lg transition-colors",
-                isLoggingOut
-                  ? "opacity-50 cursor-not-allowed"
-                  : "text-red-400 hover:bg-red-500/20",
-                isDesktopCollapsed ? "justify-center" : "",
-              ].join(" ")}
-            >
-              <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-red-500/20">
-                <LogOut
-                  className={`w-4 h-4 ${isLoggingOut ? "animate-spin" : ""}`}
-                />
-              </div>
-
-              {!isDesktopCollapsed && (
-                <span className="ml-3 text-sm font-semibold">
-                  {isLoggingOut ? "Cerrando…" : "Cerrar sesión"}
+            {isDesktopCollapsed ? (
+              <button
+                onClick={() => router.push("/parentDashboard?section=settings")}
+                className="sr-only"
+                aria-label="Abrir ajustes"
+              >
+                Abrir ajustes
+              </button>
+            ) : (
+              <button
+                onClick={() => router.push("/parentDashboard?section=settings")}
+                className="flex-1 flex items-center justify-between text-left"
+              >
+                <span className="text-sm font-semibold text-white">
+                  {userName}
                 </span>
-              )}
-            </button>
+                <Settings className="w-4 h-4 text-white/50" />
+              </button>
+            )}
           </div>
+                    <button
+            onClick={handleLogout}
+            disabled={isLoggingOut}
+            className={[
+              "flex items-center w-full p-1 md:p-3 rounded-lg transition-colors",
+              isLoggingOut
+                ? "opacity-50 cursor-not-allowed"
+                : "text-red-400 hover:bg-red-500/20",
+              isDesktopCollapsed ? "justify-center" : "",
+            ].join(" ")}
+          >
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-red-500/20">
+              <LogOut
+                className={`w-4 h-4 ${isLoggingOut ? "animate-spin" : ""}`}
+              />
+            </div>
+
+            {!isDesktopCollapsed && (
+              <span className="ml-3 text-sm font-semibold">
+                {isLoggingOut ? "Cerrando." : "Cerrar sesión"}
+              </span>
+            )}
+          </button>
         </div>
       </aside>
     </>
@@ -258,3 +250,8 @@ const Sidebar: React.FC<SidebarProps> = ({
 };
 
 export default Sidebar;
+
+
+
+
+
