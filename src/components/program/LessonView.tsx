@@ -96,7 +96,11 @@ export default function ProgramLessonView() {
   const router = useRouter();
 
   const lessonId = params.get("lesson");
-  const programLesson = program.lessons.find((l) => l.id === lessonId);
+  const programLesson =
+    program.lessons.find((l) => l.id === lessonId) ??
+    (lessonId
+      ? program.lessons.find((l) => l.order === Number(lessonId))
+      : undefined);
 
   if (!programLesson) {
     return (
