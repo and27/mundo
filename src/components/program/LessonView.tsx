@@ -3,7 +3,6 @@
 import { useSearchParams, useRouter } from "next/navigation";
 import { ReactNode, useMemo, useState } from "react";
 import ChipTabs from "@/components/ui/ChipTabs";
-import ParentResources from "@/components/program/ParentResources";
 import { program } from "@/data/program";
 import { guides } from "@/lib/guides";
 import { getGuideSections } from "@/lib/guideSections";
@@ -12,6 +11,13 @@ import type { ActionableGuide, ParentGuideSection } from "@/types/ai";
 type TabId = "cuento" | "acompanamiento";
 
 type GuideDetails = ActionableGuide;
+type CompanionTab = {
+  id: string;
+  label: string;
+  description?: string;
+  count?: number;
+  content: ReactNode;
+};
 
 function SectionCard({
   title,
@@ -58,6 +64,31 @@ function BulletList({ items }: { items: string[] }) {
       ))}
     </ul>
   );
+}
+
+function collectStrategyItems(
+  strategies: ParentGuideSection[],
+  keywords: string[],
+) {
+  if (keywords.length === 0) return [];
+  return strategies.flatMap((strategy) => {
+    if (!("items" in strategy)) return [];
+    const title = (strategy.title ?? "").toLowerCase();
+    if (!title) return [];
+    const hasKeyword = keywords.some((keyword) => title.includes(keyword));
+    return hasKeyword ? strategy.items : [];
+  });
+}
+
+function collectAllStrategyItems(strategies: ParentGuideSection[]) {
+  return strategies.flatMap((strategy) => {
+    if (!("items" in strategy)) return [];
+    return strategy.items;
+  });
+}
+
+function uniqueStrings(items: string[]) {
+  return Array.from(new Set(items));
 }
 
 export default function ProgramLessonView() {
@@ -107,7 +138,7 @@ export default function ProgramLessonView() {
   const reflection = getSection("reflection");
   const notes = getSection("notes");
   const strategies = sections.filter(
-    (section) => section.kind === "strategies"
+    (section) => section.kind === "strategies",
   ) as ParentGuideSection[];
 
   const metaphorContent =
@@ -115,7 +146,7 @@ export default function ProgramLessonView() {
   const languagePhrases =
     language && "phrases" in language ? language.phrases : [];
   const languageQuestions =
-    language && "questions" in language ? language.questions ?? [] : [];
+    language && "questions" in language ? (language.questions ?? []) : [];
   const practiceTitle =
     practice && "title" in practice ? practice.title : undefined;
   const practiceDescription =
@@ -131,6 +162,149 @@ export default function ProgramLessonView() {
   const reflectionItems =
     reflection && "prompts" in reflection ? reflection.prompts : [];
   const notesItems = notes && "items" in notes ? notes.items : [];
+  const [activeCompanionTab, setActiveCompanionTab] =
+    useState<string>("metaphor");
+
+  const allStrategyItems = uniqueStrings(collectAllStrategyItems(strategies));
+  const momentItems = uniqueStrings(
+    collectStrategyItems(strategies, [
+      "momento",
+      "pico",
+      "durante",
+      "en el momento",
+      "en momento",
+    ]),
+  );
+  const afterItems = uniqueStrings(
+    collectStrategyItems(strategies, ["despues", "cuando ya bajo", "post"]),
+  );
+  const trainingItems = uniqueStrings(
+    collectStrategyItems(strategies, [
+      "entrenamiento",
+      "calma",
+      "preparacion",
+      "previo",
+      "antes",
+    ]),
+  );
+  const matchedStrategyItems = new Set([
+    ...momentItems,
+    ...afterItems,
+    ...trainingItems,
+  ]);
+  const otherStrategyItems = allStrategyItems.filter(
+    (item) => !matchedStrategyItems.has(item),
+  );
+
+  const companionTabs: CompanionTab[] = [];
+  if (metaphorContent) {
+    companionTabs.push({
+      id: "metaphor",
+      label: "Lectura simbolica",
+      description: "Idea central para acompanar.",
+      content: (
+        <p className="text-sm text-neutral-600 leading-relaxed">
+          {metaphorContent}
+        </p>
+      ),
+    });
+  }
+  if (languagePhrases.length > 0) {
+    companionTabs.push({
+      id: "phrases",
+      label: "Frases para validar",
+      description: "Lenguaje breve y contenedor.",
+      count: languagePhrases.length,
+      content: <BulletList items={languagePhrases} />,
+    });
+  }
+  if (languageQuestions.length > 0) {
+    companionTabs.push({
+      id: "questions",
+      label: "Preguntas para explorar",
+      description: "Abren conversacion sin presionar.",
+      count: languageQuestions.length,
+      content: <BulletList items={languageQuestions} />,
+    });
+  }
+  if (momentItems.length > 0) {
+    companionTabs.push({
+      id: "moment",
+      label: "En el momento",
+      description: "Cuando la emocion esta alta.",
+      count: momentItems.length,
+      content: <BulletList items={momentItems} />,
+    });
+  }
+  if (afterItems.length > 0) {
+    companionTabs.push({
+      id: "after",
+      label: "Despues",
+      description: "Cuando ya bajo la intensidad.",
+      count: afterItems.length,
+      content: <BulletList items={afterItems} />,
+    });
+  }
+  if (trainingItems.length > 0) {
+    companionTabs.push({
+      id: "training",
+      label: "Entrenamiento en calma",
+      description: "Practica corta fuera del pico emocional.",
+      count: trainingItems.length,
+      content: <BulletList items={trainingItems} />,
+    });
+  }
+  if (otherStrategyItems.length > 0) {
+    companionTabs.push({
+      id: "extra",
+      label: "Estrategias extra",
+      description: "Apoyos adicionales cuando lo necesites.",
+      count: otherStrategyItems.length,
+      content: <BulletList items={otherStrategyItems} />,
+    });
+  }
+  if (practiceTitle || practiceDescription) {
+    companionTabs.push({
+      id: "practice",
+      label: practiceTitle ?? "Practica sugerida",
+      description: "Actividad breve para regular.",
+      content: (
+        <div className="space-y-2 text-sm text-neutral-600">
+          {practiceDescription && <p>{practiceDescription}</p>}
+          {practiceMaterials && (
+            <p className="text-xs text-neutral-500">
+              Materiales: {practiceMaterials}
+            </p>
+          )}
+        </div>
+      ),
+    });
+  }
+  if (reflectionItems.length > 0) {
+    companionTabs.push({
+      id: "reflection",
+      label: "Reflexion adulta",
+      description: "Autoobservacion del adulto.",
+      count: reflectionItems.length,
+      content: <BulletList items={reflectionItems} />,
+    });
+  }
+  if (notesItems.length > 0) {
+    companionTabs.push({
+      id: "notes",
+      label: "Notas",
+      description: "Recordatorios clave.",
+      count: notesItems.length,
+      content: <BulletList items={notesItems} />,
+    });
+  }
+
+  const resolvedCompanionTabId =
+    companionTabs.find((tab) => tab.id === activeCompanionTab)?.id ??
+    companionTabs[0]?.id;
+  const activeCompanionTabData = companionTabs.find(
+    (tab) => tab.id === resolvedCompanionTabId,
+  );
 
   return (
     <div className="max-w-5xl px-5 md:px-10 mi-stack-lg">
@@ -225,59 +399,67 @@ export default function ProgramLessonView() {
           )}
           {activeTab === "acompanamiento" && guide && (
             <div className="mi-stack-lg">
-              {metaphorContent && (
-                <SectionCard title="Lectura simbolica">
-                  {metaphorContent}
-                </SectionCard>
-              )}
-
-              {languagePhrases.length > 0 ? (
-                <SectionCard title="Lenguaje para acompanar">
-                  <BulletList items={languagePhrases} />
-                </SectionCard>
-              ) : null}
-
-              {languageQuestions.length > 0 ? (
-                <SectionCard title="Preguntas para explorar">
-                  <BulletList items={languageQuestions} />
-                </SectionCard>
-              ) : null}
-
-              {strategies.length > 0 ? (
-                <div className="grid md:grid-cols-2 gap-4">
-                  {strategies.map((strategy) => (
-                    <SectionCard
-                      key={strategy.title}
-                      title={strategy.title || ""}
-                    >
-                      {"items" in strategy ? (
-                        <BulletList items={strategy.items} />
-                      ) : null}
-                    </SectionCard>
-                  ))}
-                </div>
-              ) : null}
-
-              {practiceTitle && practiceDescription && (
-                <SectionCard title={practiceTitle}>
-                  <p>{practiceDescription}</p>
-                  {practiceMaterials && (
-                    <p className="mt-2 text-xs text-neutral-500">
-                      Materiales: {practiceMaterials}
+              {companionTabs.length === 0 ? (
+                <p className="text-sm text-neutral-500">
+                  No hay informacion de acompanamiento disponible.
+                </p>
+              ) : (
+                <div className="grid md:grid-cols-[220px_1fr] gap-4">
+                  <aside className="bg-neutral-50 border border-neutral-200 rounded-2xl p-3">
+                    <p className="text-xs uppercase tracking-[0.24em] text-neutral-400 px-2">
+                      Secciones
                     </p>
-                  )}
-                </SectionCard>
+                    <div
+                      className="mt-3 space-y-1"
+                      role="tablist"
+                      aria-orientation="vertical"
+                    >
+                      {companionTabs.map((tab) => (
+                        <button
+                          key={tab.id}
+                          type="button"
+                          role="tab"
+                          aria-selected={tab.id === resolvedCompanionTabId}
+                          onClick={() => setActiveCompanionTab(tab.id)}
+                          className={`w-full rounded-xl px-3 py-2 text-left text-sm transition focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-300 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-50 ${
+                            tab.id === resolvedCompanionTabId
+                              ? "bg-white text-neutral-900 shadow-sm border border-neutral-300"
+                              : "text-neutral-600 hover:text-neutral-800 hover:bg-white/70 border-neutral-200"
+                          }`}
+                        >
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="font-medium">{tab.label}</span>
+                            {typeof tab.count === "number" && (
+                              <span className="text-xs text-neutral-400">
+                                {tab.count}
+                              </span>
+                            )}
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </aside>
+
+                  <section
+                    className="bg-white border border-neutral-200 rounded-2xl p-5"
+                    role="tabpanel"
+                  >
+                    <div className="space-y-2">
+                      <h3 className="text-lg font-semibold text-neutral-800">
+                        {activeCompanionTabData?.label}
+                      </h3>
+                      {activeCompanionTabData?.description && (
+                        <p className="text-sm text-neutral-500">
+                          {activeCompanionTabData.description}
+                        </p>
+                      )}
+                    </div>
+                    <div className="mt-4">
+                      {activeCompanionTabData?.content}
+                    </div>
+                  </section>
+                </div>
               )}
-
-              {reflectionItems.length > 0 ? (
-                <SectionCard title="Reflexion adulta">
-                  <BulletList items={reflectionItems} />
-                </SectionCard>
-              ) : null}
-
-              {notesItems.length > 0 ? (
-                <ParentResources resources={notesItems} />
-              ) : null}
             </div>
           )}
         </div>
