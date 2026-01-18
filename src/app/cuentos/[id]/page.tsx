@@ -1,4 +1,4 @@
-import { loadStory } from "@/lib/stories";
+import { loadStory } from "@/lib/stories/server";
 import { characters } from "@/lib/characters";
 import CuentoClient from "@/components/dashboard/CuentoClient";
 

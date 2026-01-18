@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { Story, JourneyStep } from "@/lib/stories";
+import type { Story, JourneyStep } from "@/types/story";
 import { useJourneyAudio } from "@/hooks/useJourneyAudio";
 
 export interface JourneyPlayerState {
