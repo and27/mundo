@@ -3,7 +3,7 @@ import { getAuthUser } from "@/lib/apiAuth";
 import { getStoryJob } from "@/lib/storyJobs";
 
 type RouteContext = {
-  params: { jobId: string };
+  params: Promise<{ jobId: string }>;
 };
 
 export async function GET(request: Request, context: RouteContext) {
@@ -12,7 +12,8 @@ export async function GET(request: Request, context: RouteContext) {
     return NextResponse.json({ error }, { status: 401 });
   }
 
-  const job = await getStoryJob(context.params.jobId);
+  const { jobId } = await context.params;
+  const job = await getStoryJob(jobId);
   if (!job) {
     return NextResponse.json({ error: "Job not found" }, { status: 404 });
   }
