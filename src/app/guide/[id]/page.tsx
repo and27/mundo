@@ -88,7 +88,7 @@ const ProgressDots = ({
           key={index}
           className={`w-3 h-3 rounded-full transition-colors duration-300 ${
             index <= completed
-              ? "bg-[var(--color-breath-warm)]"
+              ? "bg-breath-warm"
               : "bg-neutral-600" // Dorado si completado, gris si no
           }`}
         />

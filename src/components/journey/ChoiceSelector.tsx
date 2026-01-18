@@ -38,8 +38,8 @@ const ChoiceButton = memo(
           "bg-black/30 hover:bg-black/40",
           isSelected
             ? [
-                "border-yellow-400 border-2 scale-105 brightness-110",
-                "shadow-[var(--shadow-choice-glow)]",
+              "border-yellow-400 border-2 scale-105 brightness-110",
+                "ring-2 ring-yellow-400/40",
                 "bg-yellow-400/10",
               ]
             : [
