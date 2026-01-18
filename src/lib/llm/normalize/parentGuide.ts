@@ -11,7 +11,11 @@ function normalizeEmotionId(value: string): EmotionId | undefined {
   if (normalized === "miedo") return "miedo";
   if (normalized === "ira") return "ira";
   if (normalized === "tristeza") return "tristeza";
-  if (normalized === "verguenza") return undefined;
+  if (normalized === "verguenza" || normalized === "vergüenza")
+    return "verguenza";
+  if (normalized === "celos") return "celos";
+  if (normalized === "alegria" || normalized === "alegría")
+    return "alegria";
   return undefined;
 }
 

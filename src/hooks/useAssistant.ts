@@ -1,4 +1,4 @@
-import { GuideWithCharacter } from "@/types/ai";
+import type { CharacterId, EmotionId, GuideWithCharacter } from "@/types/ai";
 import { useState, useEffect } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
 import { authFetch } from "@/lib/authFetch";
@@ -61,12 +61,21 @@ export function useMundoAssistant() {
 
       const rawData = await response.json();
 
-      const emotion = rawData.emotion;
-      const character = getCharacterFromEmotion(emotion);
+      const parsedFromId = parseGuideId(rawData?.id);
+      const emotion =
+        normalizeEmotionInput(rawData?.emotionId ?? rawData?.emotion) ??
+        parsedFromId.emotion ??
+        resolveEmotionFromTags(rawData?.tags);
+      const character =
+        parsedFromId.character ?? getCharacterFromEmotion(emotion);
+      const resolvedId =
+        typeof rawData?.id === "string" && rawData.id.trim().length > 0
+          ? rawData.id
+          : `story_${emotion ?? "miedo"}_${character}`;
 
       const finalGuide: GuideWithCharacter = {
         ...rawData,
-        id: `story_${emotion}_${character}`,
+        id: resolvedId,
         emotion,
         emotionId: emotion,
         character,
@@ -92,10 +101,42 @@ export function useMundoAssistant() {
   return { isLoading, guide, error, loadingMessage, generateGuide };
 }
 
-function getCharacterFromEmotion(emotion: "miedo" | "ira"): "yachay" | "amaru" {
-  const map = {
-    miedo: "yachay",
-    ira: "amaru",
-  } as const;
-  return map[emotion];
+function getCharacterFromEmotion(emotion?: EmotionId): CharacterId {
+  if (emotion === "ira") return "amaru";
+  return "yachay";
+}
+
+function normalizeEmotionInput(value?: string): EmotionId | undefined {
+  if (!value) return undefined;
+  const normalized = value.trim().toLowerCase();
+  if (normalized === "miedo") return "miedo";
+  if (normalized === "ira") return "ira";
+  if (normalized === "tristeza") return "tristeza";
+  if (normalized === "verguenza" || normalized === "vergüenza")
+    return "verguenza";
+  if (normalized === "celos") return "celos";
+  if (normalized === "alegria" || normalized === "alegría")
+    return "alegria";
+  return undefined;
+}
+
+function resolveEmotionFromTags(tags?: string[]): EmotionId | undefined {
+  if (!Array.isArray(tags)) return undefined;
+  for (const tag of tags) {
+    const normalized = normalizeEmotionInput(tag);
+    if (normalized) return normalized;
+  }
+  return undefined;
+}
+
+function parseGuideId(
+  value?: string
+): { emotion?: EmotionId; character?: CharacterId } {
+  if (!value) return {};
+  const match = value.trim().toLowerCase().match(/^story_([^_]+)_([^_]+)$/);
+  if (!match) return {};
+  const emotion = normalizeEmotionInput(match[1]);
+  const character =
+    match[2] === "yachay" || match[2] === "amaru" ? match[2] : undefined;
+  return { emotion, character };
 }

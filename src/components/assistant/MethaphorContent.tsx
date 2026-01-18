@@ -1,26 +1,13 @@
 import React from "react";
 import { GuideWithCharacter } from "@/types/ai";
-import {
-  Target,
-  CheckCircle,
-  Heart,
-  Star,
-  Users,
-  Info,
-  Sparkles,
-  Play,
-} from "lucide-react";
+import { Target, CheckCircle, Heart, Star, Users, Play } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Button from "../ui/Button";
-import { useAuthStore } from "@/store/useAuthStore";
-import type { ParentGuideSection } from "@/types/ai";
+import type { CharacterId, EmotionId, ParentGuideSection } from "@/types/ai";
 import { getGuideSections } from "@/lib/guideSections";
 import { toast } from "sonner";
 import { authFetch } from "@/lib/authFetch";
-import type {
-  StoryJob,
-  StoryJobCreateResponse,
-} from "@/types/storyJob";
+import type { StoryJob, StoryJobCreateResponse } from "@/types/storyJob";
 
 interface PillarContentProps {
   guide: GuideWithCharacter;
@@ -36,7 +23,7 @@ export const MetaphorContent: React.FC<PillarContentProps> = ({
   const router = useRouter();
   const sections = getGuideSections(guide);
   const metaphorSection = sections.find(
-    (section) => section.kind === "metaphor"
+    (section) => section.kind === "metaphor",
   ) as ParentGuideSection | undefined;
   const metaphorContent =
     metaphorSection && "content" in metaphorSection
@@ -58,6 +45,11 @@ export const MetaphorContent: React.FC<PillarContentProps> = ({
         method: "GET",
       });
 
+      if (statusRes.status === 404) {
+        await sleep(intervalMs);
+        continue;
+      }
+
       if (!statusRes.ok) {
         const errText = await statusRes.text();
         throw new Error(errText || "Error consultando estado del job.");
@@ -78,13 +70,13 @@ export const MetaphorContent: React.FC<PillarContentProps> = ({
     if (!setLoading) return;
     try {
       setLoading(true);
-      const characterId = guide.characterId ?? guide.character;
-      if (!characterId) {
-        throw new Error("characterId missing for story export");
-      }
-      const emotionId = guide.emotionId;
-      if (!emotionId) {
-        throw new Error("emotionId missing for story export");
+      const emotionId = resolveEmotionId(guide) ?? "miedo";
+      const characterId = resolveCharacterId(guide, emotionId);
+      if (!resolveEmotionId(guide)) {
+        console.warn(
+          "[story/export] Guide missing emotionId; defaulting to 'miedo'",
+          guide
+        );
       }
       const res = await authFetch("/api/story/export", {
         method: "POST",
@@ -155,21 +147,76 @@ export const MetaphorContent: React.FC<PillarContentProps> = ({
   );
 };
 
+function normalizeEmotionInput(value?: string): EmotionId | undefined {
+  if (!value) return undefined;
+  const normalized = value.trim().toLowerCase();
+  if (normalized === "miedo") return "miedo";
+  if (normalized === "ira") return "ira";
+  if (normalized === "tristeza") return "tristeza";
+  if (normalized === "verguenza" || normalized === "vergüenza")
+    return "verguenza";
+  if (normalized === "celos") return "celos";
+  if (normalized === "alegria" || normalized === "alegría")
+    return "alegria";
+  return undefined;
+}
+
+function parseGuideId(
+  value?: string
+): { emotion?: EmotionId; character?: CharacterId } {
+  if (!value) return {};
+  const match = value.trim().toLowerCase().match(/^story_([^_]+)_([^_]+)$/);
+  if (!match) return {};
+  const emotion = normalizeEmotionInput(match[1]);
+  const character =
+    match[2] === "yachay" || match[2] === "amaru" ? match[2] : undefined;
+  return { emotion, character };
+}
+
+function resolveEmotionId(guide: GuideWithCharacter): EmotionId | undefined {
+  if (guide.emotionId) return guide.emotionId;
+  const parsed = parseGuideId(guide.id);
+  if (parsed.emotion) return parsed.emotion;
+  if (Array.isArray(guide.tags)) {
+    for (const tag of guide.tags) {
+      const normalized = normalizeEmotionInput(tag);
+      if (normalized) return normalized;
+    }
+  }
+  return undefined;
+}
+
+function resolveCharacterId(
+  guide: GuideWithCharacter,
+  emotion: EmotionId
+): CharacterId {
+  const direct =
+    guide.characterId === "yachay" || guide.characterId === "amaru"
+      ? guide.characterId
+      : guide.character === "yachay" || guide.character === "amaru"
+        ? guide.character
+        : undefined;
+  if (direct) return direct;
+  const parsed = parseGuideId(guide.id);
+  if (parsed.character) return parsed.character;
+  return emotion === "ira" ? "amaru" : "yachay";
+}
+
 // CONVERSATION CONTENT
 export const ConversationContent: React.FC<PillarContentProps> = ({
   guide,
 }) => {
   const sections = getGuideSections(guide);
   const languageSection = sections.find(
-    (section) => section.kind === "language"
+    (section) => section.kind === "language",
   ) as ParentGuideSection | undefined;
   const questions =
     languageSection && "questions" in languageSection
-      ? languageSection.questions ?? []
+      ? (languageSection.questions ?? [])
       : [];
   const phrases =
     languageSection && "phrases" in languageSection
-      ? languageSection.phrases ?? []
+      ? (languageSection.phrases ?? [])
       : [];
   return (
     <div className="space-y-6">
@@ -224,7 +271,7 @@ export const ConversationContent: React.FC<PillarContentProps> = ({
 export const ActivityContent: React.FC<PillarContentProps> = ({ guide }) => {
   const sections = getGuideSections(guide);
   const practiceSection = sections.find(
-    (section) => section.kind === "practice"
+    (section) => section.kind === "practice",
   ) as ParentGuideSection | undefined;
   const activityTitle =
     practiceSection && "title" in practiceSection
