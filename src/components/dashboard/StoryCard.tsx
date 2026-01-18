@@ -94,14 +94,15 @@ export default function StoryCard({
   };
 
   return (
-    <article className="bg-white border border-neutral-200 rounded-2xl overflow-hidden transition hover:shadow-sm">
-      <div className="relative h-24">
+    <article className="group border border-neutral-200 rounded-2xl overflow-hidden transition-shadow duration-300 hover:shadow-lg">
+      <div className="relative h-32 bg-neutral-100 overflow-hidden">
         <Image
           src={"/images/all.webp"}
           alt={guide.guideTitle}
           fill
-          className="object-cover"
+          className="object-cover transition-transform duration-300 group-hover:scale-105"
         />
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300" />
         {onToggleFavorite && (
           <button
             onClick={(e) => {
@@ -122,12 +123,9 @@ export default function StoryCard({
 
       <div className="p-5 space-y-2">
         <header className="space-y-1">
-          <h3 className="mi-text-subtitle text-neutral-800 line-clamp-1">
+          <h3 className="mi-text-subtitle text-neutral-800 line-clamp-2">
             {guide.guideTitle}
           </h3>
-          <p className="mi-text-body-sm text-neutral-500">
-            Con {guide.characterId}
-          </p>
         </header>
 
         {description && (
@@ -144,10 +142,10 @@ export default function StoryCard({
         <footer className="flex items-center justify-between pt-2">
           <button
             onClick={onPlay}
-            className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition ${
+            className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-white shadow-md transition-transform duration-200 hover:-translate-y-0.5 ${
               isKids
-                ? "bg-sky-100 text-sky-700 hover:bg-sky-200"
-                : "bg-violet-100 text-violet-700 hover:bg-violet-200"
+                ? "bg-secondary-600 hover:bg-secondary-700"
+                : "bg-primary-600 hover:bg-primary-700"
             }`}
           >
             Ver cuento
