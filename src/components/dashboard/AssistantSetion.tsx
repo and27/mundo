@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { useMundoAssistant } from "@/hooks/useAssistant";
 import { useSavedGuides } from "@/hooks/useSavedGuides";
 import InputForm from "../assistant/InputForm";
-import ResultsDisplay from "../assistant/ResultsDisplay";
 
 export default function AssistantSection() {
   const { isLoading, guide, error, loadingMessage, generateGuide } =

@@ -8,26 +8,6 @@ export type EmotionId =
 
 export type CharacterId = "yachay" | "amaru";
 
-export interface ActivityGuideline {
-  id: string;
-  title: string;
-  description: string;
-  linkToDetail: string;
-  type: string;
-  emotionalActivityId?: string;
-  emotionalActivityPreview?: string;
-  imageUrl?: string;
-  tags?: string[];
-}
-
-export interface ChatMessage {
-  id: string;
-  role: "user" | "assistant";
-  text?: string;
-  resources?: ActivityGuideline[];
-  timestamp: number;
-}
-
 export interface RiskAssessment {
   riskLevel: "normal" | "attention" | "professional_required";
   confidence: number; // 0.1 - 1.0
