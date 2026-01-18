@@ -17,6 +17,10 @@ import type { ParentGuideSection } from "@/types/ai";
 import { getGuideSections } from "@/lib/guideSections";
 import { toast } from "sonner";
 import { authFetch } from "@/lib/authFetch";
+import type {
+  StoryJob,
+  StoryJobCreateResponse,
+} from "@/types/storyJob";
 
 interface PillarContentProps {
   guide: GuideWithCharacter;
@@ -38,6 +42,38 @@ export const MetaphorContent: React.FC<PillarContentProps> = ({
     metaphorSection && "content" in metaphorSection
       ? metaphorSection.content
       : undefined;
+
+  const sleep = (ms: number) =>
+    new Promise((resolve) => {
+      setTimeout(resolve, ms);
+    });
+
+  const pollStoryJob = async (jobId: string): Promise<StoryJob> => {
+    const timeoutMs = 10 * 60 * 1000;
+    const intervalMs = 2000;
+    const start = Date.now();
+
+    while (Date.now() - start < timeoutMs) {
+      const statusRes = await authFetch(`/api/story/export/${jobId}`, {
+        method: "GET",
+      });
+
+      if (!statusRes.ok) {
+        const errText = await statusRes.text();
+        throw new Error(errText || "Error consultando estado del job.");
+      }
+
+      const job = (await statusRes.json()) as StoryJob;
+      if (job.status === "succeeded" || job.status === "failed") {
+        return job;
+      }
+
+      await sleep(intervalMs);
+    }
+
+    throw new Error("Tiempo de espera agotado para generar la historia.");
+  };
+
   const handleStartExperience = async () => {
     if (!setLoading) return;
     try {
@@ -60,6 +96,23 @@ export const MetaphorContent: React.FC<PillarContentProps> = ({
           character: characterId,
         }),
       });
+
+      if (res.status === 202) {
+        const jobData = (await res.json()) as StoryJobCreateResponse;
+        await authFetch(jobData.processUrl, { method: "POST" });
+        const job = await pollStoryJob(jobData.jobId);
+
+        if (job.status === "failed") {
+          throw new Error(job.error ?? "Fallo generando la historia.");
+        }
+
+        if (!job.result?.storyId) {
+          throw new Error("Job completado sin storyId.");
+        }
+
+        router.push(`/cuentos/${job.result.storyId}`);
+        return;
+      }
 
       if (!res.ok) {
         const err = await res.text();
