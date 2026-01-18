@@ -1,3 +1,4 @@
+import "server-only";
 import { buildImageFilename } from "@/utils/imageUtils";
 import { buildStoryPrompt } from "./buildStoryPrompt";
 import type {
