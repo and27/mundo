@@ -7,7 +7,8 @@ import { generateStory, generateHiveImage } from "@/lib/storyEngine";
 import { enhancePromptStyle } from "@/utils/imageUtils";
 import { supabase } from "@/lib/supabaseServer";
 import { generateAudio } from "@/lib/geminiTTS";
-import type { Story } from "@/types/story";
+import type { JourneyStep, Story } from "@/types/story";
+import type { PromptStoryStep } from "@/types/promptGenerationTypes";
 
 export type StoryExportRequest = {
   emotion: string;
@@ -23,6 +24,50 @@ export type StoryExportResult = {
   cached: boolean;
   timings: TimingEntry[];
 };
+
+function normalizeStoryCategory(
+  value: string | undefined
+): Story["category"] {
+  if (!value) return undefined;
+  const normalized = value.trim().toLowerCase();
+  if (normalized === "emotions" || normalized === "emociones")
+    return "emotions";
+  if (normalized === "breathing" || normalized === "respiracion")
+    return "breathing";
+  if (normalized === "focus" || normalized === "concentracion")
+    return "focus";
+  if (normalized === "sleep" || normalized === "sueno") return "sleep";
+  return undefined;
+}
+
+function buildRuntimeSteps(sourceSteps: PromptStoryStep[]): JourneyStep[] {
+  return sourceSteps.map((step, index) => {
+    if (!step.audioSrc) {
+      throw new Error(`Missing audioSrc for step ${step.id || index}`);
+    }
+    const visuals: JourneyStep["visuals"] = {
+      type: step.visuals?.type ?? "scene",
+      backgroundImage: step.visuals?.backgroundImage,
+      foregroundImage: step.visuals?.foregroundImage,
+      breathingCueType: step.visuals?.breathingCueType,
+      choices: step.visuals?.choices,
+      gameComponentId: step.visuals?.gameComponentId,
+    };
+    const interaction: JourneyStep["interaction"] = step.interaction ?? {
+      type: "auto_proceed",
+      nextStepId: sourceSteps[index + 1]?.id ?? "end",
+    };
+
+    return {
+      id: step.id,
+      audioSrc: step.audioSrc,
+      subtitle: step.subtitle,
+      visuals,
+      interaction,
+      isNarration: step.isNarration ?? true,
+    };
+  });
+}
 
 async function timeAsync<T>(
   timings: TimingEntry[],
@@ -198,8 +243,17 @@ export async function generateStoryExport(
 
   timings.push({ label: "TOTAL", ms: performance.now() - totalStart });
 
+  const { category: rawCategory, steps, ...restStory } = story;
+  const normalizedCategory = normalizeStoryCategory(rawCategory);
+  const runtimeSteps = buildRuntimeSteps(steps);
+  const runtimeStory: Story = {
+    ...restStory,
+    steps: runtimeSteps,
+    ...(normalizedCategory ? { category: normalizedCategory } : {}),
+  };
+
   return {
-    story,
+    story: runtimeStory,
     url: publicUrlData?.publicUrl,
     cached: false,
     timings,
