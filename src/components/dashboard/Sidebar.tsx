@@ -157,7 +157,9 @@ const Sidebar: React.FC<SidebarProps> = ({
           )}
 
           <nav className="space-y-2">
-            {dashboardSections.map((item) => (
+            {dashboardSections
+              .filter((item) => item.id !== "settings")
+              .map((item) => (
               <NavItem
                 key={item.id}
                 item={item}
@@ -172,16 +174,24 @@ const Sidebar: React.FC<SidebarProps> = ({
         <div className="pb-safe">
           <div className="h-px bg-white/10" />
 
-          <div
+          <button
+            type="button"
+            onClick={() => router.push("/parentDashboard?section=settings")}
             className={[
-              "flex items-center w-full p-1 md:p-3 rounded-lg transition-colors",
-              "hover:mi-accent-soft",
+              "flex items-center w-full p-1 md:p-3 rounded-lg transition-colors cursor-pointer",
+              activeSectionId === "settings"
+                ? "mi-nav-active text-white"
+                : "hover:mi-accent-soft",
               isDesktopCollapsed ? "justify-center" : "",
             ].join(" ")}
+            aria-label="Abrir ajustes"
           >
             <div
               className={[
-                "w-10 h-10 mi-accent-gradient rounded-lg flex items-center justify-center",
+                "w-10 h-10 rounded-lg flex items-center justify-center",
+                activeSectionId === "settings"
+                  ? "mi-nav-active-icon"
+                  : "mi-accent-gradient",
                 !isDesktopCollapsed && "mr-3",
               ].join(" ")}
             >
@@ -200,26 +210,15 @@ const Sidebar: React.FC<SidebarProps> = ({
               )}
             </div>
 
-            {isDesktopCollapsed ? (
-              <button
-                onClick={() => router.push("/parentDashboard?section=settings")}
-                className="sr-only"
-                aria-label="Abrir ajustes"
-              >
-                Abrir ajustes
-              </button>
-            ) : (
-              <button
-                onClick={() => router.push("/parentDashboard?section=settings")}
-                className="flex-1 flex items-center justify-between text-left"
-              >
+            {!isDesktopCollapsed && (
+              <span className="flex-1 flex items-center justify-between text-left">
                 <span className="text-sm font-semibold text-white">
                   {userName}
                 </span>
                 <Settings className="w-4 h-4 text-white/50" />
-              </button>
+              </span>
             )}
-          </div>
+          </button>
           <button
             onClick={handleLogout}
             disabled={isLoggingOut}

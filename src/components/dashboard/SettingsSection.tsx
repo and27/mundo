@@ -1,7 +1,14 @@
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { LogOut, Mail, User, Wand2, BookOpenCheck, Sparkles } from "lucide-react";
+import {
+  LogOut,
+  Mail,
+  User,
+  Wand2,
+  BookOpenCheck,
+  Sparkles,
+} from "lucide-react";
 import { logoutUser } from "@/services/authService";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useOnboardingStore } from "@/store/useOnboardingStore";
@@ -18,7 +25,7 @@ export default function SettingsSection() {
 
   const displayName = useMemo(
     () => name || user?.displayName || user?.email || "Explorador",
-    [name, user]
+    [name, user],
   );
 
   const handleLogout = async () => {
@@ -130,7 +137,7 @@ export default function SettingsSection() {
             className="flex items-center gap-2 rounded-xl border border-neutral-200 px-4 py-3 mi-text-label text-neutral-700 hover:border-neutral-300 hover:shadow-sm transition"
           >
             <BookOpenCheck className="w-4 h-4 text-neutral-500" />
-            Emociones en accion
+            Emociones en acción
           </Link>
           <Link
             href="/parentDashboard?section=asistente"
