@@ -9,40 +9,61 @@ type BenefitProps = {
 const Benefit = ({ icon, title, subtitle }: BenefitProps) => (
   <div className="flex items-center gap-3">
     <span className="text-2xl">{icon}</span>
+
     <div className="leading-snug">
       <p className="font-semibold text-white">{title}</p>
-      {subtitle && <p className="text-sm text-green-100/80">{subtitle}</p>}
+      {subtitle && <p className="text-sm text-white/70">{subtitle}</p>}
     </div>
   </div>
 );
 
-const Divider = () => (
-  <span className="hidden md:block h-6 w-px bg-green-200/30" />
-);
+const Divider = () => <span className="hidden md:block h-6 w-px bg-white/20" />;
 
 const BenefitsBar = () => (
   <section
-    aria-label="Beneficios clave"
-    className="mx-auto max-w-4xl rounded-lg bg-black/20 backdrop-blur-sm px-6 py-4 flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10"
+    aria-labelledby="benefits-title"
+    className="
+      mi-surface-dark
+      -mt-5
+      mb-15
+      max-w-4xl
+      rounded-xl
+      px-5
+      mx-3 md:mx-auto
+      py-7
+      flex
+      flex-col
+      md:flex-row
+      items-start sm:items-center
+      justify-center
+      gap-6
+      md:gap-10
+    "
   >
+    <h2 id="benefits-title" className="sr-only">
+      Beneficios clave de Mundo Interior
+    </h2>
+
     <Benefit
       icon="😊"
-      title="Adiós ansiedad"
-      subtitle="Respira — la calma llega en minutos"
+      title="Más calma en momentos difíciles"
+      subtitle="Baja la intensidad en pocos minutos"
     />
+
     <Divider />
 
     <Benefit
       icon="🧠"
-      title="Foco de superhéroe"
-      subtitle="Mejora su atención y memoria"
+      title="Mejor convivencia y transiciones"
+      subtitle="Un lenguaje común en casa y escuela"
     />
+
     <Divider />
 
     <Benefit
       icon="🧭"
-      title="100 % guiado"
-      subtitle="Solo presiona play, ¡nosotros hacemos el resto!"
+      title="Simple y guiado"
+      subtitle="Historia → preguntas → práctica"
     />
   </section>
 );

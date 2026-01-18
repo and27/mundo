@@ -1,11 +1,11 @@
 "use client";
 
-import AboutSection from "@/components/landing/AboutSection";
-import BenefitsBar from "@/components/landing/BenefitsBar";
-import FAQs from "@/components/landing/Faqs";
-import FinalCallToAction from "@/components/landing/FinalCTA";
-import Footer from "@/components/landing/Footer";
-import Hero from "@/components/landing/Hero";
+import AboutSection from "@/components/tutorLanding/AboutSection";
+import BenefitsBar from "@/components/tutorLanding/BenefitsBar";
+import FAQs from "@/components/tutorLanding/Faqs";
+import FinalCallToAction from "@/components/tutorLanding/FinalCTA";
+import Footer from "@/components/tutorLanding/Footer";
+import Hero from "@/components/tutorLanding/Hero";
 
 export default function Tutor() {
   return (

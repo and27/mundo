@@ -1,9 +1,9 @@
-import HeroSection from "@/components/marketing/HeroSection";
-import WhatIsSection from "@/components/marketing/WhatIsSection";
-import HowItWorksSection from "@/components/marketing/HowItWorksSection";
-import BenefitsBar from "@/components/marketing/BenefitsBar";
-import FAQs from "@/components/marketing/FAQs";
-import FinalCallToAction from "@/components/marketing/FinalCallToAction";
+import HeroSection from "@/components/landing/HeroSection";
+import WhatIsSection from "@/components/landing/WhatIsSection";
+import HowItWorksSection from "@/components/landing/HowItWorksSection";
+import BenefitsBar from "@/components/landing/BenefitsBar";
+import FAQs from "@/components/landing/FAQs";
+import FinalCallToAction from "@/components/landing/FinalCallToAction";
 import Image from "next/image";
 import Link from "next/link";
 
