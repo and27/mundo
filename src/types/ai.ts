@@ -1,4 +1,10 @@
-export type EmotionId = "ira" | "miedo" | "tristeza" | "verguenza";
+export type EmotionId =
+  | "ira"
+  | "miedo"
+  | "tristeza"
+  | "verguenza"
+  | "celos"
+  | "alegria";
 
 export type CharacterId = "yachay" | "amaru";
 
