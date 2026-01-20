@@ -12,7 +12,7 @@ type DeleteGuidePayload = {
 export async function GET(request: Request) {
   const { user, error: authError } = await getAuthUser(request);
   if (!user) {
-    return NextResponse.json({ authError }, { status: 401 });
+    return NextResponse.json({ error: "No autorizado." }, { status: 401 });
   }
 
   const { data, error } = await supabase
@@ -22,7 +22,11 @@ export async function GET(request: Request) {
     .order("created_at", { ascending: false });
 
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error("Error fetching saved guides:", error);
+    return NextResponse.json(
+      { error: "No se pudo cargar tus cuentos." },
+      { status: 500 }
+    );
   }
 
   const items: { guide: GuideWithCharacter; createdAt: string | null }[] = [];
@@ -48,14 +52,17 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   const { user, error } = await getAuthUser(request);
   if (!user) {
-    return NextResponse.json({ error }, { status: 401 });
+    return NextResponse.json({ error: "No autorizado." }, { status: 401 });
   }
 
   const body = (await request.json()) as { guide?: GuideWithCharacter };
   const { guide } = body;
 
   if (!guide) {
-    return NextResponse.json({ error: "guide is required" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Se requiere una guia para guardar." },
+      { status: 400 }
+    );
   }
 
   const bucketName = "stories";
@@ -69,8 +76,9 @@ export async function POST(request: Request) {
     });
 
   if (uploadRes.error) {
+    console.error("Error uploading guide JSON:", uploadRes.error);
     return NextResponse.json(
-      { error: uploadRes.error.message },
+      { error: "No se pudo guardar el cuento." },
       { status: 500 }
     );
   }
@@ -88,7 +96,11 @@ export async function POST(request: Request) {
     .maybeSingle();
 
   if (findError) {
-    return NextResponse.json({ error: findError.message }, { status: 500 });
+    console.error("Error checking saved guide:", findError);
+    return NextResponse.json(
+      { error: "No se pudo guardar el cuento." },
+      { status: 500 }
+    );
   }
 
   if (existing?.id) {
@@ -104,7 +116,11 @@ export async function POST(request: Request) {
       .eq("id", existing.id);
 
     if (updateError) {
-      return NextResponse.json({ error: updateError.message }, { status: 500 });
+      console.error("Error updating saved guide:", updateError);
+      return NextResponse.json(
+        { error: "No se pudo guardar el cuento." },
+        { status: 500 }
+      );
     }
   } else {
     const { error: insertError } = await supabase.from("saved_guides").insert({
@@ -118,7 +134,11 @@ export async function POST(request: Request) {
     });
 
     if (insertError) {
-      return NextResponse.json({ error: insertError.message }, { status: 500 });
+      console.error("Error inserting saved guide:", insertError);
+      return NextResponse.json(
+        { error: "No se pudo guardar el cuento." },
+        { status: 500 }
+      );
     }
   }
 
@@ -130,7 +150,11 @@ export async function POST(request: Request) {
     .maybeSingle();
 
   if (readError) {
-    return NextResponse.json({ error: readError.message }, { status: 500 });
+    console.error("Error reading saved guide:", readError);
+    return NextResponse.json(
+      { error: "No se pudo guardar el cuento." },
+      { status: 500 }
+    );
   }
 
   return NextResponse.json({
@@ -142,14 +166,17 @@ export async function POST(request: Request) {
 export async function DELETE(request: Request) {
   const { user, error: authError } = await getAuthUser(request);
   if (!user) {
-    return NextResponse.json({ authError }, { status: 401 });
+    return NextResponse.json({ error: "No autorizado." }, { status: 401 });
   }
 
   const body = (await request.json()) as DeleteGuidePayload;
   const { storyId } = body;
 
   if (!storyId) {
-    return NextResponse.json({ error: "storyId is required" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Falta el identificador del cuento." },
+      { status: 400 }
+    );
   }
 
   const { data: existing, error: findError } = await supabase
@@ -160,7 +187,11 @@ export async function DELETE(request: Request) {
     .maybeSingle();
 
   if (findError) {
-    return NextResponse.json({ error: findError.message }, { status: 500 });
+    console.error("Error finding saved guide:", findError);
+    return NextResponse.json(
+      { error: "No se pudo eliminar el cuento." },
+      { status: 500 }
+    );
   }
 
   if (existing?.story_url) {
@@ -173,8 +204,9 @@ export async function DELETE(request: Request) {
         .from("stories")
         .remove([path]);
       if (storageError) {
+        console.error("Error removing guide from storage:", storageError);
         return NextResponse.json(
-          { error: storageError.message },
+          { error: "No se pudo eliminar el cuento." },
           { status: 500 }
         );
       }
@@ -188,7 +220,11 @@ export async function DELETE(request: Request) {
     .eq("story_id", storyId);
 
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error("Error deleting saved guide:", error);
+    return NextResponse.json(
+      { error: "No se pudo eliminar el cuento." },
+      { status: 500 }
+    );
   }
 
   return NextResponse.json({ ok: true });

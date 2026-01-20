@@ -10,7 +10,7 @@ Mantenerlo vivo. Marcar items con checklist.
 
 ### Seguridad y datos
 - [x] No hay secretos en git (rotados y removidos de historial).
-- [ ] Variables sensibles solo en entorno/secret manager.
+- [x] Variables sensibles solo en entorno/secret manager.
 - [ ] Supabase con RLS activo y validado para tablas criticas.
 - [x] Cookies de sesion seguras (httpOnly, secure, sameSite).
 
@@ -18,7 +18,7 @@ Mantenerlo vivo. Marcar items con checklist.
 - [x] Guardrails de contenido activos (filtros y validaciones).
 - [x] Rate limit por usuario/IP en endpoints de IA.
 - [x] Timeouts y reintentos controlados en llamadas a IA.
-- [ ] Manejo de error con mensajes claros para el usuario.
+- [x] Manejo de error con mensajes claros para el usuario.
 
 ### Producto minimo usable
 - [ ] Flujos principales funcionan end-to-end (login, dashboard, programa, cuento).
