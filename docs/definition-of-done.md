@@ -21,14 +21,14 @@ Mantenerlo vivo. Marcar items con checklist.
 - [x] Manejo de error con mensajes claros para el usuario.
 
 ### Producto minimo usable
-- [ ] Flujos principales funcionan end-to-end (login, dashboard, programa, cuento).
-- [ ] Mobile usable en las pantallas principales.
-- [ ] Assets y textos sin errores de encoding.
+- [x] Flujos principales funcionan end-to-end (login, dashboard, programa, cuento).
+- [x] Mobile usable en las pantallas principales.
+- [x] Assets y textos sin errores de encoding.
 - [ ] Sin pantallas rotas en navegadores principales.
 
 ### Operacion minima
-- [ ] Logging sin debug verboso en produccion.
-- [ ] Alertas basicas de errores (Sentry o similar).
+- [x] Logging sin debug verboso en produccion.
+- [x] Alertas basicas de errores (Sentry o similar).
 - [ ] Backup y recuperacion basica definida.
 
 ## V1 publica
