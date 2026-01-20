@@ -42,3 +42,6 @@ yarn-error.log*
 next-env.d.ts
 google-tts-service-account.json
 google-tts.b64
+
+# Sentry Config File
+.env.sentry-build-plugin
