@@ -32,18 +32,74 @@ const PrivacyPolicyDisplay: React.FC = () => {
       });
   }, []);
 
+  const markdownComponents = {
+    h1: ({ children }: { children: React.ReactNode }) => (
+      <h1 className="mi-text-title-lg text-white">{children}</h1>
+    ),
+    h2: ({ children }: { children: React.ReactNode }) => (
+      <h2 className="mi-text-title text-white mt-8">{children}</h2>
+    ),
+    h3: ({ children }: { children: React.ReactNode }) => (
+      <h3 className="mi-text-subtitle text-white mt-6">{children}</h3>
+    ),
+    p: ({ children }: { children: React.ReactNode }) => (
+      <p className="mi-text-body text-white/75 leading-relaxed">{children}</p>
+    ),
+    ul: ({ children }: { children: React.ReactNode }) => (
+      <ul className="list-disc list-inside text-white/75 space-y-2">
+        {children}
+      </ul>
+    ),
+    ol: ({ children }: { children: React.ReactNode }) => (
+      <ol className="list-decimal list-inside text-white/75 space-y-2">
+        {children}
+      </ol>
+    ),
+    li: ({ children }: { children: React.ReactNode }) => (
+      <li className="mi-text-body text-white/75">{children}</li>
+    ),
+    a: ({ children, href }: { children: React.ReactNode; href?: string }) => (
+      <a href={href} className="text-white underline underline-offset-4">
+        {children}
+      </a>
+    ),
+    strong: ({ children }: { children: React.ReactNode }) => (
+      <strong className="text-white">{children}</strong>
+    ),
+    blockquote: ({ children }: { children: React.ReactNode }) => (
+      <blockquote className="border-l-2 border-white/30 pl-4 text-white/70">
+        {children}
+      </blockquote>
+    ),
+  };
+
   return (
-    <div className="bg-black/30 backgropd-blur-md p-4 md:p-6 lg:p-8 max-w-3xl mx-auto text-left text-foreground">
-      <article className="markdown-content">
+    <section className="mi-section px-4">
+      <div className="max-w-4xl mx-auto mi-surface-dark rounded-3xl p-6 md:p-10">
+        <header className="mi-section-header">
+          <p className="mi-text-caption text-white/60">Legal</p>
+          <h1 className="mi-text-title-lg text-white">
+            Politica de privacidad
+          </h1>
+          <p className="mi-text-body text-white/70 max-w-2xl">
+            Transparencia sobre como usamos y protegemos los datos.
+          </p>
+        </header>
+
+        <article className="mi-stack-lg">
         {isLoading && <p>Cargando...</p>}
         {error && <p className="text-red-500 font-semibold">{error}</p>}
         {!isLoading && !error && (
-          <ReactMarkdown remarkPlugins={remarkGfm ? [remarkGfm] : []}>
+          <ReactMarkdown
+            remarkPlugins={remarkGfm ? [remarkGfm] : []}
+            components={markdownComponents}
+          >
             {markdown}
           </ReactMarkdown>
         )}
-      </article>
-    </div>
+        </article>
+      </div>
+    </section>
   );
 };
 
