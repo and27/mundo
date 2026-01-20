@@ -1,106 +1,73 @@
-# Política de Privacidad de Mundo Interior
+# Politica de Privacidad de Mundo Interior
 
-_Última actualización: 25 de abril de 2025_
+Fecha de ultima actualizacion: 20 de enero de 2026
 
-## 1. Introducción
+## 1. Responsable
 
-Mundo Interior ("la Aplicación", "nosotros") ofrece experiencias guiadas de bienestar emocional para niñas, niños y adolescentes (NNA). Estamos comprometidos con la protección de la privacidad y la seguridad de toda la información que tratamos, especialmente los datos sensibles relacionados con la salud mental infantil.
-
-Esta Política describe de forma transparente qué datos recopilamos, por qué lo hacemos, cómo los protegemos y los derechos que asisten a tutores y NNA conforme a la legislación vigente en Ecuador, Perú y Colombia, así como a estándares internacionales (GDPR, COPPA, ISO 82304‑2).
+Mundo Interior es un proyecto independiente operado por Andres Banda.
+Ubicacion: Quito, Ecuador.
+Contacto: andres.banda.sm@gmail.com
 
 ## 2. Alcance
 
-Se aplica a la App, el sitio mundo-interior.com y cualquier servicio relacionado (APIs, backend, panel del tutor). No cubre sitios de terceros enlazados desde nuestros servicios.
+Esta politica aplica al sitio y a la aplicacion de Mundo Interior, incluyendo sus APIs y servicios relacionados. No cubre sitios de terceros enlazados desde nuestros servicios.
 
 ## 3. Datos que recopilamos
 
-| **Categoría**                | **Ejemplos**                                                              | **Finalidad**                                                                | **Base legal**                    |
-| ---------------------------- | ------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | --------------------------------- |
-| Datos de la cuenta del tutor | Nombre, e-mail, número de teléfono, país                                  | Crear y gestionar la cuenta, verificación de mayoría de edad, notificaciones | Consentimiento (art. 6.1‑a GDPR)  |
-| Datos del NNA                | Alias o nombre, año de nacimiento                                         | Personalizar la experiencia y adecuarla a la edad                            | Consentimiento paterno            |
-| Estados emocionales          | Selección pre y post viaje (ej.: "Ansioso", "Tranquilo")                  | Adaptar contenido, medir bienestar agregado                                  | Interés legítimo + consentimiento |
-| Historial de viajes          | Identificador del viaje, fecha/hora, guía elegida                         | Mostrar recomendaciones, monitoreo del progreso                              | Consentimiento                    |
-| Datos técnicos               | Tipo de dispositivo, sistema operativo, idioma, effective connection type | Seguridad, métricas de rendimiento, modo ligero                              | Interés legítimo                  |
+Recopilamos solo lo necesario para operar el servicio:
 
-_Nunca solicitamos información médica formal ni datos biométricos._
+- Datos del adulto: nombre, email y credenciales de acceso.
+- Datos del nino o nina: nombre o alias y edad.
+- Contenido generado: guias, cuentos, preferencias y respuestas dentro de la plataforma.
+- Datos tecnicos: tipo de dispositivo, navegador, idioma, IP y registros de error.
+- Analitica de uso: eventos basicos para medir rendimiento y mejorar el producto.
 
-## 4. Verificación y consentimiento del tutor
+No solicitamos datos de pago ni informacion medica clinica.
 
-Para crear la cuenta de tutor:
+## 4. Para que usamos la informacion
 
-1.  Ingresas tu número móvil y recibes un código SMS de 6 dígitos.
-2.  Confirmas el código y marcas la casilla: “Declaro ser mayor de 18 años y tutor legal del menor registrado”.
+- Crear y mantener tu cuenta.
+- Personalizar la experiencia y el contenido segun edad y necesidades.
+- Mejorar el producto y resolver errores.
+- Brindar soporte cuando lo solicitas.
 
-Registramos teléfono, IP y sello de tiempo como evidencia verificable (art. 7 GDPR, art. COPPA). Podrás actualizar la verificación a métodos más robustos (micro-cargo o documento de identidad) cuando lancemos en nuevos mercados.
+## 5. Menores de edad
 
-## 5. Uso de la información
+El uso del servicio es gestionado por un adulto responsable. Al registrar datos de un menor, el adulto declara que cuenta con consentimiento para hacerlo.
 
-- Personalización de historias, guías y ritmo según edad y estados emocionales.
-- Mejora del producto mediante analítica agregada y anónima.
-- Notificaciones al tutor sobre progreso, eventos de crisis o recordatorios.
-- Cumplimiento de obligaciones legales y de seguridad.
+## 6. Compartir datos con terceros
 
-Jamás vendemos ni alquilamos datos a terceros. Sólo compartimos información cuando:
+Podemos compartir datos con proveedores que nos ayudan a operar el servicio, por categorias:
 
-- Lo exija la ley o autoridad competente.
-- Sea necesario para proveedores bajo contrato que actúan como encargados de tratamiento (hosting cifrado, SMS). Estos proveedores no pueden usar los datos por cuenta propia.
+- Infraestructura y hosting.
+- Almacenamiento y bases de datos.
+- Analitica y monitoreo de errores.
+- Envio de correos.
+- Modelos de IA para generar contenido.
 
-## 6. Retención y eliminación
+Estos proveedores actuan bajo instrucciones nuestras y solo para prestar el servicio. Algunos pueden estar fuera de Ecuador.
 
-| **Tipo de dato**                | **Retención por defecto**      | **Acción tras vencimiento**      |
-| ------------------------------- | ------------------------------ | -------------------------------- |
-| Estados emocionales & historial | 6 meses                        | Anonimización irreversible       |
-| Copias de seguridad cifradas    | 30 días                        | Purga automática                 |
-| Datos de cuenta del tutor       | Mientras la cuenta esté activa | Eliminación inmediata a petición |
+## 7. Retencion y eliminacion
 
-El tutor puede borrar o exportar todos los datos desde Ajustes › Privacidad. La eliminación es definitiva en ≤ 30 días.
+Conservamos los datos mientras la cuenta este activa. Puedes solicitar eliminacion escribiendo a andres.banda.sm@gmail.com. Las copias de seguridad pueden tardar hasta 30 dias en purgarse.
 
-## 7. Seguridad
+## 8. Seguridad
 
-- Cifrado en reposo y en tránsito (AES‑256 & TLS 1.3).
-- Arquitectura zero‑trust: datos sensibles en microservicio aislado, claves en HSM.
-- Pruebas de penetración y auditorías ISO 82304‑2 anuales.
+Aplicamos medidas razonables de seguridad tecnica y organizacional para proteger la informacion. Ningun sistema es 100% infalible.
 
-## 8. Soporte en crisis
+## 9. Derechos
 
-Si el NNA selecciona alta angustia y pulsa “Pedir ayuda”, la App:
+Puedes solicitar acceso, rectificacion o eliminacion de tus datos. Tambien puedes oponerte a ciertos usos. Para ejercer estos derechos, escribe a andres.banda.sm@gmail.com.
 
-- Ofrece ejercicios de respiración inmediata.
-- Notifica al tutor por push/mail.
-- Muestra recursos de crisis locales:
-  - Ecuador 171 opción 6 (Salud Mental)
-  - Perú 113 opción 5
-  - Colombia 106 (Bogotá) / 01 8000 113 113
-  - Otros países: “Llama al número de emergencia local”.
+## 10. Cookies y analitica
 
-Listado revisado cada 6 meses.
+Usamos cookies tecnicas y analitica basica para mejorar el servicio. Puedes controlar cookies desde tu navegador.
 
-## 9. Derechos del tutor y del NNA
+## 11. Cambios
 
-Conforme a la LOPDP, LGPD, GDPR y normas análogas, puedes:
-
-- Acceder a los datos que conservamos.
-- Rectificar información incorrecta.
-- Solicitar eliminación total.
-- Limitar u oponerte al tratamiento.
-- Recibir tus datos en formato estructurado (portabilidad).
-
-Solicitudes: privacy@mundo-interior.com o dentro de la App (Ajustes › Privacidad).
-
-## 10. Cookies y analítica
-
-Usamos cookies de sesión ─no de publicidad─ y analítica propia self‑hosted para evitar filtración de datos a terceros. Puedes desactivarlas en el banner de cookies.
-
-## 11. Cambios en esta Política
-
-Publicaremos toda modificación en esta página con al menos 7 días de antelación. Si el cambio afecta datos sensibles, solicitaremos nuevo consentimiento.
+Podemos actualizar esta politica. Publicaremos cambios en esta pagina.
 
 ## 12. Contacto
 
-Mundo Interior – Quito, Ecuador
-
-E-mail: privacy@mundo-interior.com
-
-Responsable de Protección de Datos: Andrea Rivera
-
-Si tienes dudas o inquietudes sobre esta Política, contáctanos. Respondemos dentro de 10 días hábiles.
+Mundo Interior - Quito, Ecuador
+andres.banda.sm@gmail.com
