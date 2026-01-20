@@ -18,7 +18,6 @@ async function timeAsync<T>(label: string, fn: () => Promise<T>): Promise<T> {
     return await fn();
   } finally {
     const duration = performance.now() - start;
-    console.log(`[generateStory] ${label}: ${duration.toFixed(2)} ms`);
   }
 }
 
@@ -41,7 +40,6 @@ export async function generateStory(
   };
 
   const prompt2 = buildStoryPrompt(promptOptions);
-  console.log("[generateStory] Prompt generado");
 
   // Medir fetch OpenAI API
   const result = await timeAsync("fetch OpenAI API", async () => {
@@ -56,7 +54,6 @@ export async function generateStory(
     return response;
   });
 
-  console.log("[generateStory] Resultado recibido de OpenAI");
 
   const content = result?.choices?.[0]?.message?.content;
   if (!content || typeof content !== "string") {

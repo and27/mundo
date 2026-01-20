@@ -31,7 +31,6 @@ function parseAudioMimeType(mimeType: string): {
         const rateStr = trimmedParam.split("=")[1];
         rate = parseInt(rateStr, 10);
       } catch (error) {
-        console.log(error);
         // Mantener rate por defecto
       }
     } else if (trimmedParam.startsWith("audio/L")) {
@@ -39,7 +38,6 @@ function parseAudioMimeType(mimeType: string): {
         const bitsStr = trimmedParam.split("L")[1];
         bitsPerSample = parseInt(bitsStr, 10);
       } catch (error) {
-        console.log(error);
         // Mantener bitsPerSample por defecto
       }
     }
@@ -137,8 +135,6 @@ export async function generateAudio(
       },
     };
 
-    console.log("[DEBUG] TTS Prompt:", ttsPrompt);
-
     // Usar stream para obtener el audio (como en el ejemplo de Python)
     const stream = await ai.models.generateContentStream({
       model: "gemini-2.5-flash-preview-tts",
@@ -150,16 +146,10 @@ export async function generateAudio(
     let mimeType = "";
 
     for await (const chunk of stream) {
-      console.log("[DEBUG] Received chunk");
-
       if (chunk.candidates?.[0]?.content?.parts?.[0]?.inlineData) {
         const inlineData = chunk.candidates[0].content.parts[0].inlineData;
 
         if (inlineData.data) {
-          console.log(
-            "[DEBUG] Audio chunk received, size:",
-            inlineData.data.length
-          );
           mimeType = inlineData.mimeType || "audio/L16;rate=24000";
 
           // Convertir de base64 a Buffer
@@ -175,16 +165,12 @@ export async function generateAudio(
 
     // Combinar todos los chunks de audio
     const rawAudioData = Buffer.concat(audioChunks);
-    console.log("[DEBUG] Total raw audio size:", rawAudioData.length, "bytes");
-    console.log("[DEBUG] MIME type:", mimeType);
-
     // Convertir a WAV con headers apropiados
     const wavBuffer = convertToWav(rawAudioData, mimeType);
-    console.log("[DEBUG] WAV buffer size:", wavBuffer.length, "bytes");
 
     return { buffer: wavBuffer, filename };
   } catch (error) {
-    console.error("[DEBUG] Error in generateAudio:", error);
+    console.error("Error in generateAudio:", error);
     throw new Error(
       `Gemini TTS error: ${
         error instanceof Error ? error.message : "Unknown error"
