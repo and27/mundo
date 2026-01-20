@@ -1,5 +1,6 @@
 import { FaEye } from "react-icons/fa6";
 import { useState } from "react";
+import type { InputHTMLAttributes } from "react";
 
 interface InputLabelProps {
   type?: string;
@@ -9,6 +10,10 @@ interface InputLabelProps {
   className?: string;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
+  inputProps?: Omit<
+    InputHTMLAttributes<HTMLInputElement>,
+    "id" | "name" | "type" | "value" | "onChange"
+  >;
 }
 
 const InputWithLabel: React.FC<InputLabelProps> = ({
@@ -19,8 +24,10 @@ const InputWithLabel: React.FC<InputLabelProps> = ({
   value,
   handleChange,
   error,
+  inputProps,
 }) => {
   const [inputType, setInputType] = useState(type);
+  const isPasswordField = type === "password";
 
   const togglePasswordVisibility = () => {
     setInputType((prevType) => (prevType === "password" ? "text" : "password"));
@@ -32,13 +39,14 @@ const InputWithLabel: React.FC<InputLabelProps> = ({
       <input
         className={`text-sm md:text-base peer border text-white py-3.5 px-4 rounded-md w-full placeholder-transparent focus:outline-none focus:ring-2 focus:ring-yellow-500 ${
           error ? "border-red-500" : ""
-        } ${className}`}
+        } ${isPasswordField ? "pr-12" : ""} ${className}`}
         type={inputType}
         id={name}
         name={name}
         value={value}
         placeholder=" "
         onChange={handleChange}
+        {...inputProps}
       />
       <label
         htmlFor={name}
@@ -52,10 +60,10 @@ const InputWithLabel: React.FC<InputLabelProps> = ({
       >
         {label}
       </label>
-      {type === "password" && (
+      {isPasswordField && (
         <button
           type="button"
-          className="bg-transparent p-0 absolute right-4 top-3.5 text-icon-color"
+          className="bg-transparent p-0 absolute right-4 top-3.5 text-icon-color z-10"
           onClick={togglePasswordVisibility}
           aria-label={
             isPasswordVisible ? "Ocultar contraseña" : "Mostrar contraseña"

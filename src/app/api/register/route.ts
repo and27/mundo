@@ -2,6 +2,18 @@ import { createFacilitatorProfile } from "@/lib/supabaseDB";
 import { supabase } from "../../../lib/supabaseServer";
 import { NextRequest, NextResponse } from "next/server";
 
+const passwordMinLength = 8;
+
+const getPasswordError = (password: string) => {
+  if (password.length < passwordMinLength) {
+    return "La contrasena debe tener al menos 8 caracteres.";
+  }
+  if (!/[A-Za-z]/.test(password) || !/\d/.test(password)) {
+    return "La contrasena debe incluir letras y numeros.";
+  }
+  return "";
+};
+
 export async function POST(req: NextRequest) {
   const body = await req.json();
   const { email, password, role } = body;
@@ -11,6 +23,11 @@ export async function POST(req: NextRequest) {
       { error: "Email and password are required" },
       { status: 400 }
     );
+  }
+
+  const passwordError = getPasswordError(password);
+  if (passwordError) {
+    return NextResponse.json({ error: passwordError }, { status: 400 });
   }
 
   const allowedRoles: string[] = ["parent", "educator"];
@@ -32,9 +49,9 @@ export async function POST(req: NextRequest) {
       if (authError.message.includes("already registered")) {
         errorMessage = "Este correo electrónico ya está registrado.";
       } else if (
-        authError.message.includes("Password should be at least 6 characters")
+        authError.message.includes("Password should be at least")
       ) {
-        errorMessage = "La contraseña debe tener al menos 6 caracteres.";
+        errorMessage = "La contrasena debe tener al menos 8 caracteres y contener letras y numeros.";
       } else {
         errorMessage = authError.message;
       }
@@ -99,3 +116,5 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
+

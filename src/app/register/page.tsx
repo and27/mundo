@@ -72,7 +72,7 @@ function AuthPageContent() {
   };
 
   return (
-    <main className="mi-canvas-auth min-h-screen flex items-center justify-center px-4 py-16">
+    <main className="mi-canvas-auth min-h-screen flex items-start md:items-center justify-center px-4 py-16">
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -121,7 +121,7 @@ function AuthPageContent() {
                 )}
               </header>
 
-              <div className="flex-1">
+              <div className="flex-1 min-h-[420px] md:min-h-[480px]">
                 <AnimatePresence mode="sync">
                   <motion.div
                     key={activeTab}

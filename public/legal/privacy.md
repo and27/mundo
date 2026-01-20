@@ -1,4 +1,4 @@
-# Politica de Privacidad de Mundo Interior
+# política de Privacidad de Mundo Interior
 
 Fecha de ultima actualizacion: 20 de enero de 2026
 
@@ -10,24 +10,24 @@ Contacto: andres.banda.sm@gmail.com
 
 ## 2. Alcance
 
-Esta politica aplica al sitio y a la aplicacion de Mundo Interior, incluyendo sus APIs y servicios relacionados. No cubre sitios de terceros enlazados desde nuestros servicios.
+Esta política aplica al sitio y a la aplicación de Mundo Interior, incluyendo sus APIs y servicios relacionados. No cubre sitios de terceros enlazados desde nuestros servicios.
 
 ## 3. Datos que recopilamos
 
 Recopilamos solo lo necesario para operar el servicio:
 
 - Datos del adulto: nombre, email y credenciales de acceso.
-- Datos del nino o nina: nombre o alias y edad.
-- Contenido generado: guias, cuentos, preferencias y respuestas dentro de la plataforma.
-- Datos tecnicos: tipo de dispositivo, navegador, idioma, IP y registros de error.
-- Analitica de uso: eventos basicos para medir rendimiento y mejorar el producto.
+- Datos del niño o niña: nombre o alias y edad.
+- Contenido generado: guías, cuentos, preferencias y respuestas dentro de la plataforma.
+- Datos técnicos: tipo de dispositivo, navegador, idioma, IP y registros de error.
+- Analítica de uso: eventos basicos para medir rendimiento y mejorar el producto.
 
 No solicitamos datos de pago ni informacion medica clinica.
 
 ## 4. Para que usamos la informacion
 
 - Crear y mantener tu cuenta.
-- Personalizar la experiencia y el contenido segun edad y necesidades.
+- Personalizar la experiencia y el contenido según edad y necesidades.
 - Mejorar el producto y resolver errores.
 - Brindar soporte cuando lo solicitas.
 
@@ -47,25 +47,25 @@ Podemos compartir datos con proveedores que nos ayudan a operar el servicio, por
 
 Estos proveedores actuan bajo instrucciones nuestras y solo para prestar el servicio. Algunos pueden estar fuera de Ecuador.
 
-## 7. Retencion y eliminacion
+## 7. Retención y eliminación
 
-Conservamos los datos mientras la cuenta este activa. Puedes solicitar eliminacion escribiendo a andres.banda.sm@gmail.com. Las copias de seguridad pueden tardar hasta 30 dias en purgarse.
+Conservamos los datos mientras la cuenta este activa. Puedes solicitar eliminación escribiendo a andres.banda.sm@gmail.com. Las copias de seguridad pueden tardar hasta 30 dias en purgarse.
 
 ## 8. Seguridad
 
-Aplicamos medidas razonables de seguridad tecnica y organizacional para proteger la informacion. Ningun sistema es 100% infalible.
+Aplicamos medidas razonables de seguridad técnica y organizacional para proteger la informacion. Ningun sistema es 100% infalible.
 
 ## 9. Derechos
 
-Puedes solicitar acceso, rectificacion o eliminacion de tus datos. Tambien puedes oponerte a ciertos usos. Para ejercer estos derechos, escribe a andres.banda.sm@gmail.com.
+Puedes solicitar acceso, rectificación o eliminación de tus datos. Tambien puedes oponerte a ciertos usos. Para ejercer estos derechos, escribe a andres.banda.sm@gmail.com.
 
 ## 10. Cookies y analitica
 
-Usamos cookies tecnicas y analitica basica para mejorar el servicio. Puedes controlar cookies desde tu navegador.
+Usamos cookies tecnicas y analítica básica para mejorar el servicio. Puedes controlar cookies desde tu navegador.
 
 ## 11. Cambios
 
-Podemos actualizar esta politica. Publicaremos cambios en esta pagina.
+Podemos actualizar esta política. Publicaremos cambios en esta página.
 
 ## 12. Contacto
 

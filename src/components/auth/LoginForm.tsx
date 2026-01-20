@@ -77,10 +77,17 @@ const LoginForm: React.FC = () => {
       <InputWithLabel
         label="Correo Electrónico"
         name="email"
-        type="text"
+        type="email"
         value={loginData.email}
         handleChange={handleChange}
         error={errors.email}
+        inputProps={{
+          autoComplete: "email",
+          autoCapitalize: "none",
+          autoCorrect: "off",
+          inputMode: "email",
+          spellCheck: false,
+        }}
       />
       <InputWithLabel
         label="Contraseña"
@@ -89,6 +96,11 @@ const LoginForm: React.FC = () => {
         value={loginData.password}
         handleChange={handleChange}
         error={errors.password}
+        inputProps={{
+          autoComplete: "current-password",
+          autoCapitalize: "none",
+          autoCorrect: "off",
+        }}
       />
       <Button
         type="submit"
@@ -102,3 +114,4 @@ const LoginForm: React.FC = () => {
 };
 
 export default LoginForm;
+
