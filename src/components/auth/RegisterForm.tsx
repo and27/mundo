@@ -29,10 +29,10 @@ const passwordMinLength = 8;
 
 const getPasswordError = (password: string) => {
   if (password.length < passwordMinLength) {
-    return "La contrase¤a debe tener al menos 8 caracteres.";
+    return "La contraseña debe tener al menos 8 caracteres.";
   }
   if (!/[A-Za-z]/.test(password) || !/\d/.test(password)) {
-    return "La contrase¤a debe incluir letras y numeros.";
+    return "La contraseña debe incluir letras y números.";
   }
   return "";
 };
@@ -48,7 +48,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
   const { isSubmitting, run } = useAsyncSubmit();
 
   const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     setRegistrationData((prev) => ({ ...prev, [name]: value }));
@@ -68,7 +68,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
       newErrors.email = "Formato de correo electrónico invÿlido.";
     }
     if (!password) {
-      newErrors.password = "La contrase¤a es obligatoria.";
+      newErrors.password = "La contraseña es obligatoria.";
     } else {
       const passwordError = getPasswordError(password);
       if (passwordError) {
@@ -76,9 +76,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
       }
     }
     if (!confirmPassword) {
-      newErrors.confirmPassword = "Confirma tu contrase¤a.";
+      newErrors.confirmPassword = "Confirma tu contraseña.";
     } else if (password !== confirmPassword) {
-      newErrors.confirmPassword = "Las contrase¤as no coinciden.";
+      newErrors.confirmPassword = "Las contraseñas no coinciden.";
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -123,7 +123,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
         }}
       />
       <InputWithLabel
-        label="Contrase¤a"
+        label="Contraseña"
         name="password"
         type="password"
         value={registrationData.password}
@@ -137,7 +137,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
         }}
       />
       <InputWithLabel
-        label="Confirmar Contrase¤a"
+        label="Confirmar contraseña"
         name="confirmPassword"
         type="password"
         value={registrationData.confirmPassword}
@@ -196,4 +196,3 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
 };
 
 export default RegisterForm;
-
