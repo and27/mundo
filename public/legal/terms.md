@@ -10,7 +10,7 @@ Mundo Interior no reemplaza atencion medica, psicologica o psiquiatrica. Si exis
 
 ## 2. Cuenta y responsabilidad
 
-Para usar el servicio debes ser mayor de 18 anos y responsable del menor asociado. Eres responsable del uso de tu cuenta y de la informacion que ingresas.
+Para usar el servicio debes ser mayor de 18 años y responsable del menor asociado. Eres responsable del uso de tu cuenta y de la informacion que ingresas.
 
 ## 3. Uso aceptable
 
@@ -29,7 +29,7 @@ El contenido que generes dentro de la plataforma es tuyo. Al usar el servicio, n
 
 ## 5. Privacidad
 
-El tratamiento de datos se rige por nuestra Politica de Privacidad: /privacy.
+El tratamiento de datos se rige por nuestra Política de Privacidad: /privacy.
 
 ## 6. Disponibilidad
 
@@ -41,7 +41,7 @@ Actualmente el servicio no tiene cobros. Si en el futuro se habilitan pagos, se 
 
 ## 8. Limitacion de responsabilidad
 
-En la maxima medida permitida por la ley, Mundo Interior no es responsable por danos indirectos o incidentales derivados del uso del servicio.
+En la maxima medida permitida por la ley, Mundo Interior no es responsable por daños indirectos o incidentales derivados del uso del servicio.
 
 ## 9. Terminacion
 
