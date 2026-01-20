@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import ReactMarkdown from "react-markdown";
+import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 const PrivacyPolicyDisplay: React.FC = () => {
@@ -32,41 +32,41 @@ const PrivacyPolicyDisplay: React.FC = () => {
       });
   }, []);
 
-  const markdownComponents = {
-    h1: ({ children }: { children: React.ReactNode }) => (
+  const markdownComponents: Components = {
+    h1: ({ children }) => (
       <h1 className="mi-text-title-lg text-white">{children}</h1>
     ),
-    h2: ({ children }: { children: React.ReactNode }) => (
+    h2: ({ children }) => (
       <h2 className="mi-text-title text-white mt-8">{children}</h2>
     ),
-    h3: ({ children }: { children: React.ReactNode }) => (
+    h3: ({ children }) => (
       <h3 className="mi-text-subtitle text-white mt-6">{children}</h3>
     ),
-    p: ({ children }: { children: React.ReactNode }) => (
+    p: ({ children }) => (
       <p className="mi-text-body text-white/75 leading-relaxed">{children}</p>
     ),
-    ul: ({ children }: { children: React.ReactNode }) => (
+    ul: ({ children }) => (
       <ul className="list-disc list-inside text-white/75 space-y-2">
         {children}
       </ul>
     ),
-    ol: ({ children }: { children: React.ReactNode }) => (
+    ol: ({ children }) => (
       <ol className="list-decimal list-inside text-white/75 space-y-2">
         {children}
       </ol>
     ),
-    li: ({ children }: { children: React.ReactNode }) => (
+    li: ({ children }) => (
       <li className="mi-text-body text-white/75">{children}</li>
     ),
-    a: ({ children, href }: { children: React.ReactNode; href?: string }) => (
-      <a href={href} className="text-white underline underline-offset-4">
+    a: ({ children, ...props }) => (
+      <a {...props} className="text-white underline underline-offset-4">
         {children}
       </a>
     ),
-    strong: ({ children }: { children: React.ReactNode }) => (
+    strong: ({ children }) => (
       <strong className="text-white">{children}</strong>
     ),
-    blockquote: ({ children }: { children: React.ReactNode }) => (
+    blockquote: ({ children }) => (
       <blockquote className="border-l-2 border-white/30 pl-4 text-white/70">
         {children}
       </blockquote>
