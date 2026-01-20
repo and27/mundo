@@ -4,6 +4,7 @@ import HowItWorksSection from "@/components/landing/HowItWorksSection";
 import BenefitsBar from "@/components/landing/BenefitsBar";
 import FAQsComponent from "@/components/landing/FAQs";
 import FinalCallToAction from "@/components/landing/FinalCallToAction";
+import LandingFooter from "@/components/landing/LandingFooter";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -27,6 +28,7 @@ export default function HomePage() {
       <HowItWorksSection />
       <FAQsComponent />
       <FinalCallToAction />
+      <LandingFooter />
     </main>
   );
 }
