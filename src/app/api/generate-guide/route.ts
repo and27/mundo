@@ -145,10 +145,6 @@ export async function POST(request: Request) {
     }
 
     const aiProvider = useOpenAI ? "OpenAI" : "DeepSeek";
-    console.log(
-      `Aynia (${aiProvider}) - Generating guide with guardrails=${AI_GUARDRAILS_ENABLED}`
-    );
-
     const generatorPrompt = createParentGuidePromptV2(userQuery);
 
     const guideString = useOpenAI

@@ -9,15 +9,15 @@ Mantenerlo vivo. Marcar items con checklist.
 ## Alpha (pre-launch controlado)
 
 ### Seguridad y datos
-- [ ] No hay secretos en git (rotados y removidos de historial).
+- [x] No hay secretos en git (rotados y removidos de historial).
 - [ ] Variables sensibles solo en entorno/secret manager.
 - [ ] Supabase con RLS activo y validado para tablas criticas.
-- [ ] Cookies de sesion seguras (httpOnly, secure, sameSite).
+- [x] Cookies de sesion seguras (httpOnly, secure, sameSite).
 
 ### IA y costos
-- [ ] Guardrails de contenido activos (filtros y validaciones).
-- [ ] Rate limit por usuario/IP en endpoints de IA.
-- [ ] Timeouts y reintentos controlados en llamadas a IA.
+- [x] Guardrails de contenido activos (filtros y validaciones).
+- [x] Rate limit por usuario/IP en endpoints de IA.
+- [x] Timeouts y reintentos controlados en llamadas a IA.
 - [ ] Manejo de error con mensajes claros para el usuario.
 
 ### Producto minimo usable
