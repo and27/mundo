@@ -1,0 +1,92 @@
+name: Backups
+
+on:
+  schedule:
+    # Weekly DB backup (Mondays 03:00 UTC)
+    - cron: "0 3 * * 1"
+    # Monthly Storage backup (1st day, 04:00 UTC)
+    - cron: "0 4 1 * *"
+  workflow_dispatch:
+    inputs:
+      task:
+        description: "db or storage"
+        required: true
+        default: "db"
+
+env:
+  BACKUP_RETENTION_DAYS: 42
+  DRIVE_ROOT: "drive:mundo-backups"
+
+jobs:
+  db-backup:
+    if: |
+      (github.event_name == 'schedule' && github.event.schedule == '0 3 * * 1') ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.task == 'db')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client rclone
+
+      - name: Configure rclone
+        run: |
+          mkdir -p ~/.config/rclone
+          echo "${{ secrets.RCLONE_CONFIG }}" > ~/.config/rclone/rclone.conf
+
+      - name: Create database dump
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          DATE=$(date +%Y-%m-%d)
+          mkdir -p backups/db
+          pg_dump "$SUPABASE_DB_URL" --format=custom --no-owner --no-privileges --file "backups/db/mundo-${DATE}.dump"
+
+      - name: Upload DB backup and enforce retention
+        run: |
+          rclone copy "backups/db" "${{ env.DRIVE_ROOT }}/db"
+          rclone delete "${{ env.DRIVE_ROOT }}/db" --min-age ${{ env.BACKUP_RETENTION_DAYS }}d
+
+  storage-backup:
+    if: |
+      (github.event_name == 'schedule' && github.event.schedule == '0 4 1 * *') ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.task == 'storage')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install rclone
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y rclone
+
+      - name: Configure rclone
+        run: |
+          mkdir -p ~/.config/rclone
+          echo "${{ secrets.RCLONE_CONFIG }}" > ~/.config/rclone/rclone.conf
+
+      - name: Download storage bucket
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SUPABASE_STORAGE_BUCKET: ${{ secrets.SUPABASE_STORAGE_BUCKET }}
+        run: |
+          DATE=$(date +%Y-%m-%d)
+          export BACKUP_OUTPUT_DIR="backups/storage/${DATE}"
+          node scripts/backup-storage.mjs
+
+      - name: Archive and upload storage backup
+        run: |
+          DATE=$(date +%Y-%m-%d)
+          tar -czf "backups/storage-${DATE}.tar.gz" -C backups "storage/${DATE}"
+          rclone copy "backups/storage-${DATE}.tar.gz" "${{ env.DRIVE_ROOT }}/storage"
+          rclone delete "${{ env.DRIVE_ROOT }}/storage" --min-age ${{ env.BACKUP_RETENTION_DAYS }}d
