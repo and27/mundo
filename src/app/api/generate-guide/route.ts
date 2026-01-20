@@ -70,7 +70,7 @@ async function callDeepSeek(
     if (!response.ok) {
       const errorText = await response.text();
       console.error("DeepSeek API Error:", errorText);
-      throw new Error(`Failed to fetch response from AI. Details: ${errorText}`);
+      throw new Error("AI_PROVIDER_ERROR");
     }
 
     const data = await response.json();
@@ -108,7 +108,7 @@ export async function POST(request: Request) {
   try {
     const { user, error } = await getAuthUser(request);
     if (!user) {
-      return NextResponse.json({ error }, { status: 401 });
+      return NextResponse.json({ error: "No autorizado." }, { status: 401 });
     }
 
     const rateLimitResult = checkRateLimit(
@@ -120,7 +120,10 @@ export async function POST(request: Request) {
 
     if (!rateLimitResult.ok) {
       return NextResponse.json(
-        { error: "Rate limit exceeded" },
+        {
+          error:
+            "Has alcanzado el limite de solicitudes. Intenta de nuevo en unos minutos.",
+        },
         { status: 429, headers: rateHeaders }
       );
     }
@@ -132,14 +135,14 @@ export async function POST(request: Request) {
 
     if (!userQuery) {
       return NextResponse.json(
-        { error: "Query is required" },
+        { error: "Debes escribir una consulta." },
         { status: 400, headers: rateHeaders }
       );
     }
 
     if (userQuery.length > AI_MAX_QUERY_LENGTH) {
       return NextResponse.json(
-        { error: "Query is too long" },
+        { error: "La consulta es demasiado larga." },
         { status: 400, headers: rateHeaders }
       );
     }
@@ -186,7 +189,7 @@ export async function POST(request: Request) {
     if (!parsed?.ok) {
       console.error("Invalid LLM response:", parsed?.error);
       return NextResponse.json(
-        { error: "Invalid AI response.", details: parsed?.error ?? null },
+        { error: "No se pudo procesar la respuesta de IA." },
         { status: 502, headers: rateHeaders }
       );
     }
@@ -205,12 +208,10 @@ export async function POST(request: Request) {
       { headers: rateHeaders }
     );
   } catch (error) {
-    if (error instanceof Error) {
-      console.error("Internal Server Error:", error.message);
-      return NextResponse.json(
-        { error: "An internal server error occurred", details: error.message },
-        { status: 500 }
-      );
-    }
+    console.error("Internal Server Error:", error);
+    return NextResponse.json(
+      { error: "Ocurrio un error inesperado. Intenta de nuevo." },
+      { status: 500 }
+    );
   }
 }

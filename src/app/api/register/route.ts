@@ -20,8 +20,8 @@ export async function POST(req: NextRequest) {
 
   if (!email || !password) {
     return NextResponse.json(
-      { error: "Email and password are required" },
-      { status: 400 }
+      { error: "El correo y la contrasena son obligatorios." },
+      { status: 400 },
     );
   }
 
@@ -33,8 +33,8 @@ export async function POST(req: NextRequest) {
   const allowedRoles: string[] = ["parent", "educator"];
   if (role && !allowedRoles.includes(role)) {
     return NextResponse.json(
-      { error: "Rol no válido proporcionado" },
-      { status: 400 }
+      { error: "Rol no valido proporcionado." },
+      { status: 400 },
     );
   }
 
@@ -45,15 +45,12 @@ export async function POST(req: NextRequest) {
     });
 
     if (authError) {
-      let errorMessage = "Error en el registro.";
+      let errorMessage = "No se pudo completar el registro.";
       if (authError.message.includes("already registered")) {
-        errorMessage = "Este correo electrónico ya está registrado.";
-      } else if (
-        authError.message.includes("Password should be at least")
-      ) {
-        errorMessage = "La contrasena debe tener al menos 8 caracteres y contener letras y numeros.";
-      } else {
-        errorMessage = authError.message;
+        errorMessage = "Este correo electronico ya esta registrado.";
+      } else if (authError.message.includes("Password should be at least")) {
+        errorMessage =
+          "La contrasena debe tener al menos 8 caracteres y contener letras y numeros.";
       }
       return NextResponse.json({ error: errorMessage }, { status: 400 });
     }
@@ -69,7 +66,7 @@ export async function POST(req: NextRequest) {
       if (profileError) {
         console.error(
           "Profile creation failed after auth user creation:",
-          profileError
+          profileError,
         );
         try {
           const { error: deleteAuthUserError } =
@@ -77,44 +74,43 @@ export async function POST(req: NextRequest) {
           if (deleteAuthUserError) {
             console.error(
               "CRITICAL: Failed to delete auth user after profile creation failure:",
-              deleteAuthUserError
+              deleteAuthUserError,
             );
           }
         } catch (cleanupError) {
           console.error(
             "CRITICAL: Exception during auth user cleanup:",
-            cleanupError
+            cleanupError,
           );
         }
         return NextResponse.json(
           {
             error:
-              "Error al crear el perfil de usuario después del registro. Se intentó revertir el registro.",
+              "Error al crear el perfil de usuario despues del registro. Se intento revertir el registro.",
           },
-          { status: 500 }
+          { status: 500 },
         );
       }
     } else {
       return NextResponse.json(
         {
           error:
-            "No se pudo obtener la información del usuario después del registro.",
+              "No se pudo obtener la informacion del usuario despues del registro.",
         },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
     return NextResponse.json(
       { message: "Registro exitoso", userId: actualUser.id },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error("Server error during registration:", error);
     return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
+      { error: "Error interno del servidor" },
+      { status: 500 },
     );
   }
 }
-
 

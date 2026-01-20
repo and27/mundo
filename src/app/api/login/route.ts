@@ -26,8 +26,6 @@ export async function POST(req: NextRequest) {
       let errorMessage = "Error al iniciar sesion.";
       if (authError.message.includes("Invalid login credentials")) {
         errorMessage = "El correo electronico o la contrasena son incorrectos.";
-      } else {
-        errorMessage = authError.message;
       }
       return NextResponse.json({ error: errorMessage }, { status: 401 });
     }
@@ -114,3 +112,5 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
+
