@@ -86,7 +86,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json(
           {
             error:
-              "Error al crear el perfil de usuario despues del registro. Se intento revertir el registro.";
+              "Error al crear el perfil de usuario despues del registro. Se intento revertir el registro.",
           },
           { status: 500 },
         );
@@ -95,7 +95,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         {
           error:
-              "No se pudo obtener la informacion del usuario despues del registro.";
+              "No se pudo obtener la informacion del usuario despues del registro.",
         },
         { status: 500 },
       );
