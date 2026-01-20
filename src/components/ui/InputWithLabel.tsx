@@ -1,5 +1,6 @@
 import { FaEye } from "react-icons/fa6";
 import { useState } from "react";
+import type { InputHTMLAttributes } from "react";
 
 interface InputLabelProps {
   type?: string;
@@ -9,6 +10,10 @@ interface InputLabelProps {
   className?: string;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
+  inputProps?: Omit<
+    InputHTMLAttributes<HTMLInputElement>,
+    "id" | "name" | "type" | "value" | "onChange"
+  >;
 }
 
 const InputWithLabel: React.FC<InputLabelProps> = ({
@@ -19,6 +24,7 @@ const InputWithLabel: React.FC<InputLabelProps> = ({
   value,
   handleChange,
   error,
+  inputProps,
 }) => {
   const [inputType, setInputType] = useState(type);
 
@@ -39,6 +45,7 @@ const InputWithLabel: React.FC<InputLabelProps> = ({
         value={value}
         placeholder=" "
         onChange={handleChange}
+        {...inputProps}
       />
       <label
         htmlFor={name}

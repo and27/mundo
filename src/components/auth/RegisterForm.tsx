@@ -25,6 +25,18 @@ interface RegisterFormProps {
   onSuccess?: () => void;
 }
 
+const passwordMinLength = 8;
+
+const getPasswordError = (password: string) => {
+  if (password.length < passwordMinLength) {
+    return "La contrase¤a debe tener al menos 8 caracteres.";
+  }
+  if (!/[A-Za-z]/.test(password) || !/\d/.test(password)) {
+    return "La contrase¤a debe incluir letras y numeros.";
+  }
+  return "";
+};
+
 const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
   const [registrationData, setRegistrationData] = useState<RegistrationData>({
     email: "",
@@ -56,12 +68,17 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
       newErrors.email = "Formato de correo electrónico invÿlido.";
     }
     if (!password) {
-      newErrors.password = "La contraseña es obligatoria.";
-    } else if (password.length < 6) {
-      newErrors.password = "La contraseña debe tener al menos 6 caracteres.";
+      newErrors.password = "La contrase¤a es obligatoria.";
+    } else {
+      const passwordError = getPasswordError(password);
+      if (passwordError) {
+        newErrors.password = passwordError;
+      }
     }
-    if (password !== confirmPassword) {
-      newErrors.confirmPassword = "Las contraseñas no coinciden.";
+    if (!confirmPassword) {
+      newErrors.confirmPassword = "Confirma tu contrase¤a.";
+    } else if (password !== confirmPassword) {
+      newErrors.confirmPassword = "Las contrase¤as no coinciden.";
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -91,28 +108,47 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-5">
       <InputWithLabel
-        label="Correo Electrónico"
+        label="Correo Electr¢nico"
         name="email"
         type="email"
         value={registrationData.email}
         handleChange={handleChange}
         error={errors.email}
+        inputProps={{
+          autoComplete: "email",
+          autoCapitalize: "none",
+          autoCorrect: "off",
+          inputMode: "email",
+          spellCheck: false,
+        }}
       />
       <InputWithLabel
-        label="Contraseña"
+        label="Contrase¤a"
         name="password"
         type="password"
         value={registrationData.password}
         handleChange={handleChange}
         error={errors.password}
+        inputProps={{
+          autoComplete: "new-password",
+          autoCapitalize: "none",
+          autoCorrect: "off",
+          minLength: passwordMinLength,
+        }}
       />
       <InputWithLabel
-        label="Confirmar Contraseña"
+        label="Confirmar Contrase¤a"
         name="confirmPassword"
         type="password"
         value={registrationData.confirmPassword}
         handleChange={handleChange}
         error={errors.confirmPassword}
+        inputProps={{
+          autoComplete: "new-password",
+          autoCapitalize: "none",
+          autoCorrect: "off",
+          minLength: passwordMinLength,
+        }}
       />
       <div className="-mt-1">
         <label htmlFor="role" className="block text-white text-sm mb-2">
@@ -160,3 +196,4 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
 };
 
 export default RegisterForm;
+
