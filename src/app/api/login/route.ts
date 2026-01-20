@@ -1,9 +1,6 @@
 import { supabase } from "../../../lib/supabaseServer";
 import { NextRequest, NextResponse } from "next/server";
-import {
-  ACCESS_TOKEN_COOKIE,
-  REFRESH_TOKEN_COOKIE,
-} from "@/lib/authCookies";
+import { ACCESS_TOKEN_COOKIE, REFRESH_TOKEN_COOKIE } from "@/lib/authCookies";
 
 export async function POST(req: NextRequest) {
   try {
@@ -12,8 +9,8 @@ export async function POST(req: NextRequest) {
 
     if (!email || !password) {
       return NextResponse.json(
-        { error: "El correo electronico y la contrasena son obligatorios" },
-        { status: 400 }
+        { error: "El correo electrónico y la contraseña son obligatorios" },
+        { status: 400 },
       );
     }
 
@@ -25,7 +22,7 @@ export async function POST(req: NextRequest) {
     if (authError) {
       let errorMessage = "Error al iniciar sesion.";
       if (authError.message.includes("Invalid login credentials")) {
-        errorMessage = "El correo electronico o la contrasena son incorrectos.";
+        errorMessage = "El correo electrónico o la contraseña son incorrectos.";
       } else {
         errorMessage = authError.message;
       }
@@ -37,7 +34,7 @@ export async function POST(req: NextRequest) {
         {
           error: "No se pudo obtener la informacion del usuario tras el login.",
         },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -67,7 +64,7 @@ export async function POST(req: NextRequest) {
     if (!accessToken || !refreshToken) {
       return NextResponse.json(
         { error: "No se pudo iniciar la sesion correctamente." },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -79,7 +76,7 @@ export async function POST(req: NextRequest) {
         role: profile?.role || "parent",
         display_name: profile?.display_name || data.user.email?.split("@")[0],
       },
-      { status: 200 }
+      { status: 200 },
     );
 
     const isProduction = process.env.NODE_ENV === "production";
@@ -110,7 +107,7 @@ export async function POST(req: NextRequest) {
     console.error("Server error during login:", error);
     return NextResponse.json(
       { error: "Error interno del servidor" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
