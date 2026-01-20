@@ -62,7 +62,6 @@ const LoginForm: React.FC = () => {
           displayName: result.display_name,
           role: result.role,
           onboardingCompleted: result.onboarding_completed,
-          accessToken: result.accessToken ?? null,
         });
         router.push("/parentDashboard");
       } catch (error) {

@@ -7,7 +7,6 @@ interface AuthUser {
   displayName?: string;
   role?: string;
   onboardingCompleted?: boolean;
-  accessToken?: string | null;
 }
 
 interface AuthState {

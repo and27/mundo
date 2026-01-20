@@ -1,46 +1,96 @@
 import { NextResponse } from "next/server";
-import { createParentGuidePromptV2 } from "@/lib/prompts";
-// import { createAuditorPrompt } from "@/lib/prompts"; // COMENTADO PARA DEMO - Reactivar en producción
+import { createParentGuidePromptV2, createAuditorPrompt } from "@/lib/prompts";
 import OpenAI from "openai";
 import { getAuthUser } from "@/lib/apiAuth";
 import { parseLlmJson } from "@/lib/llm/parse";
 import { normalizeParentGuide } from "@/lib/llm/normalize/parentGuide";
+import { buildRateLimitHeaders, checkRateLimit } from "@/lib/rateLimit";
 import type { ParentGuideV1 } from "@/schemas/parentGuide.v1";
 import type { ParentGuideV2 } from "@/schemas/parentGuide.v2";
 
-// ✅ FUNCIÓN ORIGINAL - DeepSeek
-async function callDeepSeek(prompt: string): Promise<string> {
-  const response = await fetch(process.env.DEEPSEEK_API_URL!, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.DEEPSEEK_API_KEY}`,
-    },
-    body: JSON.stringify({
-      model: "deepseek-chat",
-      messages: [{ role: "user", content: prompt }],
-      temperature: 0.7,
-      stream: false,
-      response_format: { type: "json_object" },
-    }),
-  });
-  if (!response.ok) {
-    const errorText = await response.text();
-    console.error("DeepSeek API Error:", errorText);
-    throw new Error(`Failed to fetch response from AI. Details: ${errorText}`);
-  }
-  const data = await response.json();
-  return data.choices[0].message.content;
+const toNumber = (value: string | undefined, fallback: number) => {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : fallback;
+};
+
+const AI_TIMEOUT_MS = toNumber(process.env.AI_TIMEOUT_MS, 20000);
+const AI_MAX_QUERY_LENGTH = toNumber(process.env.AI_MAX_QUERY_LENGTH, 800);
+const AI_RATE_LIMIT_MAX = toNumber(process.env.AI_RATE_LIMIT_MAX, 10);
+const AI_RATE_LIMIT_WINDOW_MS = toNumber(
+  process.env.AI_RATE_LIMIT_WINDOW_MS,
+  60000
+);
+const AI_GUARDRAILS_ENABLED = process.env.AI_GUARDRAILS_ENABLED !== "false";
+
+type ParseResult =
+  | {
+      ok: true;
+      data: ParentGuideV1 | ParentGuideV2;
+      schemaVersion: string;
+      raw: unknown;
+    }
+  | {
+      ok: false;
+      error: string;
+      raw?: unknown;
+    };
+
+function getClientKey(request: Request, userId: string): string {
+  const forwarded = request.headers.get("x-forwarded-for") ?? "";
+  const forwardedIp = forwarded.split(",")[0]?.trim();
+  const ip = forwardedIp || request.headers.get("x-real-ip") || "unknown";
+  return `${userId}:${ip}`;
 }
 
-// 🆕 NUEVA FUNCIÓN - OpenAI
-async function callOpenAI(prompt: string): Promise<string> {
+async function callDeepSeek(
+  prompt: string,
+  timeoutMs: number
+): Promise<string> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    const response = await fetch(process.env.DEEPSEEK_API_URL!, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.DEEPSEEK_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: "deepseek-chat",
+        messages: [{ role: "user", content: prompt }],
+        temperature: 0.7,
+        stream: false,
+        max_tokens: 2000,
+        response_format: { type: "json_object" },
+      }),
+      signal: controller.signal,
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("DeepSeek API Error:", errorText);
+      throw new Error(`Failed to fetch response from AI. Details: ${errorText}`);
+    }
+
+    const data = await response.json();
+    return data.choices[0].message.content;
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
+async function callOpenAI(
+  prompt: string,
+  timeoutMs: number
+): Promise<string> {
   const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
+    timeout: timeoutMs,
   });
 
   const response = await openai.chat.completions.create({
-    model: "gpt-4.1-mini", // Modelo más potente y reciente
+    model: "gpt-4.1-mini",
     messages: [{ role: "user", content: prompt }],
     temperature: 0.7,
     response_format: { type: "json_object" },
@@ -60,59 +110,104 @@ export async function POST(request: Request) {
     if (!user) {
       return NextResponse.json({ error }, { status: 401 });
     }
-    const body = await request.json();
-    const userQuery = body.query;
 
-    const useOpenAI = body.useOpenAI || false;
+    const rateLimitResult = checkRateLimit(
+      getClientKey(request, user.id),
+      AI_RATE_LIMIT_MAX,
+      AI_RATE_LIMIT_WINDOW_MS
+    );
+    const rateHeaders = buildRateLimitHeaders(rateLimitResult);
+
+    if (!rateLimitResult.ok) {
+      return NextResponse.json(
+        { error: "Rate limit exceeded" },
+        { status: 429, headers: rateHeaders }
+      );
+    }
+
+    const body = await request.json();
+    const userQuery =
+      typeof body?.query === "string" ? body.query.trim() : "";
+    const useOpenAI = Boolean(body?.useOpenAI);
 
     if (!userQuery) {
-      return NextResponse.json({ error: "Query is required" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Query is required" },
+        { status: 400, headers: rateHeaders }
+      );
+    }
+
+    if (userQuery.length > AI_MAX_QUERY_LENGTH) {
+      return NextResponse.json(
+        { error: "Query is too long" },
+        { status: 400, headers: rateHeaders }
+      );
     }
 
     const aiProvider = useOpenAI ? "OpenAI" : "DeepSeek";
     console.log(
-      `Aynia (${aiProvider}) - Generando cuento personalizado con metodología MIM...`
+      `Aynia (${aiProvider}) - Generating guide with guardrails=${AI_GUARDRAILS_ENABLED}`
     );
 
     const generatorPrompt = createParentGuidePromptV2(userQuery);
 
-    // 🎯 USAR LA FUNCIÓN SEGÚN EL PARÁMETRO
     const guideString = useOpenAI
-      ? await callOpenAI(generatorPrompt)
-      : await callDeepSeek(generatorPrompt);
+      ? await callOpenAI(generatorPrompt, AI_TIMEOUT_MS)
+      : await callDeepSeek(generatorPrompt, AI_TIMEOUT_MS);
 
-    console.log(`Aynia (${aiProvider}) - Guía generada exitosamente.`);
+    let finalGuideString = guideString;
 
-    /*
-    // REACTIVAR EN PRODUCCIÓN: Sistema dual Aynia + Ayni Guard
-    console.log(`Ayni Guard (${aiProvider}) - Auditando y refinando contenido...`);
-    const auditorPrompt = createAuditorPrompt(guideString);
-    const finalGuideString = useOpenAI 
-      ? await callOpenAI(auditorPrompt)
-      : await callDeepSeek(auditorPrompt);
-    console.log(`Ayni Guard (${aiProvider}) - Auditoría completada.`);
-    const finalGuide: ActionableGuide = JSON.parse(finalGuideString);
-    */
+    if (AI_GUARDRAILS_ENABLED) {
+      try {
+        const auditorPrompt = createAuditorPrompt(guideString);
+        finalGuideString = useOpenAI
+          ? await callOpenAI(auditorPrompt, AI_TIMEOUT_MS)
+          : await callDeepSeek(auditorPrompt, AI_TIMEOUT_MS);
+      } catch (guardError) {
+        console.error("Ayni Guard failed, using original guide:", guardError);
+      }
+    }
 
-    // Usar directamente la respuesta de Aynia para demo
-    const parsed = parseLlmJson<ParentGuideV1 | ParentGuideV2>(
-      guideString,
-      "parent_guide.v2"
-    );
-    if (!parsed.ok) {
-      console.error("Invalid LLM response:", parsed.error);
+    const candidates =
+      finalGuideString === guideString
+        ? [guideString]
+        : [finalGuideString, guideString];
+
+    let parsed: ParseResult | null = null;
+
+    for (const candidate of candidates) {
+      const attempt = parseLlmJson<ParentGuideV1 | ParentGuideV2>(
+        candidate,
+        "parent_guide.v2"
+      );
+      if (attempt.ok) {
+        parsed = attempt;
+        break;
+      }
+      parsed = attempt;
+    }
+
+    if (!parsed?.ok) {
+      console.error("Invalid LLM response:", parsed?.error);
       return NextResponse.json(
-        { error: "Invalid AI response.", details: parsed.error },
-        { status: 502 }
+        { error: "Invalid AI response.", details: parsed?.error ?? null },
+        { status: 502, headers: rateHeaders }
       );
     }
 
     const finalGuide = normalizeParentGuide(parsed.data);
 
-    return NextResponse.json({
-      ...finalGuide,
-      _metadata: { aiProvider, schemaVersion: parsed.schemaVersion }, // Para saber cuál se usó
-    });
+    return NextResponse.json(
+      {
+        ...finalGuide,
+        _metadata: {
+          aiProvider,
+          schemaVersion: parsed.schemaVersion,
+          guardrailsEnabled: AI_GUARDRAILS_ENABLED,
+        },
+      },
+      { headers: rateHeaders }
+    );
   } catch (error) {
     if (error instanceof Error) {
       console.error("Internal Server Error:", error.message);

@@ -1,27 +1,36 @@
-import { supabase } from "../../../lib/supabaseServer";
 import { NextResponse } from "next/server";
+import {
+  ACCESS_TOKEN_COOKIE,
+  REFRESH_TOKEN_COOKIE,
+} from "@/lib/authCookies";
 
 export async function POST() {
-  try {
-    const { error } = await supabase.auth.signOut();
+  const response = NextResponse.json(
+    { message: "Sesion cerrada exitosamente" },
+    { status: 200 }
+  );
 
-    if (error) {
-      console.error("Error during logout:", error);
-      return NextResponse.json(
-        { error: "Error al cerrar sesión" },
-        { status: 500 }
-      );
-    }
+  const isProduction = process.env.NODE_ENV === "production";
 
-    return NextResponse.json(
-      { message: "Sesión cerrada exitosamente" },
-      { status: 200 }
-    );
-  } catch (error) {
-    console.error("Server error during logout:", error);
-    return NextResponse.json(
-      { error: "Error interno del servidor" },
-      { status: 500 }
-    );
-  }
+  response.cookies.set({
+    name: ACCESS_TOKEN_COOKIE,
+    value: "",
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: "lax",
+    path: "/",
+    maxAge: 0,
+  });
+
+  response.cookies.set({
+    name: REFRESH_TOKEN_COOKIE,
+    value: "",
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: "lax",
+    path: "/",
+    maxAge: 0,
+  });
+
+  return response;
 }

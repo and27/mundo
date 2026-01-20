@@ -10,14 +10,14 @@ export async function authFetch(
   init: AuthFetchOptions = {}
 ): Promise<Response> {
   const { requireAuth = true, ...rest } = init;
-  const { user, clearUser } = useAuthStore.getState();
+  const { clearUser } = useAuthStore.getState();
   const headers = new Headers(rest.headers || {});
 
-  if (user?.accessToken) {
-    headers.set("Authorization", `Bearer ${user.accessToken}`);
-  }
-
-  const response = await fetch(input, { ...rest, headers });
+  const response = await fetch(input, {
+    ...rest,
+    headers,
+    credentials: "include",
+  });
 
   if (response.status === 401 && requireAuth) {
     clearUser();
