@@ -27,6 +27,7 @@ const InputWithLabel: React.FC<InputLabelProps> = ({
   inputProps,
 }) => {
   const [inputType, setInputType] = useState(type);
+  const isPasswordField = type === "password";
 
   const togglePasswordVisibility = () => {
     setInputType((prevType) => (prevType === "password" ? "text" : "password"));
@@ -38,7 +39,7 @@ const InputWithLabel: React.FC<InputLabelProps> = ({
       <input
         className={`text-sm md:text-base peer border text-white py-3.5 px-4 rounded-md w-full placeholder-transparent focus:outline-none focus:ring-2 focus:ring-yellow-500 ${
           error ? "border-red-500" : ""
-        } ${className}`}
+        } ${isPasswordField ? "pr-12" : ""} ${className}`}
         type={inputType}
         id={name}
         name={name}
@@ -59,10 +60,10 @@ const InputWithLabel: React.FC<InputLabelProps> = ({
       >
         {label}
       </label>
-      {type === "password" && (
+      {isPasswordField && (
         <button
           type="button"
-          className="bg-transparent p-0 absolute right-4 top-3.5 text-icon-color"
+          className="bg-transparent p-0 absolute right-4 top-3.5 text-icon-color z-10"
           onClick={togglePasswordVisibility}
           aria-label={
             isPasswordVisible ? "Ocultar contraseña" : "Mostrar contraseña"
