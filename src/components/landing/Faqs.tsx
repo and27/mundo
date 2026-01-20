@@ -30,7 +30,7 @@ export const faqs: FAQ[] = [
   },
 ];
 
-export default function FAQs() {
+export default function FAQsComponent() {
   const [open, setOpen] = useState<string>(faqs[0]?.id ?? "");
 
   return (
