@@ -1,4 +1,5 @@
 import { supabase } from "@/lib/supabaseServer";
+import { ACCESS_TOKEN_COOKIE, getCookieValue } from "@/lib/authCookies";
 
 export type ApiAuthResult = {
   user: { id: string } | null;
@@ -7,9 +8,14 @@ export type ApiAuthResult = {
 
 export const getAuthUser = async (request: Request): Promise<ApiAuthResult> => {
   const authHeader = request.headers.get("authorization") || "";
-  const token = authHeader.startsWith("Bearer ")
+  let token = authHeader.startsWith("Bearer ")
     ? authHeader.slice("Bearer ".length)
     : "";
+
+  if (!token) {
+    const cookieHeader = request.headers.get("cookie");
+    token = getCookieValue(cookieHeader, ACCESS_TOKEN_COOKIE) ?? "";
+  }
 
   if (!token) {
     return { user: null, error: "Missing auth token" };

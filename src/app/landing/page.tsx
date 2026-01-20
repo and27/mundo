@@ -2,7 +2,7 @@ import HeroSection from "@/components/landing/HeroSection";
 import WhatIsSection from "@/components/landing/WhatIsSection";
 import HowItWorksSection from "@/components/landing/HowItWorksSection";
 import BenefitsBar from "@/components/landing/BenefitsBar";
-import FAQs from "@/components/landing/FAQs";
+import FAQsComponent from "@/components/landing/FAQs";
 import FinalCallToAction from "@/components/landing/FinalCallToAction";
 import Image from "next/image";
 import Link from "next/link";
@@ -25,7 +25,7 @@ export default function HomePage() {
       <BenefitsBar />
       <WhatIsSection />
       <HowItWorksSection />
-      <FAQs />
+      <FAQsComponent />
       <FinalCallToAction />
     </main>
   );

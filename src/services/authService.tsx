@@ -21,7 +21,6 @@ interface LoginSuccessResponse {
   onboarding_completed: boolean;
   role: string;
   display_name?: string;
-  accessToken?: string | null;
 }
 
 interface ApiErrorResponse {
@@ -59,6 +58,7 @@ export async function loginUser(
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
     body: JSON.stringify(payload),
   });
 
@@ -84,6 +84,7 @@ export async function logoutUser(): Promise<LogoutResponse> {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
   });
 
   const result = await response.json();

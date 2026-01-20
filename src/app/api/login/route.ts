@@ -1,5 +1,9 @@
 import { supabase } from "../../../lib/supabaseServer";
 import { NextRequest, NextResponse } from "next/server";
+import {
+  ACCESS_TOKEN_COOKIE,
+  REFRESH_TOKEN_COOKIE,
+} from "@/lib/authCookies";
 
 export async function POST(req: NextRequest) {
   try {
@@ -8,7 +12,7 @@ export async function POST(req: NextRequest) {
 
     if (!email || !password) {
       return NextResponse.json(
-        { error: "El correo electrónico y la contraseña son obligatorios" },
+        { error: "El correo electronico y la contrasena son obligatorios" },
         { status: 400 }
       );
     }
@@ -19,9 +23,9 @@ export async function POST(req: NextRequest) {
     });
 
     if (authError) {
-      let errorMessage = "Error al iniciar sesión.";
+      let errorMessage = "Error al iniciar sesion.";
       if (authError.message.includes("Invalid login credentials")) {
-        errorMessage = "El correo electrónico o la contraseña son incorrectos.";
+        errorMessage = "El correo electronico o la contrasena son incorrectos.";
       } else {
         errorMessage = authError.message;
       }
@@ -31,7 +35,7 @@ export async function POST(req: NextRequest) {
     if (!data.user) {
       return NextResponse.json(
         {
-          error: "No se pudo obtener la información del usuario tras el login.",
+          error: "No se pudo obtener la informacion del usuario tras el login.",
         },
         { status: 500 }
       );
@@ -57,17 +61,51 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    return NextResponse.json(
+    const accessToken = data.session?.access_token;
+    const refreshToken = data.session?.refresh_token;
+
+    if (!accessToken || !refreshToken) {
+      return NextResponse.json(
+        { error: "No se pudo iniciar la sesion correctamente." },
+        { status: 500 }
+      );
+    }
+
+    const response = NextResponse.json(
       {
-        message: "Inicio de sesión exitoso",
+        message: "Inicio de sesion exitoso",
         userId: data.user.id,
         email: data.user.email,
         role: profile?.role || "parent",
         display_name: profile?.display_name || data.user.email?.split("@")[0],
-        accessToken: data.session?.access_token ?? null,
       },
       { status: 200 }
     );
+
+    const isProduction = process.env.NODE_ENV === "production";
+    const accessMaxAge = data.session?.expires_in ?? 3600;
+
+    response.cookies.set({
+      name: ACCESS_TOKEN_COOKIE,
+      value: accessToken,
+      httpOnly: true,
+      secure: isProduction,
+      sameSite: "lax",
+      path: "/",
+      maxAge: accessMaxAge,
+    });
+
+    response.cookies.set({
+      name: REFRESH_TOKEN_COOKIE,
+      value: refreshToken,
+      httpOnly: true,
+      secure: isProduction,
+      sameSite: "lax",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 30,
+    });
+
+    return response;
   } catch (error) {
     console.error("Server error during login:", error);
     return NextResponse.json(
@@ -76,5 +114,3 @@ export async function POST(req: NextRequest) {
     );
   }
 }
-
-

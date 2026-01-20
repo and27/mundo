@@ -61,7 +61,7 @@ export default function ProgramCatalogSection() {
               title="Aprende el lenguaje de las emociones"
               subtitle="Ruta principal"
               description="Un viaje practico donde los ninos exploran, entienden y aprenden a expresar sus emociones con claridad, seguridad y confianza."
-              image="/images/all.webp"
+              image="/images/program/cover.png"
               onEnter={goToModules}
             />
           </div>
