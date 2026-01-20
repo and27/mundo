@@ -6,7 +6,6 @@ import { ChevronRight, ArrowLeft, Calendar } from "lucide-react";
 import { useSavedGuides } from "@/hooks/useSavedGuides";
 import GuideDisplay from "../assistant/GuideDisplay";
 import StoryCard from "./StoryCard";
-import GuideActions from "./ai/GuideActionts";
 
 export default function GeneratedStories() {
   const searchParams = useSearchParams();
@@ -48,7 +47,6 @@ export default function GeneratedStories() {
             </span>
           </nav>
 
-          <GuideActions guide={currentGuide} />
         </div>
 
         <GuideDisplay guide={currentGuide} />
