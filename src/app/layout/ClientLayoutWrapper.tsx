@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useOnboardingStore } from "@/store/useOnboardingStore";
+import { disableDebugLogs } from "@/lib/disableDebugLogs";
 
 interface ClientLayoutWrapperProps {
   children: React.ReactNode;
@@ -11,6 +12,7 @@ export function ClientLayoutWrapper({ children }: ClientLayoutWrapperProps) {
   const emotion = useOnboardingStore((state) => state.emotion);
 
   useEffect(() => {
+    disableDebugLogs();
     const getTintColorValueForEmotion = (emo: string | null): string => {
       switch (emo) {
         case "Feliz":

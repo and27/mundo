@@ -109,7 +109,7 @@ export async function generateStoryExport(
       };
     }
   } catch (err) {
-    console.log("[story/export] cache miss:", cacheKey, err);
+    // Cache miss or invalid cached data; continue to regenerate.
   }
 
   const story = await timeAsync(timings, "generateStory", () =>
