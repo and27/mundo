@@ -8,6 +8,7 @@ type BaseModalProps = {
   onOpenChange: (open: boolean) => void;
   children: ReactNode;
   maxWidth?: "sm" | "md" | "lg";
+  title?: string;
 };
 
 const MAX_WIDTH = {
@@ -21,6 +22,7 @@ export function BaseModal({
   onOpenChange,
   children,
   maxWidth = "md",
+  title = "Dialog",
 }: BaseModalProps) {
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
@@ -41,6 +43,7 @@ export function BaseModal({
             -translate-x-1/2 -translate-y-1/2
           "
         >
+          <Dialog.Title className="sr-only">{title}</Dialog.Title>
           <div
             className={`
               w-full ${MAX_WIDTH[maxWidth]}
