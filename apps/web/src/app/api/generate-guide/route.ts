@@ -7,6 +7,7 @@ import { normalizeParentGuide } from "@/lib/llm/normalize/parentGuide";
 import { buildRateLimitHeaders, checkRateLimit } from "@/lib/rateLimit";
 import { mapEmotionLabel } from "@/lib/emotionMapping";
 import { resolveEmotionForGuide } from "@/lib/emotionResolution";
+import { recordOpenAICall } from "@/lib/telemetry/openaiMetrics";
 import type { ParentGuideV1 } from "@/schemas/parentGuide.v1";
 import type { ParentGuideV2 } from "@/schemas/parentGuide.v2";
 
@@ -184,6 +185,10 @@ async function callOpenAI(
     temperature: 0.7,
     response_format: { type: "json_object" },
     max_tokens: 2000,
+  });
+  recordOpenAICall("chat.completions.create", {
+    model: "gpt-4.1-mini",
+    label: "generateGuide",
   });
 
   if (!response.choices[0]?.message?.content) {

@@ -1,6 +1,7 @@
 import OpenAI from "openai";
 import { parseLlmJson } from "@/lib/llm/parse";
 import type { EmotionId } from "@/types/ai";
+import { recordOpenAICall } from "@/lib/telemetry/openaiMetrics";
 
 type EmotionClassifierProvider = "openai";
 
@@ -65,6 +66,10 @@ export async function classifyEmotionLabel(
     temperature: 0,
     response_format: { type: "json_object" },
     max_tokens: 300,
+  });
+  recordOpenAICall("chat.completions.create", {
+    model: process.env.EMOTION_CLASSIFIER_MODEL ?? DEFAULT_MODEL,
+    label: "emotionClassifier",
   });
 
   const content = response.choices[0]?.message?.content;
