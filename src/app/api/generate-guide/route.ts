@@ -59,7 +59,6 @@ function logGuideDiagnostics(label: string, text: string) {
     tail,
   });
 }
-
 async function callDeepSeek(
   prompt: string,
   timeoutMs: number
@@ -178,10 +177,18 @@ export async function POST(request: Request) {
     if (AI_GUARDRAILS_ENABLED) {
       try {
         const auditorPrompt = createAuditorPrompt(guideString);
-        finalGuideString = useOpenAI
+        const auditedGuide = useOpenAI
           ? await callOpenAI(auditorPrompt, AI_TIMEOUT_MS)
           : await callDeepSeek(auditorPrompt, AI_TIMEOUT_MS);
-        logGuideDiagnostics("auditor", finalGuideString);
+        logGuideDiagnostics("auditor", auditedGuide);
+        if (!hasMetaphorSection(auditedGuide)) {
+          console.warn(
+            "Ayni Guard output missing metaphor; using original guide."
+          );
+          finalGuideString = guideString;
+        } else {
+          finalGuideString = auditedGuide;
+        }
       } catch (guardError) {
         console.error("Ayni Guard failed, using original guide:", guardError);
       }
