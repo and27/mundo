@@ -101,6 +101,10 @@ export async function generateStoryExport(
     const cachedRes = await fetch(cachedUrl.publicUrl);
     if (cachedRes.ok) {
       const cachedStory = (await cachedRes.json()) as Story;
+      console.info("[story/export] Cache hit", {
+        cacheKey,
+        url: cachedUrl.publicUrl,
+      });
       timings.push({ label: "TOTAL", ms: performance.now() - totalStart });
       return {
         story: cachedStory,
@@ -111,6 +115,7 @@ export async function generateStoryExport(
     }
   } catch (err) {
     // Cache miss or invalid cached data; continue to regenerate.
+    console.info("[story/export] Cache miss", { cacheKey });
   }
 
   const story = await timeAsync(timings, "generateStory", () =>
