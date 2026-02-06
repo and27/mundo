@@ -30,6 +30,7 @@ export const CANCELLED_JOB_ERROR = "JOB_CANCELLED";
 
 export type StoryExportOptions = {
   shouldCancel?: () => Promise<boolean>;
+  onProgress?: (completed: number, total: number) => Promise<void>;
 };
 
 async function throwIfCancelled(options?: StoryExportOptions) {
@@ -38,6 +39,15 @@ async function throwIfCancelled(options?: StoryExportOptions) {
   if (cancelled) {
     throw new Error(CANCELLED_JOB_ERROR);
   }
+}
+
+async function reportProgress(
+  options: StoryExportOptions | undefined,
+  completed: number,
+  total: number
+) {
+  if (!options?.onProgress) return;
+  await options.onProgress(completed, total);
 }
 
 function normalizeStoryCategory(
@@ -143,6 +153,8 @@ export async function generateStoryExport(
   story.guideId = story.guideId ?? character;
 
   const limit = pLimit(4);
+  const totalSteps = story.steps.length;
+  let completedSteps = 0;
 
   await Promise.all(
     story.steps.map((step, i) =>
@@ -258,6 +270,8 @@ export async function generateStoryExport(
         }
 
         step.isNarration = true;
+        completedSteps += 1;
+        await reportProgress(options, completedSteps, totalSteps);
       })
     )
   );

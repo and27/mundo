@@ -36,6 +36,7 @@ type StoryJobUpdate = {
   status?: StoryJobStatus;
   result?: StoryJobResult | null;
   error?: string | null;
+  progress?: StoryJob["progress"] | null;
 };
 
 const JOB_BUCKET = "stories";
@@ -113,6 +114,10 @@ export async function updateStoryJob(
     nextJob.error = update.error ?? null;
   }
 
+  if ("progress" in update) {
+    nextJob.progress = update.progress ?? null;
+  }
+
   await writeJob(nextJob);
   return nextJob;
 }
@@ -149,6 +154,11 @@ export async function processStoryJob(
       shouldCancel: async () => {
         const latest = await getStoryJob(jobId);
         return latest?.status === "cancelled";
+      },
+      onProgress: async (completed, total) => {
+        await updateStoryJob(jobId, {
+          progress: { completed, total },
+        });
       },
     });
     return await updateStoryJob(jobId, {

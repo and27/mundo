@@ -86,6 +86,12 @@ export default function GeneratedStories() {
     if (job?.status && job.status !== "queued" && job.status !== "running") {
       return 100;
     }
+    if (job?.progress && job.progress.total > 0) {
+      return Math.min(
+        100,
+        Math.round((job.progress.completed / job.progress.total) * 100)
+      );
+    }
     const estimateMs = getStoryEstimateMs();
     const createdAtMs = job?.createdAt
       ? new Date(job.createdAt).getTime()
