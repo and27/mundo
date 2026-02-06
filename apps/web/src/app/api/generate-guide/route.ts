@@ -123,6 +123,26 @@ type EmotionResolution =
   | { ok: true; emotionId: EmotionId; source: "manual" | "inferred" }
   | { ok: false; error: string };
 
+function isVagueQuery(text: string): boolean {
+  const normalized = text.toLowerCase();
+  const patterns = [
+    "no se que pasa",
+    "no sé qué pasa",
+    "no se que decir",
+    "no sé qué decir",
+    "no se que hacer",
+    "no sé qué hacer",
+    "no entiendo",
+    "no estoy seguro",
+    "no estoy segura",
+    "no tengo claro",
+    "no tengo idea",
+    "no sé",
+    "no se",
+  ];
+  return patterns.some((pattern) => normalized.includes(pattern));
+}
+
 async function resolveEmotionForGuide(
   userQuery: string,
   manualEmotion?: string
@@ -137,6 +157,14 @@ async function resolveEmotionForGuide(
       };
     }
     return { ok: true, emotionId: normalized, source: "manual" };
+  }
+
+  if (isVagueQuery(userQuery)) {
+    return {
+      ok: false,
+      error:
+        "No pudimos inferir la emoción. Elige cuál es la emoción que más representa lo que nos cuentas.",
+    };
   }
 
   const direct = mapEmotionLabel(userQuery);
