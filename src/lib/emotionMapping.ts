@@ -12,7 +12,6 @@ const BASE_EMOTIONS: EmotionId[] = [
 
 const KEYWORDS: Record<EmotionId, string[]> = {
   ira: [
-    "amenazado",
     "frustrado",
     "frustracion",
     "frustración",
@@ -68,6 +67,7 @@ const KEYWORDS: Record<EmotionId, string[]> = {
     "temor",
     "apremio",
     "amenaza",
+    "amenazado",
     "obligacion",
     "miedo",
     "confusion",
@@ -146,9 +146,15 @@ export function mapEmotionLabel(value?: string): EmotionId | undefined {
   const exact = BASE_EMOTIONS.find((e) => e === normalized);
   if (exact) return exact;
 
+  const matchesKeyword = (text: string, keyword: string) => {
+    const escaped = keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const pattern = new RegExp(`\\b${escaped}\\b`, "i");
+    return pattern.test(text);
+  };
+
   for (const base of BASE_EMOTIONS) {
     const matches = KEYWORDS[base].some((word) =>
-      normalized.includes(normalizeText(word))
+      matchesKeyword(normalized, normalizeText(word))
     );
     if (matches) return base;
   }
