@@ -21,8 +21,14 @@ export default function GeneratedStories() {
   const [job, setJob] = useState<StoryJob | null>(null);
   const [jobError, setJobError] = useState<string | null>(null);
   const [now, setNow] = useState(() => Date.now());
-  const { savedGuides, createdAtById, isLoaded, deleteGuide, getGuide } =
-    useSavedGuides();
+  const {
+    savedGuides,
+    createdAtById,
+    isLoaded,
+    deleteGuide,
+    getGuide,
+    saveGuide,
+  } = useSavedGuides();
 
   useEffect(() => {
     if (jobIdFromUrl) {
@@ -74,6 +80,33 @@ export default function GeneratedStories() {
       if (intervalId) clearInterval(intervalId);
     };
   }, [jobIdFromUrl]);
+
+  useEffect(() => {
+    if (
+      !jobIdFromUrl ||
+      !job ||
+      job.status !== "succeeded" ||
+      !job.result?.storyId ||
+      !guideIdFromUrl
+    ) {
+      return;
+    }
+
+    const guide = getGuide(guideIdFromUrl);
+    if (!guide || guide.storyId === job.result.storyId) {
+      return;
+    }
+
+    const updatedGuide = {
+      ...guide,
+      storyId: job.result.storyId,
+      storyUrl: job.result.url,
+    };
+
+    void saveGuide(updatedGuide).catch((err) => {
+      console.error("Error updating guide with storyId:", err);
+    });
+  }, [guideIdFromUrl, job, jobIdFromUrl, getGuide, saveGuide]);
 
   useEffect(() => {
     if (!jobIdFromUrl) return;

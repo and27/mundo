@@ -47,6 +47,8 @@ export interface ActionableGuide {
   riskAssessment?: RiskAssessment;
   sections?: ParentGuideSection[];
   character?: string;
+  storyId?: string;
+  storyUrl?: string;
 }
 
 /**
