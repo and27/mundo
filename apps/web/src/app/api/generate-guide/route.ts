@@ -23,6 +23,10 @@ const AI_RATE_LIMIT_WINDOW_MS = toNumber(
   process.env.AI_RATE_LIMIT_WINDOW_MS,
   60000
 );
+const EMOTION_CLASSIFIER_MIN_CONFIDENCE = toNumber(
+  process.env.EMOTION_CLASSIFIER_MIN_CONFIDENCE,
+  0.6
+);
 const AI_GUARDRAILS_ENABLED = process.env.AI_GUARDRAILS_ENABLED !== "false";
 const GUIDE_DIAGNOSTICS_ENABLED =
   process.env.GUIDE_DIAGNOSTICS_ENABLED === "true" ||
@@ -141,7 +145,10 @@ async function resolveEmotionForGuide(
   }
 
   const classified = await classifyEmotionLabel(userQuery, AI_TIMEOUT_MS);
-  if (classified?.emotion) {
+  if (
+    classified?.emotion &&
+    (classified.confidence ?? 0) >= EMOTION_CLASSIFIER_MIN_CONFIDENCE
+  ) {
     return { ok: true, emotionId: classified.emotion, source: "inferred" };
   }
 

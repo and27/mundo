@@ -214,6 +214,21 @@ export default function GeneratedStories() {
     return Math.min(100, Math.round((elapsed / estimateMs) * 100));
   }, [job?.createdAt, jobIdFromUrl, newStoryQuery, now, queryStartMs, job?.progress, job?.status]);
 
+  const latestGuideId = useMemo(() => {
+    if (!savedGuides.length) return null;
+    let latestId = savedGuides[0].id;
+    let latestTime = 0;
+    for (const guide of savedGuides) {
+      const createdAt = createdAtById[guide.id];
+      const time = createdAt ? new Date(createdAt).getTime() : 0;
+      if (time > latestTime) {
+        latestTime = time;
+        latestId = guide.id;
+      }
+    }
+    return latestId;
+  }, [savedGuides, createdAtById]);
+
   const handleCancelJob = async () => {
     if (!jobIdFromUrl) return;
     try {
@@ -358,6 +373,11 @@ export default function GeneratedStories() {
                 }
               }}
               createdAt={createdAtById[guide.id] || "Generada en la nube"}
+              badgeLabel={
+                guide.id === latestGuideId
+                  ? formatEmotionLabel(guide.emotionId)
+                  : undefined
+              }
             />
           ))}
         </div>
@@ -390,4 +410,27 @@ function getStoryEstimateMs() {
 function formatEstimateMinutes(ms: number) {
   const minutes = Math.max(1, Math.round(ms / 60000));
   return `${minutes} minutos`;
+}
+
+function formatEmotionLabel(emotion?: string) {
+  if (!emotion) return "Emoción";
+  const normalized = emotion.toLowerCase();
+  switch (normalized) {
+    case "verguenza":
+      return "Vergüenza";
+    case "alegria":
+      return "Alegría";
+    case "miedo":
+      return "Miedo";
+    case "ira":
+      return "Ira";
+    case "tristeza":
+      return "Tristeza";
+    case "celos":
+      return "Celos";
+    case "calma":
+      return "Calma";
+    default:
+      return normalized.charAt(0).toUpperCase() + normalized.slice(1);
+  }
 }

@@ -12,6 +12,7 @@ interface StoryCardProps {
   isFavorite?: boolean;
   onToggleFavorite?: () => void;
   createdAt?: string;
+  badgeLabel?: string;
 }
 
 const getMetaphorContent = (sections: ParentGuideSection[]) => {
@@ -73,6 +74,7 @@ export default function StoryCard({
   isFavorite = false,
   onToggleFavorite,
   createdAt,
+  badgeLabel,
 }: StoryCardProps) {
   const isKids = variant === "kids";
   const sections = getGuideSections(guide);
@@ -103,6 +105,11 @@ export default function StoryCard({
           className="object-cover transition-transform duration-300 group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300" />
+        {badgeLabel && (
+          <span className="absolute top-3 left-3 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-neutral-700 shadow">
+            {badgeLabel}
+          </span>
+        )}
         {onToggleFavorite && (
           <button
             onClick={(e) => {

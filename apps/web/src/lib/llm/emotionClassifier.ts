@@ -73,5 +73,9 @@ export async function classifyEmotionLabel(
   if (!parsed.ok) return null;
 
   if (!BASE_EMOTIONS.includes(parsed.data.emotion)) return null;
-  return parsed.data;
+  return {
+    ...parsed.data,
+    confidence:
+      typeof parsed.data.confidence === "number" ? parsed.data.confidence : 0,
+  };
 }
