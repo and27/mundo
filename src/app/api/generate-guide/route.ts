@@ -5,6 +5,7 @@ import { getAuthUser } from "@/lib/apiAuth";
 import { parseLlmJson } from "@/lib/llm/parse";
 import { normalizeParentGuide } from "@/lib/llm/normalize/parentGuide";
 import { buildRateLimitHeaders, checkRateLimit } from "@/lib/rateLimit";
+import { mapEmotionLabel } from "@/lib/emotionMapping";
 import type { ParentGuideV1 } from "@/schemas/parentGuide.v1";
 import type { ParentGuideV2 } from "@/schemas/parentGuide.v2";
 
@@ -50,20 +51,6 @@ function hasMetaphorSection(text: string): boolean {
   return /"kind"\s*:\s*"metaphor"/i.test(text);
 }
 
-function normalizeEmotionId(value: string | undefined): string | undefined {
-  if (!value) return undefined;
-  const normalized = value.trim().toLowerCase();
-  if (normalized === "miedo") return "miedo";
-  if (normalized === "ira") return "ira";
-  if (normalized === "tristeza") return "tristeza";
-  if (normalized === "verguenza" || normalized === "vergüenza")
-    return "verguenza";
-  if (normalized === "celos") return "celos";
-  if (normalized === "alegria" || normalized === "alegría")
-    return "alegria";
-  return undefined;
-}
-
 function tryParseJson(value: string): Record<string, unknown> | null {
   try {
     const match = value.match(/\{[\s\S]*\}/);
@@ -79,7 +66,7 @@ function buildFallbackGuide(userQuery: string, raw?: unknown) {
   const rawEmotion =
     (rawObj?.emotion as string | undefined) ??
     (rawObj?.emotionId as string | undefined);
-  const emotion = normalizeEmotionId(rawEmotion) ?? "miedo";
+  const emotion = mapEmotionLabel(rawEmotion) ?? "miedo";
   const guideTitle =
     (rawObj?.guideTitle as string | undefined) ??
     `Cuento para acompañar ${emotion}`;

@@ -1,22 +1,10 @@
-import type {
-  ActionableGuide,
-  EmotionId,
-  ParentGuideSection,
-} from "@/types/ai";
+import type { ActionableGuide, ParentGuideSection } from "@/types/ai";
+import { mapEmotionLabel } from "@/lib/emotionMapping";
 import type { ParentGuideV1 } from "@/schemas/parentGuide.v1";
 import type { ParentGuideV2 } from "@/schemas/parentGuide.v2";
 
-function normalizeEmotionId(value: string): EmotionId | undefined {
-  const normalized = value.trim().toLowerCase();
-  if (normalized === "miedo") return "miedo";
-  if (normalized === "ira") return "ira";
-  if (normalized === "tristeza") return "tristeza";
-  if (normalized === "verguenza" || normalized === "vergüenza")
-    return "verguenza";
-  if (normalized === "celos") return "celos";
-  if (normalized === "alegria" || normalized === "alegría")
-    return "alegria";
-  return undefined;
+function normalizeEmotionId(value: string): ReturnType<typeof mapEmotionLabel> {
+  return mapEmotionLabel(value);
 }
 
 function normalizeFromV1(input: ParentGuideV1): ActionableGuide {

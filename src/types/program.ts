@@ -17,7 +17,7 @@ export interface ProgramLesson {
   order: number;
 
   /** Metadata opcional */
-  emotion?: "miedo" | "ira" | "tristeza" | "vergüenza";
+  emotion?: "miedo" | "ira" | "tristeza" | "vergüenza" | "calma";
 }
 
 export interface Program {

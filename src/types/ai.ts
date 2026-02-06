@@ -4,7 +4,8 @@ export type EmotionId =
   | "tristeza"
   | "verguenza"
   | "celos"
-  | "alegria";
+  | "alegria"
+  | "calma";
 
 export type CharacterId = "yachay" | "amaru";
 
