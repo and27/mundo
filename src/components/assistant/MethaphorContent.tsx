@@ -71,6 +71,10 @@ export const MetaphorContent: React.FC<PillarContentProps> = ({
     if (!setLoading) return;
     try {
       setLoading(true);
+      if (guide.storyId) {
+        router.push(`/cuentos/${guide.storyId}`);
+        return;
+      }
       const inference = inferGuideContext(guide);
       const emotionId = inference.emotionId;
       const characterId = inference.characterId;

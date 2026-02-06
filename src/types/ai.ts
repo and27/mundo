@@ -4,7 +4,8 @@ export type EmotionId =
   | "tristeza"
   | "verguenza"
   | "celos"
-  | "alegria";
+  | "alegria"
+  | "calma";
 
 export type CharacterId = "yachay" | "amaru";
 
@@ -47,6 +48,8 @@ export interface ActionableGuide {
   riskAssessment?: RiskAssessment;
   sections?: ParentGuideSection[];
   character?: string;
+  storyId?: string;
+  storyUrl?: string;
 }
 
 /**

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getAuthUser } from "@/lib/apiAuth";
-import { getStoryJob, processStoryJob } from "@/lib/storyJobs";
+import { cancelStoryJob, getStoryJob } from "@/lib/storyJobs";
 
 type RouteContext = {
   params: Promise<{ jobId: string }>;
@@ -22,20 +22,17 @@ export async function POST(request: Request, context: RouteContext) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
-  if (job.status === "running") {
-    return NextResponse.json(job, { status: 202 });
+  if (job.status === "succeeded" || job.status === "failed") {
+    return NextResponse.json(
+      { error: "Job already finished" },
+      { status: 409 }
+    );
   }
 
-  if (job.status === "succeeded" || job.status === "cancelled") {
-    return NextResponse.json(job, { status: 200 });
+  const cancelled = await cancelStoryJob(jobId);
+  if (!cancelled) {
+    return NextResponse.json({ error: "Unable to cancel job" }, { status: 500 });
   }
 
-  void processStoryJob(job.id).catch((err) => {
-    console.error("[story/export] Process job failed:", err);
-  });
-
-  return NextResponse.json(
-    { ...job, status: "running" },
-    { status: 202 }
-  );
+  return NextResponse.json(cancelled);
 }

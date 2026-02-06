@@ -1,4 +1,5 @@
 import type { CharacterId, EmotionId, GuideWithCharacter } from "@/types/ai";
+import { mapEmotionLabel } from "@/lib/emotionMapping";
 
 export type EmotionSource =
   | "emotionId"
@@ -23,17 +24,7 @@ export type GuideInference = {
 export function normalizeEmotionInput(
   value?: string
 ): EmotionId | undefined {
-  if (!value) return undefined;
-  const normalized = value.trim().toLowerCase();
-  if (normalized === "miedo") return "miedo";
-  if (normalized === "ira") return "ira";
-  if (normalized === "tristeza") return "tristeza";
-  if (normalized === "verguenza" || normalized === "vergüenza")
-    return "verguenza";
-  if (normalized === "celos") return "celos";
-  if (normalized === "alegria" || normalized === "alegría")
-    return "alegria";
-  return undefined;
+  return mapEmotionLabel(value);
 }
 
 export function parseGuideId(
