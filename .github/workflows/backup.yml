@@ -61,8 +61,11 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Install pnpm
+        run: npm install -g pnpm@9.12.3
+
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --filter ./apps/web...
 
       - name: Install rclone
         run: |
@@ -82,7 +85,7 @@ jobs:
         run: |
           DATE=$(date +%Y-%m-%d)
           export BACKUP_OUTPUT_DIR="backups/storage/${DATE}"
-          node scripts/backup-storage.mjs
+          node apps/web/scripts/backup-storage.mjs
 
       - name: Archive and upload storage backup
         run: |
