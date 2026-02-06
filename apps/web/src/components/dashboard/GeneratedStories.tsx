@@ -25,6 +25,8 @@ export default function GeneratedStories() {
   const [jobError, setJobError] = useState<string | null>(null);
   const [now, setNow] = useState(() => Date.now());
   const [queryStartMs, setQueryStartMs] = useState<number | null>(null);
+  const [pendingQuery, setPendingQuery] = useState<string | null>(null);
+  const [createEpoch, setCreateEpoch] = useState(0);
   const [needsEmotionSelection, setNeedsEmotionSelection] = useState(false);
   const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null);
   const {
@@ -88,23 +90,34 @@ export default function GeneratedStories() {
   }, [jobIdFromUrl]);
 
   useEffect(() => {
-    if (!newStoryQuery) return;
-    let isActive = true;
-    if (!queryStartMs) {
-      setQueryStartMs(Date.now());
+    if (!newStoryQuery) {
+      setPendingQuery(null);
+      setNeedsEmotionSelection(false);
+      setSelectedEmotion(null);
+      return;
     }
+
+    setPendingQuery(decodeURIComponent(newStoryQuery));
+    setNeedsEmotionSelection(false);
+    setSelectedEmotion(null);
+    setJobError(null);
+    setQueryStartMs(Date.now());
+    setCreateEpoch((prev) => prev + 1);
+  }, [newStoryQuery]);
+
+  useEffect(() => {
+    if (!pendingQuery) return;
+    if (needsEmotionSelection && !selectedEmotion) return;
+
+    let isActive = true;
 
     const createFromQuery = async () => {
       try {
-        if (needsEmotionSelection && !selectedEmotion) {
-          return;
-        }
-
         const res = await authFetch("/api/generate-guide", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            query: decodeURIComponent(newStoryQuery),
+            query: pendingQuery,
             useOpenAI: true,
             emotionId: selectedEmotion ?? undefined,
           }),
@@ -180,7 +193,7 @@ export default function GeneratedStories() {
     return () => {
       isActive = false;
     };
-  }, [newStoryQuery, saveGuide, router, queryStartMs]);
+  }, [pendingQuery, selectedEmotion, needsEmotionSelection, createEpoch, saveGuide, router]);
 
   useEffect(() => {
     if (
@@ -357,6 +370,7 @@ export default function GeneratedStories() {
                     onClick={() => {
                       setSelectedEmotion(emotion);
                       setNeedsEmotionSelection(false);
+                      setCreateEpoch((prev) => prev + 1);
                     }}
                     className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition ${
                       selectedEmotion === emotion
