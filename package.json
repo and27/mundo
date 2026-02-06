@@ -6,7 +6,10 @@
     "dev": "next dev --webpack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:emotion-map": "tsx scripts/test-emotion-mapping.ts",
+    "eval:emotion-classifier": "tsx scripts/eval-emotion-classifier.ts",
+    "eval:emotion-pipeline": "tsx scripts/eval-emotion-pipeline.ts"
   },
   "dependencies": {
     "@google/genai": "^1.11.0",
@@ -42,6 +45,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.3.0",
     "tailwindcss": "^4",
+    "tsx": "^4.20.2",
     "typescript": "^5"
   }
 }
