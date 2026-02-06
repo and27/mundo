@@ -21,11 +21,17 @@ export type StoryJobResult = {
   cached: boolean;
 };
 
+export type StoryJobProgress = {
+  completed: number;
+  total: number;
+};
+
 export type StoryJob = {
   id: string;
   userId: string;
   status: StoryJobStatus;
   request: StoryExportRequest;
+  progress?: StoryJobProgress | null;
   result?: StoryJobResult | null;
   error?: string | null;
   createdAt: string;
