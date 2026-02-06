@@ -1,51 +1,11 @@
 {
-  "name": "mundo",
-  "version": "0.1.0",
+  "name": "mundo-monorepo",
   "private": true,
+  "packageManager": "pnpm@9.12.3",
   "scripts": {
-    "dev": "next dev --webpack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "test:emotion-map": "tsx scripts/test-emotion-mapping.ts",
-    "eval:emotion-classifier": "tsx scripts/eval-emotion-classifier.ts",
-    "eval:emotion-pipeline": "tsx scripts/eval-emotion-pipeline.ts"
-  },
-  "dependencies": {
-    "@google/genai": "^1.11.0",
-    "@radix-ui/react-dialog": "^1.1.15",
-    "@radix-ui/react-slot": "^1.2.4",
-    "@sentry/nextjs": "^10.35.0",
-    "@supabase/supabase-js": "^2.49.4",
-    "clsx": "^2.1.1",
-    "framer-motion": "^12.23.26",
-    "google-auth-library": "^10.1.0",
-    "howler": "^2.2.4",
-    "lucide-react": "^0.487.0",
-    "next": "^16.1.0",
-    "openai": "^5.10.2",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3",
-    "react-icons": "^5.5.0",
-    "react-markdown": "^10.1.0",
-    "remark-gfm": "^4.0.1",
-    "sonner": "^2.0.7",
-    "tone": "^15.0.4",
-    "zod": "^3.25.76",
-    "zustand": "^5.0.3"
-  },
-  "devDependencies": {
-    "@eslint/eslintrc": "^3",
-    "@tailwindcss/postcss": "^4",
-    "@types/howler": "^2.2.12",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "cross-env": "^10.1.0",
-    "eslint": "^9",
-    "eslint-config-next": "15.3.0",
-    "tailwindcss": "^4",
-    "tsx": "^4.20.2",
-    "typescript": "^5"
+    "dev:web": "pnpm --filter ./apps/web dev",
+    "build:web": "pnpm --filter ./apps/web build",
+    "start:web": "pnpm --filter ./apps/web start",
+    "lint:web": "pnpm --filter ./apps/web lint"
   }
 }
