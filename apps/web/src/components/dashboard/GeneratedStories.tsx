@@ -25,6 +25,8 @@ export default function GeneratedStories() {
   const [jobError, setJobError] = useState<string | null>(null);
   const [now, setNow] = useState(() => Date.now());
   const [queryStartMs, setQueryStartMs] = useState<number | null>(null);
+  const [needsEmotionSelection, setNeedsEmotionSelection] = useState(false);
+  const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null);
   const {
     savedGuides,
     createdAtById,
@@ -94,22 +96,39 @@ export default function GeneratedStories() {
 
     const createFromQuery = async () => {
       try {
+        if (needsEmotionSelection && !selectedEmotion) {
+          return;
+        }
+
         const res = await authFetch("/api/generate-guide", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             query: decodeURIComponent(newStoryQuery),
             useOpenAI: true,
+            emotionId: selectedEmotion ?? undefined,
           }),
         });
         if (!res.ok) {
           let errMessage = "No se pudo generar la guía.";
+          let requiresEmotionSelection = false;
           try {
-            const errJson = (await res.json()) as { error?: string };
+            const errJson = (await res.json()) as {
+              error?: string;
+              requiresEmotionSelection?: boolean;
+            };
             if (errJson?.error) errMessage = errJson.error;
+            if (errJson?.requiresEmotionSelection) {
+              requiresEmotionSelection = true;
+            }
           } catch {
             const errText = await res.text();
             if (errText) errMessage = errText;
+          }
+          if (requiresEmotionSelection) {
+            setNeedsEmotionSelection(true);
+            setJobError(errMessage);
+            return;
           }
           throw new Error(errMessage);
         }
@@ -144,6 +163,7 @@ export default function GeneratedStories() {
         const jobData = (await jobRes.json()) as { jobId: string };
         if (!isActive) return;
 
+        setNeedsEmotionSelection(false);
         setJobError(null);
         router.replace(
           `/parentDashboard?section=guides&guideId=${savedId}&jobId=${jobData.jobId}`
@@ -304,7 +324,7 @@ export default function GeneratedStories() {
             </div>
             {(job?.status === "queued" ||
               job?.status === "running" ||
-              newStoryQuery) && (
+              (newStoryQuery && !needsEmotionSelection)) && (
               <div className="h-8 w-8 animate-spin rounded-full border-2 border-neutral-300 border-t-neutral-700" />
             )}
           </div>
@@ -316,7 +336,40 @@ export default function GeneratedStories() {
             />
           </div>
 
-          {job?.status === "succeeded" && job.result?.storyId ? (
+          {needsEmotionSelection ? (
+            <div className="mi-stack-sm">
+              <p className="text-sm text-neutral-600">
+                {jobError ??
+                  "No pudimos inferir la emoción. Elige la emoción que más representa lo que nos cuentas."}
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {[
+                  "miedo",
+                  "ira",
+                  "tristeza",
+                  "verguenza",
+                  "celos",
+                  "alegria",
+                  "calma",
+                ].map((emotion) => (
+                  <button
+                    key={emotion}
+                    onClick={() => {
+                      setSelectedEmotion(emotion);
+                      setNeedsEmotionSelection(false);
+                    }}
+                    className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition ${
+                      selectedEmotion === emotion
+                        ? "bg-neutral-900 text-white border-neutral-900"
+                        : "border-neutral-200 text-neutral-700 hover:border-neutral-300"
+                    }`}
+                  >
+                    {formatEmotionLabel(emotion)}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : job?.status === "succeeded" && job.result?.storyId ? (
             <button
               onClick={() => router.push(`/cuentos/${job.result?.storyId}`)}
               className="px-4 py-2 rounded-xl text-sm font-semibold text-white shadow-md transition-transform duration-200 hover:-translate-y-0.5 bg-primary-600 hover:bg-primary-700"
