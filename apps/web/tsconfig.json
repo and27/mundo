@@ -25,6 +25,12 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@mundo/core": [
+        "../../packages/core/src/index.ts"
+      ],
+      "@mundo/core/*": [
+        "../../packages/core/src/*"
       ]
     }
   },
@@ -40,3 +46,5 @@
     "node_modules"
   ]
 }
+
+
