@@ -21,6 +21,9 @@ const AI_RATE_LIMIT_WINDOW_MS = toNumber(
   60000
 );
 const AI_GUARDRAILS_ENABLED = process.env.AI_GUARDRAILS_ENABLED !== "false";
+const GUIDE_DIAGNOSTICS_ENABLED =
+  process.env.GUIDE_DIAGNOSTICS_ENABLED === "true" ||
+  process.env.NODE_ENV !== "production";
 
 type ParseResult =
   | {
@@ -40,6 +43,21 @@ function getClientKey(request: Request, userId: string): string {
   const forwardedIp = forwarded.split(",")[0]?.trim();
   const ip = forwardedIp || request.headers.get("x-real-ip") || "unknown";
   return `${userId}:${ip}`;
+}
+
+function hasMetaphorSection(text: string): boolean {
+  if (!text) return false;
+  return /"kind"\s*:\s*"metaphor"/i.test(text);
+}
+
+function logGuideDiagnostics(label: string, text: string) {
+  if (!GUIDE_DIAGNOSTICS_ENABLED) return;
+  const tail = text.slice(-200);
+  console.info(`[guide/diagnostics] ${label}`, {
+    hasMetaphor: hasMetaphorSection(text),
+    length: text.length,
+    tail,
+  });
 }
 
 async function callDeepSeek(
@@ -155,6 +173,7 @@ export async function POST(request: Request) {
       : await callDeepSeek(generatorPrompt, AI_TIMEOUT_MS);
 
     let finalGuideString = guideString;
+    logGuideDiagnostics("generator", guideString);
 
     if (AI_GUARDRAILS_ENABLED) {
       try {
@@ -162,6 +181,7 @@ export async function POST(request: Request) {
         finalGuideString = useOpenAI
           ? await callOpenAI(auditorPrompt, AI_TIMEOUT_MS)
           : await callDeepSeek(auditorPrompt, AI_TIMEOUT_MS);
+        logGuideDiagnostics("auditor", finalGuideString);
       } catch (guardError) {
         console.error("Ayni Guard failed, using original guide:", guardError);
       }
