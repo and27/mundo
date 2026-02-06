@@ -3,7 +3,8 @@ import "server-only";
 import { performance } from "node:perf_hooks";
 import pLimit from "p-limit";
 
-import { generateStory, generateHiveImage } from "@/lib/storyEngine";
+import { generateStory } from "@/lib/storyEngine";
+import { generateImage } from "@/lib/images";
 import { enhancePromptStyle } from "@/utils/imageUtils";
 import { supabase } from "@/lib/supabaseServer";
 import { generateAudio } from "@/lib/geminiTTS";
@@ -162,8 +163,8 @@ export async function generateStoryExport(
           const styledPrompt = enhancePromptStyle(step.prompt_img);
           const imageData = await timeAsync(
             timings,
-            "generateHiveImage",
-            () => generateHiveImage(styledPrompt, orientation),
+            "generateImage",
+            () => generateImage(styledPrompt, orientation),
             stepId
           );
 
