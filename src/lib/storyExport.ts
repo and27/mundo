@@ -26,6 +26,20 @@ export type StoryExportResult = {
   timings: TimingEntry[];
 };
 
+export const CANCELLED_JOB_ERROR = "JOB_CANCELLED";
+
+export type StoryExportOptions = {
+  shouldCancel?: () => Promise<boolean>;
+};
+
+async function throwIfCancelled(options?: StoryExportOptions) {
+  if (!options?.shouldCancel) return;
+  const cancelled = await options.shouldCancel();
+  if (cancelled) {
+    throw new Error(CANCELLED_JOB_ERROR);
+  }
+}
+
 function normalizeStoryCategory(
   value: string | undefined
 ): Story["category"] {
@@ -86,12 +100,14 @@ async function timeAsync<T>(
 }
 
 export async function generateStoryExport(
-  request: StoryExportRequest
+  request: StoryExportRequest,
+  options?: StoryExportOptions
 ): Promise<StoryExportResult> {
   const { emotion, character, orientation } = request;
   const timings: TimingEntry[] = [];
   const totalStart = performance.now();
 
+  await throwIfCancelled(options);
   const cacheKey = `generated/${character}_${emotion}.json`;
   try {
     const { data: cachedUrl } = supabase.storage
@@ -118,6 +134,7 @@ export async function generateStoryExport(
     console.info("[story/export] Cache miss", { cacheKey });
   }
 
+  await throwIfCancelled(options);
   const story = await timeAsync(timings, "generateStory", () =>
     generateStory(emotion, character)
   );
@@ -130,6 +147,7 @@ export async function generateStoryExport(
   await Promise.all(
     story.steps.map((step, i) =>
       limit(async () => {
+        await throwIfCancelled(options);
         const stepId = step.id ?? `scene_${i + 1}`;
         const audioFilename = `${story.id}_${stepId}.wav`;
 
@@ -165,6 +183,7 @@ export async function generateStoryExport(
         step.audioSrc = audioPublicUrl.publicUrl;
 
         if (step.prompt_img) {
+          await throwIfCancelled(options);
           const styledPrompt = enhancePromptStyle(step.prompt_img);
           const imageFilename = buildImageFilename(styledPrompt, orientation);
           const legacyFilename = buildImageFilename(styledPrompt);
@@ -181,6 +200,7 @@ export async function generateStoryExport(
               backgroundImage: existingImageUrl,
             };
           } else {
+            await throwIfCancelled(options);
             const legacyImageUrl = supabase.storage
               .from("stories")
               .getPublicUrl(legacyPath).data.publicUrl;

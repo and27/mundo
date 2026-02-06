@@ -2,9 +2,18 @@ import "server-only";
 
 import { randomUUID } from "node:crypto";
 import { supabase } from "@/lib/supabaseServer";
-import { generateStoryExport, type StoryExportRequest } from "@/lib/storyExport";
+import {
+  generateStoryExport,
+  type StoryExportRequest,
+  CANCELLED_JOB_ERROR,
+} from "@/lib/storyExport";
 
-export type StoryJobStatus = "queued" | "running" | "succeeded" | "failed";
+export type StoryJobStatus =
+  | "queued"
+  | "running"
+  | "succeeded"
+  | "failed"
+  | "cancelled";
 
 export type StoryJobResult = {
   storyId: string;
@@ -108,19 +117,40 @@ export async function updateStoryJob(
   return nextJob;
 }
 
+export async function cancelStoryJob(
+  jobId: string
+): Promise<StoryJob | null> {
+  const job = await getStoryJob(jobId);
+  if (!job) return null;
+  if (job.status === "succeeded" || job.status === "failed") {
+    return job;
+  }
+
+  return await updateStoryJob(jobId, { status: "cancelled", error: null });
+}
+
 export async function processStoryJob(
   jobId: string
 ): Promise<StoryJob | null> {
   const job = await getStoryJob(jobId);
   if (!job) return null;
-  if (job.status === "running" || job.status === "succeeded") {
+  if (
+    job.status === "running" ||
+    job.status === "succeeded" ||
+    job.status === "cancelled"
+  ) {
     return job;
   }
 
   await updateStoryJob(jobId, { status: "running", error: null });
 
   try {
-    const result = await generateStoryExport(job.request);
+    const result = await generateStoryExport(job.request, {
+      shouldCancel: async () => {
+        const latest = await getStoryJob(jobId);
+        return latest?.status === "cancelled";
+      },
+    });
     return await updateStoryJob(jobId, {
       status: "succeeded",
       result: {
@@ -132,6 +162,12 @@ export async function processStoryJob(
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
+    if (message === CANCELLED_JOB_ERROR) {
+      return await updateStoryJob(jobId, {
+        status: "cancelled",
+        error: null,
+      });
+    }
     console.error("Story job failed:", error);
     return await updateStoryJob(jobId, {
       status: "failed",
