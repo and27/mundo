@@ -5,7 +5,7 @@ import type { EmotionId } from "@/types/ai";
 type EmotionClassifierProvider = "openai";
 
 type EmotionClassification = {
-  emotion: EmotionId;
+  emotion: EmotionId | "indefinida";
   confidence?: number;
   reasoning?: string;
 };
@@ -26,7 +26,8 @@ function buildPrompt(input: string) {
   const baseList = BASE_EMOTIONS.map((value) => `"${value}"`).join(", ");
   return [
     "Clasifica la emocion principal del texto en una sola categoria base.",
-    `Categorias permitidas: ${baseList}.`,
+    `Categorias permitidas: ${baseList} o "indefinida" si no hay suficiente informacion.`,
+    "Si el texto es ambiguo o no menciona una emocion clara, usa emotion=\"indefinida\" y confidence <= 0.4.",
     "Responde SOLO JSON valido con campos: emotion, confidence, reasoning.",
     "confidence debe ser un numero entre 0 y 1.",
     "",

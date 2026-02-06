@@ -255,18 +255,8 @@ export default function GeneratedStories() {
 
   const latestGuideId = useMemo(() => {
     if (!savedGuides.length) return null;
-    let latestId = savedGuides[0].id;
-    let latestTime = 0;
-    for (const guide of savedGuides) {
-      const createdAt = createdAtById[guide.id];
-      const time = createdAt ? new Date(createdAt).getTime() : 0;
-      if (time > latestTime) {
-        latestTime = time;
-        latestId = guide.id;
-      }
-    }
-    return latestId;
-  }, [savedGuides, createdAtById]);
+    return savedGuides[0].id;
+  }, [savedGuides]);
 
   const handleCancelJob = async () => {
     if (!jobIdFromUrl) return;
