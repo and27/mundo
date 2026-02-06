@@ -86,7 +86,7 @@ export default function GeneratedStories() {
     if (job?.status && job.status !== "queued" && job.status !== "running") {
       return 100;
     }
-    const estimateMs = 2 * 60 * 1000;
+    const estimateMs = getStoryEstimateMs();
     const createdAtMs = job?.createdAt
       ? new Date(job.createdAt).getTime()
       : now;
@@ -172,7 +172,7 @@ export default function GeneratedStories() {
                 Cocinando tu cuento personalizado
               </h3>
               <p className="text-sm text-neutral-600">
-                Tiempo estimado: 2 minutos
+                Tiempo estimado: {formatEstimateMinutes(getStoryEstimateMs())}
               </p>
             </div>
             <div className="h-8 w-8 animate-spin rounded-full border-2 border-neutral-300 border-t-neutral-700" />
@@ -246,4 +246,16 @@ export default function GeneratedStories() {
       )}
     </div>
   );
+}
+
+function getStoryEstimateMs() {
+  const raw = process.env.NEXT_PUBLIC_STORY_ESTIMATE_MS;
+  if (!raw) return 2 * 60 * 1000;
+  const parsed = Number(raw);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : 2 * 60 * 1000;
+}
+
+function formatEstimateMinutes(ms: number) {
+  const minutes = Math.max(1, Math.round(ms / 60000));
+  return `${minutes} minutos`;
 }
