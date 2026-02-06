@@ -23,7 +23,7 @@ export async function generateImage(
     prompt,
     size,
     quality: "medium",
-    format: "jpeg",
+    output_format: "jpeg",
     output_compression: 90,
     moderation: "auto",
   });
