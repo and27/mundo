@@ -22,6 +22,7 @@ Responde UNICAMENTE JSON valido con campos: schema_version, id, guideTitle, emot
 schema_version debe ser "parent_guide.v2".
 
 sections[] es una lista ordenada de bloques. Incluye SIEMPRE estos kinds: "metaphor", "language", "practice".
+La seccion "metaphor" es OBLIGATORIA y debe ir primero. Si la consulta es ambigua, inventa una metafora breve y neutral igualmente.
 Bloques disponibles:
 - understanding: { kind, title, content }
 - normalization: { kind, title?, bullets[] }
@@ -36,6 +37,7 @@ CALIDAD:
 - Lenguaje claro y empatico, sin estereotipos.
 - Contenido apropiado para ninos.
 - Responde en espanol.
+Si falta "metaphor", la respuesta es invalida. Asegurate de incluirla siempre.
 
 Ejemplo minimo (no copiar literal):
 {
@@ -67,6 +69,7 @@ export const createAuditorPrompt = (guideToReview: string): string => {
 
     Si encuentras un problema, reescribe esa seccion para que sea mas empatica, inclusiva y empoderadora.
     Si la guia ya es de alta calidad y no necesita cambios, devuelvela exactamente como esta.
+    NUNCA elimines la seccion "metaphor". Si no existe, debes crearla con un cuento breve y apropiado para ninos.
 
     La guia a revisar es la siguiente:
     ${guideToReview}

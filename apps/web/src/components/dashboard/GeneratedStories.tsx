@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { ChevronRight, ArrowLeft, Calendar } from "lucide-react";
 import { useSavedGuides } from "@/hooks/useSavedGuides";
@@ -17,6 +17,7 @@ export default function GeneratedStories() {
   const guideIdFromUrl = searchParams.get("guideId");
   const jobIdFromUrl = searchParams.get("jobId");
   const newStoryQuery = searchParams.get("newStoryQuery");
+  const newStoryEmotion = searchParams.get("newStoryEmotion");
 
   const [selectedGuideId, setSelectedGuideId] = useState<string | null>(
     guideIdFromUrl
@@ -25,6 +26,11 @@ export default function GeneratedStories() {
   const [jobError, setJobError] = useState<string | null>(null);
   const [now, setNow] = useState(() => Date.now());
   const [queryStartMs, setQueryStartMs] = useState<number | null>(null);
+  const [pendingQuery, setPendingQuery] = useState<string | null>(null);
+  const [createEpoch, setCreateEpoch] = useState(0);
+  const [needsEmotionSelection, setNeedsEmotionSelection] = useState(false);
+  const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null);
+  const lastSubmitKeyRef = useRef<string | null>(null);
   const {
     savedGuides,
     createdAtById,
@@ -86,11 +92,38 @@ export default function GeneratedStories() {
   }, [jobIdFromUrl]);
 
   useEffect(() => {
-    if (!newStoryQuery) return;
-    let isActive = true;
-    if (!queryStartMs) {
-      setQueryStartMs(Date.now());
+    if (!newStoryQuery) {
+      setPendingQuery(null);
+      setNeedsEmotionSelection(false);
+      setSelectedEmotion(null);
+      return;
     }
+
+    setPendingQuery(decodeURIComponent(newStoryQuery));
+    if (newStoryEmotion) {
+      setSelectedEmotion(newStoryEmotion);
+      setNeedsEmotionSelection(false);
+    } else {
+      setNeedsEmotionSelection(false);
+      setSelectedEmotion(null);
+    }
+    setJobError(null);
+    setQueryStartMs(Date.now());
+    setCreateEpoch((prev) => prev + 1);
+  }, [newStoryQuery, newStoryEmotion]);
+
+  useEffect(() => {
+    if (!pendingQuery) return;
+    if (needsEmotionSelection && !selectedEmotion) return;
+
+    let isActive = true;
+    const submitKey = `${pendingQuery}::${selectedEmotion ?? "none"}`;
+    if (lastSubmitKeyRef.current === submitKey) {
+      return () => {
+        isActive = false;
+      };
+    }
+    lastSubmitKeyRef.current = submitKey;
 
     const createFromQuery = async () => {
       try {
@@ -98,13 +131,33 @@ export default function GeneratedStories() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            query: decodeURIComponent(newStoryQuery),
+            query: pendingQuery,
             useOpenAI: true,
+            emotionId: selectedEmotion ?? undefined,
           }),
         });
         if (!res.ok) {
-          const errText = await res.text();
-          throw new Error(errText || "No se pudo generar la guía.");
+          let errMessage = "No se pudo generar la guía.";
+          let requiresEmotionSelection = false;
+          try {
+            const errJson = (await res.json()) as {
+              error?: string;
+              requiresEmotionSelection?: boolean;
+            };
+            if (errJson?.error) errMessage = errJson.error;
+            if (errJson?.requiresEmotionSelection) {
+              requiresEmotionSelection = true;
+            }
+          } catch {
+            const errText = await res.text();
+            if (errText) errMessage = errText;
+          }
+          if (requiresEmotionSelection) {
+            setNeedsEmotionSelection(true);
+            setJobError(errMessage);
+            return;
+          }
+          throw new Error(errMessage);
         }
         const rawGuide = (await res.json()) as GuideWithCharacter;
         const inference = inferGuideContext(rawGuide);
@@ -124,12 +177,20 @@ export default function GeneratedStories() {
           }),
         });
         if (!jobRes.ok) {
-          const errText = await jobRes.text();
-          throw new Error(errText || "No se pudo iniciar el cuento.");
+          let errMessage = "No se pudo iniciar el cuento.";
+          try {
+            const errJson = (await jobRes.json()) as { error?: string };
+            if (errJson?.error) errMessage = errJson.error;
+          } catch {
+            const errText = await jobRes.text();
+            if (errText) errMessage = errText;
+          }
+          throw new Error(errMessage);
         }
         const jobData = (await jobRes.json()) as { jobId: string };
         if (!isActive) return;
 
+        setNeedsEmotionSelection(false);
         setJobError(null);
         router.replace(
           `/parentDashboard?section=guides&guideId=${savedId}&jobId=${jobData.jobId}`
@@ -146,7 +207,7 @@ export default function GeneratedStories() {
     return () => {
       isActive = false;
     };
-  }, [newStoryQuery, saveGuide, router, queryStartMs]);
+  }, [pendingQuery, selectedEmotion, needsEmotionSelection, createEpoch, saveGuide, router]);
 
   useEffect(() => {
     if (
@@ -199,6 +260,11 @@ export default function GeneratedStories() {
     const elapsed = Math.max(0, now - createdAtMs);
     return Math.min(100, Math.round((elapsed / estimateMs) * 100));
   }, [job?.createdAt, jobIdFromUrl, newStoryQuery, now, queryStartMs, job?.progress, job?.status]);
+
+  const latestGuideId = useMemo(() => {
+    if (!savedGuides.length) return null;
+    return savedGuides[0].id;
+  }, [savedGuides]);
 
   const handleCancelJob = async () => {
     if (!jobIdFromUrl) return;
@@ -275,7 +341,7 @@ export default function GeneratedStories() {
             </div>
             {(job?.status === "queued" ||
               job?.status === "running" ||
-              newStoryQuery) && (
+              (newStoryQuery && !needsEmotionSelection)) && (
               <div className="h-8 w-8 animate-spin rounded-full border-2 border-neutral-300 border-t-neutral-700" />
             )}
           </div>
@@ -287,7 +353,41 @@ export default function GeneratedStories() {
             />
           </div>
 
-          {job?.status === "succeeded" && job.result?.storyId ? (
+          {needsEmotionSelection ? (
+            <div className="mi-stack-sm">
+              <p className="text-sm text-neutral-600">
+                {jobError ??
+                  "No pudimos inferir la emoción. Elige la emoción que más representa lo que nos cuentas."}
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {[
+                  "miedo",
+                  "ira",
+                  "tristeza",
+                  "verguenza",
+                  "celos",
+                  "alegria",
+                  "calma",
+                ].map((emotion) => (
+                  <button
+                    key={emotion}
+                    onClick={() => {
+                      setSelectedEmotion(emotion);
+                      setNeedsEmotionSelection(false);
+                      setCreateEpoch((prev) => prev + 1);
+                    }}
+                    className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition ${
+                      selectedEmotion === emotion
+                        ? "bg-neutral-900 text-white border-neutral-900"
+                        : "border-neutral-200 text-neutral-700 hover:border-neutral-300"
+                    }`}
+                  >
+                    {formatEmotionLabel(emotion)}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : job?.status === "succeeded" && job.result?.storyId ? (
             <button
               onClick={() => router.push(`/cuentos/${job.result?.storyId}`)}
               className="px-4 py-2 rounded-xl text-sm font-semibold text-white shadow-md transition-transform duration-200 hover:-translate-y-0.5 bg-primary-600 hover:bg-primary-700"
@@ -344,6 +444,8 @@ export default function GeneratedStories() {
                 }
               }}
               createdAt={createdAtById[guide.id] || "Generada en la nube"}
+              badgeLabel={formatEmotionLabel(guide.emotionId)}
+              isNew={guide.id === latestGuideId}
             />
           ))}
         </div>
@@ -376,4 +478,27 @@ function getStoryEstimateMs() {
 function formatEstimateMinutes(ms: number) {
   const minutes = Math.max(1, Math.round(ms / 60000));
   return `${minutes} minutos`;
+}
+
+function formatEmotionLabel(emotion?: string) {
+  if (!emotion) return "Emoción";
+  const normalized = emotion.toLowerCase();
+  switch (normalized) {
+    case "verguenza":
+      return "Vergüenza";
+    case "alegria":
+      return "Alegría";
+    case "miedo":
+      return "Miedo";
+    case "ira":
+      return "Ira";
+    case "tristeza":
+      return "Tristeza";
+    case "celos":
+      return "Celos";
+    case "calma":
+      return "Calma";
+    default:
+      return normalized.charAt(0).toUpperCase() + normalized.slice(1);
+  }
 }

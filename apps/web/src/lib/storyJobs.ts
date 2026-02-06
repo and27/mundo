@@ -56,6 +56,7 @@ async function writeJob(job: StoryJob): Promise<void> {
     .upload(jobPath(job.id), JSON.stringify(job, null, 2), {
       contentType: "application/json",
       upsert: true,
+      cacheControl: "0",
     });
 
   if (error) {
