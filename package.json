@@ -6,7 +6,8 @@
     "dev": "next dev --webpack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:emotion-map": "tsx scripts/test-emotion-mapping.ts"
   },
   "dependencies": {
     "@google/genai": "^1.11.0",
