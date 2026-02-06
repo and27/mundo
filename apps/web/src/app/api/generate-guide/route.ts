@@ -6,8 +6,7 @@ import { parseLlmJson } from "@/lib/llm/parse";
 import { normalizeParentGuide } from "@/lib/llm/normalize/parentGuide";
 import { buildRateLimitHeaders, checkRateLimit } from "@/lib/rateLimit";
 import { mapEmotionLabel } from "@/lib/emotionMapping";
-import { classifyEmotionLabel } from "@/lib/llm/emotionClassifier";
-import type { EmotionId } from "@/types/ai";
+import { resolveEmotionForGuide } from "@/lib/emotionResolution";
 import type { ParentGuideV1 } from "@/schemas/parentGuide.v1";
 import type { ParentGuideV2 } from "@/schemas/parentGuide.v2";
 
@@ -22,10 +21,6 @@ const AI_RATE_LIMIT_MAX = toNumber(process.env.AI_RATE_LIMIT_MAX, 10);
 const AI_RATE_LIMIT_WINDOW_MS = toNumber(
   process.env.AI_RATE_LIMIT_WINDOW_MS,
   60000
-);
-const EMOTION_CLASSIFIER_MIN_CONFIDENCE = toNumber(
-  process.env.EMOTION_CLASSIFIER_MIN_CONFIDENCE,
-  0.6
 );
 const AI_GUARDRAILS_ENABLED = process.env.AI_GUARDRAILS_ENABLED !== "false";
 const GUIDE_DIAGNOSTICS_ENABLED =
@@ -119,45 +114,6 @@ function buildFallbackGuide(userQuery: string, raw?: unknown) {
   };
 }
 
-type EmotionResolution =
-  | { ok: true; emotionId: EmotionId; source: "manual" | "inferred" }
-  | { ok: false; error: string };
-
-async function resolveEmotionForGuide(
-  userQuery: string,
-  manualEmotion?: string
-): Promise<EmotionResolution> {
-  if (manualEmotion) {
-    const normalized = mapEmotionLabel(manualEmotion);
-    if (!normalized) {
-      return {
-        ok: false,
-        error:
-          "La emoción seleccionada no es válida. Por favor, elige una emoción disponible.",
-      };
-    }
-    return { ok: true, emotionId: normalized, source: "manual" };
-  }
-
-  const direct = mapEmotionLabel(userQuery);
-  if (direct) {
-    return { ok: true, emotionId: direct, source: "inferred" };
-  }
-
-  const classified = await classifyEmotionLabel(userQuery, AI_TIMEOUT_MS);
-  if (
-    classified?.emotion &&
-    (classified.confidence ?? 0) >= EMOTION_CLASSIFIER_MIN_CONFIDENCE
-  ) {
-    return { ok: true, emotionId: classified.emotion, source: "inferred" };
-  }
-
-  return {
-    ok: false,
-    error:
-      "No pudimos inferir la emoción. Elige cuál es la emoción que más representa lo que nos cuentas.",
-  };
-}
 
 function logGuideDiagnostics(label: string, text: string) {
   if (!GUIDE_DIAGNOSTICS_ENABLED) return;

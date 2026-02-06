@@ -17,6 +17,7 @@ export default function GeneratedStories() {
   const guideIdFromUrl = searchParams.get("guideId");
   const jobIdFromUrl = searchParams.get("jobId");
   const newStoryQuery = searchParams.get("newStoryQuery");
+  const newStoryEmotion = searchParams.get("newStoryEmotion");
 
   const [selectedGuideId, setSelectedGuideId] = useState<string | null>(
     guideIdFromUrl
@@ -98,12 +99,17 @@ export default function GeneratedStories() {
     }
 
     setPendingQuery(decodeURIComponent(newStoryQuery));
-    setNeedsEmotionSelection(false);
-    setSelectedEmotion(null);
+    if (newStoryEmotion) {
+      setSelectedEmotion(newStoryEmotion);
+      setNeedsEmotionSelection(false);
+    } else {
+      setNeedsEmotionSelection(false);
+      setSelectedEmotion(null);
+    }
     setJobError(null);
     setQueryStartMs(Date.now());
     setCreateEpoch((prev) => prev + 1);
-  }, [newStoryQuery]);
+  }, [newStoryQuery, newStoryEmotion]);
 
   useEffect(() => {
     if (!pendingQuery) return;
