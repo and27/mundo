@@ -166,10 +166,13 @@ export async function generateStoryExport(
 
         if (step.prompt_img) {
           const styledPrompt = enhancePromptStyle(step.prompt_img);
-          const imageFilename = buildImageFilename(styledPrompt);
+          const imageFilename = buildImageFilename(styledPrompt, orientation);
+          const legacyFilename = buildImageFilename(styledPrompt);
+          const imagePath = `images/${imageFilename}`;
+          const legacyPath = `images/${legacyFilename}`;
           const existingImageUrl = supabase.storage
             .from("stories")
-            .getPublicUrl(`images/${imageFilename}`).data.publicUrl;
+            .getPublicUrl(imagePath).data.publicUrl;
 
           const existingImageRes = await fetch(existingImageUrl);
           if (existingImageRes.ok) {
@@ -178,6 +181,18 @@ export async function generateStoryExport(
               backgroundImage: existingImageUrl,
             };
           } else {
+            const legacyImageUrl = supabase.storage
+              .from("stories")
+              .getPublicUrl(legacyPath).data.publicUrl;
+            const legacyImageRes = await fetch(legacyImageUrl);
+            if (legacyImageRes.ok) {
+              step.visuals = {
+                ...step.visuals,
+                backgroundImage: legacyImageUrl,
+              };
+              return;
+            }
+
             const imageData = await timeAsync(
               timings,
               "generateImage",

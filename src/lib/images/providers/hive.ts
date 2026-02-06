@@ -6,7 +6,7 @@ export async function generateImage(
   prompt: string,
   orientation: "vertical" | "horizontal" = "vertical"
 ): Promise<ImageGenerationResult> {
-  const filename = buildImageFilename(prompt);
+  const filename = buildImageFilename(prompt, orientation);
 
   const imageSize =
     orientation === "horizontal"
