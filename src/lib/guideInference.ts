@@ -1,4 +1,5 @@
 import type { CharacterId, EmotionId, GuideWithCharacter } from "@/types/ai";
+import { getDefaultCharacterForEmotion } from "@/lib/emotionCharacterMap";
 import { mapEmotionLabel } from "@/lib/emotionMapping";
 
 export type EmotionSource =
@@ -86,8 +87,10 @@ export function resolveCharacterId(
     return { characterId: parsed.character, source: "id" };
   }
 
-  const fallback = emotionId === "ira" ? "amaru" : "yachay";
-  return { characterId: fallback, source: "fallback" };
+  return {
+    characterId: getDefaultCharacterForEmotion(emotionId),
+    source: "fallback",
+  };
 }
 
 export function inferGuideContext(

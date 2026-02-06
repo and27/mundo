@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "test:emotion-map": "tsx scripts/test-emotion-mapping.ts",
+    "test:emotion-character-map": "tsx scripts/test-emotion-character-map.ts",
     "eval:emotion-classifier": "tsx scripts/eval-emotion-classifier.ts",
     "eval:emotion-pipeline": "tsx scripts/eval-emotion-pipeline.ts"
   },
