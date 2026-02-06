@@ -7,7 +7,12 @@ export type EmotionId =
   | "alegria"
   | "calma";
 
-export type CharacterId = "yachay" | "amaru";
+export type CharacterId =
+  | "yachay"
+  | "amaru"
+  | "kuntur"
+  | "hatun"
+  | "pajaro";
 
 export interface RiskAssessment {
   riskLevel: "normal" | "attention" | "professional_required";
