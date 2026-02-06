@@ -5,7 +5,7 @@ import pLimit from "p-limit";
 
 import { generateStory } from "@/lib/storyEngine";
 import { generateImage } from "@/lib/images";
-import { enhancePromptStyle } from "@/utils/imageUtils";
+import { buildImageFilename, enhancePromptStyle } from "@/utils/imageUtils";
 import { supabase } from "@/lib/supabaseServer";
 import { generateAudio } from "@/lib/geminiTTS";
 import type { JourneyStep, Story } from "@/types/story";
@@ -101,6 +101,10 @@ export async function generateStoryExport(
     const cachedRes = await fetch(cachedUrl.publicUrl);
     if (cachedRes.ok) {
       const cachedStory = (await cachedRes.json()) as Story;
+      console.info("[story/export] Cache hit", {
+        cacheKey,
+        url: cachedUrl.publicUrl,
+      });
       timings.push({ label: "TOTAL", ms: performance.now() - totalStart });
       return {
         story: cachedStory,
@@ -111,6 +115,7 @@ export async function generateStoryExport(
     }
   } catch (err) {
     // Cache miss or invalid cached data; continue to regenerate.
+    console.info("[story/export] Cache miss", { cacheKey });
   }
 
   const story = await timeAsync(timings, "generateStory", () =>
@@ -161,39 +166,52 @@ export async function generateStoryExport(
 
         if (step.prompt_img) {
           const styledPrompt = enhancePromptStyle(step.prompt_img);
-          const imageData = await timeAsync(
-            timings,
-            "generateImage",
-            () => generateImage(styledPrompt, orientation),
-            stepId
-          );
-
-          const imageUploadRes = await timeAsync(
-            timings,
-            "uploadImage",
-            () =>
-              supabase.storage
-                .from("stories")
-                .upload(`images/${imageData.filename}`, imageData.buffer, {
-                  contentType: "image/jpeg",
-                  upsert: true,
-                }),
-            stepId
-          );
-
-          if (imageUploadRes.error) {
-            throw new Error(
-              `Error al subir imagen: ${imageUploadRes.error.message}`
-            );
-          }
-
-          const { data: imagePublicUrl } = supabase.storage
+          const imageFilename = buildImageFilename(styledPrompt);
+          const existingImageUrl = supabase.storage
             .from("stories")
-            .getPublicUrl(`images/${imageData.filename}`);
-          step.visuals = {
-            ...step.visuals,
-            backgroundImage: imagePublicUrl.publicUrl,
-          };
+            .getPublicUrl(`images/${imageFilename}`).data.publicUrl;
+
+          const existingImageRes = await fetch(existingImageUrl);
+          if (existingImageRes.ok) {
+            step.visuals = {
+              ...step.visuals,
+              backgroundImage: existingImageUrl,
+            };
+          } else {
+            const imageData = await timeAsync(
+              timings,
+              "generateImage",
+              () => generateImage(styledPrompt, orientation),
+              stepId
+            );
+
+            const imageUploadRes = await timeAsync(
+              timings,
+              "uploadImage",
+              () =>
+                supabase.storage
+                  .from("stories")
+                  .upload(`images/${imageData.filename}`, imageData.buffer, {
+                    contentType: "image/jpeg",
+                    upsert: true,
+                  }),
+              stepId
+            );
+
+            if (imageUploadRes.error) {
+              throw new Error(
+                `Error al subir imagen: ${imageUploadRes.error.message}`
+              );
+            }
+
+            const { data: imagePublicUrl } = supabase.storage
+              .from("stories")
+              .getPublicUrl(`images/${imageData.filename}`);
+            step.visuals = {
+              ...step.visuals,
+              backgroundImage: imagePublicUrl.publicUrl,
+            };
+          }
         }
 
         const nextStep = story.steps[i + 1];
