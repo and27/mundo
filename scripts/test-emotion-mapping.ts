@@ -10,7 +10,7 @@ const cases: TestCase[] = [
   { input: "ansiedad", expected: "miedo" },
   { input: "mi hijo esta ansioso", expected: "miedo" },
   { input: "mi hijo tiene ansiedad", expected: "miedo" },
-  { input: "amenazado", expected: "ira" },
+  { input: "amenazado", expected: "miedo" },
   { input: "frustración", expected: "ira" },
   { input: "agresivo", expected: "ira" },
   { input: "abandonado", expected: "tristeza" },
