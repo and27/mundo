@@ -8,12 +8,15 @@ import GuideDisplay from "../assistant/GuideDisplay";
 import StoryCard from "./StoryCard";
 import { authFetch } from "@/lib/authFetch";
 import type { StoryJob } from "@/types/storyJob";
+import type { GuideWithCharacter } from "@/types/ai";
+import { inferGuideContext } from "@/lib/guideInference";
 
 export default function GeneratedStories() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const guideIdFromUrl = searchParams.get("guideId");
   const jobIdFromUrl = searchParams.get("jobId");
+  const newStoryQuery = searchParams.get("newStoryQuery");
 
   const [selectedGuideId, setSelectedGuideId] = useState<string | null>(
     guideIdFromUrl
@@ -21,6 +24,7 @@ export default function GeneratedStories() {
   const [job, setJob] = useState<StoryJob | null>(null);
   const [jobError, setJobError] = useState<string | null>(null);
   const [now, setNow] = useState(() => Date.now());
+  const [queryStartMs, setQueryStartMs] = useState<number | null>(null);
   const {
     savedGuides,
     createdAtById,
@@ -31,14 +35,14 @@ export default function GeneratedStories() {
   } = useSavedGuides();
 
   useEffect(() => {
-    if (jobIdFromUrl) {
+    if (jobIdFromUrl || newStoryQuery) {
       if (selectedGuideId !== null) setSelectedGuideId(null);
       return;
     }
     if (guideIdFromUrl && guideIdFromUrl !== selectedGuideId) {
       setSelectedGuideId(guideIdFromUrl);
     }
-  }, [guideIdFromUrl, jobIdFromUrl, selectedGuideId]);
+  }, [guideIdFromUrl, jobIdFromUrl, newStoryQuery, selectedGuideId]);
 
   useEffect(() => {
     if (!jobIdFromUrl) {
@@ -82,6 +86,68 @@ export default function GeneratedStories() {
   }, [jobIdFromUrl]);
 
   useEffect(() => {
+    if (!newStoryQuery) return;
+    let isActive = true;
+    if (!queryStartMs) {
+      setQueryStartMs(Date.now());
+    }
+
+    const createFromQuery = async () => {
+      try {
+        const res = await authFetch("/api/generate-guide", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            query: decodeURIComponent(newStoryQuery),
+            useOpenAI: true,
+          }),
+        });
+        if (!res.ok) {
+          const errText = await res.text();
+          throw new Error(errText || "No se pudo generar la guía.");
+        }
+        const rawGuide = (await res.json()) as GuideWithCharacter;
+        const inference = inferGuideContext(rawGuide);
+        const guide: GuideWithCharacter = {
+          ...rawGuide,
+          emotionId: inference.emotionId,
+          characterId: inference.characterId,
+        };
+        const savedId = await saveGuide(guide);
+
+        const jobRes = await authFetch("/api/story/export", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            emotion: guide.emotionId,
+            character: guide.characterId,
+          }),
+        });
+        if (!jobRes.ok) {
+          const errText = await jobRes.text();
+          throw new Error(errText || "No se pudo iniciar el cuento.");
+        }
+        const jobData = (await jobRes.json()) as { jobId: string };
+        if (!isActive) return;
+
+        setJobError(null);
+        router.replace(
+          `/parentDashboard?section=guides&guideId=${savedId}&jobId=${jobData.jobId}`
+        );
+      } catch (err) {
+        const message = err instanceof Error ? err.message : "Error desconocido.";
+        setJobError(message);
+      }
+    };
+
+    createFromQuery();
+
+    return () => {
+      isActive = false;
+    };
+  }, [newStoryQuery, saveGuide, router, queryStartMs]);
+
+  useEffect(() => {
     if (
       !jobIdFromUrl ||
       !job ||
@@ -115,7 +181,7 @@ export default function GeneratedStories() {
   }, [jobIdFromUrl]);
 
   const progress = useMemo(() => {
-    if (!jobIdFromUrl) return 0;
+    if (!jobIdFromUrl && !newStoryQuery) return 0;
     if (job?.status && job.status !== "queued" && job.status !== "running") {
       return 100;
     }
@@ -128,10 +194,10 @@ export default function GeneratedStories() {
     const estimateMs = getStoryEstimateMs();
     const createdAtMs = job?.createdAt
       ? new Date(job.createdAt).getTime()
-      : now;
+      : queryStartMs ?? now;
     const elapsed = Math.max(0, now - createdAtMs);
     return Math.min(100, Math.round((elapsed / estimateMs) * 100));
-  }, [job?.createdAt, jobIdFromUrl, now]);
+  }, [job?.createdAt, jobIdFromUrl, newStoryQuery, now, queryStartMs, job?.progress, job?.status]);
 
   const handleCancelJob = async () => {
     if (!jobIdFromUrl) return;
@@ -200,7 +266,7 @@ export default function GeneratedStories() {
         </p>
       </div>
 
-      {jobIdFromUrl && (
+      {(jobIdFromUrl || newStoryQuery) && (
         <div className="border border-neutral-200 rounded-2xl p-5 mi-stack-md bg-white">
           <div className="flex items-center justify-between gap-4">
             <div>
@@ -214,7 +280,11 @@ export default function GeneratedStories() {
                 Tiempo estimado: {formatEstimateMinutes(getStoryEstimateMs())}
               </p>
             </div>
-            <div className="h-8 w-8 animate-spin rounded-full border-2 border-neutral-300 border-t-neutral-700" />
+            {(job?.status === "queued" ||
+              job?.status === "running" ||
+              newStoryQuery) && (
+              <div className="h-8 w-8 animate-spin rounded-full border-2 border-neutral-300 border-t-neutral-700" />
+            )}
           </div>
 
           <div className="w-full h-2 rounded-full bg-neutral-100 overflow-hidden">
@@ -227,10 +297,20 @@ export default function GeneratedStories() {
           {job?.status === "succeeded" && job.result?.storyId ? (
             <button
               onClick={() => router.push(`/cuentos/${job.result?.storyId}`)}
-              className="px-4 py-2 rounded-lg text-sm font-semibold bg-neutral-900 text-white hover:bg-neutral-800 transition"
+              className="px-4 py-2 rounded-xl text-sm font-semibold text-white shadow-md transition-transform duration-200 hover:-translate-y-0.5 bg-primary-600 hover:bg-primary-700"
             >
               Escuchar cuento
             </button>
+          ) : jobError && !job ? (
+            <div className="mi-stack-sm">
+              <p className="text-sm text-red-500">{jobError}</p>
+              <button
+                onClick={() => router.replace("/parentDashboard?section=guides")}
+                className="px-4 py-2 rounded-xl text-sm font-semibold border border-neutral-200 text-neutral-700 hover:border-neutral-300 hover:bg-neutral-50 transition"
+              >
+                Volver
+              </button>
+            </div>
           ) : job?.status === "failed" ? (
             <p className="text-sm text-red-500">
               {job.error ?? jobError ?? "No se pudo generar el cuento."}
@@ -242,7 +322,7 @@ export default function GeneratedStories() {
           ) : (
             <button
               onClick={handleCancelJob}
-              className="px-4 py-2 rounded-lg text-sm font-semibold border border-neutral-300 text-neutral-700 hover:border-neutral-400 transition"
+              className="px-4 py-2 rounded-xl text-sm font-semibold border border-neutral-200 text-neutral-700 hover:border-neutral-300 hover:bg-neutral-50 transition"
             >
               Cancelar
             </button>
