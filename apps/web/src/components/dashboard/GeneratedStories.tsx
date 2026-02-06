@@ -427,6 +427,7 @@ export default function GeneratedStories() {
               }}
               createdAt={createdAtById[guide.id] || "Generada en la nube"}
               badgeLabel={formatEmotionLabel(guide.emotionId)}
+              isNew={guide.id === latestGuideId}
             />
           ))}
         </div>
