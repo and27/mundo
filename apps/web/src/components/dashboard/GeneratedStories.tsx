@@ -426,11 +426,7 @@ export default function GeneratedStories() {
                 }
               }}
               createdAt={createdAtById[guide.id] || "Generada en la nube"}
-              badgeLabel={
-                guide.id === latestGuideId
-                  ? formatEmotionLabel(guide.emotionId)
-                  : undefined
-              }
+              badgeLabel={formatEmotionLabel(guide.emotionId)}
             />
           ))}
         </div>
