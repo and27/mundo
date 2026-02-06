@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:emotion-map": "tsx scripts/test-emotion-mapping.ts"
+    "test:emotion-map": "tsx scripts/test-emotion-mapping.ts",
+    "eval:emotion-classifier": "tsx scripts/eval-emotion-classifier.ts"
   },
   "dependencies": {
     "@google/genai": "^1.11.0",

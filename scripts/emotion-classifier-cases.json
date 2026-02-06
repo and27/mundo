@@ -1,0 +1,50 @@
+[
+  {
+    "input": "Mi hijo está ansioso porque no quiere dormir solo.",
+    "expected": "miedo"
+  },
+  {
+    "input": "Mi hija está ansiosa desde que cambiamos de colegio y se siente sola.",
+    "expected": "tristeza"
+  },
+  {
+    "input": "Mi hijo se enojó y está provocando a su hermana.",
+    "expected": "ira"
+  },
+  {
+    "input": "Se siente avergonzado por lo que pasó en clase.",
+    "expected": "verguenza"
+  },
+  {
+    "input": "Dice que me quiere solo para él y no quiere compartir.",
+    "expected": "celos"
+  },
+  {
+    "input": "Está tranquilo y agradecido después de hablar.",
+    "expected": "calma"
+  },
+  {
+    "input": "Siente culpa y remordimiento por haber mentido.",
+    "expected": "verguenza"
+  },
+  {
+    "input": "Está irritado, hostil y responde mal.",
+    "expected": "ira"
+  },
+  {
+    "input": "Tiene miedo a la oscuridad y se asusta fácil.",
+    "expected": "miedo"
+  },
+  {
+    "input": "Se siente feliz y orgulloso por su logro.",
+    "expected": "alegria"
+  },
+  {
+    "input": "Está confundido y con intriga por lo que vio.",
+    "expected": "miedo"
+  },
+  {
+    "input": "Dice que nadie lo quiere y está muy solo.",
+    "expected": "tristeza"
+  }
+]
