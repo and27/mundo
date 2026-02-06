@@ -62,12 +62,19 @@ function tryParseJson(value: string): Record<string, unknown> | null {
   }
 }
 
-function buildFallbackGuide(userQuery: string, raw?: unknown) {
+function buildFallbackGuide(
+  userQuery: string,
+  raw?: unknown,
+  forcedEmotion?: string
+) {
   const rawObj = typeof raw === "string" ? tryParseJson(raw) : null;
   const rawEmotion =
     (rawObj?.emotion as string | undefined) ??
     (rawObj?.emotionId as string | undefined);
-  const emotion = mapEmotionLabel(rawEmotion) ?? "miedo";
+  const emotion =
+    mapEmotionLabel(forcedEmotion) ??
+    mapEmotionLabel(rawEmotion) ??
+    "miedo";
   const guideTitle =
     (rawObj?.guideTitle as string | undefined) ??
     `Cuento para acompañar ${emotion}`;
@@ -293,7 +300,11 @@ export async function POST(request: Request) {
 
     if (!parsed?.ok) {
       console.error("Invalid LLM response:", parsed?.error);
-      const fallbackGuide = buildFallbackGuide(userQuery, finalGuideString);
+      const fallbackGuide = buildFallbackGuide(
+        userQuery,
+        finalGuideString,
+        emotionResolution.emotionId
+      );
       const normalizedFallback = normalizeParentGuide(
         fallbackGuide as ParentGuideV2
       );
