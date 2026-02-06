@@ -1,11 +1,15 @@
-export function buildImageFilename(prompt: string): string {
+export function buildImageFilename(
+  prompt: string,
+  orientation?: "vertical" | "horizontal"
+): string {
   const base = prompt
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "_")
     .slice(0, 40)
     .replace(/_+$/, "");
 
-  return `${base}_bg.jpg`;
+  const suffix = orientation ? `_${orientation}` : "";
+  return `${base}${suffix}_bg.jpg`;
 }
 
 export function enhancePromptStyle(prompt: string): string {
