@@ -8,6 +8,8 @@ type TestCase = {
 const cases: TestCase[] = [
   { input: "ansioso", expected: "miedo" },
   { input: "ansiedad", expected: "miedo" },
+  { input: "mi hijo esta ansioso", expected: "miedo" },
+  { input: "mi hijo tiene ansiedad", expected: "miedo" },
   { input: "amenazado", expected: "ira" },
   { input: "frustración", expected: "ira" },
   { input: "agresivo", expected: "ira" },
