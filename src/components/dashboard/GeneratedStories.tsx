@@ -83,6 +83,9 @@ export default function GeneratedStories() {
 
   const progress = useMemo(() => {
     if (!jobIdFromUrl) return 0;
+    if (job?.status && job.status !== "queued" && job.status !== "running") {
+      return 100;
+    }
     const estimateMs = 2 * 60 * 1000;
     const createdAtMs = job?.createdAt
       ? new Date(job.createdAt).getTime()
