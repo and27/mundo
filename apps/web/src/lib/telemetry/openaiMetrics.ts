@@ -1,3 +1,6 @@
+import fs from "node:fs";
+import path from "node:path";
+
 type OpenAICallType =
   | "chat.completions.create"
   | "images.generate";
@@ -23,6 +26,49 @@ const state: OpenAIMetricsState = {
   entries: [],
 };
 
+const METRICS_PATH = path.join(
+  process.cwd(),
+  ".local",
+  "telemetry",
+  "openai-metrics.json"
+);
+
+let loadedFromDisk = false;
+let pendingWrite = false;
+let writeTimer: NodeJS.Timeout | null = null;
+
+function loadFromDisk() {
+  if (loadedFromDisk) return;
+  loadedFromDisk = true;
+  try {
+    if (!fs.existsSync(METRICS_PATH)) return;
+    const raw = fs.readFileSync(METRICS_PATH, "utf-8");
+    const parsed = JSON.parse(raw) as OpenAIMetricsState;
+    if (!parsed || typeof parsed !== "object") return;
+    state.total = parsed.total ?? state.total;
+    state.byType = parsed.byType ?? state.byType;
+    state.byModel = parsed.byModel ?? state.byModel;
+    state.entries = Array.isArray(parsed.entries) ? parsed.entries : state.entries;
+  } catch {
+    // ignore disk errors; keep in-memory state
+  }
+}
+
+function scheduleWrite() {
+  if (writeTimer) return;
+  writeTimer = setTimeout(() => {
+    writeTimer = null;
+    if (!pendingWrite) return;
+    pendingWrite = false;
+    try {
+      fs.mkdirSync(path.dirname(METRICS_PATH), { recursive: true });
+      fs.writeFileSync(METRICS_PATH, JSON.stringify(state, null, 2), "utf-8");
+    } catch {
+      // ignore disk errors
+    }
+  }, 500);
+}
+
 function findEntry(
   type: OpenAICallType,
   model?: string,
@@ -42,6 +88,7 @@ export function recordOpenAICall(
   type: OpenAICallType,
   options: { model?: string; label?: string } = {}
 ) {
+  loadFromDisk();
   state.total += 1;
   state.byType[type] = (state.byType[type] ?? 0) + 1;
   if (options.model) {
@@ -60,9 +107,12 @@ export function recordOpenAICall(
       return created;
     })();
   entry.count += 1;
+  pendingWrite = true;
+  scheduleWrite();
 }
 
 export function getOpenAIMetricsSnapshot() {
+  loadFromDisk();
   return {
     total: state.total,
     byType: { ...state.byType },
