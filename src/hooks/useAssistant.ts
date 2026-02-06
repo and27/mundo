@@ -1,7 +1,8 @@
-import type { CharacterId, EmotionId, GuideWithCharacter } from "@/types/ai";
+import type { GuideWithCharacter } from "@/types/ai";
 import { useState, useEffect } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
 import { authFetch } from "@/lib/authFetch";
+import { inferGuideContext } from "@/lib/guideInference";
 
 const loadingMessages = [
   "Contactando a Aynia...",
@@ -61,17 +62,13 @@ export function useMundoAssistant() {
 
       const rawData = await response.json();
 
-      const parsedFromId = parseGuideId(rawData?.id);
-      const emotion =
-        normalizeEmotionInput(rawData?.emotionId ?? rawData?.emotion) ??
-        parsedFromId.emotion ??
-        resolveEmotionFromTags(rawData?.tags);
-      const character =
-        parsedFromId.character ?? getCharacterFromEmotion(emotion);
+      const inference = inferGuideContext(rawData ?? {});
+      const emotion = inference.emotionId;
+      const character = inference.characterId;
       const resolvedId =
         typeof rawData?.id === "string" && rawData.id.trim().length > 0
           ? rawData.id
-          : `story_${emotion ?? "miedo"}_${character}`;
+          : `story_${emotion}_${character}`;
 
       const finalGuide: GuideWithCharacter = {
         ...rawData,
@@ -82,8 +79,12 @@ export function useMundoAssistant() {
         characterId: character,
       };
       console.log("[useAssistant] rawData:", rawData);
-      console.log("[useAssistant] emotion:", emotion);
-      console.log("[useAssistant] character:", character);
+      console.log("[useAssistant] emotion:", emotion, inference.emotionSource);
+      console.log(
+        "[useAssistant] character:",
+        character,
+        inference.characterSource
+      );
       console.log("[useAssistant] finalGuide:", finalGuide);
 
       setGuide(finalGuide);
@@ -99,44 +100,4 @@ export function useMundoAssistant() {
   };
 
   return { isLoading, guide, error, loadingMessage, generateGuide };
-}
-
-function getCharacterFromEmotion(emotion?: EmotionId): CharacterId {
-  if (emotion === "ira") return "amaru";
-  return "yachay";
-}
-
-function normalizeEmotionInput(value?: string): EmotionId | undefined {
-  if (!value) return undefined;
-  const normalized = value.trim().toLowerCase();
-  if (normalized === "miedo") return "miedo";
-  if (normalized === "ira") return "ira";
-  if (normalized === "tristeza") return "tristeza";
-  if (normalized === "verguenza" || normalized === "vergüenza")
-    return "verguenza";
-  if (normalized === "celos") return "celos";
-  if (normalized === "alegria" || normalized === "alegría")
-    return "alegria";
-  return undefined;
-}
-
-function resolveEmotionFromTags(tags?: string[]): EmotionId | undefined {
-  if (!Array.isArray(tags)) return undefined;
-  for (const tag of tags) {
-    const normalized = normalizeEmotionInput(tag);
-    if (normalized) return normalized;
-  }
-  return undefined;
-}
-
-function parseGuideId(
-  value?: string
-): { emotion?: EmotionId; character?: CharacterId } {
-  if (!value) return {};
-  const match = value.trim().toLowerCase().match(/^story_([^_]+)_([^_]+)$/);
-  if (!match) return {};
-  const emotion = normalizeEmotionInput(match[1]);
-  const character =
-    match[2] === "yachay" || match[2] === "amaru" ? match[2] : undefined;
-  return { emotion, character };
 }
