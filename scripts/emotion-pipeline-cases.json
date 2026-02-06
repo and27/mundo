@@ -1,0 +1,49 @@
+[
+  { "input": "Mi hijo está ansioso porque no quiere dormir solo.", "expected": "miedo" },
+  { "input": "Siente pavor en la noche.", "expected": "miedo" },
+  { "input": "Está nervioso antes del examen.", "expected": "miedo" },
+  { "input": "Tiene temor a la oscuridad.", "expected": "miedo" },
+  { "input": "Se mostró muy inquieto y asustado.", "expected": "miedo" },
+
+  { "input": "Se enojó y está provocando a su hermana.", "expected": "ira" },
+  { "input": "Está furioso y no quiere hablar.", "expected": "ira" },
+  { "input": "Se siente hostil y responde mal.", "expected": "ira" },
+  { "input": "Está rabioso por lo que pasó.", "expected": "ira" },
+  { "input": "Se mostró agresivo en el juego.", "expected": "ira" },
+
+  { "input": "Dice que nadie lo quiere y está muy solo.", "expected": "tristeza" },
+  { "input": "Se siente melancólico desde el cambio.", "expected": "tristeza" },
+  { "input": "Está desanimado y sin ganas.", "expected": "tristeza" },
+  { "input": "Se siente vacío y apartado.", "expected": "tristeza" },
+  { "input": "Está triste y abatido.", "expected": "tristeza" },
+
+  { "input": "Se siente avergonzado por lo que pasó en clase.", "expected": "verguenza" },
+  { "input": "Tiene mucha culpa por haber mentido.", "expected": "verguenza" },
+  { "input": "Está arrepentido y con remordimiento.", "expected": "verguenza" },
+  { "input": "Siente bochorno al hablar.", "expected": "verguenza" },
+  { "input": "Se sintió humillado frente a todos.", "expected": "verguenza" },
+
+  { "input": "Dice que me quiere solo para él.", "expected": "celos" },
+  { "input": "Está celoso de su hermano menor.", "expected": "celos" },
+  { "input": "Tiene envidia cuando otros reciben atención.", "expected": "celos" },
+  { "input": "Se mostró inseguro cuando lo compararon.", "expected": "celos" },
+  { "input": "Se siente posesivo con sus amigos.", "expected": "celos" },
+
+  { "input": "Está feliz y orgulloso por su logro.", "expected": "alegria" },
+  { "input": "Se mostró entusiasmado y con mucho gozo.", "expected": "alegria" },
+  { "input": "Está alegre y con energía positiva.", "expected": "alegria" },
+  { "input": "Se siente satisfecho y contento.", "expected": "alegria" },
+  { "input": "Está agradecido por el apoyo.", "expected": "alegria" },
+
+  { "input": "Está tranquilo y agradecido después de hablar.", "expected": "calma" },
+  { "input": "Se siente sereno y en paz.", "expected": "calma" },
+  { "input": "Está calmado y aliviado.", "expected": "calma" },
+  { "input": "Siente ternura y bienestar.", "expected": "calma" },
+  { "input": "Se siente en armonía con su entorno.", "expected": "calma" },
+
+  { "input": "Está confundido y con intriga por lo que vio.", "expected": "miedo" },
+  { "input": "Se siente amenazado cuando lo gritan.", "expected": "miedo" },
+  { "input": "Está frustrado y muy irritado.", "expected": "ira" },
+  { "input": "Se siente abandonado y vulnerable.", "expected": "tristeza" },
+  { "input": "Siente compasión por su amigo.", "expected": "calma" }
+]

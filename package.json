@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "test:emotion-map": "tsx scripts/test-emotion-mapping.ts",
-    "eval:emotion-classifier": "tsx scripts/eval-emotion-classifier.ts"
+    "eval:emotion-classifier": "tsx scripts/eval-emotion-classifier.ts",
+    "eval:emotion-pipeline": "tsx scripts/eval-emotion-pipeline.ts"
   },
   "dependencies": {
     "@google/genai": "^1.11.0",
