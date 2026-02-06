@@ -14,7 +14,18 @@ export async function generateImage(
 
   switch (provider) {
     case "hive":
-      return generateHiveImage(prompt, orientation);
+      try {
+        return await generateHiveImage(prompt, orientation);
+      } catch (error) {
+        if (!process.env.OPENAI_API_KEY) {
+          throw error;
+        }
+        console.warn(
+          "[images] Hive failed. Falling back to OpenAI.",
+          error
+        );
+        return await generateOpenAIImage(prompt, orientation);
+      }
     case "openai":
       try {
         return await generateOpenAIImage(prompt, orientation);
