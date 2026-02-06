@@ -50,6 +50,82 @@ function hasMetaphorSection(text: string): boolean {
   return /"kind"\s*:\s*"metaphor"/i.test(text);
 }
 
+function normalizeEmotionId(value: string | undefined): string | undefined {
+  if (!value) return undefined;
+  const normalized = value.trim().toLowerCase();
+  if (normalized === "miedo") return "miedo";
+  if (normalized === "ira") return "ira";
+  if (normalized === "tristeza") return "tristeza";
+  if (normalized === "verguenza" || normalized === "vergüenza")
+    return "verguenza";
+  if (normalized === "celos") return "celos";
+  if (normalized === "alegria" || normalized === "alegría")
+    return "alegria";
+  return undefined;
+}
+
+function tryParseJson(value: string): Record<string, unknown> | null {
+  try {
+    const match = value.match(/\{[\s\S]*\}/);
+    if (!match) return null;
+    return JSON.parse(match[0]) as Record<string, unknown>;
+  } catch {
+    return null;
+  }
+}
+
+function buildFallbackGuide(userQuery: string, raw?: unknown) {
+  const rawObj = typeof raw === "string" ? tryParseJson(raw) : null;
+  const rawEmotion =
+    (rawObj?.emotion as string | undefined) ??
+    (rawObj?.emotionId as string | undefined);
+  const emotion = normalizeEmotionId(rawEmotion) ?? "miedo";
+  const guideTitle =
+    (rawObj?.guideTitle as string | undefined) ??
+    `Cuento para acompañar ${emotion}`;
+  const id =
+    (rawObj?.id as string | undefined) ?? `guide_${Date.now()}`;
+  const metaphor =
+    `En un valle tranquilo, un niño llamado Inti sintió ${emotion}. ` +
+    `Con la ayuda de su guía, aprendió a respirar y escuchar su corazón, ` +
+    `descubriendo que todas las emociones pueden cuidarse con calma.`;
+
+  return {
+    schema_version: "parent_guide.v2",
+    id,
+    guideTitle,
+    emotion,
+    tags: [],
+    sections: [
+      {
+        kind: "metaphor",
+        title: "Cuento",
+        content: metaphor,
+      },
+      {
+        kind: "language",
+        title: "Acompañamiento",
+        phrases: [
+          `Entiendo que sientas ${emotion}.`,
+          "Estoy aquí contigo.",
+        ],
+        questions: [
+          "¿Dónde lo sientes en tu cuerpo?",
+          "¿Qué crees que necesita esa emoción?",
+          "¿Qué te ayudaría ahora mismo?",
+        ],
+      },
+      {
+        kind: "practice",
+        title: "Respiración suave",
+        description:
+          "Inhalen contando 4, sostengan 2, exhalen 6. Repetir 3 veces.",
+        materials: "Ninguno.",
+      },
+    ],
+  };
+}
+
 function logGuideDiagnostics(label: string, text: string) {
   if (!GUIDE_DIAGNOSTICS_ENABLED) return;
   const tail = text.slice(-200);
@@ -215,9 +291,21 @@ export async function POST(request: Request) {
 
     if (!parsed?.ok) {
       console.error("Invalid LLM response:", parsed?.error);
+      const fallbackGuide = buildFallbackGuide(userQuery, finalGuideString);
+      const normalizedFallback = normalizeParentGuide(
+        fallbackGuide as ParentGuideV2
+      );
       return NextResponse.json(
-        { error: "No se pudo procesar la respuesta de IA." },
-        { status: 502, headers: rateHeaders }
+        {
+          ...normalizedFallback,
+          _metadata: {
+            aiProvider,
+            schemaVersion: "parent_guide.v2",
+            guardrailsEnabled: AI_GUARDRAILS_ENABLED,
+            fallback: "metaphor_missing",
+          },
+        },
+        { headers: rateHeaders }
       );
     }
 

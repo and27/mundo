@@ -137,6 +137,7 @@ export default function GeneratedStories() {
       } catch (err) {
         const message = err instanceof Error ? err.message : "Error desconocido.";
         setJobError(message);
+        router.replace("/parentDashboard?section=guides");
       }
     };
 
@@ -246,14 +247,6 @@ export default function GeneratedStories() {
     );
   }
 
-  if (!isLoaded) {
-    return (
-      <div className="flex items-center justify-center py-16">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-neutral-300 border-t-neutral-700" />
-      </div>
-    );
-  }
-
   return (
     <div className="max-w-4xl px-5 md:px-20 mi-stack-md">
       <div className="mi-section-header">
@@ -267,7 +260,7 @@ export default function GeneratedStories() {
       </div>
 
       {(jobIdFromUrl || newStoryQuery) && (
-        <div className="border border-neutral-200 rounded-2xl p-5 mi-stack-md bg-white">
+        <div className="border border-neutral-200 rounded-2xl p-5 mi-stack-md bg-white shadow-sm">
           <div className="flex items-center justify-between gap-4">
             <div>
               <p className="text-sm uppercase tracking-wide text-neutral-500">
@@ -327,6 +320,12 @@ export default function GeneratedStories() {
               Cancelar
             </button>
           )}
+        </div>
+      )}
+
+      {!isLoaded && (
+        <div className="flex items-center justify-center py-10">
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-neutral-300 border-t-neutral-700" />
         </div>
       )}
 
