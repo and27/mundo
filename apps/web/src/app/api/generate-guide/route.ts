@@ -7,6 +7,7 @@ import { normalizeParentGuide } from "@/lib/llm/normalize/parentGuide";
 import { buildRateLimitHeaders, checkRateLimit } from "@/lib/rateLimit";
 import { mapEmotionLabel } from "@/lib/emotionMapping";
 import { classifyEmotionLabel } from "@/lib/llm/emotionClassifier";
+import type { EmotionId } from "@/types/ai";
 import type { ParentGuideV1 } from "@/schemas/parentGuide.v1";
 import type { ParentGuideV2 } from "@/schemas/parentGuide.v2";
 
@@ -114,6 +115,43 @@ function buildFallbackGuide(userQuery: string, raw?: unknown) {
   };
 }
 
+type EmotionResolution =
+  | { ok: true; emotionId: EmotionId; source: "manual" | "inferred" }
+  | { ok: false; error: string };
+
+async function resolveEmotionForGuide(
+  userQuery: string,
+  manualEmotion?: string
+): Promise<EmotionResolution> {
+  if (manualEmotion) {
+    const normalized = mapEmotionLabel(manualEmotion);
+    if (!normalized) {
+      return {
+        ok: false,
+        error:
+          "La emoción seleccionada no es válida. Por favor, elige una emoción disponible.",
+      };
+    }
+    return { ok: true, emotionId: normalized, source: "manual" };
+  }
+
+  const direct = mapEmotionLabel(userQuery);
+  if (direct) {
+    return { ok: true, emotionId: direct, source: "inferred" };
+  }
+
+  const classified = await classifyEmotionLabel(userQuery, AI_TIMEOUT_MS);
+  if (classified?.emotion) {
+    return { ok: true, emotionId: classified.emotion, source: "inferred" };
+  }
+
+  return {
+    ok: false,
+    error:
+      "No pudimos inferir la emoción. Elige cuál es la emoción que más representa lo que nos cuentas.",
+  };
+}
+
 function logGuideDiagnostics(label: string, text: string) {
   if (!GUIDE_DIAGNOSTICS_ENABLED) return;
   const tail = text.slice(-200);
@@ -213,6 +251,8 @@ export async function POST(request: Request) {
     const userQuery =
       typeof body?.query === "string" ? body.query.trim() : "";
     const useOpenAI = Boolean(body?.useOpenAI);
+    const manualEmotion =
+      typeof body?.emotionId === "string" ? body.emotionId.trim() : "";
 
     if (!userQuery) {
       return NextResponse.json(
@@ -225,6 +265,17 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { error: "La consulta es demasiado larga." },
         { status: 400, headers: rateHeaders }
+      );
+    }
+
+    const emotionResolution = await resolveEmotionForGuide(
+      userQuery,
+      manualEmotion
+    );
+    if (!emotionResolution.ok) {
+      return NextResponse.json(
+        { error: emotionResolution.error, requiresEmotionSelection: true },
+        { status: 422, headers: rateHeaders }
       );
     }
 
@@ -297,23 +348,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const parsedEmotion = mapEmotionLabel(parsed.data.emotion);
-    if (!parsedEmotion) {
-      try {
-        const classified = await classifyEmotionLabel(
-          userQuery,
-          AI_TIMEOUT_MS
-        );
-        if (classified?.emotion) {
-          parsed.data.emotion = classified.emotion;
-        }
-      } catch (classificationError) {
-        console.warn(
-          "Emotion classifier failed, keeping original emotion:",
-          classificationError
-        );
-      }
-    }
+    parsed.data.emotion = emotionResolution.emotionId;
 
     const finalGuide = normalizeParentGuide(parsed.data);
 
@@ -324,6 +359,7 @@ export async function POST(request: Request) {
           aiProvider,
           schemaVersion: parsed.schemaVersion,
           guardrailsEnabled: AI_GUARDRAILS_ENABLED,
+          emotionSource: emotionResolution.source,
         },
       },
       { headers: rateHeaders }

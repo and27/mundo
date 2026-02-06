@@ -103,8 +103,15 @@ export default function GeneratedStories() {
           }),
         });
         if (!res.ok) {
-          const errText = await res.text();
-          throw new Error(errText || "No se pudo generar la guía.");
+          let errMessage = "No se pudo generar la guía.";
+          try {
+            const errJson = (await res.json()) as { error?: string };
+            if (errJson?.error) errMessage = errJson.error;
+          } catch {
+            const errText = await res.text();
+            if (errText) errMessage = errText;
+          }
+          throw new Error(errMessage);
         }
         const rawGuide = (await res.json()) as GuideWithCharacter;
         const inference = inferGuideContext(rawGuide);
@@ -124,8 +131,15 @@ export default function GeneratedStories() {
           }),
         });
         if (!jobRes.ok) {
-          const errText = await jobRes.text();
-          throw new Error(errText || "No se pudo iniciar el cuento.");
+          let errMessage = "No se pudo iniciar el cuento.";
+          try {
+            const errJson = (await jobRes.json()) as { error?: string };
+            if (errJson?.error) errMessage = errJson.error;
+          } catch {
+            const errText = await jobRes.text();
+            if (errText) errMessage = errText;
+          }
+          throw new Error(errMessage);
         }
         const jobData = (await jobRes.json()) as { jobId: string };
         if (!isActive) return;
