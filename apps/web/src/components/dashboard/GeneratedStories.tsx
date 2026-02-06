@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { ChevronRight, ArrowLeft, Calendar } from "lucide-react";
 import { useSavedGuides } from "@/hooks/useSavedGuides";
@@ -30,6 +30,7 @@ export default function GeneratedStories() {
   const [createEpoch, setCreateEpoch] = useState(0);
   const [needsEmotionSelection, setNeedsEmotionSelection] = useState(false);
   const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null);
+  const lastSubmitKeyRef = useRef<string | null>(null);
   const {
     savedGuides,
     createdAtById,
@@ -116,6 +117,13 @@ export default function GeneratedStories() {
     if (needsEmotionSelection && !selectedEmotion) return;
 
     let isActive = true;
+    const submitKey = `${pendingQuery}::${selectedEmotion ?? "none"}`;
+    if (lastSubmitKeyRef.current === submitKey) {
+      return () => {
+        isActive = false;
+      };
+    }
+    lastSubmitKeyRef.current = submitKey;
 
     const createFromQuery = async () => {
       try {
