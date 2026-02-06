@@ -2,6 +2,7 @@ import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  transpilePackages: ["@mundo/core"],
   images: {
     remotePatterns: [
       {
@@ -89,3 +90,4 @@ export default withSentryConfig(nextConfig, {
     },
   },
 });
+
