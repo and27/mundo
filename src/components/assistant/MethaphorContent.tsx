@@ -3,11 +3,12 @@ import { GuideWithCharacter } from "@/types/ai";
 import { Target, CheckCircle, Heart, Star, Users, Play } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Button from "../ui/Button";
-import type { CharacterId, EmotionId, ParentGuideSection } from "@/types/ai";
+import type { ParentGuideSection } from "@/types/ai";
 import { getGuideSections } from "@/lib/guideSections";
 import { toast } from "sonner";
 import { authFetch } from "@/lib/authFetch";
 import type { StoryJob, StoryJobCreateResponse } from "@/types/storyJob";
+import { inferGuideContext } from "@/lib/guideInference";
 
 interface PillarContentProps {
   guide: GuideWithCharacter;
@@ -70,14 +71,25 @@ export const MetaphorContent: React.FC<PillarContentProps> = ({
     if (!setLoading) return;
     try {
       setLoading(true);
-      const emotionId = resolveEmotionId(guide) ?? "miedo";
-      const characterId = resolveCharacterId(guide, emotionId);
-      if (!resolveEmotionId(guide)) {
+      const inference = inferGuideContext(guide);
+      const emotionId = inference.emotionId;
+      const characterId = inference.characterId;
+      if (inference.emotionSource === "fallback") {
         console.warn(
           "[story/export] Guide missing emotionId; defaulting to 'miedo'",
           guide
         );
       }
+      console.log(
+        "[story/export] Inferred emotion:",
+        emotionId,
+        inference.emotionSource
+      );
+      console.log(
+        "[story/export] Inferred character:",
+        characterId,
+        inference.characterSource
+      );
       const res = await authFetch("/api/story/export", {
         method: "POST",
         headers: {
@@ -146,61 +158,6 @@ export const MetaphorContent: React.FC<PillarContentProps> = ({
     </div>
   );
 };
-
-function normalizeEmotionInput(value?: string): EmotionId | undefined {
-  if (!value) return undefined;
-  const normalized = value.trim().toLowerCase();
-  if (normalized === "miedo") return "miedo";
-  if (normalized === "ira") return "ira";
-  if (normalized === "tristeza") return "tristeza";
-  if (normalized === "verguenza" || normalized === "vergüenza")
-    return "verguenza";
-  if (normalized === "celos") return "celos";
-  if (normalized === "alegria" || normalized === "alegría")
-    return "alegria";
-  return undefined;
-}
-
-function parseGuideId(
-  value?: string
-): { emotion?: EmotionId; character?: CharacterId } {
-  if (!value) return {};
-  const match = value.trim().toLowerCase().match(/^story_([^_]+)_([^_]+)$/);
-  if (!match) return {};
-  const emotion = normalizeEmotionInput(match[1]);
-  const character =
-    match[2] === "yachay" || match[2] === "amaru" ? match[2] : undefined;
-  return { emotion, character };
-}
-
-function resolveEmotionId(guide: GuideWithCharacter): EmotionId | undefined {
-  if (guide.emotionId) return guide.emotionId;
-  const parsed = parseGuideId(guide.id);
-  if (parsed.emotion) return parsed.emotion;
-  if (Array.isArray(guide.tags)) {
-    for (const tag of guide.tags) {
-      const normalized = normalizeEmotionInput(tag);
-      if (normalized) return normalized;
-    }
-  }
-  return undefined;
-}
-
-function resolveCharacterId(
-  guide: GuideWithCharacter,
-  emotion: EmotionId
-): CharacterId {
-  const direct =
-    guide.characterId === "yachay" || guide.characterId === "amaru"
-      ? guide.characterId
-      : guide.character === "yachay" || guide.character === "amaru"
-        ? guide.character
-        : undefined;
-  if (direct) return direct;
-  const parsed = parseGuideId(guide.id);
-  if (parsed.character) return parsed.character;
-  return emotion === "ira" ? "amaru" : "yachay";
-}
 
 // CONVERSATION CONTENT
 export const ConversationContent: React.FC<PillarContentProps> = ({
