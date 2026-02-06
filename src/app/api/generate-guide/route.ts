@@ -6,6 +6,7 @@ import { parseLlmJson } from "@/lib/llm/parse";
 import { normalizeParentGuide } from "@/lib/llm/normalize/parentGuide";
 import { buildRateLimitHeaders, checkRateLimit } from "@/lib/rateLimit";
 import { mapEmotionLabel } from "@/lib/emotionMapping";
+import { classifyEmotionLabel } from "@/lib/llm/emotionClassifier";
 import type { ParentGuideV1 } from "@/schemas/parentGuide.v1";
 import type { ParentGuideV2 } from "@/schemas/parentGuide.v2";
 
@@ -294,6 +295,24 @@ export async function POST(request: Request) {
         },
         { headers: rateHeaders }
       );
+    }
+
+    const parsedEmotion = mapEmotionLabel(parsed.data.emotion);
+    if (!parsedEmotion) {
+      try {
+        const classified = await classifyEmotionLabel(
+          userQuery,
+          AI_TIMEOUT_MS
+        );
+        if (classified?.emotion) {
+          parsed.data.emotion = classified.emotion;
+        }
+      } catch (classificationError) {
+        console.warn(
+          "Emotion classifier failed, keeping original emotion:",
+          classificationError
+        );
+      }
     }
 
     const finalGuide = normalizeParentGuide(parsed.data);
