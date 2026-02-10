@@ -139,7 +139,7 @@ export default function GeneratedStories() {
     if (needsEmotionSelection && !selectedEmotion) return;
 
     let isActive = true;
-    const submitKey = `${pendingQuery}::${selectedEmotion ?? "none"}`;
+    const submitKey = `${pendingQuery}::${selectedEmotion ?? "none"}::${createEpoch}`;
     if (lastSubmitKeyRef.current === submitKey) {
       return () => {
         isActive = false;
