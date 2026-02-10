@@ -35,6 +35,7 @@ export default function GeneratedStories() {
   const [needsEmotionSelection, setNeedsEmotionSelection] = useState(false);
   const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null);
   const lastSubmitKeyRef = useRef<string | null>(null);
+  const [loadingGuideId, setLoadingGuideId] = useState<string | null>(null);
   const {
     savedGuides,
     createdAtById,
@@ -42,7 +43,33 @@ export default function GeneratedStories() {
     deleteGuide,
     getGuide,
     saveGuide,
+    loadGuide,
   } = useSavedGuides();
+
+  const selectedGuide = useMemo(() => {
+    if (!selectedGuideId) return null;
+    return getGuide(selectedGuideId);
+  }, [getGuide, selectedGuideId]);
+
+  useEffect(() => {
+    if (!selectedGuideId) {
+      if (loadingGuideId) setLoadingGuideId(null);
+      return;
+    }
+    if (!selectedGuide) return;
+    const needsLoad =
+      (!selectedGuide.sections || selectedGuide.sections.length === 0) &&
+      Boolean(selectedGuide.storyUrl);
+    if (!needsLoad) {
+      if (loadingGuideId) setLoadingGuideId(null);
+      return;
+    }
+    if (loadingGuideId === selectedGuideId) return;
+    setLoadingGuideId(selectedGuideId);
+    void loadGuide(selectedGuideId).finally(() => {
+      setLoadingGuideId((prev) => (prev === selectedGuideId ? null : prev));
+    });
+  }, [selectedGuideId, selectedGuide, loadGuide, loadingGuideId]);
 
   useEffect(() => {
     if (jobIdFromUrl || newStoryQuery) {
@@ -331,10 +358,18 @@ export default function GeneratedStories() {
   };
 
   if (selectedGuideId) {
-    const currentGuide = getGuide(selectedGuideId);
+    const currentGuide = selectedGuide;
     if (!currentGuide) {
       setSelectedGuideId(null);
       return null;
+    }
+
+    if (loadingGuideId === selectedGuideId) {
+      return (
+        <div className="flex items-center justify-center py-10">
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-neutral-300 border-t-neutral-700" />
+        </div>
+      );
     }
 
     return (

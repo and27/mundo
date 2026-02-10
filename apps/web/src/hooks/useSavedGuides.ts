@@ -59,6 +59,28 @@ export function useSavedGuides() {
     load();
   }, [user?.id]);
 
+  const loadGuide = async (id: string) => {
+    const current = savedGuides.find((g) => g.id === id);
+    if (!current) return null;
+    if (Array.isArray(current.sections) && current.sections.length > 0) {
+      return current;
+    }
+    if (!current.storyUrl) return current;
+
+    try {
+      const res = await fetch(current.storyUrl, { cache: "no-store" });
+      if (!res.ok) return current;
+      const full = normalizeGuide((await res.json()) as GuideWithCharacter);
+      setSavedGuides((prev) => {
+        const next = prev.map((g) => (g.id === id ? { ...full, storyUrl: current.storyUrl } : g));
+        return next;
+      });
+      return full;
+    } catch {
+      return current;
+    }
+  };
+
   const saveGuide = async (guide: GuideWithCharacter) => {
     if (!user?.id) {
       throw new Error("User not authenticated");
@@ -126,6 +148,7 @@ export function useSavedGuides() {
     saveGuide,
     deleteGuide,
     getGuide,
+    loadGuide,
     updateGuideTitle,
   };
 }
