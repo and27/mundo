@@ -2,6 +2,7 @@ import "server-only";
 import OpenAI from "openai";
 import { buildImageFilename } from "@/utils/imageUtils";
 import type { ImageGenerationResult } from "../types";
+import { recordOpenAICall } from "@/lib/telemetry/openaiMetrics";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -35,6 +36,10 @@ export async function generateImage(
         output_format: "jpeg",
         output_compression: 90,
         moderation: "auto",
+      });
+      recordOpenAICall("images.generate", {
+        model: "gpt-image-1-mini",
+        label: "generateImage",
       });
 
       const imageBase64 = result?.data?.[0]?.b64_json;

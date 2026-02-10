@@ -2,10 +2,17 @@ import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabaseServer";
 import { GuideWithCharacter } from "@/types/ai";
 import { getAuthUser } from "@/lib/apiAuth";
+import { createHash } from "node:crypto";
 
 type DeleteGuidePayload = {
   storyId: string;
 };
+
+function buildSafeGuideStoragePath(userId: string, guideId: string) {
+  // Supabase Storage keys can reject some unicode characters; hash keeps it safe and stable.
+  const hash = createHash("sha256").update(guideId, "utf8").digest("hex");
+  return `guides/${userId}/${hash}.json`;
+}
 
  
 
@@ -66,7 +73,7 @@ export async function POST(request: Request) {
   }
 
   const bucketName = "stories";
-  const storagePath = `guides/${user.id}/${guide.id}.json`;
+  const storagePath = buildSafeGuideStoragePath(user.id, guide.id);
 
   const uploadRes = await supabase.storage
     .from(bucketName)

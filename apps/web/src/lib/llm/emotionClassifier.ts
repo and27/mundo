@@ -1,10 +1,17 @@
 import OpenAI from "openai";
 import { parseLlmJson } from "@/lib/llm/parse";
 import type { EmotionId } from "@/types/ai";
+import { recordOpenAICall } from "@/lib/telemetry/openaiMetrics";
 
 type EmotionClassifierProvider = "openai";
 
 type EmotionClassification = {
+  emotion: EmotionId | "indefinida";
+  confidence?: number;
+  reasoning?: string;
+};
+
+export type EmotionClassificationResult = {
   emotion: EmotionId;
   confidence?: number;
   reasoning?: string;
@@ -26,7 +33,8 @@ function buildPrompt(input: string) {
   const baseList = BASE_EMOTIONS.map((value) => `"${value}"`).join(", ");
   return [
     "Clasifica la emocion principal del texto en una sola categoria base.",
-    `Categorias permitidas: ${baseList}.`,
+    `Categorias permitidas: ${baseList} o "indefinida" si no hay suficiente informacion.`,
+    "Si el texto es ambiguo o no menciona una emocion clara, usa emotion=\"indefinida\" y confidence <= 0.4.",
     "Responde SOLO JSON valido con campos: emotion, confidence, reasoning.",
     "confidence debe ser un numero entre 0 y 1.",
     "",
@@ -49,7 +57,7 @@ function getProvider(): EmotionClassifierProvider {
 export async function classifyEmotionLabel(
   input: string,
   timeoutMs: number
-): Promise<EmotionClassification | null> {
+): Promise<EmotionClassificationResult | null> {
   const provider = getProvider();
   if (provider !== "openai") return null;
 
@@ -65,6 +73,10 @@ export async function classifyEmotionLabel(
     response_format: { type: "json_object" },
     max_tokens: 300,
   });
+  recordOpenAICall("chat.completions.create", {
+    model: process.env.EMOTION_CLASSIFIER_MODEL ?? DEFAULT_MODEL,
+    label: "emotionClassifier",
+  });
 
   const content = response.choices[0]?.message?.content;
   if (!content) return null;
@@ -72,6 +84,12 @@ export async function classifyEmotionLabel(
   const parsed = parseLlmJson<EmotionClassification>(content, "emotion_class");
   if (!parsed.ok) return null;
 
+  if (parsed.data.emotion === "indefinida") return null;
   if (!BASE_EMOTIONS.includes(parsed.data.emotion)) return null;
-  return parsed.data;
+  return {
+    emotion: parsed.data.emotion,
+    reasoning: parsed.data.reasoning,
+    confidence:
+      typeof parsed.data.confidence === "number" ? parsed.data.confidence : 0,
+  };
 }

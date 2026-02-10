@@ -6,7 +6,8 @@ import { parseLlmJson } from "@/lib/llm/parse";
 import { normalizeParentGuide } from "@/lib/llm/normalize/parentGuide";
 import { buildRateLimitHeaders, checkRateLimit } from "@/lib/rateLimit";
 import { mapEmotionLabel } from "@/lib/emotionMapping";
-import { classifyEmotionLabel } from "@/lib/llm/emotionClassifier";
+import { resolveEmotionForGuide } from "@/lib/emotionResolution";
+import { recordOpenAICall } from "@/lib/telemetry/openaiMetrics";
 import type { ParentGuideV1 } from "@/schemas/parentGuide.v1";
 import type { ParentGuideV2 } from "@/schemas/parentGuide.v2";
 
@@ -62,12 +63,19 @@ function tryParseJson(value: string): Record<string, unknown> | null {
   }
 }
 
-function buildFallbackGuide(userQuery: string, raw?: unknown) {
+function buildFallbackGuide(
+  userQuery: string,
+  raw?: unknown,
+  forcedEmotion?: string
+) {
   const rawObj = typeof raw === "string" ? tryParseJson(raw) : null;
   const rawEmotion =
     (rawObj?.emotion as string | undefined) ??
     (rawObj?.emotionId as string | undefined);
-  const emotion = mapEmotionLabel(rawEmotion) ?? "miedo";
+  const emotion =
+    mapEmotionLabel(forcedEmotion) ??
+    mapEmotionLabel(rawEmotion) ??
+    "miedo";
   const guideTitle =
     (rawObj?.guideTitle as string | undefined) ??
     `Cuento para acompañar ${emotion}`;
@@ -113,6 +121,7 @@ function buildFallbackGuide(userQuery: string, raw?: unknown) {
     ],
   };
 }
+
 
 function logGuideDiagnostics(label: string, text: string) {
   if (!GUIDE_DIAGNOSTICS_ENABLED) return;
@@ -177,6 +186,10 @@ async function callOpenAI(
     response_format: { type: "json_object" },
     max_tokens: 2000,
   });
+  recordOpenAICall("chat.completions.create", {
+    model: "gpt-4.1-mini",
+    label: "generateGuide",
+  });
 
   if (!response.choices[0]?.message?.content) {
     throw new Error("No content received from OpenAI API");
@@ -213,6 +226,8 @@ export async function POST(request: Request) {
     const userQuery =
       typeof body?.query === "string" ? body.query.trim() : "";
     const useOpenAI = Boolean(body?.useOpenAI);
+    const manualEmotion =
+      typeof body?.emotionId === "string" ? body.emotionId.trim() : "";
 
     if (!userQuery) {
       return NextResponse.json(
@@ -225,6 +240,17 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { error: "La consulta es demasiado larga." },
         { status: 400, headers: rateHeaders }
+      );
+    }
+
+    const emotionResolution = await resolveEmotionForGuide(
+      userQuery,
+      manualEmotion
+    );
+    if (!emotionResolution.ok) {
+      return NextResponse.json(
+        { error: emotionResolution.error, requiresEmotionSelection: true },
+        { status: 422, headers: rateHeaders }
       );
     }
 
@@ -279,7 +305,11 @@ export async function POST(request: Request) {
 
     if (!parsed?.ok) {
       console.error("Invalid LLM response:", parsed?.error);
-      const fallbackGuide = buildFallbackGuide(userQuery, finalGuideString);
+      const fallbackGuide = buildFallbackGuide(
+        userQuery,
+        finalGuideString,
+        emotionResolution.emotionId
+      );
       const normalizedFallback = normalizeParentGuide(
         fallbackGuide as ParentGuideV2
       );
@@ -297,23 +327,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const parsedEmotion = mapEmotionLabel(parsed.data.emotion);
-    if (!parsedEmotion) {
-      try {
-        const classified = await classifyEmotionLabel(
-          userQuery,
-          AI_TIMEOUT_MS
-        );
-        if (classified?.emotion) {
-          parsed.data.emotion = classified.emotion;
-        }
-      } catch (classificationError) {
-        console.warn(
-          "Emotion classifier failed, keeping original emotion:",
-          classificationError
-        );
-      }
-    }
+    parsed.data.emotion = emotionResolution.emotionId;
 
     const finalGuide = normalizeParentGuide(parsed.data);
 
@@ -324,6 +338,7 @@ export async function POST(request: Request) {
           aiProvider,
           schemaVersion: parsed.schemaVersion,
           guardrailsEnabled: AI_GUARDRAILS_ENABLED,
+          emotionSource: emotionResolution.source,
         },
       },
       { headers: rateHeaders }

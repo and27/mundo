@@ -1,6 +1,7 @@
 import type { ImageProvider } from "./types";
 import { generateImage as generateHiveImage } from "./providers/hive";
 import { generateImage as generateOpenAIImage } from "./providers/openai";
+import { getDefaultImage } from "./defaults";
 
 export type { ImageProvider, ImageGenerationResult } from "./types";
 
@@ -14,7 +15,15 @@ export async function generateImage(
 
   switch (provider) {
     case "hive":
-      return generateHiveImage(prompt, orientation);
+      try {
+        return await generateHiveImage(prompt, orientation);
+      } catch (error) {
+        console.warn(
+          "[images] Hive failed. Using default system image.",
+          error
+        );
+        return getDefaultImage(orientation);
+      }
     case "openai":
       try {
         return await generateOpenAIImage(prompt, orientation);

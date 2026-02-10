@@ -7,6 +7,7 @@ import type {
 } from "@/types/promptGenerationTypes";
 import { performance } from "node:perf_hooks";
 import OpenAI from "openai";
+import { recordOpenAICall } from "@/lib/telemetry/openaiMetrics";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -49,6 +50,10 @@ export async function generateStory(
       response_format: { type: "json_object" },
       temperature: 0.3,
       max_tokens: 2000,
+    });
+    recordOpenAICall("chat.completions.create", {
+      model: "gpt-4.1-mini",
+      label: "generateStory",
     });
 
     return response;

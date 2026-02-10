@@ -10,6 +10,7 @@ export const emotionClassSchema = z.object({
     "celos",
     "alegria",
     "calma",
+    "indefinida",
   ]),
   confidence: z.number().min(0).max(1).optional(),
   reasoning: z.string().optional(),
