@@ -30,6 +30,7 @@ export function useSavedGuides() {
       }
 
       try {
+        setIsLoaded(false);
         const res = await authFetch(`/api/saved-guides`);
         if (!res.ok) {
           throw new Error("Error loading saved guides");

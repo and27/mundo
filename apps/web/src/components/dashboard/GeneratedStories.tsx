@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect, useMemo, useRef } from "react";
+import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { ChevronRight, ArrowLeft, Calendar } from "lucide-react";
 import { useSavedGuides } from "@/hooks/useSavedGuides";
-import GuideDisplay from "../assistant/GuideDisplay";
-import StoryCard from "./StoryCard";
+import StoryCookingCard from "./StoryCookingCard";
+import StoryGuideDetail from "./StoryGuideDetail";
+import StoryGrid from "./StoryGrid";
 import { authFetch } from "@/lib/authFetch";
 import type { StoryJob } from "@/types/storyJob";
 import type { GuideWithCharacter } from "@/types/ai";
@@ -20,12 +20,16 @@ export default function GeneratedStories() {
   const newStoryEmotion = searchParams.get("newStoryEmotion");
 
   const [selectedGuideId, setSelectedGuideId] = useState<string | null>(
-    guideIdFromUrl
+    guideIdFromUrl,
   );
   const [job, setJob] = useState<StoryJob | null>(null);
   const [jobError, setJobError] = useState<string | null>(null);
   const [now, setNow] = useState(() => Date.now());
   const [queryStartMs, setQueryStartMs] = useState<number | null>(null);
+  const [activeJobId, setActiveJobId] = useState<string | null>(null);
+  const [lastCreatedGuideId, setLastCreatedGuideId] = useState<string | null>(
+    null,
+  );
   const [pendingQuery, setPendingQuery] = useState<string | null>(null);
   const [createEpoch, setCreateEpoch] = useState(0);
   const [needsEmotionSelection, setNeedsEmotionSelection] = useState(false);
@@ -51,7 +55,8 @@ export default function GeneratedStories() {
   }, [guideIdFromUrl, jobIdFromUrl, newStoryQuery, selectedGuideId]);
 
   useEffect(() => {
-    if (!jobIdFromUrl) {
+    const effectiveJobId = jobIdFromUrl ?? activeJobId;
+    if (!effectiveJobId) {
       setJob(null);
       setJobError(null);
       return;
@@ -62,7 +67,7 @@ export default function GeneratedStories() {
 
     const fetchJob = async () => {
       try {
-        const res = await authFetch(`/api/story/export/${jobIdFromUrl}`, {
+        const res = await authFetch(`/api/story/export/${effectiveJobId}`, {
           method: "GET",
         });
         if (!res.ok) {
@@ -77,7 +82,8 @@ export default function GeneratedStories() {
         }
       } catch (err) {
         if (!isActive) return;
-        const message = err instanceof Error ? err.message : "Error desconocido.";
+        const message =
+          err instanceof Error ? err.message : "Error desconocido.";
         setJobError(message);
       }
     };
@@ -89,13 +95,20 @@ export default function GeneratedStories() {
       isActive = false;
       if (intervalId) clearInterval(intervalId);
     };
-  }, [jobIdFromUrl]);
+  }, [jobIdFromUrl, activeJobId]);
+
+  useEffect(() => {
+    if (!jobIdFromUrl && !activeJobId && !newStoryQuery) return;
+    const timer = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(timer);
+  }, [jobIdFromUrl, activeJobId, newStoryQuery]);
 
   useEffect(() => {
     if (!newStoryQuery) {
       setPendingQuery(null);
       setNeedsEmotionSelection(false);
       setSelectedEmotion(null);
+      setActiveJobId(null);
       return;
     }
 
@@ -111,6 +124,15 @@ export default function GeneratedStories() {
     setQueryStartMs(Date.now());
     setCreateEpoch((prev) => prev + 1);
   }, [newStoryQuery, newStoryEmotion]);
+
+  useEffect(() => {
+    if (!newStoryQuery) return;
+    if (!lastCreatedGuideId) return;
+    if (jobIdFromUrl || activeJobId) return;
+    router.replace(
+      `/parentDashboard?section=guides&guideId=${lastCreatedGuideId}`,
+    );
+  }, [newStoryQuery, lastCreatedGuideId, jobIdFromUrl, activeJobId, router]);
 
   useEffect(() => {
     if (!pendingQuery) return;
@@ -167,6 +189,7 @@ export default function GeneratedStories() {
           characterId: inference.characterId,
         };
         const savedId = await saveGuide(guide);
+        setLastCreatedGuideId(savedId);
 
         const jobRes = await authFetch("/api/story/export", {
           method: "POST",
@@ -190,13 +213,15 @@ export default function GeneratedStories() {
         const jobData = (await jobRes.json()) as { jobId: string };
         if (!isActive) return;
 
+        setActiveJobId(jobData.jobId);
         setNeedsEmotionSelection(false);
         setJobError(null);
         router.replace(
-          `/parentDashboard?section=guides&guideId=${savedId}&jobId=${jobData.jobId}`
+          `/parentDashboard?section=guides&guideId=${savedId}&jobId=${jobData.jobId}`,
         );
       } catch (err) {
-        const message = err instanceof Error ? err.message : "Error desconocido.";
+        const message =
+          err instanceof Error ? err.message : "Error desconocido.";
         setJobError(message);
         router.replace("/parentDashboard?section=guides");
       }
@@ -207,7 +232,14 @@ export default function GeneratedStories() {
     return () => {
       isActive = false;
     };
-  }, [pendingQuery, selectedEmotion, needsEmotionSelection, createEpoch, saveGuide, router]);
+  }, [
+    pendingQuery,
+    selectedEmotion,
+    needsEmotionSelection,
+    createEpoch,
+    saveGuide,
+    router,
+  ]);
 
   useEffect(() => {
     if (
@@ -236,42 +268,58 @@ export default function GeneratedStories() {
     });
   }, [guideIdFromUrl, job, jobIdFromUrl, getGuide, saveGuide]);
 
-  useEffect(() => {
-    if (!jobIdFromUrl) return;
-    const timer = setInterval(() => setNow(Date.now()), 1000);
-    return () => clearInterval(timer);
-  }, [jobIdFromUrl]);
-
   const progress = useMemo(() => {
-    if (!jobIdFromUrl && !newStoryQuery) return 0;
-    if (job?.status && job.status !== "queued" && job.status !== "running") {
-      return 100;
-    }
+    if (!jobIdFromUrl && !activeJobId && !newStoryQuery) return 0;
+    if (job?.status === "succeeded") return 100;
     if (job?.progress && job.progress.total > 0) {
       return Math.min(
         100,
-        Math.round((job.progress.completed / job.progress.total) * 100)
+        Math.round((job.progress.completed / job.progress.total) * 100),
       );
     }
     const estimateMs = getStoryEstimateMs();
     const createdAtMs = job?.createdAt
       ? new Date(job.createdAt).getTime()
-      : queryStartMs ?? now;
+      : (queryStartMs ?? now);
     const elapsed = Math.max(0, now - createdAtMs);
-    return Math.min(100, Math.round((elapsed / estimateMs) * 100));
-  }, [job?.createdAt, jobIdFromUrl, newStoryQuery, now, queryStartMs, job?.progress, job?.status]);
+    return Math.max(5, Math.min(100, Math.round((elapsed / estimateMs) * 100)));
+  }, [
+    job?.createdAt,
+    jobIdFromUrl,
+    activeJobId,
+    newStoryQuery,
+    now,
+    queryStartMs,
+    job?.progress,
+    job?.status,
+  ]);
 
   const latestGuideId = useMemo(() => {
     if (!savedGuides.length) return null;
     return savedGuides[0].id;
   }, [savedGuides]);
 
+  const handlePlayGuide = useCallback((guideId: string) => {
+    setSelectedGuideId(guideId);
+  }, []);
+
+  const handleDeleteGuide = useCallback(
+    (guideId: string) => {
+      deleteGuide(guideId);
+      if (selectedGuideId === guideId) {
+        setSelectedGuideId(null);
+      }
+    },
+    [deleteGuide, selectedGuideId]
+  );
+
   const handleCancelJob = async () => {
-    if (!jobIdFromUrl) return;
+    const effectiveJobId = jobIdFromUrl ?? activeJobId;
+    if (!effectiveJobId) return;
     try {
       const res = await authFetch(
-        `/api/story/export/${jobIdFromUrl}/cancel`,
-        { method: "POST" }
+        `/api/story/export/${effectiveJobId}/cancel`,
+        { method: "POST" },
       );
       if (res.ok) {
         setJob((prev) => (prev ? { ...prev, status: "cancelled" } : prev));
@@ -290,180 +338,64 @@ export default function GeneratedStories() {
     }
 
     return (
-      <div className="max-w-5xl px-4 md:px-20 mi-stack-md">
-        <div className="mi-section-header flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <nav className="flex items-center gap-2 text-sm text-neutral-500">
-            <button
-              onClick={() => setSelectedGuideId(null)}
-              className="flex items-center gap-1 hover:text-neutral-800 transition"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Biblioteca
-            </button>
-            <ChevronRight className="w-4 h-4 text-neutral-400" />
-            <span className="text-neutral-800 font-medium line-clamp-1">
-              {currentGuide.guideTitle}
-            </span>
-          </nav>
-
-        </div>
-
-        <GuideDisplay guide={currentGuide} />
-      </div>
+      <StoryGuideDetail
+        guide={currentGuide}
+        onBack={() => {
+          setSelectedGuideId(null);
+          router.replace("/parentDashboard?section=guides");
+        }}
+      />
     );
   }
 
   return (
-    <div className="max-w-4xl px-5 md:px-20 mi-stack-md">
-      <div className="mi-section-header">
-        <h1 className="text-xl md:text-3xl tracking-tight font-extrabold text-neutral-800 mi-section-title">
-          {"Tu biblioteca de cuentos"}
-        </h1>
-        <p className="text-neutral-600">
-          Accede a todos los cuentos emocionales que has creado (
-          {savedGuides.length})
-        </p>
-      </div>
-
-      {(jobIdFromUrl || newStoryQuery) && (
-        <div className="border border-neutral-200 rounded-2xl p-5 mi-stack-md bg-white shadow-sm">
-          <div className="flex items-center justify-between gap-4">
-            <div>
-              <p className="text-sm uppercase tracking-wide text-neutral-500">
-                Nuevo cuento en preparación
-              </p>
-              <h3 className="text-lg font-semibold text-neutral-800">
-                Cocinando tu cuento personalizado
-              </h3>
-              <p className="text-sm text-neutral-600">
-                Tiempo estimado: {formatEstimateMinutes(getStoryEstimateMs())}
-              </p>
-            </div>
-            {(job?.status === "queued" ||
-              job?.status === "running" ||
-              (newStoryQuery && !needsEmotionSelection)) && (
-              <div className="h-8 w-8 animate-spin rounded-full border-2 border-neutral-300 border-t-neutral-700" />
-            )}
-          </div>
-
-          <div className="w-full h-2 rounded-full bg-neutral-100 overflow-hidden">
-            <div
-              className="h-full bg-neutral-900 transition-all"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-
-          {needsEmotionSelection ? (
-            <div className="mi-stack-sm">
-              <p className="text-sm text-neutral-600">
-                {jobError ??
-                  "No pudimos inferir la emoción. Elige la emoción que más representa lo que nos cuentas."}
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {[
-                  "miedo",
-                  "ira",
-                  "tristeza",
-                  "verguenza",
-                  "celos",
-                  "alegria",
-                  "calma",
-                ].map((emotion) => (
-                  <button
-                    key={emotion}
-                    onClick={() => {
-                      setSelectedEmotion(emotion);
-                      setNeedsEmotionSelection(false);
-                      setCreateEpoch((prev) => prev + 1);
-                    }}
-                    className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition ${
-                      selectedEmotion === emotion
-                        ? "bg-neutral-900 text-white border-neutral-900"
-                        : "border-neutral-200 text-neutral-700 hover:border-neutral-300"
-                    }`}
-                  >
-                    {formatEmotionLabel(emotion)}
-                  </button>
-                ))}
-              </div>
-            </div>
-          ) : job?.status === "succeeded" && job.result?.storyId ? (
-            <button
-              onClick={() => router.push(`/cuentos/${job.result?.storyId}`)}
-              className="px-4 py-2 rounded-xl text-sm font-semibold text-white shadow-md transition-transform duration-200 hover:-translate-y-0.5 bg-primary-600 hover:bg-primary-700"
-            >
-              Escuchar cuento
-            </button>
-          ) : jobError && !job ? (
-            <div className="mi-stack-sm">
-              <p className="text-sm text-red-500">{jobError}</p>
-              <button
-                onClick={() => router.replace("/parentDashboard?section=guides")}
-                className="px-4 py-2 rounded-xl text-sm font-semibold border border-neutral-200 text-neutral-700 hover:border-neutral-300 hover:bg-neutral-50 transition"
-              >
-                Volver
-              </button>
-            </div>
-          ) : job?.status === "failed" ? (
-            <p className="text-sm text-red-500">
-              {job.error ?? jobError ?? "No se pudo generar el cuento."}
-            </p>
-          ) : job?.status === "cancelled" ? (
-            <p className="text-sm text-neutral-500">
-              Creación cancelada. Puedes iniciar un nuevo cuento cuando quieras.
-            </p>
-          ) : (
-            <button
-              onClick={handleCancelJob}
-              className="px-4 py-2 rounded-xl text-sm font-semibold border border-neutral-200 text-neutral-700 hover:border-neutral-300 hover:bg-neutral-50 transition"
-            >
-              Cancelar
-            </button>
-          )}
-        </div>
+    <div className="px-5 md:px-20 mi-stack-md">
+      {(jobIdFromUrl || activeJobId || newStoryQuery) && (
+        <StoryCookingCard
+          job={job}
+          jobError={jobError}
+          progress={progress}
+          needsEmotionSelection={needsEmotionSelection}
+          selectedEmotion={selectedEmotion}
+          showSpinner={
+            job?.status === "queued" ||
+            job?.status === "running" ||
+            (Boolean(newStoryQuery) && !needsEmotionSelection)
+          }
+          estimateMinutes={formatEstimateMinutes(getStoryEstimateMs())}
+          onSelectEmotion={(emotion) => {
+            setSelectedEmotion(emotion);
+            setNeedsEmotionSelection(false);
+            setCreateEpoch((prev) => prev + 1);
+          }}
+          onCancel={handleCancelJob}
+          onPlay={() => router.push(`/cuentos/${job?.result?.storyId}`)}
+          onBack={() => router.replace("/parentDashboard?section=guides")}
+          formatEmotionLabel={formatEmotionLabel}
+        />
       )}
 
-      {!isLoaded && (
-        <div className="flex items-center justify-center py-10">
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-neutral-300 border-t-neutral-700" />
-        </div>
-      )}
-
-      {savedGuides.length > 0 ? (
-        <div className="grid md:grid-cols-2 gap-6">
-          {savedGuides.map((guide, index) => (
-            <StoryCard
-              key={`${guide.id}-${index}`}
-              guide={guide}
-              variant="parent"
-              onPlay={() => setSelectedGuideId(guide.id)}
-              onDelete={() => {
-                deleteGuide(guide.id);
-                if (selectedGuideId === guide.id) {
-                  setSelectedGuideId(null);
-                }
-              }}
-              createdAt={createdAtById[guide.id] || "Generada en la nube"}
-              badgeLabel={formatEmotionLabel(guide.emotionId)}
-              isNew={guide.id === latestGuideId}
-            />
-          ))}
-        </div>
-      ) : (
-        <div className="bg-neutral-50 border border-neutral-200 rounded-2xl py-16 px-6 text-center mi-stack-md">
-          <div className="w-16 h-16 mx-auto rounded-full bg-neutral-100 flex items-center justify-center">
-            <Calendar className="w-8 h-8 text-neutral-400" />
-          </div>
-          <h3 className="text-lg font-semibold text-neutral-800">
-            Aún no tienes cuentos guardados
-          </h3>
-          <p className="text-neutral-600 max-w-md mx-auto">
-            Cuando generes tu primera guía emocional, se guardará
-            automáticamente aquí para que puedas acceder a ella cuando la
-            necesites.
+      <div className="max-w-4xl ">
+        <div className="mi-section-header">
+          <h1 className="text-xl md:text-3xl tracking-tight font-extrabold text-neutral-800 mi-section-title">
+            {"Tu biblioteca de cuentos"}
+          </h1>
+          <p className="text-neutral-600">
+            Accede a todos los cuentos emocionales que has creado (
+            {savedGuides.length})
           </p>
         </div>
-      )}
+
+        <StoryGrid
+          guides={savedGuides}
+          createdAtById={createdAtById}
+          latestGuideId={latestGuideId}
+          isLoaded={isLoaded}
+          onPlay={handlePlayGuide}
+          onDelete={handleDeleteGuide}
+          formatEmotionLabel={formatEmotionLabel}
+        />
+      </div>
     </div>
   );
 }

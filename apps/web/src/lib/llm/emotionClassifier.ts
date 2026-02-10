@@ -11,6 +11,12 @@ type EmotionClassification = {
   reasoning?: string;
 };
 
+export type EmotionClassificationResult = {
+  emotion: EmotionId;
+  confidence?: number;
+  reasoning?: string;
+};
+
 const DEFAULT_MODEL = "gpt-4.1-mini";
 
 const BASE_EMOTIONS: EmotionId[] = [
@@ -51,7 +57,7 @@ function getProvider(): EmotionClassifierProvider {
 export async function classifyEmotionLabel(
   input: string,
   timeoutMs: number
-): Promise<EmotionClassification | null> {
+): Promise<EmotionClassificationResult | null> {
   const provider = getProvider();
   if (provider !== "openai") return null;
 
@@ -78,9 +84,11 @@ export async function classifyEmotionLabel(
   const parsed = parseLlmJson<EmotionClassification>(content, "emotion_class");
   if (!parsed.ok) return null;
 
+  if (parsed.data.emotion === "indefinida") return null;
   if (!BASE_EMOTIONS.includes(parsed.data.emotion)) return null;
   return {
-    ...parsed.data,
+    emotion: parsed.data.emotion,
+    reasoning: parsed.data.reasoning,
     confidence:
       typeof parsed.data.confidence === "number" ? parsed.data.confidence : 0,
   };
