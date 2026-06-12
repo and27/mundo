@@ -1,8 +1,11 @@
 import type { GuideWithCharacter } from "@/types/ai";
 import { useState, useEffect } from "react";
-import { useAuthStore } from "@/store/useAuthStore";
 import { authFetch } from "@/lib/authFetch";
 import { inferGuideContext } from "@/lib/guideInference";
+import {
+  trackGuiaGenerada,
+  trackGuiaGeneracionFallida,
+} from "@/lib/analytics";
 
 const loadingMessages = [
   "Contactando a Aynia...",
@@ -87,8 +90,29 @@ export function useMundoAssistant() {
       );
       console.log("[useAssistant] finalGuide:", finalGuide);
 
+      const metadata = rawData?._metadata as
+        | {
+            aiProvider?: string;
+            fallback?: string;
+            emotionSource?: string;
+          }
+        | undefined;
+      trackGuiaGenerada({
+        emotion,
+        provider: metadata?.aiProvider,
+        fallback: Boolean(metadata?.fallback),
+        emotionSource: metadata?.emotionSource,
+        queryLength: query.length,
+      });
+
       setGuide(finalGuide);
     } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "An unexpected error occurred.";
+      trackGuiaGeneracionFallida({
+        errorMessage: message,
+        queryLength: query.length,
+      });
       if (err instanceof Error) {
         setError(err.message);
       } else {

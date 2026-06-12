@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@google/genai": "^1.11.0",
+    "@mundo/core": "workspace:*",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-slot": "^1.2.4",
     "@sentry/nextjs": "^10.35.0",
@@ -24,6 +25,8 @@
     "lucide-react": "^0.487.0",
     "next": "^16.1.0",
     "openai": "^5.10.2",
+    "p-limit": "^4.0.0",
+    "posthog-js": "^1.386.6",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-icons": "^5.5.0",
@@ -32,9 +35,7 @@
     "sonner": "^2.0.7",
     "tone": "^15.0.4",
     "zod": "^3.25.76",
-    "zustand": "^5.0.3",
-    "@mundo/core": "workspace:*",
-    "p-limit": "^4.0.0"
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
