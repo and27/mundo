@@ -3,6 +3,9 @@
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
 import * as Sentry from "@sentry/nextjs";
+import { initAnalytics } from "@/lib/analytics";
+
+initAnalytics();
 
 const tracesSampleRate = Number(
   process.env.NEXT_PUBLIC_SENTRY_TRACES_SAMPLE_RATE ?? 0.1
