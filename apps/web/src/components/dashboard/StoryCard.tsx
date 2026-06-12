@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Heart, Clock, Trash2 } from "lucide-react";
 import type { GuideWithCharacter, ParentGuideSection } from "@/types/ai";
 import { getGuideSections } from "@/lib/guideSections";
+import { getGuideCover } from "@/lib/guideCover";
 import { toast } from "sonner";
 
 interface StoryCardProps {
@@ -81,6 +82,7 @@ export default function StoryCard({
   const isKids = variant === "kids";
   const sections = getGuideSections(guide);
   const description = getMetaphorContent(sections);
+  const cover = getGuideCover(guide.emotionId);
 
   const handleDelete = () => {
     if (!onDelete) return;
@@ -101,7 +103,7 @@ export default function StoryCard({
     <article className="group border border-neutral-200 rounded-2xl overflow-hidden transition-shadow duration-300 hover:shadow-lg">
       <div className="relative h-32 bg-neutral-100 overflow-hidden">
         <Image
-          src={"/images/all.webp"}
+          src={cover.src}
           alt={guide.guideTitle}
           fill
           className="object-cover transition-transform duration-300 group-hover:scale-105"

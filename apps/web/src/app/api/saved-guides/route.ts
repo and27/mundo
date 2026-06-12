@@ -38,19 +38,18 @@ export async function GET(request: Request) {
 
   const items: { guide: GuideWithCharacter; createdAt: string | null }[] = [];
   for (const row of data || []) {
-    if (!row.story_url) {
-      continue;
-    }
-    try {
-      const res = await fetch(row.story_url);
-      if (!res.ok) {
-        continue;
-      }
-      const guide = (await res.json()) as GuideWithCharacter;
-      items.push({ guide, createdAt: row.created_at ?? null });
-    } catch (err) {
-      console.error("Error loading guide JSON:", err);
-    }
+    // Lazy: we return a summary row and fetch full JSON only when opening a guide.
+    items.push({
+      guide: {
+        id: row.story_id,
+        guideTitle: row.title ?? row.story_id,
+        emotionId: row.emotion ?? undefined,
+        characterId: row.character ?? "yachay",
+        tags: [],
+        storyUrl: row.story_url ?? undefined,
+      },
+      createdAt: row.created_at ?? null,
+    });
   }
 
   return NextResponse.json({ items });
