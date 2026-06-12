@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Howl } from "howler";
+import { trackCuentoAudioReproducido } from "@/lib/analytics";
 
 interface UseJourneyAudioProps {
   onStepComplete: () => void;
@@ -35,7 +36,7 @@ export function useJourneyAudio({
         html5: true, // Usar audio HTML5 (importante para PWA/Service Workers/Caching)
         onplay: () => {
           setIsPlaying(true);
-          // console.log(`Audio playing: ${src}`);
+          trackCuentoAudioReproducido();
         },
         onend: () => {
           // Asegurarse de que onStepComplete se llame solo una vez por reproducción

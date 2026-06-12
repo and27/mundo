@@ -1,3 +1,10 @@
+import {
+  identifyUser,
+  resetAnalytics,
+  trackLogin,
+  trackRegistroCompletado,
+} from "@/lib/analytics";
+
 interface RegistrationPayload {
   email: string;
   password: string;
@@ -47,7 +54,10 @@ export async function registerUser(
     throw new Error(errorMessage);
   }
 
-  return result as RegistrationSuccessResponse;
+  const registration = result as RegistrationSuccessResponse;
+  identifyUser(registration.userId, { role: payload.role });
+  trackRegistroCompletado({ role: payload.role });
+  return registration;
 }
 
 export async function loginUser(
@@ -71,7 +81,10 @@ export async function loginUser(
     throw new Error(errorMessage);
   }
 
-  return result as LoginSuccessResponse;
+  const login = result as LoginSuccessResponse;
+  identifyUser(login.userId, { role: login.role });
+  trackLogin();
+  return login;
 }
 
 interface LogoutResponse {
@@ -96,5 +109,6 @@ export async function logoutUser(): Promise<LogoutResponse> {
     throw new Error(errorMessage);
   }
 
+  resetAnalytics();
   return result as LogoutResponse;
 }

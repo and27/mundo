@@ -2,6 +2,7 @@ import { GuideWithCharacter } from "@/types/ai";
 import { useEffect, useState } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
 import { authFetch } from "@/lib/authFetch";
+import { trackGuiaGuardada } from "@/lib/analytics";
 
 export function useSavedGuides() {
   const [savedGuides, setSavedGuides] = useState<GuideWithCharacter[]>([]);
@@ -97,6 +98,10 @@ export function useSavedGuides() {
     }
 
     const data = await res.json();
+    trackGuiaGuardada({
+      emotion: normalizedGuide.emotionId,
+      character: normalizedGuide.characterId,
+    });
     setSavedGuides((prev) => {
       const next = prev.filter((g) => g.id !== normalizedGuide.id);
       return [normalizeGuide(data.guide as GuideWithCharacter), ...next];
