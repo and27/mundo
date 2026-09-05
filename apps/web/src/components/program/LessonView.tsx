@@ -102,6 +102,20 @@ export default function ProgramLessonView() {
       ? program.lessons.find((l) => l.order === Number(lessonId))
       : undefined);
 
+  const guide = programLesson
+    ? (guides[programLesson.guideId] as GuideDetails | undefined)
+    : undefined;
+
+  // Los hooks van antes de cualquier return: su orden debe ser el mismo en cada render.
+  const [activeTab, setActiveTab] = useState<TabId>("cuento");
+  const [activeCompanionTab, setActiveCompanionTab] =
+    useState<string>("metaphor");
+
+  const emotionLabel = useMemo(() => {
+    if (!guide?.emotionId) return "-";
+    return guide.emotionId;
+  }, [guide?.emotionId]);
+
   if (!programLesson) {
     return (
       <section className="mi-section">
@@ -120,14 +134,7 @@ export default function ProgramLessonView() {
     );
   }
 
-  const guide = guides[programLesson.guideId] as GuideDetails | undefined;
-  const [activeTab, setActiveTab] = useState<TabId>("cuento");
   const sections = guide ? getGuideSections(guide) : [];
-
-  const emotionLabel = useMemo(() => {
-    if (!guide?.emotionId) return "-";
-    return guide.emotionId;
-  }, [guide?.emotionId]);
 
   const getSection = (kind: ParentGuideSection["kind"]) =>
     sections.find((section) => section.kind === kind) as
@@ -166,8 +173,6 @@ export default function ProgramLessonView() {
   const reflectionItems =
     reflection && "prompts" in reflection ? reflection.prompts : [];
   const notesItems = notes && "items" in notes ? notes.items : [];
-  const [activeCompanionTab, setActiveCompanionTab] =
-    useState<string>("metaphor");
 
   const allStrategyItems = uniqueStrings(collectAllStrategyItems(strategies));
   const momentItems = uniqueStrings(

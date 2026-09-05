@@ -1,15 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  Lightbulb,
-  Sparkles,
-  MessageCircle,
-  Send,
-  Clock,
-  ChevronDown,
-  Settings,
-} from "lucide-react";
+import { Lightbulb, Clock, ChevronDown } from "lucide-react";
 import { SuggestionCard } from "./SuggestionCard";
 import { getSuggestionsByMode } from "../../lib/suggestionsConfig";
 import { TextareaWithCounter } from "./TextAreaWithCounter";

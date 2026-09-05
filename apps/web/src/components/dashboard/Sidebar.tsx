@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import { LogOut, User, Settings } from "lucide-react";
+import { LogOut, Settings } from "lucide-react";
 import { dashboardSections } from "@/lib/dashboardConfig";
 import { FaBars } from "react-icons/fa";
 import { logoutUser } from "@/services/authService";

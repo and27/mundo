@@ -1,7 +1,7 @@
 "use client";
 import { useState, memo } from "react";
 import { motion, AnimatePresence, Transition } from "framer-motion";
-import { HiSparkles } from "react-icons/hi2";
+
 import { FiCheck } from "react-icons/fi";
 
 const emotionsData = [

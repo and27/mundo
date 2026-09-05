@@ -1,5 +1,5 @@
 import { ActionableGuide } from "@/types/ai";
-import { Tag } from "lucide-react";
+
 
 interface GuideHeaderProps {
   guide: ActionableGuide;

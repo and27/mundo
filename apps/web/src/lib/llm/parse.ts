@@ -30,7 +30,7 @@ export function parseLlmJson<T>(
   let parsed: unknown;
   try {
     parsed = JSON.parse(rawJson);
-  } catch (err) {
+  } catch {
     return {
       ok: false,
       error: "Failed to parse JSON from model response.",

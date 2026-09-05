@@ -26,7 +26,7 @@ type InfoPanelProps = {
   activeTab: string;
 };
 
-const InfoPanel: React.FC<InfoPanelProps> = memo(({ activeTab }) => {
+const InfoPanel: React.FC<InfoPanelProps> = memo(() => {
   const [currentStep, setCurrentStep] = useState(0);
 
   useEffect(() => {
