@@ -4,9 +4,11 @@ import { buildImageFilename } from "@/utils/imageUtils";
 import type { ImageGenerationResult } from "../types";
 import { recordOpenAICall } from "@/lib/telemetry/openaiMetrics";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// Cliente perezoso: instanciarlo al importar rompe el build y la carga del modulo
+// cuando la clave no esta presente.
+let openaiClient: OpenAI | null = null;
+const getOpenAI = () =>
+  (openaiClient ??= new OpenAI({ apiKey: process.env.OPENAI_API_KEY }));
 
 function getOpenAIImageSize(orientation: "vertical" | "horizontal") {
   return orientation === "horizontal" ? "1536x1024" : "1024x1536";
@@ -28,7 +30,7 @@ export async function generateImage(
 
   for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
     try {
-      const result = await openai.images.generate({
+      const result = await getOpenAI().images.generate({
         model: "gpt-image-1-mini",
         prompt,
         size,
