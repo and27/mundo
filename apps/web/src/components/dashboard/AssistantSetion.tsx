@@ -59,9 +59,17 @@ export default function AssistantSection() {
         throw new Error(errMessage);
       }
 
-      const data = (await res.json()) as { emotionId?: string };
+      const data = (await res.json()) as {
+        emotionId?: string;
+        source?: string;
+      };
+      // Se arrastra el origen ("manual" o "inferred") para que la guia no
+      // reporte como manual una emocion que en realidad infirio el clasificador.
       const emotionParam = data?.emotionId
-        ? `&newStoryEmotion=${encodeURIComponent(data.emotionId)}`
+        ? `&newStoryEmotion=${encodeURIComponent(data.emotionId)}` +
+          (data.source
+            ? `&newStoryEmotionSource=${encodeURIComponent(data.source)}`
+            : "")
         : "";
       router.push(
         `/parentDashboard?section=guides&newStoryQuery=${encoded}${emotionParam}`
