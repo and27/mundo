@@ -104,10 +104,12 @@ const LoginForm: React.FC = () => {
       />
       <Button
         type="submit"
-        className="w-full mt-5 transition focus:outline-none focus:ring-2 focus:ring-yellow-500 disabled:opacity-50"
+        size="lg"
+        fullWidth
+        className="mt-5"
         disabled={isSubmitting}
       >
-        {isSubmitting ? "Iniciando sesion..." : "Iniciar sesion"}
+        {isSubmitting ? "Iniciando sesión..." : "Iniciar sesión"}
       </Button>
     </form>
   );

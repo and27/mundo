@@ -158,7 +158,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
           id="role"
           name="role"
           value={registrationData.role}
-          className="w-full p-3 rounded-md border border-white/50 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500 bg-transparent appearance-none"
+          className="w-full p-3.5 rounded-[var(--radius-control)] mi-surface-1 border border-white/15 focus:border-white/40 text-white appearance-none transition-colors"
           onChange={handleChange}
           style={{
             backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
@@ -186,7 +186,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
       </div>
       <Button
         type="submit"
-        className="w-full mt-5 transition focus:outline-none focus:ring-2 focus:ring-yellow-500 disabled:opacity-50"
+        size="lg"
+        fullWidth
+        className="mt-5"
         disabled={isSubmitting}
       >
         {isSubmitting ? "Creando cuenta..." : "Crear Cuenta"}

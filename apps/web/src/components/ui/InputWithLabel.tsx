@@ -37,9 +37,13 @@ const InputWithLabel: React.FC<InputLabelProps> = ({
   return (
     <div className="relative w-full mb-4">
       <input
-        className={`text-sm md:text-base peer border text-white py-3.5 px-4 rounded-md w-full placeholder-transparent focus:outline-none focus:ring-2 focus:ring-yellow-500 ${
-          error ? "border-red-500" : ""
-        } ${isPasswordField ? "pr-12" : ""} ${className}`}
+        className={`text-sm md:text-base peer w-full py-3.5 px-4 text-white placeholder-transparent
+          rounded-[var(--radius-control)] mi-surface-1 border transition-colors
+          ${
+            error
+              ? "border-[var(--color-error-500)]"
+              : "border-white/15 focus:border-white/40"
+          } ${isPasswordField ? "pr-12" : ""} ${className}`}
         type={inputType}
         id={name}
         name={name}
@@ -63,18 +67,18 @@ const InputWithLabel: React.FC<InputLabelProps> = ({
       {isPasswordField && (
         <button
           type="button"
-          className="bg-transparent p-0 absolute right-4 top-3.5 text-icon-color z-10"
+          className="bg-transparent p-0 absolute right-4 top-3.5 text-white/60 hover:text-white transition-colors z-10"
           onClick={togglePasswordVisibility}
           aria-label={
             isPasswordVisible ? "Ocultar contraseña" : "Mostrar contraseña"
           }
           aria-pressed={isPasswordVisible}
         >
-          <FaEye color="white" />
+          <FaEye aria-hidden />
         </button>
       )}
       {error && (
-        <p className="text-red-500 text-sm mt-1 flex items-center">{error}</p>
+        <p className="text-[var(--color-error-500)] text-sm mt-1">{error}</p>
       )}
     </div>
   );

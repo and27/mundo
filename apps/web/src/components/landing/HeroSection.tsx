@@ -6,71 +6,40 @@ import Button from "../ui/Button";
 
 export default function HeroSection() {
   return (
-    <section
-      className="
-        mt-20 md:mt-0
-        my-10
-        md:my-0
-        min-h-screen
-        max-w-4xl
-        mx-auto
-        flex
-        flex-col
-        justify-center
-        md:flex-row
-        px-5
-        lg:px-0
-        md:gap-10
-        items-center
-      "
-    >
-      <div className="text-center md:text-left">
-        <h1 className="text-4xl md:text-5xl tracking-tight font-extrabold mb-4 leading-tight text-white">
-          Autorregulación emocional <br />
-          para la infancia.
+    // Alto por contenido, no por viewport: el min-h-screen anterior empujaba
+    // el resto de la pagina fuera y dejaba medio pantallazo vacio.
+    <section className="max-w-5xl mx-auto px-5 pt-36 pb-16 md:pt-44 md:pb-24 flex flex-col md:flex-row md:gap-12 items-center">
+      <div className="text-center md:text-left md:flex-1">
+        <h1 className="text-4xl md:text-5xl lg:text-[3.4rem] tracking-tight font-extrabold leading-[1.05] text-balance text-white">
+          Autorregulación emocional para la infancia.
         </h1>
 
-        <p className="text-white/70 max-w-xl mb-8 text-lg">
+        <p className="mt-5 text-white/70 max-w-xl mx-auto md:mx-0 text-lg leading-relaxed">
           Un método simple para acompañar emociones difíciles, basado en
           historias guiadas.
         </p>
 
-        <div className="flex flex-col md:flex-row gap-3 items-center md:items-start">
-          <Button asChild>
+        <div className="mt-8 flex flex-col sm:flex-row gap-3 items-center md:items-start justify-center md:justify-start">
+          <Button asChild size="lg">
             <Link href="/welcome">Acceder ahora</Link>
           </Button>
-          <Link
-            href="#enfoque"
-            className="inline-flex items-center justify-center px-6 py-3 font-semibold text-white/70 hover:text-white underline underline-offset-4"
-          >
-            Conocer el enfoque
-          </Link>
+          <Button asChild variant="ghost" size="lg">
+            <Link href="#enfoque">Conocer el enfoque</Link>
+          </Button>
         </div>
       </div>
 
-      <div
-        className="
-          m-10
-          relative
-          w-[270px]
-          h-[270px]
-          md:min-w-[320px]
-          md:h-[320px]
-          lg:w-[620px]
-          lg:h-[380px]
-          rounded-full
-          overflow-hidden
-          mi-surface-soft
-        "
-      >
-        <Image
-          src="/images/kidWithYachayBed.png"
-          alt="Mundo Interior"
-          fill
-          priority
-          className="object-cover"
-          sizes="(min-width: 768px) 320px, 220px"
-        />
+      <div className="mt-12 md:mt-0 relative w-full max-w-[340px] md:max-w-none md:w-[360px] lg:w-[420px] shrink-0">
+        <div className="relative aspect-square rounded-[var(--radius-card)] overflow-hidden mi-surface-2">
+          <Image
+            src="/images/kidWithYachayBed.png"
+            alt="Una niña lee un cuento acompañada de Yachay"
+            fill
+            priority
+            className="object-cover"
+            sizes="(min-width: 1024px) 420px, (min-width: 768px) 360px, 340px"
+          />
+        </div>
       </div>
     </section>
   );
