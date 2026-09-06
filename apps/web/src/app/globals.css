@@ -1,8 +1,10 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Voz adulta por defecto; --font-kid para las pantallas de nino. */
+  --font-sans: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+  --font-kid: var(--font-baloo), var(--font-figtree), ui-sans-serif, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* Primary - Índigo MIM */
   --color-primary-50: #f4f6ff;
@@ -133,6 +135,31 @@
   --leading-snug: 1.35;
   --leading-normal: 1.5;
   --leading-relaxed: 1.7;
+
+  /* === PROFUNDIDAD ===
+     Tres capas, no una. La elevacion la da la luz de arriba mas la sombra
+     larga; los halos de color quedan solo para lo que de verdad brilla. */
+  --shadow-lift-1: 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 8px 18px -12px rgba(0, 0, 0, 0.7);
+  --shadow-lift-2: inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 18px 34px -20px rgba(0, 0, 0, 0.85);
+  --shadow-lift-3: inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 28px 50px -24px rgba(0, 0, 0, 0.9);
+  /* Sombra que cae en el suelo bajo un personaje recortado. */
+  --shadow-ground: 0 14px 18px -10px rgba(10, 26, 14, 0.55);
+
+  /* === RADIOS CON ROL ===
+     Uno para tarjetas, uno para controles, uno para el mundo del nino.
+     El resto de la escala sigue disponible, pero estos son los que tocan. */
+  --radius-control: 0.75rem;
+  --radius-card: 1rem;
+  --radius-kid: 1.25rem;
+
+  /* === ACCION ===
+     Boton plano con canto inferior solido: se hunde al pulsar. Sin degradado,
+     sin brillo interior, sin sombra del color del propio boton. */
+  --color-action-edge: #a97a09;
+  --color-action-ink: #3a2100;
 }
 
 /* === RESET BÁSICO === */
@@ -508,20 +535,44 @@ select:-webkit-autofill:focus {
       var(--color-ambient-to)
     );
   }
-  /* === CTA / Action === */
+  /* === CTA / Action ===
+     Color plano y canto inferior solido. Al pulsar, el boton baja y el canto
+     se encoge: el gesto de un boton fisico, no un degradado con brillo. */
   .mi-cta-primary {
-    background-color: var(--color-action-600);
-    color: var(--color-neutral-900);
+    background-color: var(--color-action-500);
+    color: var(--color-action-ink);
+    border-bottom: 4px solid var(--color-action-edge);
+    transition: transform 110ms ease, border-bottom-width 110ms ease,
+      background-color 160ms ease;
   }
 
   .mi-cta-primary:hover {
-    background-color: var(--color-action-500);
+    background-color: var(--color-action-400);
+  }
+
+  .mi-cta-primary:active {
+    transform: translateY(2px);
+    border-bottom-width: 2px;
+  }
+
+  .mi-cta-ghost {
+    background-color: transparent;
+    color: inherit;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    transition: background-color 160ms ease, border-color 160ms ease;
+  }
+
+  .mi-cta-ghost:hover {
+    background-color: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.3);
   }
 
   .mi-cta-secondary {
     background-color: var(--color-primary-600);
     color: white;
-  }\n  .mi-cta-secondary:hover {
+  }
+
+  .mi-cta-secondary:hover {
     background-color: var(--color-primary-700);
   }
 
@@ -612,5 +663,93 @@ select:-webkit-autofill:focus {
 
   .pb-safe {
     padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* ======================================================
+     VOCES — el nino y el adulto no hablan igual
+     ====================================================== */
+
+  .mi-voice-kid {
+    font-family: var(--font-kid);
+    letter-spacing: -0.01em;
+  }
+
+  .mi-text-kid-title {
+    font-family: var(--font-kid);
+    font-size: clamp(1.75rem, 4vw, 2.125rem);
+    line-height: var(--leading-tight);
+    font-weight: 700;
+  }
+
+  .mi-text-kid-name {
+    font-family: var(--font-kid);
+    font-size: var(--text-xl);
+    line-height: var(--leading-tight);
+    font-weight: 700;
+  }
+
+  /* ======================================================
+     PROFUNDIDAD — sustituye a los bg-white/N sueltos
+     ====================================================== */
+
+  .mi-surface-1 {
+    background-color: rgba(255, 255, 255, 0.04);
+    box-shadow: var(--shadow-lift-1);
+  }
+
+  .mi-surface-2 {
+    background-color: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: var(--shadow-lift-2);
+  }
+
+  .mi-surface-3 {
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: var(--shadow-lift-3);
+  }
+
+  /* ======================================================
+     ESCENA — personajes de pie sobre el suelo, no en una caja
+     ====================================================== */
+
+  .mi-stage {
+    position: relative;
+    isolation: isolate;
+  }
+
+  /* Velo para que el texto se lea sobre la ilustracion de fondo. */
+  .mi-stage-veil::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(8, 26, 20, 0.72) 0%,
+      rgba(8, 26, 20, 0.18) 30%,
+      rgba(8, 26, 20, 0) 52%,
+      rgba(8, 26, 20, 0.35) 100%
+    );
+  }
+
+  .mi-stage > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* La sombra elíptica que ancla al personaje al suelo. */
+  .mi-ground-shadow {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: rgba(10, 26, 14, 0.5);
+    filter: blur(9px);
+    pointer-events: none;
+  }
+
+  .mi-legible {
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.55);
   }
 }

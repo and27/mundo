@@ -104,7 +104,7 @@ function AuthPageContent() {
                 <ChipTabs
                   tabs={[
                     { id: "register", label: "Registrarme" },
-                    { id: "login", label: "Iniciar sesion" },
+                    { id: "login", label: "Iniciar sesión" },
                   ]}
                   activeTab={activeTab}
                   onTabChange={(tabId) =>
@@ -145,7 +145,7 @@ function AuthPageContent() {
                   <span>Mundo es una plataforma confiable.</span>
                 </div>
                 <p className="text-white/40 text-xs">
-                  Al continuar, aceptas nuestros tＳminos y condiciones
+                  Al continuar, aceptas nuestros términos y condiciones
                 </p>
               </footer>
             </motion.section>
