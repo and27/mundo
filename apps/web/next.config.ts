@@ -1,8 +1,18 @@
+import path from "node:path";
 import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   transpilePackages: ["@mundo/core"],
+  // La raiz del monorepo, para que el trazado de dependencias resuelva bien los
+  // enlaces de pnpm en lugar de adivinar desde apps/web.
+  outputFileTracingRoot: path.join(process.cwd(), "../.."),
+  // public/ pesa ~247 MB y se estaba empaquetando dentro de cada funcion
+  // serverless, que asi superaba el limite de 250 MB de Vercel. Los estaticos
+  // los sirve el CDN; ninguna funcion los lee del disco.
+  outputFileTracingExcludes: {
+    "**/*": ["public/**", "apps/web/public/**"],
+  },
   images: {
     remotePatterns: [
       {
