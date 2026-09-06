@@ -100,7 +100,7 @@ function AuthPageContent() {
               variants={panelVariants}
               className="flex-1 px-0 md:px-6 py-10 lg:px-12 lg:py-14 flex flex-col"
             >
-              <header className="mi-stack-md mb-12">
+              <header className="mi-stack-md mb-8">
                 <ChipTabs
                   tabs={[
                     { id: "register", label: "Registrarme" },
@@ -121,7 +121,7 @@ function AuthPageContent() {
                 )}
               </header>
 
-              <div className="flex-1 min-h-[420px] md:min-h-[480px]">
+              <div className="flex-1 min-h-[300px] md:min-h-[360px]">
                 <AnimatePresence mode="sync">
                   <motion.div
                     key={activeTab}
@@ -139,7 +139,7 @@ function AuthPageContent() {
                 </AnimatePresence>
               </div>
 
-              <footer className="mt-12 pt-6 border-t border-white/10 mi-stack-sm text-center">
+              <footer className="mt-10 pt-6 border-t border-white/10 mi-stack-sm text-center">
                 <div className="flex items-center justify-center gap-2 text-white/60 text-sm">
                   <HiShieldCheck className="w-4 h-4" />
                   <span>Mundo es una plataforma confiable.</span>
