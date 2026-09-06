@@ -200,7 +200,7 @@ async function callOpenAI(
 
 export async function POST(request: Request) {
   try {
-    const { user, error } = await getAuthUser(request);
+    const { user } = await getAuthUser(request);
     if (!user) {
       return NextResponse.json({ error: "No autorizado." }, { status: 401 });
     }
@@ -228,6 +228,12 @@ export async function POST(request: Request) {
     const useOpenAI = Boolean(body?.useOpenAI);
     const manualEmotion =
       typeof body?.emotionId === "string" ? body.emotionId.trim() : "";
+    // El cliente puede haber resuelto la emocion en /api/emotion/resolve; sin
+    // esta pista se reportaria como "manual" y falsearia la metrica del funnel.
+    const emotionSourceHint =
+      body?.emotionSource === "inferred" || body?.emotionSource === "manual"
+        ? body.emotionSource
+        : undefined;
 
     if (!userQuery) {
       return NextResponse.json(
@@ -338,7 +344,7 @@ export async function POST(request: Request) {
           aiProvider,
           schemaVersion: parsed.schemaVersion,
           guardrailsEnabled: AI_GUARDRAILS_ENABLED,
-          emotionSource: emotionResolution.source,
+          emotionSource: emotionSourceHint ?? emotionResolution.source,
         },
       },
       { headers: rateHeaders }

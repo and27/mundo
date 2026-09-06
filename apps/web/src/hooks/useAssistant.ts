@@ -1,6 +1,6 @@
 import type { GuideWithCharacter } from "@/types/ai";
 import { useState, useEffect } from "react";
-import { useAuthStore } from "@/store/useAuthStore";
+
 import { authFetch } from "@/lib/authFetch";
 import { inferGuideContext } from "@/lib/guideInference";
 

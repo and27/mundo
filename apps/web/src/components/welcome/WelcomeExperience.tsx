@@ -8,7 +8,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaPlay } from "react-icons/fa";
 import { FiUsers } from "react-icons/fi";
 import Button from "@/components/ui/Button";
-import { HiSparkles } from "react-icons/hi2";
+
 
 const inspirationalQuotes = [
   "Cada emoci¢n es un tesoro por descubrir.",
@@ -86,7 +86,7 @@ const WelcomePanel: React.FC = memo(() => {
               transition={{ duration: 0.4 }}
               className="text-white/70 italic"
             >
-              "{inspirationalQuotes[currentQuote]}"
+              &ldquo;{inspirationalQuotes[currentQuote]}&rdquo;
             </motion.p>
           </AnimatePresence>
         </div>

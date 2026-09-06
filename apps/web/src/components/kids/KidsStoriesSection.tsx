@@ -6,9 +6,7 @@ import { GuideWithCharacter } from "@/types/ai";
 export function KidsStoriesSection({
   stories,
   allStories,
-  favorites,
   onPlay,
-  onToggleFavorite,
 }: {
   stories: GuideWithCharacter[];
   allStories: GuideWithCharacter[];

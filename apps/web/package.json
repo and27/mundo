@@ -6,7 +6,8 @@
     "dev": "next dev --webpack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
     "test:emotion-map": "tsx scripts/test-emotion-mapping.ts",
     "eval:emotion-classifier": "tsx scripts/eval-emotion-classifier.ts",
     "eval:emotion-pipeline": "tsx scripts/eval-emotion-pipeline.ts"

@@ -139,7 +139,7 @@ export async function generateStoryExport(
         timings,
       };
     }
-  } catch (err) {
+  } catch {
     // Cache miss or invalid cached data; continue to regenerate.
     console.info("[story/export] Cache miss", { cacheKey });
   }

@@ -18,6 +18,7 @@ export default function GeneratedStories() {
   const jobIdFromUrl = searchParams.get("jobId");
   const newStoryQuery = searchParams.get("newStoryQuery");
   const newStoryEmotion = searchParams.get("newStoryEmotion");
+  const newStoryEmotionSource = searchParams.get("newStoryEmotionSource");
 
   const [selectedGuideId, setSelectedGuideId] = useState<string | null>(
     guideIdFromUrl,
@@ -33,6 +34,9 @@ export default function GeneratedStories() {
   const [pendingQuery, setPendingQuery] = useState<string | null>(null);
   const [createEpoch, setCreateEpoch] = useState(0);
   const [needsEmotionSelection, setNeedsEmotionSelection] = useState(false);
+  const [selectedEmotionSource, setSelectedEmotionSource] = useState<
+    string | null
+  >(null);
   const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null);
   const lastSubmitKeyRef = useRef<string | null>(null);
   const [loadingGuideId, setLoadingGuideId] = useState<string | null>(null);
@@ -135,6 +139,7 @@ export default function GeneratedStories() {
       setPendingQuery(null);
       setNeedsEmotionSelection(false);
       setSelectedEmotion(null);
+      setSelectedEmotionSource(null);
       setActiveJobId(null);
       return;
     }
@@ -142,15 +147,19 @@ export default function GeneratedStories() {
     setPendingQuery(decodeURIComponent(newStoryQuery));
     if (newStoryEmotion) {
       setSelectedEmotion(newStoryEmotion);
+      // La emocion ya viene resuelta del paso anterior; sin esto la API la
+      // reportaria como "manual" y la metrica del funnel seria falsa.
+      setSelectedEmotionSource(newStoryEmotionSource);
       setNeedsEmotionSelection(false);
     } else {
       setNeedsEmotionSelection(false);
       setSelectedEmotion(null);
+      setSelectedEmotionSource(null);
     }
     setJobError(null);
     setQueryStartMs(Date.now());
     setCreateEpoch((prev) => prev + 1);
-  }, [newStoryQuery, newStoryEmotion]);
+  }, [newStoryQuery, newStoryEmotion, newStoryEmotionSource]);
 
   useEffect(() => {
     if (!newStoryQuery) return;
@@ -183,6 +192,7 @@ export default function GeneratedStories() {
             query: pendingQuery,
             useOpenAI: true,
             emotionId: selectedEmotion ?? undefined,
+            emotionSource: selectedEmotionSource ?? undefined,
           }),
         });
         if (!res.ok) {
@@ -262,6 +272,7 @@ export default function GeneratedStories() {
   }, [
     pendingQuery,
     selectedEmotion,
+    selectedEmotionSource,
     needsEmotionSelection,
     createEpoch,
     saveGuide,
@@ -400,6 +411,7 @@ export default function GeneratedStories() {
           estimateMinutes={formatEstimateMinutes(getStoryEstimateMs())}
           onSelectEmotion={(emotion) => {
             setSelectedEmotion(emotion);
+            setSelectedEmotionSource("manual");
             setNeedsEmotionSelection(false);
             setCreateEpoch((prev) => prev + 1);
           }}

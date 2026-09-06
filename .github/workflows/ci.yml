@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Lint, types and build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install pnpm
+        run: npm install -g pnpm@9.12.3
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint:web
+
+      - name: Typecheck
+        run: pnpm typecheck:web
+
+      - name: Build
+        # Placeholders, no secretos: el build solo necesita que estas variables
+        # existan para importar el cliente de Supabase. Las claves de IA ya no
+        # hacen falta porque los clientes se instancian de forma perezosa.
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+          SUPABASE_SERVICE_ROLE_KEY: ci-placeholder-not-a-real-key
+          NEXT_TELEMETRY_DISABLED: "1"
+        run: pnpm build:web

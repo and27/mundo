@@ -30,14 +30,14 @@ function parseAudioMimeType(mimeType: string): {
       try {
         const rateStr = trimmedParam.split("=")[1];
         rate = parseInt(rateStr, 10);
-      } catch (error) {
+      } catch {
         // Mantener rate por defecto
       }
     } else if (trimmedParam.startsWith("audio/L")) {
       try {
         const bitsStr = trimmedParam.split("L")[1];
         bitsPerSample = parseInt(bitsStr, 10);
-      } catch (error) {
+      } catch {
         // Mantener bitsPerSample por defecto
       }
     }

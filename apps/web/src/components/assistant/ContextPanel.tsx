@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ChevronDown, Settings, Users, Calendar, MapPin } from "lucide-react";
+import { Users, Calendar, MapPin } from "lucide-react";
 import { useModeStore } from "@/store/useModeState";
 
 interface ContextPanelProps {

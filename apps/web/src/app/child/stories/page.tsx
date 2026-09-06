@@ -9,7 +9,7 @@ import { useSavedGuides } from "@/hooks/useSavedGuides";
 import { useRouter } from "next/navigation";
 
 export default function ChildStoriesPage() {
-  const { savedGuides, isLoaded } = useSavedGuides();
+  const { savedGuides } = useSavedGuides();
   const router = useRouter();
 
   const {

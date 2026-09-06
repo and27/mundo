@@ -14,3 +14,14 @@ if (!supabaseUrl || !supabaseServiceKey) {
 }
 
 export const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
+// Cliente aislado para operaciones de sesion (login, refresh): no comparte el estado
+// de auth del cliente singleton, que atiende peticiones de todos los usuarios.
+export const createAuthClient = () =>
+  createClient(supabaseUrl, supabaseServiceKey, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+      detectSessionInUrl: false,
+    },
+  });

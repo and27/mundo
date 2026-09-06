@@ -9,9 +9,11 @@ import { performance } from "node:perf_hooks";
 import OpenAI from "openai";
 import { recordOpenAICall } from "@/lib/telemetry/openaiMetrics";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// Cliente perezoso: instanciarlo al importar rompe el build y la carga del modulo
+// cuando la clave no esta presente.
+let openaiClient: OpenAI | null = null;
+const getOpenAI = () =>
+  (openaiClient ??= new OpenAI({ apiKey: process.env.OPENAI_API_KEY }));
 
 async function timeAsync<T>(label: string, fn: () => Promise<T>): Promise<T> {
   const start = performance.now();
@@ -19,6 +21,7 @@ async function timeAsync<T>(label: string, fn: () => Promise<T>): Promise<T> {
     return await fn();
   } finally {
     const duration = performance.now() - start;
+    console.info(`[storyEngine] ${label}`, `${Math.round(duration)}ms`);
   }
 }
 
@@ -44,7 +47,7 @@ export async function generateStory(
 
   // Medir fetch OpenAI API
   const result = await timeAsync("fetch OpenAI API", async () => {
-    const response = await openai.chat.completions.create({
+    const response = await getOpenAI().chat.completions.create({
       model: "gpt-4.1-mini", // Usando gpt-4o-mini que es más estable que gpt-4.1-nano
       messages: [{ role: "user", content: prompt2 }],
       response_format: { type: "json_object" },
