@@ -1,21 +1,23 @@
 import type { Metadata } from "next";
-import { Chakra_Petch, Quicksand } from "next/font/google";
+import { Baloo_2, Figtree } from "next/font/google";
 import "./globals.css";
 import { ClientLayoutWrapper } from "./layout/ClientLayoutWrapper";
 import Script from "next/script";
 import { Toaster } from "sonner";
 
-const chakra = Chakra_Petch({
-  variable: "--font-chakra",
+// Dos voces: Figtree para el adulto (interfaz, datos, lectura larga) y
+// Baloo 2 para el nino (redonda y gruesa, aguanta a tamano grande).
+const figtree = Figtree({
+  variable: "--font-figtree",
   subsets: ["latin"],
-  weight: ["400", "600", "700"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
-const quicksand = Quicksand({
-  variable: "--font-quicksand",
+const baloo = Baloo_2({
+  variable: "--font-baloo",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["500", "600", "700", "800"],
   display: "swap",
 });
 
@@ -31,8 +33,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" className={`${chakra.variable} ${quicksand.variable}`}>
-      <body className="font-sans antialiased bg-emotion-default">
+    <html lang="es" className={`${figtree.variable} ${baloo.variable}`}>
+      <body className="font-sans antialiased">
         <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
         <Toaster richColors position="top-right" />
         <Script id="register-sw" strategy="afterInteractive">
