@@ -3,9 +3,9 @@ import ModeToggle from "../dashboard/ModeToggle";
 export function KidsHeader() {
   const userName = "Andreu";
   return (
-    <header className="relative mi-surface-dark">
+    <header className="relative">
       <div className="flex items-center justify-center px-6 py-6 md:py-7">
-        <h1 className="text-center mi-text-title text-white">
+        <h1 className="text-center mi-text-kid-title text-white mi-legible">
           {`Hola, ${userName}`}
         </h1>
 

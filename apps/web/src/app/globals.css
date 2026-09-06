@@ -447,13 +447,21 @@ select:-webkit-autofill:focus {
       );
   }
 
+  /* El mundo del nino es un lugar, no un degradado: la ilustracion del bosque
+     con un velo encima para que el texto se lea. */
   .mi-canvas-kids {
-    background: linear-gradient(
-      135deg,
-      var(--kids-bg-from) 0%,
-      var(--kids-bg-via) 45%,
-      var(--kids-bg-to) 100%
-    );
+    background-image: linear-gradient(
+        180deg,
+        rgba(8, 26, 20, 0.74) 0%,
+        rgba(8, 26, 20, 0.22) 26%,
+        rgba(8, 26, 20, 0.1) 50%,
+        rgba(8, 26, 20, 0.58) 100%
+      ),
+      url("/images/forest-bg.webp");
+    background-size: cover;
+    background-position: center 34%;
+    background-attachment: fixed;
+    background-color: #16281f;
   }
 
   /* ======================================================

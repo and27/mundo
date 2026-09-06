@@ -28,7 +28,7 @@ export default function ChildStoriesPage() {
       <KidsFeaturedCard
         title="Aventura del Miedo"
         subtitle="Paso 2 de 4"
-        imageUrl="/images/all.webp"
+        imageUrl="/guides/yachay-transparent.png"
         onContinue={() => router.push("/cuentos/miedo-paso-2")}
       />
 
@@ -42,15 +42,6 @@ export default function ChildStoriesPage() {
         onPlay={(id) => router.push(`/cuentos/${id}`)}
         onToggleFavorite={toggleFavorite}
       />
-      <div className="mi-surface-soft">
-        <KidsStoriesSection
-          stories={filteredStories}
-          allStories={savedGuides}
-          favorites={favorites}
-          onPlay={(id) => router.push(`/cuentos/${id}`)}
-          onToggleFavorite={toggleFavorite}
-        />
-      </div>
     </main>
   );
 }

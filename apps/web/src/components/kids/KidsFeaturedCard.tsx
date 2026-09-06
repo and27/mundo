@@ -14,28 +14,36 @@ export function KidsFeaturedCard({
   onContinue,
 }: KidsFeaturedCardProps) {
   return (
-    <section className="max-w-4xl mx-auto px-6 pt-6">
-      <div className="mi-surface-soft rounded-2xl p-4 md:p-5">
-        <div className="flex flex-col md:flex-row items-center gap-4">
-          <div className="relative w-full md:w-44 h-28 rounded-xl overflow-hidden">
-            <Image src={imageUrl} alt="" fill className="object-cover" />
+    <section className="max-w-3xl mx-auto px-6 pt-8">
+      <div className="flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left">
+        {/* El personaje se apoya en el suelo de la escena, sin caja alrededor. */}
+        <div className="relative shrink-0">
+          <span
+            aria-hidden
+            className="mi-ground-shadow bottom-1 h-4 w-24"
+          />
+          <Image
+            src={imageUrl}
+            alt=""
+            width={132}
+            height={132}
+            className="relative w-[132px] h-[132px] object-contain"
+          />
+        </div>
+
+        <div className="flex-1 mi-stack-sm items-center sm:items-start">
+          <div>
+            <h2 className="mi-text-kid-name text-white mi-legible">{title}</h2>
+            <p className="mi-text-body text-white/75 mi-legible">{subtitle}</p>
           </div>
 
-          <div className="flex-1 mi-stack-sm">
-            <div>
-              <h2 className="mi-text-subtitle text-white">
-                {title}
-              </h2>
-              <p className="mi-text-body-sm text-white/70">{subtitle}</p>
-            </div>
-
-            <button
-              onClick={onContinue}
-              className="mi-cta-primary inline-flex items-center gap-2 px-4 py-2 rounded-xl font-semibold w-fit"
-            >
-              ▶ Continuar historia
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={onContinue}
+            className="mi-cta-primary mi-voice-kid inline-flex items-center gap-2 px-7 py-4 min-h-[56px] text-lg rounded-[var(--radius-kid)] font-bold"
+          >
+            Seguir mi cuento
+          </button>
         </div>
       </div>
     </section>
