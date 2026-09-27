@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Mi escalera de valentía · Mundo Interior</title>
+<link rel="stylesheet" href="print.css">
+<style>
+  .goal {
+    margin-top: 6mm; display: grid; grid-template-columns: auto 1fr; gap: 4mm;
+    align-items: end; border: 0.5mm solid var(--ink); border-radius: 4mm;
+    padding: 4mm 5mm; background: #fff8dd;
+  }
+  .goal .lbl { font-family: var(--kid); font-weight: 800; font-size: 15pt; }
+  .goal .line { border-bottom: 0.4mm solid var(--ink); height: 8mm; }
+
+  /* La escalera se lee de abajo arriba: el peldano 1 es el mas facil. */
+  .stairs { display: flex; flex-direction: column-reverse; gap: 2mm; margin-top: 6mm; }
+  .step {
+    width: 128mm; height: 22mm; display: grid;
+    grid-template-columns: 12mm 1fr 19mm 17mm; align-items: center;
+    border: 0.5mm solid var(--ink); border-top-width: 1.6mm;
+    border-radius: 2mm; background: #fff;
+  }
+  .step .n {
+    font-family: var(--kid); font-weight: 800; font-size: 18pt;
+    text-align: center; color: var(--gold);
+  }
+  .step .w { border-bottom: 0.3mm dashed var(--ink-faint); height: 9mm; margin-right: 4mm; }
+  .step .cell { text-align: center; font-size: 7.5pt; font-weight: 700; color: var(--ink-faint); line-height: 1.1; }
+  .step .cell i {
+    display: block; margin: 1mm auto 0; width: 8.5mm; height: 8.5mm;
+    border: 0.4mm solid var(--ink-soft); border-radius: 1.5mm;
+  }
+  .s1 { margin-left: 0; }   .s2 { margin-left: 10mm; } .s3 { margin-left: 20mm; }
+  .s4 { margin-left: 30mm; } .s5 { margin-left: 40mm; } .s6 { margin-left: 50mm; }
+
+
+  .note { margin-top: 5mm; font-size: 9.5pt; color: var(--ink-soft); max-width: 140mm; }
+
+  .ex { display: flex; flex-direction: column; gap: 1.3mm; counter-reset: e; }
+  .ex li { list-style: none; counter-increment: e; display: grid; grid-template-columns: 6mm 1fr; font-size: 9.5pt; }
+  .ex li::before { content: counter(e); font-family: var(--kid); font-weight: 800; color: var(--gold); }
+</style>
+</head>
+<body>
+
+<!-- ============ Pagina 1: para el nino y la familia ============ -->
+<section class="page">
+  <div class="head">
+    <img src="img/yachay.png" alt="">
+    <div>
+      <div class="kicker">Mundo Interior · Paso a paso</div>
+      <h1>Mi escalera<br>de valentía</h1>
+      <div class="sub">Como Yachay en la cueva: un paso pequeño cada vez.</div>
+    </div>
+  </div>
+
+  <div class="goal">
+    <div class="lbl">Mi meta:</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="stairs">
+    <div class="step s1"><div class="n">1</div><div class="w"></div><div class="cell">Miedo<br>(1 a 5)<i></i></div><div class="cell">¡Lo<br>logré!<i></i></div></div>
+    <div class="step s2"><div class="n">2</div><div class="w"></div><div class="cell">Miedo<br>(1 a 5)<i></i></div><div class="cell">¡Lo<br>logré!<i></i></div></div>
+    <div class="step s3"><div class="n">3</div><div class="w"></div><div class="cell">Miedo<br>(1 a 5)<i></i></div><div class="cell">¡Lo<br>logré!<i></i></div></div>
+    <div class="step s4"><div class="n">4</div><div class="w"></div><div class="cell">Miedo<br>(1 a 5)<i></i></div><div class="cell">¡Lo<br>logré!<i></i></div></div>
+    <div class="step s5"><div class="n">5</div><div class="w"></div><div class="cell">Miedo<br>(1 a 5)<i></i></div><div class="cell">¡Lo<br>logré!<i></i></div></div>
+    <div class="step s6"><div class="n">6</div><div class="w"></div><div class="cell">Miedo<br>(1 a 5)<i></i></div><div class="cell">¡Lo<br>logré!<i></i></div></div>
+  </div>
+
+  <p class="note">
+    Empieza por el escalón 1, el más fácil. Repítelo hasta que el miedo baje a 1 o 2, y
+    solo entonces sube al siguiente. Cada escalón subido cuenta.
+  </p>
+
+  <div class="foot">
+    <div><b>Mundo Interior</b> · mundo.vercel.app/profesionales</div>
+    <div>Material gratuito · Versión 1, septiembre de 2026</div>
+  </div>
+</section>
+
+<!-- ============ Pagina 2: para el adulto ============ -->
+<section class="page">
+  <div class="kicker">Para madres, padres y profesionales</div>
+  <h1 style="font-size:24pt;margin-top:2mm">Cómo armar la escalera</h1>
+  <p style="margin-top:3mm;max-width:165mm">
+    Enfrentar el miedo en pasos pequeños, uno detrás de otro, es de lo que más ayuda a que
+    disminuya. Evitar lo que da miedo alivia en el momento, pero le enseña al niño que de
+    verdad era peligroso. La escalera es la forma de acercarse sin abrumarse.
+  </p>
+
+  <div class="stack" style="margin-top:6mm">
+    <div class="box">
+      <h2>En cuatro pasos</h2>
+      <ol class="steps">
+        <li><span><strong>Elijan juntos una meta concreta.</strong> No «perder el miedo», sino algo que se pueda ver: «dormir con la luz apagada».</span></li>
+        <li><span><strong>Escriban seis escalones</strong>, del que da un poco de miedo (un 2) al que más da (un 5). La meta es el último.</span></li>
+        <li><span><strong>Practiquen un escalón varias veces</strong>, en días distintos, hasta que el miedo baje a 1 o 2.</span></li>
+        <li><span><strong>Solo entonces, suban.</strong> Si un escalón da demasiado miedo, inventen uno intermedio.</span></li>
+      </ol>
+    </div>
+
+    <div class="grid2">
+      <div class="box">
+        <h3>Ejemplo: miedo a dormir solo</h3>
+        <ol class="ex">
+          <li>Puerta abierta, luz del pasillo, mamá sentada en la habitación.</li>
+          <li>Mamá sentada junto a la puerta.</li>
+          <li>Mamá sale y vuelve a los 5 minutos.</li>
+          <li>Mamá vuelve a los 10 minutos.</li>
+          <li>Luz del pasillo apagada, puerta entreabierta.</li>
+          <li>Dormir solo con la puerta cerrada.</li>
+        </ol>
+      </div>
+      <div class="box">
+        <h3>Claves que marcan la diferencia</h3>
+        <ul class="dots">
+          <li><strong>Celebra el esfuerzo</strong>, no solo el resultado.</li>
+          <li><strong>No saltes escalones</strong>, aunque vaya bien.</li>
+          <li><strong>Acompaña y espera</strong> a que el miedo baje, en vez de rescatarlo en cuanto aparece.</li>
+          <li><strong>Un escalón por semana</strong> es un buen ritmo.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div class="box">
+        <h3>Para profesionales</h3>
+        <p>Construya la escalera en sesión con la familia y úsela como tarea entre sesiones. La columna de miedo muestra si cada escalón se está practicando lo suficiente antes de avanzar.</p>
+      </div>
+      <div class="box alarm">
+        <h3>Cuándo pedir ayuda profesional</h3>
+        <p>Si el miedo le impide ir al colegio, comer o dormir muchas noches seguidas, si tiene ataques de pánico, si habla de hacerse daño, o si sientes que te desborda a ti.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div><b>Mundo Interior</b> · Herramientas para acompañar los miedos de niños de 5 a 10 años.<br>Este material acompaña, pero no sustituye la atención de un profesional de la salud mental.</div>
+    <div>mundo.vercel.app/profesionales</div>
+  </div>
+</section>
+
+</body>
+</html>
