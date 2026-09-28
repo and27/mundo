@@ -8,9 +8,9 @@ import { WeekTracker } from "@/components/muestra/WeekTracker";
 // Pagina publica, sin cuenta ni datos: es lo que un psicologo manda a una
 // familia por WhatsApp para que vea el programa antes de decidir nada.
 
-const TITLE = "Ponerle nombre al miedo";
+const TITLE = "Ayuda a tu hija o hijo a enfrentar sus miedos";
 const DESCRIPTION =
-  "Semana 1 de un programa en casa para niños con miedos: un cuento con Yachay, tres preguntas y una sola frase para el adulto.";
+  "Programa de 4 semanas en casa para niñas y niños de 5 a 10 años. Empieza gratis con la semana 1: un cuento con Yachay, tres preguntas y una frase para el adulto.";
 
 export const metadata: Metadata = {
   title: `${TITLE} · Mundo Interior`,
@@ -48,7 +48,7 @@ const QUESTIONS = [
   },
   {
     q: "¿Y tú, cuándo sientes un miedo así?",
-    hint: "Solo escucha. No corrijas ni lo convenzas de que no pasa nada.",
+    hint: "Solo escucha. No corrijas ni intentes convencer de que no pasa nada.",
   },
   {
     q: "¿Qué ayudó a Yachay a seguir?",
@@ -59,7 +59,7 @@ const QUESTIONS = [
 // Frase de apoyo: aceptar el miedo + confiar en el nino (SPACE).
 const PHRASE = "Sé que da miedo. Confío en que puedes con esto.";
 
-const STOP = ["«No pasa nada».", "«No seas miedoso»."];
+const STOP = ["«No pasa nada».", "«No es para tanto»."];
 
 const StepBadge = ({ n }: { n: number }) => (
   <span className="mi-voice-kid shrink-0 w-10 h-10 rounded-full bg-[var(--color-action-500)] text-[#2a1a05] text-xl font-extrabold flex items-center justify-center">
@@ -67,7 +67,7 @@ const StepBadge = ({ n }: { n: number }) => (
   </span>
 );
 
-export default function MuestraMiedosPage() {
+export default function MiedosPage() {
   return (
     <main className="mi-canvas-base mi-canvas-marketing text-white">
       <div className="max-w-2xl mx-auto px-5 pt-10 pb-20">
@@ -84,15 +84,38 @@ export default function MuestraMiedosPage() {
           />
         </Link>
 
-        {/* ---------- Encabezado: para el adulto ---------- */}
-        <header className="mt-10">
-          <p className="mi-text-caption text-[var(--color-action-400)]">
-            Programa para miedos · Semana 1 de 4
+        {/* ---------- Encabezado: el programa ---------- */}
+        <header className="mt-8">
+          <div className="relative aspect-[4/3] sm:aspect-[16/10] rounded-[var(--radius-card)] overflow-hidden">
+            <Image
+              src="/images/kidWithYachayBed.png"
+              alt="Un niño en la cama lee un cuento con Yachay, el puma"
+              fill
+              priority
+              sizes="(min-width: 672px) 672px, 100vw"
+              className="object-cover object-[center_35%]"
+            />
+          </div>
+          <p className="mt-8 mi-text-caption text-[var(--color-action-400)]">
+            Programa para miedos · 5 a 10 años
           </p>
           <h1 className="mt-3 text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.05] text-balance">
-            {TITLE}
+            {TITLE}, con cuentos.
           </h1>
           <p className="mt-5 text-lg text-white/75 leading-relaxed">
+            Cuatro semanas en casa: cada noche un cuento con Yachay, tres
+            preguntas y una sola cosa que hacer como mamá o papá. Basado en la
+            terapia cognitivo-conductual guiada por padres.
+          </p>
+        </header>
+
+        {/* ---------- Semana 1 ---------- */}
+        <section className="mt-14">
+          <p className="mi-text-caption text-[var(--color-action-400)]">
+            Semana 1 de 4 · Gratis
+          </p>
+          <h2 className="mt-2 mi-text-title">Ponerle nombre al miedo</h2>
+          <p className="mt-3 text-white/75 leading-relaxed">
             El cuento abre la conversación, pero lo que ayuda de verdad es lo
             que tú haces después. Esta semana es una sola cosa.
           </p>
@@ -108,7 +131,7 @@ export default function MuestraMiedosPage() {
               </li>
             ))}
           </ol>
-        </header>
+        </section>
 
         {/* ---------- 1. El cuento ---------- */}
         <section className="mt-14">
@@ -118,7 +141,7 @@ export default function MuestraMiedosPage() {
           </div>
           <p className="mt-3 text-white/70">
             Yachay es un puma joven que tiene que entrar a una cueva oscura. Él
-            también tiene miedo, y eso es justo lo que tu hijo necesita ver.
+            también tiene miedo, y eso es justo lo que tu hija o hijo necesita ver.
           </p>
 
           <div className="mt-6 flex flex-col sm:flex-row gap-5 items-center rounded-[var(--radius-card)] mi-surface-2 p-5">
@@ -136,7 +159,7 @@ export default function MuestraMiedosPage() {
                 Yachay, el Joven Puma y la Montaña
               </h3>
               <p className="mt-1 text-sm text-white/60">
-                Narrado · 7 minutos. Escúchalo con él, no lo dejes solo.
+                Narrado · 7 minutos. Escúchenlo juntos, a su lado.
               </p>
               <Button asChild kid size="md" className="mt-4">
                 <Link href={`/cuentos/${STORY_ID}`}>Escuchar el cuento</Link>
@@ -186,7 +209,7 @@ export default function MuestraMiedosPage() {
             <h2 className="mi-text-title">Tu parte esta semana: una frase</h2>
           </div>
           <p className="mt-3 text-white/70">
-            Cada vez que tenga miedo, a cualquier hora, dile:
+            Cuando tenga miedo, díselo una vez, con calma, y quédate cerca:
           </p>
 
           <blockquote className="mt-5 rounded-[var(--radius-card)] mi-surface-2 p-6 border-l-4 border-[var(--color-action-500)]">
@@ -214,7 +237,7 @@ export default function MuestraMiedosPage() {
               <h3 className="mi-text-label text-white/70">Por qué funciona</h3>
               <p className="mt-3 text-white/80">
                 La primera mitad le dice que su miedo es real. La segunda, que
-                tú lo ves capaz. Tu calma y tu confianza le enseñan más que
+                confías en su capacidad. Tu calma y tu confianza le enseñan más que
                 cualquier explicación.
               </p>
             </div>
@@ -252,15 +275,15 @@ export default function MuestraMiedosPage() {
         {/* ---------- Para profesionales ---------- */}
         <footer className="mt-16 pt-8 border-t border-white/10 text-center">
           <p className="text-white/80">
-            ¿Eres psicóloga o psicólogo infantil? Este es el primer paso de un
-            programa de cuatro semanas para que las familias trabajen en casa
-            entre sesión y sesión.
+            <strong className="text-white">Si eres psicóloga o psicólogo:</strong>{" "}
+            este es el primer paso de un programa de cuatro semanas para que
+            las familias trabajen en casa entre sesión y sesión.
           </p>
           <Button asChild variant="ghost" size="lg" className="mt-5">
-            <Link href="/register?tab=register">Quiero usarlo con mis pacientes</Link>
+            <Link href="/recursos">Ver herramientas para profesionales</Link>
           </Button>
           <p className="mt-8 text-xs text-white/40">
-            Contenido en revisión clínica. No sustituye la atención de un
+            Material educativo en desarrollo. No sustituye la atención de un
             profesional de la salud mental.
           </p>
         </footer>

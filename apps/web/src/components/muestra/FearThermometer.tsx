@@ -13,7 +13,7 @@ type Level = {
 const LEVELS: Level[] = [
   {
     value: 1,
-    label: "Tranquilo",
+    label: "En calma",
     color: "#4cc4a0",
     tip: "Celébralo en voz alta: «Hoy tu cuerpo está tranquilo». Así también aprende a reconocer la calma.",
   },

@@ -1,4 +1,4 @@
--- Contactos que descargan los imprimibles desde /profesionales.
+-- Contactos que descargan los imprimibles desde /recursos.
 -- Ejecutar una vez en Supabase: SQL Editor -> pegar -> Run.
 
 create table if not exists public.professional_leads (

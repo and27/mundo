@@ -1,4 +1,4 @@
-// Opciones del formulario de /profesionales, compartidas entre la pagina y la API
+// Opciones del formulario de /recursos, compartidas entre la pagina y la API
 // para que el servidor solo acepte valores que el formulario puede enviar.
 
 export const LEAD_CITIES = [
@@ -22,7 +22,7 @@ export const LEAD_RESOURCES = [
     preview: "/recursos/termometro-del-miedo-preview.webp",
     title: "Termómetro del miedo",
     blurb:
-      "El niño aprende a decir cuánto miedo siente, del 1 al 5. Incluye registro semanal para llevar a sesión.",
+      "Para decir cuánto miedo se siente, del 1 al 5. Incluye un registro semanal para llevar a sesión.",
   },
   {
     href: "/recursos/escalera-de-valentia.pdf",

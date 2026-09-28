@@ -53,7 +53,7 @@ export function WeekTracker() {
       </div>
       <p className="mt-3 text-sm text-white/65" aria-live="polite">
         {count === 0
-          ? "Una casilla por noche: tócala cuando uses la frase."
+          ? "Una casilla por noche: tócala cuando uses la frase. Se guarda solo en este teléfono."
           : `${count} de ${NIGHTS} noches. ${
               count >= 4 ? "Muy bien: eso ya es un hábito." : "Casi todas las noches es suficiente."
             }`}

@@ -80,7 +80,7 @@ export function LeadForm({ source }: { source: string | null }) {
         </div>
         <p className="mt-6 text-sm text-white/65">
           ¿Quieres ver cómo continúa en casa?{" "}
-          <Link href="/muestra/miedos" className="underline underline-offset-4 text-white">
+          <Link href="/miedos" className="underline underline-offset-4 text-white">
             Mira la semana 1 del programa para miedos
           </Link>
           .
