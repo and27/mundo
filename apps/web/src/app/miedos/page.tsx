@@ -31,12 +31,12 @@ export const metadata: Metadata = {
 
 const STORY_ID = "journey4_yachay_puma";
 
-// Formato de cada semana: cuento (7 min) -> preguntas (2 min) -> una sola
+// Formato de cada semana: cuento (~4 min) -> preguntas (2 min) -> una sola
 // accion para el adulto. El cuento es el gancho; lo que cambia algo es lo que
 // el adulto hace despues (Rasmussen 2016; SPACE, Lebowitz).
 
 const STEPS = [
-  { n: 1, title: "El cuento", time: "7 min" },
+  { n: 1, title: "El cuento", time: "4 min" },
   { n: 2, title: "Tres preguntas", time: "2 min" },
   { n: 3, title: "Tu frase", time: "toda la semana" },
 ];
@@ -159,7 +159,7 @@ export default function MiedosPage() {
                 Yachay, el Joven Puma y la Montaña
               </h3>
               <p className="mt-1 text-sm text-white/60">
-                Narrado · 7 minutos. Escúchenlo juntos, a su lado.
+                Narrado · 4 minutos. Escúchenlo juntos, a su lado.
               </p>
               <Button asChild kid size="md" className="mt-4">
                 <Link href={`/cuentos/${STORY_ID}`}>Escuchar el cuento</Link>
