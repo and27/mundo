@@ -9,37 +9,38 @@ type Level = {
   tip: string;
 };
 
-// Cinco niveles, de menos a mas. El consejo es para el adulto, no para el nino.
+// Cinco niveles, de 0 a 4: el 0 (pata o puño cerrado) es "nada de miedo", que
+// es el punto de llegada. El consejo es para el adulto, no para el nino.
 const LEVELS: Level[] = [
   {
-    value: 1,
-    label: "En calma",
+    value: 0,
+    label: "Nada",
     color: "#4cc4a0",
     tip: "Celébralo en voz alta: «Hoy tu cuerpo está tranquilo». Así también aprende a reconocer la calma.",
   },
   {
-    value: 2,
+    value: 1,
     label: "Un poquito",
     color: "#a6c95a",
     tip: "Nómbralo sin agrandarlo: «Un poquito de miedo es normal. Estoy aquí».",
   },
   {
-    value: 3,
-    label: "Bastante",
+    value: 2,
+    label: "Medio",
     color: "#f5c518",
     tip: "Pregunta dónde lo siente en el cuerpo. Ponerle lugar ya le quita fuerza.",
   },
   {
-    value: 4,
+    value: 3,
     label: "Mucho",
     color: "#f09a3a",
-    tip: "Primero calma, después palabras: respiren juntos despacio, y solo luego conversen.",
+    tip: "Primero calma, después palabras: quédate cerca y conversen cuando haya bajado.",
   },
   {
-    value: 5,
+    value: 4,
     label: "Muchísimo",
     color: "#e0603a",
-    tip: "Quédate cerca y no intentes razonar todavía. Si pasa muchas noches seguidas, cuéntaselo a su psicóloga.",
+    tip: "Quédate cerca y no intentes razonar todavía. Si pasa muchas noches seguidas, cuéntaselo a su psicóloga o psicólogo.",
   },
 ];
 
@@ -75,7 +76,7 @@ export function FearThermometer() {
                 aria-hidden
                 className="w-4 rounded-full"
                 style={{
-                  height: `${14 + l.value * 11}px`,
+                  height: `${14 + (l.value + 1) * 11}px`,
                   backgroundColor: isActive ? "rgba(0,0,0,0.25)" : l.color,
                 }}
               />
@@ -103,7 +104,7 @@ export function FearThermometer() {
           </p>
         ) : (
           <p className="mi-text-body text-white/60">
-            Toca un número para ver qué hacer como adulto en ese momento.
+            Toca un número para ver qué hacer como adulto en ese momento. El 0 es la pata cerrada: nada de miedo.
           </p>
         )}
       </div>

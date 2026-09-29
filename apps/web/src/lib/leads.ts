@@ -22,7 +22,7 @@ export const LEAD_RESOURCES = [
     preview: "/recursos/termometro-del-miedo-preview.webp",
     title: "Termómetro del miedo",
     blurb:
-      "Para decir cuánto miedo se siente, del 1 al 5. Incluye un registro semanal para llevar a sesión.",
+      "Para decir cuánto miedo se siente, de 0 (nada) a 4, con los dedos. Incluye un registro semanal para llevar a sesión.",
   },
   {
     href: "/recursos/escalera-de-valentia.pdf",

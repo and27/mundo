@@ -50,8 +50,8 @@ export default async function RecursosPage({ searchParams }: PageProps) {
             {TITLE}.
           </h1>
           <p className="mt-5 text-lg text-white/75 leading-relaxed">
-            Un programa de 4 semanas para miedos en niñas y niños de 5 a 10
-            años. Tú lo asignas, la familia lo hace con cuentos, y en la sesión
+            Un programa de 4 semanas para los miedos de la noche, en niñas y
+            niños de 5 a 10 años. Tú lo asignas, la familia lo hace con cuentos, y en la sesión
             ves si lo hicieron.
           </p>
           <p className="mt-3 text-white/60">
@@ -85,14 +85,18 @@ export default async function RecursosPage({ searchParams }: PageProps) {
           <h2 className="mi-text-title">¿Qué es Mundo Interior?</h2>
           <p className="mt-3 text-white/75 leading-relaxed">
             Un programa de cuatro semanas para que las familias trabajen los
-            miedos en casa: cada noche un cuento narrado, tres preguntas y una
-            sola acción para el adulto, con un registro que la familia trae a
-            sesión. Está pensado para acompañar tu trabajo, no para sustituirlo.
+            miedos de la noche en casa: cada noche un cuento narrado, tres
+            preguntas, un juego de exposición corto y una sola acción para el
+            adulto, con un registro que la familia trae a sesión. Está pensado para acompañar tu trabajo, no para sustituirlo.
           </p>
           <p className="mt-3 text-white/75 leading-relaxed">
-            Se basa en la terapia cognitivo-conductual guiada por padres
-            (Creswell; Cartwright-Hatton) y en SPACE (Lebowitz, Yale). Aún no
-            tiene revisión clínica externa: por eso nos sirve tu opinión.
+            Se basa en programas de cuentos y juegos aplicados por padres con
+            ensayos clínicos en niños de 4 a 8 años (Santacruz y Méndez,
+            Universidad de Murcia; <em>Uncle Lightfoot</em>), en la terapia
+            cognitivo-conductual guiada por padres y en la frase de apoyo de
+            SPACE (Lebowitz, Yale; probado de 7 a 14 años). El programa en sí
+            aún no tiene revisión clínica externa: por eso nos sirve tu
+            opinión.
           </p>
           <p className="mt-4">
             <Link href="/miedos" className="underline underline-offset-4 text-white">

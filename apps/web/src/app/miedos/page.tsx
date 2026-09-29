@@ -8,9 +8,9 @@ import { WeekTracker } from "@/components/muestra/WeekTracker";
 // Pagina publica, sin cuenta ni datos: es lo que un psicologo manda a una
 // familia por WhatsApp para que vea el programa antes de decidir nada.
 
-const TITLE = "Ayuda a tu hija o hijo a enfrentar sus miedos";
+const TITLE = "Ayuda a tu hija o hijo con sus miedos de la noche";
 const DESCRIPTION =
-  "Programa de 4 semanas en casa para niñas y niños de 5 a 10 años. Empieza gratis con la semana 1: un cuento con Yachay, tres preguntas y una frase para el adulto.";
+  "Programa de 4 semanas en casa para los miedos de la noche, de 5 a 10 años. Empieza gratis con la semana 1: un cuento con Yachay, tres preguntas, un juego y una frase para el adulto.";
 
 export const metadata: Metadata = {
   title: `${TITLE} · Mundo Interior`,
@@ -31,27 +31,31 @@ export const metadata: Metadata = {
 
 const STORY_ID = "journey4_yachay_puma";
 
-// Formato de cada semana: cuento (~4 min) -> preguntas (2 min) -> una sola
-// accion para el adulto. El cuento es el gancho; lo que cambia algo es lo que
-// el adulto hace despues (Rasmussen 2016; SPACE, Lebowitz).
+// Formato de cada semana: cuento (~4 min) -> preguntas (2 min) -> juego
+// (5 min) -> una sola accion para el adulto. El cuento es el gancho; lo que
+// cambia algo es el juego de exposicion y lo que el adulto hace despues
+// (Santacruz y Mendez 2006; Uncle Lightfoot; SPACE, Lebowitz).
+
+const PRINTABLE = "/recursos/semana-1-miedos-de-la-noche.pdf";
 
 const STEPS = [
   { n: 1, title: "El cuento", time: "4 min" },
   { n: 2, title: "Tres preguntas", time: "2 min" },
-  { n: 3, title: "Tu frase", time: "toda la semana" },
+  { n: 3, title: "Un juego", time: "5 min" },
+  { n: 4, title: "Tu frase", time: "toda la semana" },
 ];
 
 const QUESTIONS = [
   {
-    q: "¿Cuánto miedo tenía Yachay en la cueva?",
-    hint: "Que lo señale en el termómetro.",
+    q: "¿Cuántos dedos de miedo tenía Yachay? ¿Y al final?",
+    hint: "Que lo muestre con la mano o en el termómetro. La mano cerrada es nada de miedo.",
   },
   {
     q: "¿Y tú, cuándo sientes un miedo así?",
     hint: "Solo escucha. No corrijas ni intentes convencer de que no pasa nada.",
   },
   {
-    q: "¿Qué ayudó a Yachay a seguir?",
+    q: "¿Qué hizo Yachay cuando tenía miedo?",
     hint: "Si no se le ocurre nada, está bien. Recuérdalo tú.",
   },
 ];
@@ -97,15 +101,16 @@ export default function MiedosPage() {
             />
           </div>
           <p className="mt-8 mi-text-caption text-[var(--color-action-400)]">
-            Programa para miedos · 5 a 10 años
+            Miedos de la noche · 5 a 10 años
           </p>
           <h1 className="mt-3 text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.05] text-balance">
-            {TITLE}, con cuentos.
+            {TITLE}.
           </h1>
           <p className="mt-5 text-lg text-white/75 leading-relaxed">
             Cuatro semanas en casa: cada noche un cuento con Yachay, tres
-            preguntas y una sola cosa que hacer como mamá o papá. Basado en la
-            terapia cognitivo-conductual guiada por padres.
+            preguntas, un juego corto y una sola cosa que hacer como mamá o
+            papá. Inspirado en programas de juego guiados por padres que se
+            probaron en ensayos clínicos con niños pequeños.
           </p>
         </header>
 
@@ -117,10 +122,10 @@ export default function MiedosPage() {
           <h2 className="mt-2 mi-text-title">Ponerle nombre al miedo</h2>
           <p className="mt-3 text-white/75 leading-relaxed">
             El cuento abre la conversación, pero lo que ayuda de verdad es lo
-            que tú haces después. Esta semana es una sola cosa.
+            que hacen después: jugar y una sola frase tuya.
           </p>
 
-          <ol className="mt-8 grid grid-cols-3 gap-2 sm:gap-3">
+          <ol className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
             {STEPS.map((s) => (
               <li key={s.n} className="rounded-[var(--radius-card)] mi-surface-1 p-3 sm:p-4">
                 <span className="mi-voice-kid text-2xl font-extrabold text-[var(--color-action-400)]">
@@ -197,15 +202,32 @@ export default function MiedosPage() {
             <FearThermometer />
           </div>
           <p className="mt-3 text-sm text-white/55">
-            De 5 a 7 años: que lo toque o lo señale. De 8 a 10: que diga el
-            número y en qué momento del día lo siente.
+            Con 5 años basta con tres: poquito, medio, mucho. De 8 a 10, que
+            diga el número y en qué momento lo siente.
+          </p>
+        </section>
+
+        {/* ---------- 3. El juego ---------- */}
+        <section className="mt-14">
+          <div className="flex items-center gap-3">
+            <StepBadge n={3} />
+            <h2 className="mi-text-kid-title">Un juego: sombras con linterna</h2>
+          </div>
+          <p className="mt-3 text-white/75 leading-relaxed">
+            De día o con la luz tenue, tu hija o hijo maneja la linterna y hacen
+            sombras de animales en la pared. Que decida cuándo prender y apagar.
+          </p>
+          <p className="mt-3 text-sm text-white/55">
+            Es acercarse a la oscuridad jugando. En los estudios con niños
+            pequeños, el juego es lo que más ayuda: cuanto más juegan, más
+            mejoran.
           </p>
         </section>
 
         {/* ---------- 3. La accion del adulto ---------- */}
         <section className="mt-14">
           <div className="flex items-center gap-3">
-            <StepBadge n={3} />
+            <StepBadge n={4} />
             <h2 className="mi-text-title">Tu parte esta semana: una frase</h2>
           </div>
           <p className="mt-3 text-white/70">
@@ -259,16 +281,33 @@ export default function MiedosPage() {
               perfecto.
             </p>
           </div>
+
+          <div className="mt-4 rounded-[var(--radius-card)] mi-surface-1 p-5 flex flex-col sm:flex-row sm:items-center gap-4 justify-between">
+            <p className="text-white/80">
+              <strong className="text-white">¿Prefieres papel?</strong> La hoja
+              de la semana, en blanco y negro, con el registro para llevar a
+              sesión.
+            </p>
+            <Button asChild variant="ghost" size="md" className="shrink-0">
+              <a href={PRINTABLE} download>
+                Descargar la hoja
+              </a>
+            </Button>
+          </div>
         </section>
 
         {/* ---------- Senales de alarma ---------- */}
         <section className="mt-14 rounded-[var(--radius-card)] border border-[var(--color-warning-500)]/40 bg-[var(--color-warning-500)]/10 p-5">
-          <h2 className="mi-text-subtitle">Cuándo pedir ayuda profesional</h2>
-          <p className="mt-2 text-white/80">
-            Este programa acompaña, pero no reemplaza a un profesional. Busca
-            ayuda si el miedo le impide ir al colegio, comer o dormir muchas
-            noches seguidas, si tiene ataques de pánico, si habla de hacerse
-            daño, o si sientes que te está desbordando a ti.
+          <h2 className="mi-text-subtitle">Habla con tu psicóloga o psicólogo antes de seguir si…</h2>
+          <ul className="mt-3 mi-stack-sm list-disc pl-5 text-white/80">
+            <li>el miedo apareció de golpe después de algo que pasó, o hay pesadillas que repiten algo vivido;</li>
+            <li>es miedo a una persona o a un lugar concreto;</li>
+            <li>vuelve atrás en cosas que ya hacía, o el miedo invade también el día;</li>
+            <li>no puede ir al colegio, comer o dormir muchas noches, tiene ataques de pánico o habla de hacerse daño;</li>
+            <li>o sientes que te está desbordando a ti.</li>
+          </ul>
+          <p className="mt-3 text-sm text-white/60">
+            Este programa acompaña, pero no reemplaza a un profesional.
           </p>
         </section>
 
@@ -277,7 +316,8 @@ export default function MiedosPage() {
           <p className="text-white/80">
             <strong className="text-white">Si eres psicóloga o psicólogo:</strong>{" "}
             este es el primer paso de un programa de cuatro semanas para que
-            las familias trabajen en casa entre sesión y sesión.
+            las familias trabajen los miedos de la noche en casa, entre sesión y
+            sesión.
           </p>
           <Button asChild variant="ghost" size="lg" className="mt-5">
             <Link href="/recursos">Ver herramientas para profesionales</Link>
