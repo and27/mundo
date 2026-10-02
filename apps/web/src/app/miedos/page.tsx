@@ -4,6 +4,7 @@ import Link from "next/link";
 import Button from "@/components/ui/Button";
 import { FearThermometer } from "@/components/muestra/FearThermometer";
 import { WeekTracker } from "@/components/muestra/WeekTracker";
+import { ParentWaitlist } from "@/components/muestra/ParentWaitlist";
 
 // Pagina publica, sin cuenta ni datos: es lo que un psicologo manda a una
 // familia por WhatsApp para que vea el programa antes de decidir nada.
@@ -109,7 +110,8 @@ export default function MiedosPage() {
             preguntas, un juego corto y una sola cosa nueva para quien lo
             acompaña a dormir: mamá, papá, abuela, abuelo… Inspirado en
             programas de cuentos y juegos guiados por padres que se probaron
-            con niños pequeños.
+            con niños pequeños. Puedes hacerlo por tu cuenta o junto con tu
+            psicóloga o psicólogo.
           </p>
         </header>
 
@@ -130,8 +132,9 @@ export default function MiedosPage() {
               <strong className="text-white">Antes de empezar.</strong> Esto es
               para los miedos comunes de la noche. Si en casa hay gritos, golpes
               o alguien que le da miedo, o si el miedo empezó después de algo
-              que pasó, no empieces todavía: habla primero con tu psicóloga o
-              psicólogo. En una emergencia, llama al ECU 911.
+              que pasó, no empieces todavía: habla primero con una psicóloga o
+              psicólogo infantil, o con su pediatra. En una emergencia, llama al
+              ECU 911.
             </p>
           </div>
 
@@ -286,17 +289,16 @@ export default function MiedosPage() {
               <WeekTracker />
             </div>
             <p className="mt-4 text-sm text-white/55">
-              Muéstrale esta pantalla a tu psicóloga o psicólogo en la próxima
-              sesión. Hacerlo casi todas las noches importa más que hacerlo
-              perfecto.
+              Hacerlo casi todas las noches importa más que hacerlo perfecto. Si
+              tienes psicóloga o psicólogo, muéstrale esta pantalla en la
+              próxima sesión.
             </p>
           </div>
 
           <div className="mt-4 rounded-[var(--radius-card)] mi-surface-1 p-5 flex flex-col sm:flex-row sm:items-center gap-4 justify-between">
             <p className="text-white/80">
               <strong className="text-white">¿Prefieres papel?</strong> La hoja
-              de la semana, en blanco y negro, con el registro para llevar a
-              sesión.
+              de la semana, en blanco y negro, con el registro de cada noche.
             </p>
             <Button asChild variant="ghost" size="md" className="shrink-0">
               <a href={PRINTABLE} download>
@@ -306,9 +308,21 @@ export default function MiedosPage() {
           </div>
         </section>
 
+        {/* ---------- Semana 2: lista de espera ---------- */}
+        <section className="mt-14">
+          <h2 className="mi-text-title">¿Quieres la semana 2?</h2>
+          <p className="mt-3 text-white/75 leading-relaxed">
+            Estamos en piloto. La semana 2, «El cuerpo avisa», está en camino.
+            Déjanos tu correo y te avisamos cuando esté lista.
+          </p>
+          <div className="mt-6">
+            <ParentWaitlist />
+          </div>
+        </section>
+
         {/* ---------- Senales de alarma ---------- */}
         <section className="mt-14 rounded-[var(--radius-card)] border border-[var(--color-warning-500)]/40 bg-[var(--color-warning-500)]/10 p-5">
-          <h2 className="mi-text-subtitle">Habla con tu psicóloga o psicólogo antes de seguir si…</h2>
+          <h2 className="mi-text-subtitle">Habla con una psicóloga o psicólogo infantil antes de seguir si…</h2>
           <ul className="mt-3 mi-stack-sm list-disc pl-5 text-white/80">
             <li>el miedo apareció de golpe después de algo que pasó, o hay pesadillas que repiten algo vivido;</li>
             <li>en casa hay gritos, golpes o alguien que le da miedo;</li>

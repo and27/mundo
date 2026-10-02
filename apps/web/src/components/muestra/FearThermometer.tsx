@@ -40,7 +40,7 @@ const LEVELS: Level[] = [
     value: 4,
     label: "Muchísimo",
     color: "#e0603a",
-    tip: "Quédate cerca y no intentes razonar todavía. Si pasa muchas noches seguidas, cuéntaselo a su psicóloga o psicólogo.",
+    tip: "Quédate cerca y no intentes razonar todavía. Si pasa muchas noches seguidas, consulta con una psicóloga o psicólogo infantil.",
   },
 ];
 
