@@ -41,17 +41,17 @@ const PRINTABLE = "/recursos/semana-1-miedos-de-la-noche.pdf";
 const STEPS = [
   { n: 1, title: "El cuento", time: "4 min" },
   { n: 2, title: "Tres preguntas", time: "2 min" },
-  { n: 3, title: "Un juego", time: "5 min" },
+  { n: 3, title: "Un juego", time: "5 min, de tarde" },
   { n: 4, title: "Tu frase", time: "toda la semana" },
 ];
 
 const QUESTIONS = [
   {
-    q: "¿Cuántos dedos de miedo tenía Yachay? ¿Y al final?",
+    q: "¿Cuántos dedos de miedo crees que tenía Yachay?",
     hint: "Que lo muestre con la mano o en el termómetro. La mano cerrada es nada de miedo.",
   },
   {
-    q: "¿Y tú, cuándo sientes un miedo así?",
+    q: "¿A ti te pasa eso a veces? ¿Qué te da miedo en la noche?",
     hint: "Solo escucha. No corrijas ni intentes convencer de que no pasa nada.",
   },
   {
@@ -62,8 +62,6 @@ const QUESTIONS = [
 
 // Frase de apoyo: aceptar el miedo + confiar en el nino (SPACE).
 const PHRASE = "Sé que da miedo. Confío en que puedes con esto.";
-
-const STOP = ["«No pasa nada».", "«No es para tanto»."];
 
 const StepBadge = ({ n }: { n: number }) => (
   <span className="mi-voice-kid shrink-0 w-10 h-10 rounded-full bg-[var(--color-action-500)] text-[#2a1a05] text-xl font-extrabold flex items-center justify-center">
@@ -108,9 +106,10 @@ export default function MiedosPage() {
           </h1>
           <p className="mt-5 text-lg text-white/75 leading-relaxed">
             Cuatro semanas en casa: cada noche un cuento con Yachay, tres
-            preguntas, un juego corto y una sola cosa que hacer como mamá o
-            papá. Inspirado en programas de juego guiados por padres que se
-            probaron en ensayos clínicos con niños pequeños.
+            preguntas, un juego corto y una sola cosa nueva para quien lo
+            acompaña a dormir: mamá, papá, abuela, abuelo… Inspirado en
+            programas de cuentos y juegos guiados por padres que se probaron
+            con niños pequeños.
           </p>
         </header>
 
@@ -122,8 +121,19 @@ export default function MiedosPage() {
           <h2 className="mt-2 mi-text-title">Ponerle nombre al miedo</h2>
           <p className="mt-3 text-white/75 leading-relaxed">
             El cuento abre la conversación, pero lo que ayuda de verdad es lo
-            que hacen después: jugar y una sola frase tuya.
+            que hacen después: jugar y una sola frase tuya. Con 4 noches de 7
+            alcanza.
           </p>
+
+          <div className="mt-6 rounded-[var(--radius-card)] border border-white/15 p-4">
+            <p className="text-sm text-white/80">
+              <strong className="text-white">Antes de empezar.</strong> Esto es
+              para los miedos comunes de la noche. Si en casa hay gritos, golpes
+              o alguien que le da miedo, o si el miedo empezó después de algo
+              que pasó, no empieces todavía: habla primero con tu psicóloga o
+              psicólogo. En una emergencia, llama al ECU 911.
+            </p>
+          </div>
 
           <ol className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
             {STEPS.map((s) => (
@@ -145,8 +155,8 @@ export default function MiedosPage() {
             <h2 className="mi-text-kid-title">Escuchen el cuento juntos</h2>
           </div>
           <p className="mt-3 text-white/70">
-            Yachay es un puma joven que tiene que entrar a una cueva oscura. Él
-            también tiene miedo, y eso es justo lo que tu hija o hijo necesita ver.
+            Yachay es un puma joven que de noche tiene miedo. Que el personaje
+            también lo sienta es justo lo que tu hija o hijo necesita ver.
           </p>
 
           <div className="mt-6 flex flex-col sm:flex-row gap-5 items-center rounded-[var(--radius-card)] mi-surface-2 p-5">
@@ -214,13 +224,14 @@ export default function MiedosPage() {
             <h2 className="mi-text-kid-title">Un juego: sombras con linterna</h2>
           </div>
           <p className="mt-3 text-white/75 leading-relaxed">
-            De día o con la luz tenue, tu hija o hijo maneja la linterna y hacen
-            sombras de animales en la pared. Que decida cuándo prender y apagar.
+            Por la tarde o el fin de semana, con la luz tenue, tu hija o hijo
+            maneja la linterna y hacen sombras en la pared: con las manos, con
+            peluches o con figuras de papel. Que decida cuándo prender y apagar.
           </p>
           <p className="mt-3 text-sm text-white/55">
-            Es acercarse a la oscuridad jugando. En los estudios con niños
-            pequeños, el juego es lo que más ayuda: cuanto más juegan, más
-            mejoran.
+            Es acercarse a la oscuridad jugando. Nunca justo antes de dormir, y
+            al terminar guarden la linterna. En programas parecidos, practicar
+            más con juegos se asoció con mejores resultados.
           </p>
         </section>
 
@@ -243,20 +254,19 @@ export default function MiedosPage() {
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <div className="rounded-[var(--radius-card)] mi-surface-1 p-5">
               <h3 className="mi-text-label text-[var(--color-warning-500)]">
-                Deja de decir
+                En vez de «No pasa nada»
               </h3>
-              <ul className="mt-3 mi-stack-sm">
-                {STOP.map((s) => (
-                  <li key={s} className="text-white/85">{s}</li>
-                ))}
-              </ul>
+              <p className="mt-3 text-white/85">
+                Casi todos decimos «No pasa nada» o «No es para tanto», y lo
+                decimos para calmar.
+              </p>
               <p className="mt-3 text-sm text-white/55">
-                Con buena intención, le enseñan que lo que siente está mal, y
-                aprende a esconderlo.
+                Esta semana prueba la frase de arriba. Si se te escapa la de
+                siempre, no importa: la próxima vez usas la nueva.
               </p>
             </div>
             <div className="rounded-[var(--radius-card)] mi-surface-1 p-5">
-              <h3 className="mi-text-label text-white/70">Por qué funciona</h3>
+              <h3 className="mi-text-label text-white/70">Por qué la proponemos</h3>
               <p className="mt-3 text-white/80">
                 La primera mitad le dice que su miedo es real. La segunda, que
                 confías en su capacidad. Tu calma y tu confianza le enseñan más que
@@ -301,8 +311,12 @@ export default function MiedosPage() {
           <h2 className="mi-text-subtitle">Habla con tu psicóloga o psicólogo antes de seguir si…</h2>
           <ul className="mt-3 mi-stack-sm list-disc pl-5 text-white/80">
             <li>el miedo apareció de golpe después de algo que pasó, o hay pesadillas que repiten algo vivido;</li>
-            <li>es miedo a una persona o a un lugar concreto;</li>
-            <li>vuelve atrás en cosas que ya hacía, o el miedo invade también el día;</li>
+            <li>en casa hay gritos, golpes o alguien que le da miedo;</li>
+            <li>es miedo o rechazo a una persona concreta, o a un lugar donde pasó algo;</li>
+            <li>hubo un cambio grande hace poco: una muerte, una separación, una mudanza;</li>
+            <li>vuelve atrás en cosas que ya hacía (mojar la cama, hablar como bebé), o el miedo invade también el día;</li>
+            <li>tiene pesadillas casi todas las noches, grita o camina dormido sin recordarlo, o ronca fuerte con pausas al respirar;</li>
+            <li>se angustia mucho con el cuento o el juego: en ese caso, paren y consulten;</li>
             <li>no puede ir al colegio, comer o dormir muchas noches, tiene ataques de pánico o habla de hacerse daño;</li>
             <li>o sientes que te está desbordando a ti.</li>
           </ul>

@@ -104,7 +104,7 @@ export function FearThermometer() {
           </p>
         ) : (
           <p className="mi-text-body text-white/60">
-            Toca un número para ver qué hacer como adulto en ese momento. El 0 es la pata cerrada: nada de miedo.
+            Toca un número para ver qué hacer como adulto en ese momento. El 0 es la mano cerrada: nada de miedo.
           </p>
         )}
       </div>

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { LeadForm } from "@/components/profesionales/LeadForm";
 import { LEAD_RESOURCES } from "@/lib/leads";
 
-const TITLE = "La tarea para casa que las familias sí hacen";
+const TITLE = "Tarea para casa, pensada para que las familias sí la hagan";
 // Al compartir en grupos, la oferta gratuita invita mas que el titular.
 const SHARE_TITLE = "Dos herramientas gratis para trabajar el miedo en casa";
 const DESCRIPTION =
@@ -44,18 +44,20 @@ export default async function RecursosPage({ searchParams }: PageProps) {
 
         <header className="mt-10 max-w-2xl">
           <p className="mi-text-caption text-[var(--color-action-400)]">
-            Para psicólogas y psicólogos infantiles
+            Programa en piloto · Para psicólogas y psicólogos infantiles
           </p>
           <h1 className="mt-3 text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.05] text-balance">
             {TITLE}.
           </h1>
           <p className="mt-5 text-lg text-white/75 leading-relaxed">
             Un programa de 4 semanas para los miedos de la noche, en niñas y
-            niños de 5 a 10 años. Tú lo asignas, la familia lo hace con cuentos, y en la sesión
-            ves si lo hicieron.
+            niños de 5 a 10 años. Tú lo asignas, la familia lo hace con cuentos
+            y juegos, y en la sesión ves si lo hicieron.
           </p>
           <p className="mt-3 text-white/60">
-            Empieza con dos herramientas gratis, listas para imprimir.
+            Estamos en piloto: la semana 1 está lista y buscamos psicólogas que
+            la prueben con una familia. Mientras tanto, llévate dos herramientas
+            gratis, listas para imprimir.
           </p>
         </header>
 
@@ -90,13 +92,14 @@ export default async function RecursosPage({ searchParams }: PageProps) {
             adulto, con un registro que la familia trae a sesión. Está pensado para acompañar tu trabajo, no para sustituirlo.
           </p>
           <p className="mt-3 text-white/75 leading-relaxed">
-            Se basa en programas de cuentos y juegos aplicados por padres con
-            ensayos clínicos en niños de 4 a 8 años (Santacruz y Méndez,
+            Se inspira en programas de cuentos y juegos aplicados por padres
+            que se probaron en niños de 4 a 8 años (Santacruz y Méndez,
             Universidad de Murcia; <em>Uncle Lightfoot</em>), en la terapia
             cognitivo-conductual guiada por padres y en la frase de apoyo de
-            SPACE (Lebowitz, Yale; probado de 7 a 14 años). El programa en sí
-            aún no tiene revisión clínica externa: por eso nos sirve tu
-            opinión.
+            SPACE (Lebowitz, Yale; probado de 7 a 14 años). Este programa en sí
+            aún no ha sido evaluado ni tiene revisión clínica externa: por eso
+            nos sirve tu opinión. Las decisiones clínicas son siempre de la
+            psicóloga o el psicólogo que lo asigna.
           </p>
           <p className="mt-4">
             <Link href="/miedos" className="underline underline-offset-4 text-white">
