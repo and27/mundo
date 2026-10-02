@@ -1,0 +1,97 @@
+/* Estilos compartidos de los imprimibles de Mundo Interior.
+   A4, fondo blanco y poca tinta: se imprimen en casa o en consulta. */
+
+@font-face {
+  font-family: "Baloo 2";
+  src: url("fonts/Baloo2.woff2") format("woff2");
+  font-weight: 400 800;
+}
+@font-face {
+  font-family: "Figtree";
+  src: url("fonts/Figtree.woff2") format("woff2");
+  font-weight: 300 900;
+}
+
+@page { size: A4; margin: 0; }
+
+:root {
+  --ink: #1d1a16;
+  --ink-soft: #57514a;
+  --ink-faint: #8c857b;
+  --line: #d9d2c4;
+  --cream: #fbf6ea;
+  --gold: #e3a80c;
+  --l1: #4cc4a0;
+  --l2: #a6c95a;
+  --l3: #f5c518;
+  --l4: #f09a3a;
+  --l5: #e0603a;
+  --kid: "Baloo 2", "Figtree", sans-serif;
+  --adult: "Figtree", sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: #fff;
+  color: var(--ink);
+  font-family: var(--adult);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.page {
+  width: 210mm;
+  height: 297mm;
+  padding: 14mm 15mm 12mm;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  page-break-after: always;
+  overflow: hidden;
+}
+.page:last-child { page-break-after: auto; }
+
+/* ---------- cabecera ---------- */
+.head { display: flex; align-items: center; gap: 6mm; }
+.head img { width: 34mm; height: auto; }
+.kicker {
+  font-size: 9pt; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--gold);
+}
+h1 {
+  font-family: var(--kid); font-weight: 800; font-size: 30pt;
+  line-height: 1; letter-spacing: -0.01em; margin-top: 1.5mm;
+}
+.sub { font-family: var(--kid); font-weight: 700; font-size: 14pt; color: var(--ink-soft); margin-top: 2mm; }
+
+h2 { font-family: var(--adult); font-weight: 700; font-size: 13pt; margin: 0 0 2.5mm; }
+h3 { font-family: var(--adult); font-weight: 700; font-size: 10.5pt; margin: 0 0 1.5mm; }
+p, li { font-size: 10pt; line-height: 1.45; color: var(--ink-soft); }
+strong { color: var(--ink); }
+
+.box {
+  border: 0.4mm solid var(--line); border-radius: 4mm;
+  padding: 4.5mm 5mm; background: var(--cream);
+}
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; }
+.stack { display: flex; flex-direction: column; gap: 4.5mm; }
+
+ol.steps { list-style: none; counter-reset: s; display: flex; flex-direction: column; gap: 2.5mm; }
+ol.steps li { counter-increment: s; display: grid; grid-template-columns: 7mm 1fr; }
+ol.steps li::before {
+  content: counter(s); font-family: var(--kid); font-weight: 800;
+  font-size: 13pt; color: var(--gold); line-height: 1.1;
+}
+ul.dots { padding-left: 4.5mm; display: flex; flex-direction: column; gap: 1.5mm; }
+
+.alarm { border: 0.5mm solid var(--l5); background: #fdf0ea; }
+.alarm h3 { color: #b8442a; }
+
+/* ---------- pie ---------- */
+.foot {
+  margin-top: auto; padding-top: 4mm; border-top: 0.3mm solid var(--line);
+  display: flex; justify-content: space-between; gap: 6mm;
+  font-size: 7.5pt; color: var(--ink-faint); line-height: 1.4;
+}
+.foot b { color: var(--ink-soft); }
