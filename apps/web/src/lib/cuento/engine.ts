@@ -67,9 +67,27 @@ export function buildTimeline(scene: Scene): Timeline {
     end.push(t);
   });
   const duration = t + (scene.tail ?? 1.5);
+  // Con voz: las palabras habladas se reparten según su largo durante la voz,
+  // y las onomatopeyas (que son efectos, no voz) aparecen justo después.
+  const voiced = words.map((ws, i) => {
+    const v = scene.lines[i].voice;
+    if (!v) return null;
+    const spoken = ws.filter((w) => !w.snd);
+    const total = spoken.reduce((a, w) => a + w.w.length + 1, 0) || 1;
+    let acc = 0;
+    let sndK = 0;
+    return ws.map((w) => {
+      if (w.snd) return v + 0.2 + 0.45 * sndK++;
+      const at = (acc / total) * v * 0.92;
+      acc += w.w.length + 1;
+      return at;
+    });
+  });
   const wordTime = (line: number, word: number) => {
     const n = words[line]?.length ?? 1;
     const k = word < 0 ? n - 1 : Math.min(word, n - 1);
+    const vt = voiced[line];
+    if (vt) return start[line] + vt[k];
     return start[line] + scene.lines[line].dur * WORD_SPREAD * (k / Math.max(1, n));
   };
   const cue = (c?: Cue) => {

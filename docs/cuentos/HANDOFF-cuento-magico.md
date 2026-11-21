@@ -22,6 +22,6 @@ Commits como `and27 <andres.banda.sm@gmail.com>`, sin coautor ni trailers. Ramas
 
 ## Pendiente (en orden)
 1. **UI centrada en el niño, como Moshi:** portada con título y ▶ solamente; pausa solo con íconos; final de "buenas noches" con el cierre del narrador. La guía para el adulto va detrás de un botón pequeño "Para papás", con puerta para adultos ("mantén presionado 2 s"). Hoy el final le habla al papá: cambiarlo. Bajar el tono explicativo del copy.
-2. **Voz con Fish Audio** (el modelo S2.1 Pro tiene API gratis hasta el 30 nov 2026). La clave va como network secret del entorno `mundo`: host `api.fish.audio`, header `Authorization: Bearer`. Generar un audio por frase, poner `Line.audio` y `dur` con la duración real, y grabar la escena 1 para comparar. Después comparar con ElevenLabs (plan gratis sin uso comercial; Starter cuesta unos $6 al mes).
+2. **Voz: HECHO (provisional).** Fish Audio, voz "Cuento" (119fec1a…), una frase por archivo (`scripts/cuento/voz_fish.py`). Las onomatopeyas son efectos en `public/cuentos/yachay/sfx` (provisionales: reemplazar con ElevenLabs SFX). El audio usa Web Audio y es el reloj de la animación (`lib/cuento/audio.ts`). Faltan: una voz más neutra, mayor y cálida (o clonar una narradora real con permiso) y confirmar la licencia comercial de la voz.
 3. Escena 3 "El cuerpo avisa": darle el prompt al usuario (con las fichas como referencia, 9:16, el tercio de abajo en papel crema, sin texto).
 4. "Ver la semana 1" enlaza a `/miedos`, que existe solo cuando se mergee el PR #62.

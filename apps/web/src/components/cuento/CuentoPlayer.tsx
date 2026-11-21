@@ -3,37 +3,54 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { createSceneRenderer, type SceneRenderer } from "@/lib/cuento/engine";
+import { CuentoAudio } from "@/lib/cuento/audio";
 import type { CuentoStory } from "@/lib/cuento/types";
 
 const LOGICAL_W = 1080;
 const CROSSFADE = 1.2;
 
-type Phase = "intro" | "playing" | "end";
+type Phase = "intro" | "loading" | "playing" | "end";
 
 interface Live {
   idx: number;
+  key: number;
   t: number;
   renderer: SceneRenderer;
   wrap: HTMLDivElement;
-  audio: HTMLAudioElement | null;
+}
+
+interface AudioPlan {
+  duration: number;
+  bed?: string;
+  bedGain?: number;
+  clips: { src: string; at: number; gain: number }[];
 }
 
 declare global {
   interface Window {
-    __cuento?: { scenes: number; duration: (i: number) => number; seek: (i: number, t: number) => void };
+    __cuento?: {
+      scenes: number;
+      duration: (i: number) => number;
+      seek: (i: number, t: number) => void;
+      plan: (i: number) => AudioPlan;
+    };
   }
 }
+
+let keySeq = 0;
 
 export default function CuentoPlayer({ story }: { story: CuentoStory }) {
   const [phase, setPhase] = useState<Phase>("intro");
   const [paused, setPaused] = useState(false);
   const [sceneIdx, setSceneIdx] = useState(0);
   const [frame, setFrame] = useState({ h: 1920, scale: 0.3 });
+  const [renderMode, setRenderMode] = useState(false);
 
   const frameRef = useRef<HTMLDivElement>(null);
   const progressRefs = useRef<(HTMLDivElement | null)[]>([]);
   const live = useRef<Live | null>(null);
   const outgoing = useRef<Live | null>(null);
+  const audio = useRef<CuentoAudio | null>(null);
   const pausedRef = useRef(false);
   const frameH = useRef(1920);
   const rafRef = useRef<number>(0);
@@ -64,45 +81,45 @@ export default function CuentoPlayer({ story }: { story: CuentoStory }) {
       const wrap = document.createElement("div");
       Object.assign(wrap.style, { position: "absolute", inset: "0", opacity: "0" });
       host.appendChild(wrap);
-      const scene = story.scenes[idx];
-      const renderer = createSceneRenderer(wrap, scene, LOGICAL_W, frameH.current);
-      let audio: HTMLAudioElement | null = null;
-      if (scene.ambient) {
-        audio = new Audio(scene.ambient);
-        audio.preload = "auto";
-        audio.volume = 0.9;
-      }
+      const renderer = createSceneRenderer(wrap, story.scenes[idx], LOGICAL_W, frameH.current);
       renderer.render(0);
-      return { idx, t: 0, renderer, wrap, audio };
+      return { idx, key: ++keySeq, t: 0, renderer, wrap };
     },
     [story.scenes],
   );
 
   const unmount = (l: Live | null) => {
     if (!l) return;
-    l.audio?.pause();
     l.renderer.destroy();
     l.wrap.remove();
   };
 
   const goTo = useCallback(
     (idx: number, crossfade: boolean) => {
+      const A = audio.current;
       if (crossfade && live.current) {
         unmount(outgoing.current);
         outgoing.current = live.current;
+        A?.fadeOut(outgoing.current.key, CROSSFADE);
       } else {
         unmount(outgoing.current);
         outgoing.current = null;
         unmount(live.current);
+        A?.stopAll();
       }
-      live.current = mount(idx);
+      const L = mount(idx);
+      live.current = L;
       setSceneIdx(idx);
-      if (!pausedRef.current) live.current.audio?.play().catch(() => {});
+      if (A) {
+        A.start(L.key, story.scenes[idx], L.renderer.timeline, 0);
+        const next = story.scenes[idx + 1];
+        if (next) A.preload(next);
+      }
     },
-    [mount],
+    [mount, story.scenes],
   );
 
-  // ---------- bucle de animación ----------
+  // ---------- bucle de animación (el reloj lo marca el audio) ----------
   useEffect(() => {
     if (phase !== "playing") return;
     const loop = (ts: number) => {
@@ -110,16 +127,16 @@ export default function CuentoPlayer({ story }: { story: CuentoStory }) {
       lastTs.current = ts;
       const L = live.current;
       if (L && !pausedRef.current) {
-        L.t += dt;
+        const A = audio.current;
+        if (A) L.t = Math.max(0, A.time(L.key) ?? 0);
+        else L.t += dt;
         const dur = L.renderer.timeline.duration;
         L.renderer.render(Math.min(L.t, dur));
         L.wrap.style.opacity = String(Math.min(1, L.t / (L.idx === 0 ? 1.1 : CROSSFADE)));
         const O = outgoing.current;
         if (O) {
-          O.t += dt;
           const k = Math.min(1, L.t / CROSSFADE);
           O.wrap.style.opacity = String(1 - k);
-          if (O.audio) O.audio.volume = Math.max(0, 0.9 * (1 - k));
           if (k >= 1) {
             unmount(O);
             outgoing.current = null;
@@ -132,7 +149,7 @@ export default function CuentoPlayer({ story }: { story: CuentoStory }) {
         if (L.t >= dur) {
           if (L.idx + 1 < story.scenes.length) goTo(L.idx + 1, true);
           else {
-            L.audio?.pause();
+            A?.fadeOut(L.key, 1.5);
             setPhase("end");
           }
         }
@@ -146,32 +163,51 @@ export default function CuentoPlayer({ story }: { story: CuentoStory }) {
     };
   }, [phase, goTo, story.scenes.length]);
 
-  // ---------- modo grabación (?render=1): sin interfaz, control externo ----------
-  const [renderMode, setRenderMode] = useState(false);
+  // ---------- modo grabación (?render=1): sin interfaz ni audio, control externo ----------
   useEffect(() => {
     if (!new URLSearchParams(window.location.search).has("render")) return;
     pausedRef.current = true;
     setRenderMode(true);
     setPaused(true);
     setPhase("playing");
+    const seek = (i: number, t: number) => {
+      if (!live.current || live.current.idx !== i) {
+        unmount(live.current);
+        live.current = mount(i);
+        live.current.wrap.style.opacity = "1";
+      }
+      live.current.renderer.render(t);
+    };
     window.__cuento = {
       scenes: story.scenes.length,
+      seek,
       duration: (i) => {
-        if (!live.current || live.current.idx !== i) window.__cuento!.seek(i, 0);
+        seek(i, 0);
         return live.current!.renderer.timeline.duration;
       },
-      seek: (i, t) => {
-        if (!live.current || live.current.idx !== i) {
-          unmount(live.current);
-          live.current = mount(i);
-          live.current.wrap.style.opacity = "1";
-        }
-        live.current.renderer.render(t);
+      plan: (i) => {
+        seek(i, 0);
+        const tl = live.current!.renderer.timeline;
+        const sc = story.scenes[i];
+        const clips = [
+          ...sc.lines.flatMap((l, k) => (l.audio ? [{ src: l.audio, at: tl.start[k], gain: 1 }] : [])),
+          ...(sc.sounds ?? []).map((s) => ({ src: s.src, at: tl.cue(s.at), gain: s.gain ?? 1 })),
+        ];
+        return { duration: tl.duration, bed: sc.bed, bedGain: sc.bedGain, clips };
       },
     };
-  }, [mount, story.scenes.length]);
+  }, [mount, story.scenes]);
 
-  const start = () => {
+  const start = async () => {
+    setPhase("loading");
+    try {
+      const A = audio.current ?? new CuentoAudio();
+      audio.current = A;
+      await A.resume(); // desbloquea el audio en iOS (requiere el toque del usuario)
+      await A.preload(story.scenes[0]);
+    } catch {
+      audio.current = null; // sin audio: el cuento sigue con su propio reloj
+    }
     pausedRef.current = false;
     setPaused(false);
     setPhase("playing");
@@ -182,17 +218,11 @@ export default function CuentoPlayer({ story }: { story: CuentoStory }) {
     const p = !pausedRef.current;
     pausedRef.current = p;
     setPaused(p);
-    const a = live.current?.audio;
-    if (a && live.current) {
-      if (p) a.pause();
-      else {
-        try {
-          a.currentTime = Math.min(live.current.t, a.duration || live.current.t);
-        } catch {}
-        a.play().catch(() => {});
-      }
+    if (p) audio.current?.pause();
+    else {
+      audio.current?.resume();
+      lastTs.current = null;
     }
-    if (!p) lastTs.current = null;
   }, []);
 
   const jump = useCallback(
@@ -210,11 +240,13 @@ export default function CuentoPlayer({ story }: { story: CuentoStory }) {
     [goTo, story.scenes.length],
   );
 
-  const restart = () => {
+  const restart = async () => {
     unmount(outgoing.current);
     outgoing.current = null;
     unmount(live.current);
     live.current = null;
+    audio.current?.stopAll();
+    await audio.current?.resume();
     pausedRef.current = false;
     setPaused(false);
     setPhase("playing");
@@ -239,6 +271,7 @@ export default function CuentoPlayer({ story }: { story: CuentoStory }) {
     () => () => {
       unmount(outgoing.current);
       unmount(live.current);
+      audio.current?.close();
     },
     [],
   );
@@ -325,7 +358,7 @@ export default function CuentoPlayer({ story }: { story: CuentoStory }) {
         )}
 
         {/* Portada */}
-        {phase === "intro" && (
+        {(phase === "intro" || phase === "loading") && (
           <div className="absolute inset-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={story.cover} alt="" className="absolute inset-0 h-full w-full object-cover" style={{ objectPosition: "40% 30%" }} />
@@ -339,10 +372,11 @@ export default function CuentoPlayer({ story }: { story: CuentoStory }) {
               </h1>
               <button
                 onClick={start}
+                disabled={phase === "loading"}
                 className="flex h-[150px] w-full items-center justify-center gap-[24px] rounded-full text-[52px] text-white"
                 style={{ background: "#4a3324", fontFamily: "var(--font-figtree), sans-serif", fontWeight: 600 }}
               >
-                ▶ Empezar el cuento
+                {phase === "loading" ? "Preparando…" : "▶ Empezar el cuento"}
               </button>
               <p className="mt-[34px] text-center text-[32px]" style={{ fontFamily: "var(--font-figtree), sans-serif", color: "#7d6650" }}>
                 Para escuchar juntos, con el volumen bajo. Toca la pantalla para pausar.

@@ -11,8 +11,19 @@ export interface Line {
   dur: number;
   /** Silencio antes de la frase (s). Por defecto 0.3. */
   gap?: number;
-  /** Audio de la voz para esta frase (futuro). */
+  /** Lo que dice la voz, si difiere del texto (p. ej. sin onomatopeyas, que son efectos). */
+  say?: string;
+  /** Audio de la voz para esta frase. */
   audio?: string;
+  /** Duración de la voz (s). Las palabras se sincronizan con ella. */
+  voice?: number;
+}
+
+/** Efecto de sonido atado a un momento del guion. */
+export interface Sound {
+  src: string;
+  at: Cue;
+  gain?: number;
 }
 
 /**
@@ -69,8 +80,11 @@ export interface Scene {
   width: number;
   height: number;
   alt: string;
-  /** Sonido de ambiente (dura lo mismo que la escena). */
-  ambient?: string;
+  /** Ambiente continuo de fondo (más largo que la escena). */
+  bed?: string;
+  bedGain?: number;
+  /** Efectos de sonido puntuales. */
+  sounds?: Sound[];
   /** Segundos antes de la primera frase. */
   lead?: number;
   /** Segundos después de la última frase. */
