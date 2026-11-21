@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Escena 1 · Yachay</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;height:100%;background:#000;overflow:hidden}
+#stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000}
+#frame{position:relative;width:1080px;height:1920px;overflow:hidden;transform-origin:center;background:#f3ead8}
+#cam{position:absolute;left:0;top:0;width:768px;height:1376px;transform-origin:0 0;will-change:transform}
+#cam > *{position:absolute;left:0;top:0}
+#bg{width:768px;height:1376px;display:block}
+canvas{width:768px;height:1376px;pointer-events:none}
+#dusk{width:768px;height:1376px;mix-blend-mode:multiply;opacity:0;
+  background:linear-gradient(to bottom,#1a2160 0%,#3b3a86 28%,#8a5f9e 46%,#d39b86 64%,#e7c3a6 100%)}
+#glows{width:768px;height:1376px}
+#condor{width:96px;height:52px;transform-origin:48px 26px}
+#bfly{width:70px;height:60px;overflow:visible}
+.ov{position:absolute;inset:0;pointer-events:none}
+#paper{background:radial-gradient(130% 90% at 50% 45%,transparent 60%,rgba(80,55,30,.18) 100%)}
+#txt{position:absolute;left:92px;right:92px;bottom:190px;min-height:380px;display:flex;align-items:flex-end}
+#line{font-family:"Fraunces",Georgia,serif;font-size:70px;line-height:1.27;font-weight:400;color:#4a3324;font-variation-settings:"opsz" 72}
+#line .w{display:inline-block;will-change:opacity,transform,filter}
+#line .snd{font-style:italic;font-weight:500;color:#b4592a;transform-origin:20% 80%;margin-left:.12em}
+#fade{background:#000}
+#tap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:28px;
+  font:500 44px/1.2 "Fraunces",Georgia,serif;color:#4a3324;background:rgba(243,234,216,.6);cursor:pointer}
+#tap span{font-size:30px;opacity:.7}
+body.render #tap{display:none}
+</style>
+</head>
+<body>
+<div id="stage"><div id="frame">
+  <div id="cam">
+    <img id="bg" src="bg.png" alt="Yachay salta entre piedras en el páramo, junto a su cueva">
+    <canvas id="sky" width="1536" height="2752"></canvas>
+    <img id="condor" src="condor.png" alt="">
+    <svg id="bfly" viewBox="-35 -30 70 60">
+      <g stroke="#5e3f22" stroke-width="1.6" stroke-linejoin="round">
+        <g id="wl"><path d="M-2,-2 C-14,-26 -34,-24 -30,-8 C-28,0 -14,2 -2,0Z" fill="#efcd5c"/>
+          <path d="M-2,1 C-14,4 -24,12 -18,20 C-12,25 -4,14 -2,4Z" fill="#e8bd48"/>
+          <circle cx="-19" cy="-11" r="3" fill="#7a5532" stroke="none"/></g>
+        <g id="wr"><path d="M2,-2 C14,-26 34,-24 30,-8 C28,0 14,2 2,0Z" fill="#efcd5c"/>
+          <path d="M2,1 C14,4 24,12 18,20 C12,25 4,14 2,4Z" fill="#e8bd48"/>
+          <circle cx="19" cy="-11" r="3" fill="#7a5532" stroke="none"/></g>
+        <path d="M0,-8 L0,14" stroke-width="3.2" stroke-linecap="round"/>
+        <path d="M0,-8 C-3,-16 -7,-20 -9,-23 M0,-8 C3,-16 7,-20 9,-23" fill="none" stroke-width="1.2"/>
+      </g>
+    </svg>
+    <div id="dusk"></div>
+    <svg id="glows" viewBox="0 0 768 1376">
+      <defs>
+        <radialGradient id="sun"><stop offset="0" stop-color="#fff6cf" stop-opacity=".9"/><stop offset=".4" stop-color="#ffe7a0" stop-opacity=".35"/><stop offset="1" stop-color="#ffe2a0" stop-opacity="0"/></radialGradient>
+        <radialGradient id="cave"><stop offset="0" stop-color="#ffc066" stop-opacity=".95"/><stop offset=".45" stop-color="#ff9a3c" stop-opacity=".4"/><stop offset="1" stop-color="#ff8a2a" stop-opacity="0"/></radialGradient>
+      </defs>
+      <ellipse id="sunG" cx="690" cy="120" rx="420" ry="380" fill="url(#sun)" style="mix-blend-mode:screen"/>
+      <ellipse id="caveG" cx="680" cy="540" rx="120" ry="110" fill="url(#cave)" style="mix-blend-mode:screen" opacity="0"/>
+    </svg>
+    <canvas id="fx" width="1536" height="2752"></canvas>
+  </div>
+  <div class="ov" id="paper"></div>
+  <div id="txt"><div id="line"></div></div>
+  <div class="ov" id="fade"></div>
+  <div id="tap">Toca para empezar<span>Escena 1 · prototipo</span></div>
+</div></div>
+<audio id="amb" src="ambiente.m4a" preload="auto"></audio>
+<script>
+const LINES=[
+  {t0:1.0, t1:5.0, text:"Al pie de una montaña muy alta, en una cueva calentita, vivía Yachay,"},
+  {t0:5.3, t1:9.4, text:"un puma joven con bigotes largos y una cola que nunca se quedaba quieta."},
+  {t0:9.7, t1:13.2,text:"Su mejor amigo era Kuntur, un cóndor que volaba alto."},
+  {t0:13.5,t1:17.0,text:"De día, Yachay era rapidísimo: saltaba piedras, perseguía mariposas"},
+  {t0:17.2,t1:19.2,text:"y rugía para practicar: *¡grrr!*"},
+  {t0:19.8,t1:23.6,text:"Pero de noche… de noche le daba miedo."},
+];
+const DUR=25, GRR=18.45, DUSK0=19.7, DUSK1=22.2;
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const ease=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const eo=x=>1-Math.pow(1-x,3);
+const ramp=(t,a,b)=>clamp((t-a)/(b-a));
+const mix=(a,b,k)=>a+(b-a)*k;
+function rng(s){return()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+
+// ---- texto ----
+const lineEl=document.getElementById('line');
+const built=LINES.map(L=>{const p=[];let snd=false;L.text.split(/(\*)/).forEach(s=>{if(s==='*'){snd=!snd;return}s.split(/(\s+)/).forEach(w=>{if(w.trim())p.push({w,snd})})});return p});
+let shown=-1,spans=[];
+function setLine(i){if(i===shown)return;shown=i;lineEl.innerHTML='';spans=[];if(i<0)return;
+  built[i].forEach((p,k)=>{const s=document.createElement('span');s.className='w'+(p.snd?' snd':'');s.textContent=p.w;lineEl.appendChild(s);spans.push(s);if(k<built[i].length-1)lineEl.appendChild(document.createTextNode(' '))})}
+function renderText(t){
+  const i=LINES.findIndex(L=>t>=L.t0-0.05&&t<L.t1+0.6);setLine(i);
+  const d=ramp(t,DUSK0,DUSK1);
+  lineEl.style.color=`rgb(${mix(74,251,d)|0},${mix(51,243,d)|0},${mix(36,230,d)|0})`;
+  lineEl.style.textShadow=d>0?`0 2px 22px rgba(20,14,40,${(0.7*d).toFixed(2)})`:'none';
+  if(i<0)return;const L=LINES[i],n=spans.length,span=(L.t1-L.t0)*0.72,out=1-ramp(t,L.t1,L.t1+0.55);
+  spans.forEach((s,k)=>{const st=L.t0+span*k/Math.max(1,n);const a=eo(ramp(t,st,st+0.55));
+    let sc=1; if(s.classList.contains('snd')&&i===4){const g=ramp(t,GRR-0.1,GRR+0.5);sc=1+0.35*Math.sin(Math.PI*g)*(1-g)}
+    s.style.opacity=(a*out).toFixed(3);s.style.transform=`translateY(${((1-a)*14).toFixed(2)}px) scale(${sc.toFixed(3)})`;s.style.filter=`blur(${((1-a)*6).toFixed(2)}px)`})}
+
+// ---- cámara: acercamiento lento hacia Yachay + golpe en "grrr" ----
+const cam=document.getElementById('cam');
+const S0=Math.max(1080/768,1920/1376), FX=330, FY=640;
+const F0x=FX*S0+(1080-768*S0)/2, F0y=FY*S0+(1920-1376*S0)/2;
+function renderCam(t){
+  const p=ease(clamp(t/DUR));
+  const g=ramp(t,GRR,GRR+0.9), punch=0.022*Math.sin(Math.PI*Math.min(1,g*3))*(1-g);
+  const s=S0*(1.0+0.075*p+punch);
+  const shake=(t>GRR&&t<GRR+0.45)?3*Math.sin(t*90)*(1-ramp(t,GRR,GRR+0.45)):0;
+  cam.style.transform=`translate(${(F0x-FX*s+shake).toFixed(2)}px,${(F0y-FY*s+shake*0.6).toFixed(2)}px) scale(${s.toFixed(5)})`;
+}
+
+// ---- mariposa ----
+const bf=document.getElementById('bfly'),wl=document.getElementById('wl'),wr=document.getElementById('wr');
+function renderButterfly(t){
+  let x=128+58*Math.sin(t*0.42)+14*Math.sin(t*1.7), y=612-48*Math.sin(t*0.55+0.4)-16*Math.abs(Math.sin(t*2.1));
+  const away=ramp(t,DUSK0-0.6,DUSK0+2.4); x-=away*away*260; y-=away*away*420;      // se va al anochecer
+  const f=0.18+0.82*Math.abs(Math.cos(t*Math.PI*4.2));
+  wl.setAttribute('transform',`scale(${f.toFixed(3)},1)`);wr.setAttribute('transform',`scale(${f.toFixed(3)},1)`);
+  const tilt=12*Math.sin(t*0.9);
+  bf.style.transform=`translate(${(x-35).toFixed(1)}px,${(y-30).toFixed(1)}px) rotate(${tilt.toFixed(1)}deg) scale(0.92)`;
+  bf.style.opacity=(ramp(t,0.2,0.8)*(1-ramp(t,DUSK0+1.8,DUSK0+2.6))).toFixed(3);
+}
+
+// ---- Kuntur planea cuando la voz lo nombra ----
+const co=document.getElementById('condor');
+function renderCondor(t){
+  const k=ramp(t,9.4,17.5); const x=mix(-110,820,k), y=232-60*k+8*Math.sin(t*1.1);
+  const bank=6*Math.sin(t*0.8)-4;
+  co.style.transform=`translate(${x.toFixed(1)}px,${y.toFixed(1)}px) rotate(${bank.toFixed(1)}deg) scale(${mix(0.85,1.1,k).toFixed(3)})`;
+  co.style.opacity=(k>0&&k<1)?'1':'0';
+}
+
+// ---- pelusas de paja en el sol, estrellas al anochecer ----
+const fx=document.getElementById('fx').getContext('2d'), sky=document.getElementById('sky').getContext('2d');
+const r=rng(11), FL=[], ST=[];
+for(let i=0;i<80;i++)FL.push({x:r()*768,y:280+r()*720,vx:6+r()*14,vy:-(3+r()*9),ph:r()*6.3,sz:1.2+r()*2.6,tw:1+r()*3});
+for(let i=0;i<46;i++)ST.push({x:r()*768,y:20+r()*360,sz:0.8+r()*1.8,ph:r()*6.3,tw:1.5+r()*3,d:r()*1.5});
+function renderParticles(t){
+  fx.setTransform(2,0,0,2,0,0);fx.clearRect(0,0,768,1376);
+  const day=1-ramp(t,DUSK0,DUSK0+1.6), fi=ramp(t,0.3,2);
+  if(day>0.01){fx.globalCompositeOperation='lighter';
+    for(const q of FL){let x=(q.x+q.vx*t+10*Math.sin(t*0.7+q.ph))%800-16, y=q.y+q.vy*t+8*Math.sin(t*1.1+q.ph);
+      y=280+((y-280)%720+720)%720;
+      const a=fi*day*(0.35+0.35*Math.sin(t*q.tw+q.ph))*(y<330?(y-280)/50:1)*(y>950?(1000-y)/50:1);
+      if(a<0.02)continue;const R=q.sz*2.2;const g=fx.createRadialGradient(x,y,0,x,y,R);
+      g.addColorStop(0,`rgba(255,248,215,${a})`);g.addColorStop(1,'rgba(255,240,190,0)');fx.fillStyle=g;fx.beginPath();fx.arc(x,y,R,0,6.283);fx.fill()}}
+  sky.setTransform(2,0,0,2,0,0);sky.clearRect(0,0,768,1376);
+  const n=ramp(t,DUSK0+1.0,DUSK1+0.8);
+  if(n>0){for(const s of ST){const a=n*ramp(t,DUSK0+1+s.d,DUSK0+2.2+s.d)*(0.55+0.45*Math.sin(t*s.tw+s.ph));
+      const g=sky.createRadialGradient(s.x,s.y,0,s.x,s.y,s.sz*3);g.addColorStop(0,`rgba(255,250,230,${a})`);g.addColorStop(1,'rgba(255,250,230,0)');
+      sky.fillStyle=g;sky.beginPath();sky.arc(s.x,s.y,s.sz*3,0,6.283);sky.fill()}}
+}
+
+// ---- luz: sol, cueva calentita, atardecer ----
+const sunG=document.getElementById('sunG'),caveG=document.getElementById('caveG'),dusk=document.getElementById('dusk'),fade=document.getElementById('fade');
+function renderLight(t){
+  const d=ramp(t,DUSK0,DUSK1);
+  sunG.setAttribute('opacity',((0.75+0.1*Math.sin(t*0.8))*(1-d)).toFixed(3));
+  const warm=0.55*Math.sin(Math.PI*ramp(t,2.6,5.2));           // "cueva calentita"
+  const flick=0.9+0.07*Math.sin(t*9)+0.03*Math.sin(t*21);
+  caveG.setAttribute('opacity',(Math.max(warm,0.95*d)*flick).toFixed(3));
+  dusk.style.opacity=(0.82*d).toFixed(3);
+  fade.style.opacity=(1-ramp(t,0,1.1)+ramp(t,DUR-1.0,DUR)).toFixed(3);
+}
+
+window.render=t=>{renderCam(t);renderButterfly(t);renderCondor(t);renderParticles(t);renderLight(t);renderText(t)};
+const frame=document.getElementById('frame');function fit(){frame.style.transform=`scale(${Math.min(innerWidth/1080,innerHeight/1920)})`}
+addEventListener('resize',fit);fit();
+if(new URLSearchParams(location.search).has('render')){document.body.classList.add('render');render(0)}
+else{render(0);const amb=document.getElementById('amb');
+  document.getElementById('tap').addEventListener('click',e=>{e.currentTarget.style.display='none';amb.currentTime=0;amb.play().catch(()=>{});
+    const t0=performance.now();(function loop(){const t=(performance.now()-t0)/1000;render(Math.min(t,DUR));if(t<DUR)requestAnimationFrame(loop);else setTimeout(()=>{document.getElementById('tap').style.display='flex'},600)})()})}
+</script>
+</body>
+</html>
