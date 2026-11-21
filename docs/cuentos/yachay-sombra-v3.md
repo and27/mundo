@@ -8,10 +8,11 @@ Estado: texto listo. Falta la revisión de Shir, la voz y las imágenes.
 **1 · Yachay**
 Al pie de una montaña muy alta, en una cueva calentita, vivía Yachay, un puma joven con bigotes largos y una cola que nunca se quedaba quieta. Su mejor amigo era Kuntur, un cóndor que volaba alto.
 De día, Yachay era rapidísimo: saltaba piedras, perseguía mariposas y rugía para practicar: ¡grrr!
-Pero de noche… de noche le daba miedo.
+Pero de noche…
 
 **2 · La sombra**
-Esa noche, la abuela sopló la velita. *Fffu.*
+De noche, a Yachay le daba miedo.
+Y esa noche, la abuela sopló la velita. *Fffu.*
 La cueva se puso oscura. Solo entraba un rayito de luna por la puerta. Afuera, el viento hacía *fiuuu… fiuuu.*
 Y en la pared, con la luz de la luna, apareció una sombra larga, larga… que se movía.
 

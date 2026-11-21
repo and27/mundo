@@ -73,9 +73,9 @@ const LINES=[
   {t0:9.7, t1:13.2,text:"Su mejor amigo era Kuntur, un cóndor que volaba alto."},
   {t0:13.5,t1:17.0,text:"De día, Yachay era rapidísimo: saltaba piedras, perseguía mariposas"},
   {t0:17.2,t1:19.2,text:"y rugía para practicar: *¡grrr!*"},
-  {t0:19.8,t1:23.6,text:"Pero de noche… de noche le daba miedo."},
+  {t0:19.8,t1:22.6,text:"Pero de noche…"},
 ];
-const DUR=25, GRR=18.45, DUSK0=19.7, DUSK1=22.2;
+const DUR=24, GRR=18.45, DUSK0=19.7, DUSK1=22.2;
 const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
 const ease=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
 const eo=x=>1-Math.pow(1-x,3);
