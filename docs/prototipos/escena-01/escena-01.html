@@ -14,7 +14,7 @@ html,body{margin:0;height:100%;background:#000;overflow:hidden}
 #bg{width:768px;height:1376px;display:block}
 canvas{width:768px;height:1376px;pointer-events:none}
 #dusk{width:768px;height:1376px;mix-blend-mode:multiply;opacity:0;
-  background:linear-gradient(to bottom,#1a2160 0%,#3b3a86 28%,#8a5f9e 46%,#d39b86 64%,#e7c3a6 100%)}
+  background:linear-gradient(to bottom,#1a2160 0%,#343884 26%,#7d5c9c 42%,#c99a9a 54%,#f1dccd 64%,#fff 72%,#fff 100%)}
 #glows{width:768px;height:1376px}
 #condor{width:96px;height:52px;transform-origin:48px 26px}
 #bfly{width:70px;height:60px;overflow:visible}
@@ -91,9 +91,6 @@ function setLine(i){if(i===shown)return;shown=i;lineEl.innerHTML='';spans=[];if(
   built[i].forEach((p,k)=>{const s=document.createElement('span');s.className='w'+(p.snd?' snd':'');s.textContent=p.w;lineEl.appendChild(s);spans.push(s);if(k<built[i].length-1)lineEl.appendChild(document.createTextNode(' '))})}
 function renderText(t){
   const i=LINES.findIndex(L=>t>=L.t0-0.05&&t<L.t1+0.6);setLine(i);
-  const d=ramp(t,DUSK0,DUSK1);
-  lineEl.style.color=`rgb(${mix(74,251,d)|0},${mix(51,243,d)|0},${mix(36,230,d)|0})`;
-  lineEl.style.textShadow=d>0?`0 2px 22px rgba(20,14,40,${(0.7*d).toFixed(2)})`:'none';
   if(i<0)return;const L=LINES[i],n=spans.length,span=(L.t1-L.t0)*0.72,out=1-ramp(t,L.t1,L.t1+0.55);
   spans.forEach((s,k)=>{const st=L.t0+span*k/Math.max(1,n);const a=eo(ramp(t,st,st+0.55));
     let sc=1; if(s.classList.contains('snd')&&i===4){const g=ramp(t,GRR-0.1,GRR+0.5);sc=1+0.35*Math.sin(Math.PI*g)*(1-g)}
