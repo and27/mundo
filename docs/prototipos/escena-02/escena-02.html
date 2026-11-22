@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Escena 2 · La sombra</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#f7efe1;--moon:#cfe0ff}
+html,body{margin:0;height:100%;background:#000;overflow:hidden}
+#stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000}
+/* El lienzo lógico es 1080x1920 y se escala para caber en cualquier pantalla */
+#frame{position:relative;width:1080px;height:1920px;overflow:hidden;transform-origin:center;background:#000}
+#cam{position:absolute;left:0;top:0;width:896px;height:1200px;transform-origin:0 0;will-change:transform}
+#cam img{position:absolute;inset:0;width:896px;height:1200px;display:block}
+#cam canvas{position:absolute;inset:0;width:896px;height:1200px}
+.ov{position:absolute;inset:0;pointer-events:none}
+#beam{mix-blend-mode:screen;filter:blur(18px)}
+#dark{background:#02040c}
+#vig{background:
+  radial-gradient(120% 70% at 50% 40%,transparent 55%,rgba(0,0,0,.55) 100%),
+  linear-gradient(to bottom,rgba(0,0,0,.35) 0%,transparent 14%,transparent 52%,rgba(2,3,10,.82) 82%,rgba(2,3,10,.92) 100%)}
+#fade{background:#000}
+#txt{position:absolute;left:96px;right:96px;bottom:230px;min-height:360px;display:flex;align-items:flex-end}
+#line{font-family:"Fraunces",Georgia,serif;font-size:72px;line-height:1.26;font-weight:400;color:var(--ink);
+  letter-spacing:.005em;text-shadow:0 2px 24px rgba(0,0,0,.65),0 0 2px rgba(0,0,0,.4);font-variation-settings:"opsz" 72}
+#line .w{display:inline-block;will-change:opacity,transform,filter}
+#line .snd{font-style:italic;color:var(--moon);text-shadow:0 0 28px rgba(150,185,255,.55),0 2px 20px rgba(0,0,0,.6)}
+#tap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:28px;
+  font:500 44px/1.2 "Fraunces",Georgia,serif;color:var(--ink);background:rgba(0,0,0,.45);cursor:pointer}
+#tap span{font-size:30px;opacity:.7}
+body.render #tap{display:none}
+</style>
+</head>
+<body>
+<div id="stage"><div id="frame">
+  <div id="cam">
+    <img id="bg" src="escena-02.png" alt="Yachay en su cama; la abuela junto a la vela; un rayo de luna y una sombra en la pared">
+    <svg class="ov" id="beam" viewBox="0 0 896 1200" width="896" height="1200">
+      <defs>
+        <linearGradient id="bg1" x1="0.05" y1="0.12" x2="0.5" y2="0.62">
+          <stop offset="0" stop-color="#bcd3ff" stop-opacity=".55"/>
+          <stop offset=".55" stop-color="#8fb0f0" stop-opacity=".22"/>
+          <stop offset="1" stop-color="#6d8fd8" stop-opacity="0"/>
+        </linearGradient>
+        <radialGradient id="cg"><stop offset="0" stop-color="#ffcf7a" stop-opacity=".75"/><stop offset=".35" stop-color="#ff9d3c" stop-opacity=".25"/><stop offset="1" stop-color="#ff8a2a" stop-opacity="0"/></radialGradient>
+        <radialGradient id="fl"><stop offset="0" stop-color="#1a1410" stop-opacity="1"/><stop offset=".6" stop-color="#1a1410" stop-opacity=".9"/><stop offset="1" stop-color="#1a1410" stop-opacity="0"/></radialGradient>
+        <radialGradient id="sh"><stop offset="0" stop-color="#000" stop-opacity=".9"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+      </defs>
+      <polygon id="beamPoly" points="48,175 168,140 560,600 300,790" fill="url(#bg1)"/>
+    </svg>
+    <svg class="ov" id="fx" viewBox="0 0 896 1200" width="896" height="1200">
+      <ellipse id="candleGlow" cx="614" cy="752" rx="190" ry="170" fill="url(#cg)" style="mix-blend-mode:screen"/>
+      <ellipse id="flameOff" cx="615" cy="752" rx="11" ry="17" fill="url(#fl)" opacity="0"/>
+      <ellipse id="shadowMove" cx="285" cy="560" rx="70" ry="150" fill="url(#sh)" opacity="0"/>
+    </svg>
+    <canvas id="dust" width="1792" height="2400"></canvas>
+  </div>
+  <div class="ov" id="dark" style="opacity:0"></div>
+  <div class="ov" id="vig"></div>
+  <div id="txt"><div id="line"></div></div>
+  <div class="ov" id="fade"></div>
+  <div id="tap">Toca para empezar<span>Escena 2 · prototipo</span></div>
+</div></div>
+
+<audio id="amb" src="ambiente.m4a" preload="auto"></audio>
+<script>
+// ---------- Guion de la escena (tiempos en segundos) ----------
+const LINES = [
+  {t0:1.0,  t1:4.6,  text:"Esa noche, la abuela sopló la velita. *Fffu.*"},
+  {t0:4.9,  t1:7.0,  text:"La cueva se puso oscura."},
+  {t0:7.3,  t1:10.2, text:"Solo entraba un rayito de luna por la puerta."},
+  {t0:10.5, t1:13.4, text:"Afuera, el viento hacía *fiuuu… fiuuu.*"},
+  {t0:13.7, t1:17.0, text:"Y en la pared, con la luz de la luna, apareció una sombra larga, larga…"},
+  {t0:17.2, t1:19.8, text:"…que se movía."},
+];
+const DUR = 21.0, BLOW = 3.7;
+
+// ---------- utilidades ----------
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const ease=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;          // easeInOutCubic
+const eo=x=>1-Math.pow(1-x,3);
+const ramp=(t,a,b)=>clamp((t-a)/(b-a));
+function rng(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+
+// ---------- texto palabra por palabra ----------
+const lineEl=document.getElementById('line');
+const built=LINES.map(L=>{
+  const parts=[];let snd=false;
+  L.text.split(/(\*)/).forEach(seg=>{if(seg==='*'){snd=!snd;return}seg.split(/(\s+)/).forEach(w=>{if(w.trim())parts.push({w,snd})})});
+  return parts;
+});
+let shown=-1, spans=[];
+function setLine(i){
+  if(i===shown)return;shown=i;lineEl.innerHTML='';spans=[];
+  if(i<0)return;
+  built[i].forEach((p,k)=>{const s=document.createElement('span');s.className='w'+(p.snd?' snd':'');s.textContent=p.w;lineEl.appendChild(s);spans.push(s);if(k<built[i].length-1)lineEl.appendChild(document.createTextNode(' '))});
+}
+function renderText(t){
+  let i=LINES.findIndex(L=>t>=L.t0-0.05&&t<L.t1+0.6);
+  setLine(i); if(i<0)return;
+  const L=LINES[i], n=spans.length, span=(L.t1-L.t0)*0.72;
+  const out=1-ramp(t,L.t1,L.t1+0.55);
+  spans.forEach((s,k)=>{
+    const st=L.t0+span*k/Math.max(1,n);
+    const a=eo(ramp(t,st,st+0.55));
+    s.style.opacity=(a*out).toFixed(3);
+    s.style.transform=`translateY(${((1-a)*14).toFixed(2)}px)`;
+    s.style.filter=`blur(${((1-a)*6).toFixed(2)}px)`;
+  });
+}
+
+// ---------- cámara: pan a la derecha, con un leve acercamiento ----------
+const cam=document.getElementById('cam');
+const BASE=1920/1200;                          // cubrir alto 1920
+function renderCam(t){
+  const p=ease(clamp(t/DUR));
+  const s=BASE*(1.035+0.045*p);
+  const panImg=20+150*p;                       // px de imagen recorridos hacia la derecha
+  const y=-(1200*s-1920)*0.45;
+  cam.style.transform=`translate(${(-panImg*s).toFixed(2)}px,${y.toFixed(2)}px) scale(${s.toFixed(5)})`;
+}
+
+// ---------- polvo en el rayo de luna ----------
+const cv=document.getElementById('dust'), cx=cv.getContext('2d'); const K=2; // canvas a 2x de la imagen
+// Eje del rayo: de la abertura (108,158) hacia la pared (430,695). Ancho crece con u.
+const A={x:108,y:158}, B={x:430,y:695};
+const AX={x:B.x-A.x,y:B.y-A.y}, LEN=Math.hypot(AX.x,AX.y), UX={x:AX.x/LEN,y:AX.y/LEN}, NX={x:-UX.y,y:UX.x};
+const r=rng(7), P=[];
+for(let i=0;i<260;i++){P.push({u:r(),v:(r()*2-1),sp:0.006+r()*0.014,ph:r()*6.28,f:0.4+r()*1.2,sz:r()<0.12?(3.2+r()*3.5):(0.8+r()*1.9),tw:2+r()*5,k:r()})}
+function dustAt(t){
+  cx.setTransform(K,0,0,K,0,0);cx.clearRect(0,0,896,1200);
+  cx.globalCompositeOperation='lighter';
+  const beamI=0.55+0.45*ramp(t,7.0,8.6);                // el rayo se nota más en la frase 3
+  const gust=Math.sin(Math.PI*clamp((t-10.4)/3.2));       // ráfaga en "fiuuu"
+  const fadeIn=ramp(t,0.3,2.2);
+  for(const q of P){
+    const drift=q.sp*t*(1+0.9*gust)+gust*0.012*q.k*Math.sin(t*1.7+q.ph);
+    let u=(q.u+drift)%1; if(u<0)u+=1;
+    const wob=0.10*Math.sin(t*q.f*0.6+q.ph)+0.05*Math.sin(t*q.f*1.3+q.ph*2)+gust*0.08*Math.sin(t*2.3+q.ph);
+    const v=clamp(q.v+wob,-1.2,1.2);
+    const half=40+150*u;                                   // medio ancho del rayo
+    const x=A.x+AX.x*u+NX.x*v*half, y=A.y+AX.y*u+NX.y*v*half;
+    const edge=Math.max(0,1-v*v);                          // más brillo al centro del rayo
+    const ends=clamp(u/0.08)*clamp((1-u)/0.25);
+    const tw=0.55+0.45*Math.sin(t*q.tw+q.ph);
+    const a=fadeIn*beamI*edge*ends*tw*(q.sz>3?0.3:1.0)*(1-0.45*u);
+    if(a<0.01)continue;
+    const R=q.sz*(q.sz>3?2.2:1.6);
+    const g=cx.createRadialGradient(x,y,0,x,y,R);
+    g.addColorStop(0,`rgba(230,240,255,${a})`);g.addColorStop(0.4,`rgba(200,220,255,${a*0.45})`);g.addColorStop(1,'rgba(180,205,255,0)');
+    cx.fillStyle=g;cx.beginPath();cx.arc(x,y,R,0,6.2832);cx.fill();
+  }
+}
+
+// ---------- luz, vela, sombra ----------
+const beam=document.getElementById('beam'), glow=document.getElementById('candleGlow'), flameOff=document.getElementById('flameOff'),
+      shadowMove=document.getElementById('shadowMove'), dark=document.getElementById('dark'), fade=document.getElementById('fade');
+function renderLight(t){
+  const shimmer=0.06*Math.sin(t*1.3)+0.04*Math.sin(t*2.9+1);
+  beam.style.opacity=(0.45+0.4*ramp(t,7.0,8.8)+shimmer).toFixed(3);
+  const flick=0.85+0.1*Math.sin(t*11)+0.05*Math.sin(t*23+2);
+  const on=1-ramp(t,BLOW,BLOW+0.35);
+  glow.setAttribute('opacity',(0.9*flick*on).toFixed(3));
+  flameOff.setAttribute('opacity',(1-on).toFixed(3));
+  dark.style.opacity=(0.30*ramp(t,BLOW+0.2,6.2)).toFixed(3);
+  // "que se movía": una penumbra que se desliza sobre la sombra de la pared
+  const m=ramp(t,16.4,17.6);
+  shadowMove.setAttribute('opacity',(0.5*m).toFixed(3));
+  shadowMove.setAttribute('cx',(285+16*Math.sin((t-16.4)*1.6)*m).toFixed(1));
+  fade.style.opacity=(1-ramp(t,0,1.2)+ramp(t,DUR-1.0,DUR)).toFixed(3);
+}
+
+window.render=function(t){renderCam(t);renderLight(t);dustAt(t);renderText(t)};
+
+// ---------- escala a la pantalla ----------
+const frame=document.getElementById('frame');
+function fit(){const s=Math.min(innerWidth/1080,innerHeight/1920);frame.style.transform=`scale(${s})`}
+addEventListener('resize',fit);fit();
+
+// ---------- modo reproducción (celular) vs. modo render ----------
+if(new URLSearchParams(location.search).has('render')){document.body.classList.add('render');window.render(0)}
+else{
+  window.render(0);
+  const amb=document.getElementById('amb');
+  document.getElementById('tap').addEventListener('click',e=>{
+    e.currentTarget.style.display='none';
+    amb.currentTime=0;amb.play().catch(()=>{});
+    const t0=performance.now();
+    (function loop(){const t=(performance.now()-t0)/1000;window.render(Math.min(t,DUR));if(t<DUR)requestAnimationFrame(loop);else setTimeout(()=>{document.getElementById('tap').style.display='flex'},600)})();
+  });
+}
+</script>
+</body>
+</html>
