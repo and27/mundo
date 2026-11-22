@@ -59,7 +59,11 @@ export type Effect =
   /** Resplandor cálido (cueva, ventana). Pulsa en `pulse` y se queda encendido desde `on`. */
   | { type: "glow"; at: Point; radius: Point; color?: string; pulse?: Cue; on?: Cue }
   /** Vela encendida que se apaga en `out`. `cover` es el color del fondo detrás de la llama. */
-  | { type: "candle"; flame: Point; cover: string; out: Cue }
+  | { type: "candle"; flame: Point; cover: string; out: Cue; size?: Point }
+  /** Latido: la cámara pulsa como un corazón durante `dur` segundos. */
+  | { type: "heartbeat"; at: Cue; dur: number }
+  /** Puntos de luz que aparecen uno por uno (p. ej. contar los dedos). */
+  | { type: "count"; points: Point[]; at: Cue[] }
   /** Atardecer: degradado oscuro desde arriba; la parte baja (texto) queda clara. */
   | { type: "dusk"; at: Cue; ramp?: number }
   /** La escena se oscurece desde arriba (noche dentro de la cueva). */
@@ -96,6 +100,12 @@ export interface Scene {
     zoom: [number, number];
     /** Desplazamiento horizontal del foco durante la escena (px de imagen): paneo. */
     panX?: [number, number];
+    /**
+     * Movimientos de cámara atados al guion (planos distintos dentro de una escena).
+     * Si existen, la cámara centra el foco en la parte alta de la pantalla y viaja de un
+     * plano al siguiente empezando en `at`, durante `dur` segundos (2.5 por defecto).
+     */
+    keys?: { at: Cue; focal: Point; zoom: number; dur?: number }[];
   };
   lines: Line[];
   effects: Effect[];

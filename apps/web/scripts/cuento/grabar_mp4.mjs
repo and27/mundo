@@ -1,6 +1,10 @@
 // Graba el cuento a MP4 (1080x1920, 30 fps) con voz, ambiente y efectos.
 // Requiere el servidor dev en :3105. Uso: node scripts/cuento/grabar_mp4.mjs (salida en ./mp4)
-import { chromium } from 'playwright';
+import { createRequire } from 'node:module';
+import { pathToFileURL } from 'node:url';
+// Playwright puede estar instalado global: se resuelve con las rutas de Node (NODE_PATH).
+const pw = await import(pathToFileURL(createRequire(import.meta.url).resolve('playwright')).href);
+const chromium = pw.chromium ?? pw.default.chromium;
 import fs from 'node:fs';
 import { execFileSync } from 'node:child_process';
 const PUB = new URL('../../public', import.meta.url).pathname;

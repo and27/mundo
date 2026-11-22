@@ -11,7 +11,8 @@ const INK = "#4a3324";
 export const clamp = (x: number, a = 0, b = 1) => Math.min(b, Math.max(a, x));
 const ease = (x: number) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
 const easeOut = (x: number) => 1 - Math.pow(1 - x, 3);
-const ramp = (t: number, a: number, b: number) => clamp((t - a) / (b - a));
+// Un momento que no existe (Infinity) nunca llega: la rampa se queda en 0.
+const ramp = (t: number, a: number, b: number) => (a === Infinity ? 0 : clamp((t - a) / (b - a)));
 const mix = (a: number, b: number, k: number) => a + (b - a) * k;
 
 function rng(seed: number) {
@@ -344,8 +345,9 @@ export function createSceneRenderer(host: HTMLElement, scene: Scene, frameW: num
         [0.65, fx.cover, 0.95],
         [1, fx.cover, 0],
       ]);
-      const cover = svgEl("ellipse", { cx: fx.flame[0], cy: fx.flame[1] - 1, rx: 10, ry: 16, fill: coverFill, opacity: 0 });
-      const wick = svgEl("rect", { x: fx.flame[0] - 1, y: fx.flame[1] + 6, width: 2, height: 5, rx: 1, fill: "#3b2a1c", opacity: 0 });
+      const [crx, cry] = fx.size ?? [10, 16];
+      const cover = svgEl("ellipse", { cx: fx.flame[0], cy: fx.flame[1] - 1, rx: crx, ry: cry, fill: coverFill, opacity: 0 });
+      const wick = svgEl("rect", { x: fx.flame[0] - 1, y: fx.flame[1] + cry * 0.4, width: 2, height: cry * 0.3, rx: 1, fill: "#3b2a1c", opacity: 0 });
       fxSvg.append(cover, wick);
       const out = tl.cue(fx.out);
       updaters.push((t) => {
@@ -371,6 +373,29 @@ export function createSceneRenderer(host: HTMLElement, scene: Scene, frameW: num
         e.setAttribute("cx", (fx.at[0] + 16 * Math.sin((t - s0) * 1.6) * m).toFixed(1));
       });
     }
+  }
+  for (const fx of effects) {
+    if (fx.type !== "count") continue;
+    glowUsed = true;
+    const fill = radial(gdefs, [
+      [0, "#fff7d6", 1],
+      [0.35, "#ffd77a", 0.7],
+      [1, "#ffb84a", 0],
+    ]);
+    fx.points.forEach((pt, i) => {
+      const halo = svgEl("circle", { cx: pt[0], cy: pt[1], r: 34, fill, style: "mix-blend-mode:screen", opacity: 0 });
+      const ring = svgEl("circle", { cx: pt[0], cy: pt[1], r: 22, fill: "none", stroke: "#fff3c9", "stroke-width": 3, opacity: 0 });
+      glowSvg.append(halo, ring);
+      const t0 = tl.cue(fx.at[i]);
+      updaters.push((t) => {
+        const k = ramp(t, t0, t0 + 0.45);
+        const pop = k <= 0 ? 0 : 1 + 0.35 * Math.sin(Math.PI * k) * (1 - k);
+        halo.setAttribute("opacity", (0.95 * easeOut(k)).toFixed(3));
+        halo.setAttribute("r", (34 * pop).toFixed(1));
+        ring.setAttribute("opacity", (0.9 * easeOut(k) * (0.75 + 0.25 * Math.sin(t * 3 + i))).toFixed(3));
+        ring.setAttribute("r", (22 * pop).toFixed(1));
+      });
+    });
   }
   if (fxUsed) layer(fxSvg);
   if (glowUsed) layer(glowSvg);
@@ -492,6 +517,17 @@ export function createSceneRenderer(host: HTMLElement, scene: Scene, frameW: num
     });
   }
 
+  // Franja de papel fija abajo: aunque la cámara se acerque, el texto siempre queda sobre papel.
+  root.appendChild(
+    el("div", {
+      position: "absolute",
+      inset: "0",
+      pointerEvents: "none",
+      background:
+        "linear-gradient(to bottom, rgba(243,234,216,0) 0%, rgba(243,234,216,0) 62%, rgba(243,234,216,.9) 71%, #f3ead8 78%, #f3ead8 100%)",
+    }),
+  );
+
   // Texto: palabra por palabra, en tinta sobre el papel
   const txt = el("div", { position: "absolute", left: "92px", right: "92px", bottom: "190px", minHeight: "380px", display: "flex", alignItems: "flex-end", pointerEvents: "none" });
   const lineEl = el("div", {
@@ -553,6 +589,9 @@ export function createSceneRenderer(host: HTMLElement, scene: Scene, frameW: num
   });
 
   // Cámara
+  const heartbeats = effects
+    .filter((e): e is Extract<Effect, { type: "heartbeat" }> => e.type === "heartbeat")
+    .map((h) => ({ t0: tl.cue(h.at), dur: h.dur }));
   const renderCam = (t: number) => {
     const p = ease(clamp(t / tl.duration));
     const s0 = Math.max(FW / W, FH / H);
@@ -562,6 +601,33 @@ export function createSceneRenderer(host: HTMLElement, scene: Scene, frameW: num
       const g = ramp(t, pt, pt + 0.9);
       punch += 0.022 * Math.sin(Math.PI * Math.min(1, g * 3)) * (1 - g);
       if (t > pt && t < pt + 0.45) shake += 3 * Math.sin(t * 90) * (1 - ramp(t, pt, pt + 0.45));
+    }
+    for (const hb of heartbeats) {
+      if (t > hb.t0 && t < hb.t0 + hb.dur) {
+        const ph = ((t - hb.t0) * 1.4) % 1; // ~84 latidos por minuto
+        const beat = Math.exp(-Math.pow((ph - 0.08) / 0.05, 2)) + 0.6 * Math.exp(-Math.pow((ph - 0.28) / 0.05, 2));
+        punch += 0.018 * beat * (1 - ramp(t, hb.t0 + hb.dur - 0.6, hb.t0 + hb.dur));
+      }
+    }
+    const keys = scene.camera.keys;
+    if (keys && keys.length) {
+      let focal: Point = scene.camera.focal;
+      let zoom = scene.camera.zoom[0];
+      for (const k of keys) {
+        const k0 = tl.cue(k.at);
+        const e = ease(ramp(t, k0, k0 + (k.dur ?? 2.5)));
+        if (e <= 0) break;
+        focal = [mix(focal[0], k.focal[0], e), mix(focal[1], k.focal[1], e)];
+        zoom = mix(zoom, k.zoom, e);
+      }
+      const drift = 1 + 0.025 * p; // respiración lenta de la cámara
+      const s = s0 * (zoom * drift + punch);
+      let tx = FW / 2 - focal[0] * s + shake;
+      let ty = FH * 0.4 - focal[1] * s + shake * 0.6;
+      tx = clamp(tx, FW - W * s, 0);
+      ty = clamp(ty, FH - H * s, 0);
+      cam.style.transform = `translate(${tx.toFixed(2)}px,${ty.toFixed(2)}px) scale(${s.toFixed(5)})`;
+      return;
     }
     const s = s0 * (mix(scene.camera.zoom[0], scene.camera.zoom[1], p) + punch);
     const [fx0, fy] = scene.camera.focal;
