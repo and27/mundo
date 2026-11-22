@@ -25,7 +25,11 @@ for ln in lines:
         if r.stdout != "200":
             sys.exit(f"error {ln['id']}: {r.stdout} {open(raw, 'rb').read()[:200]!r}")
         trim = "silenceremove=start_periods=1:start_threshold=-45dB,areverse,silenceremove=start_periods=1:start_threshold=-45dB,areverse"
-        subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", raw, "-af", f"{trim},loudnorm=I=-18:TP=-2", "-ar", "44100", "-ac", "1", "-b:a", "96k", dst], check=True)
+        # Limpieza: quita el siseo de fondo y suaviza el inicio y el final de cada frase,
+        # para que en las pausas no se note que el audio "se apaga y vuelve".
+        clean = "highpass=f=70,afftdn=nr=18:nf=-42:tn=1,agate=threshold=0.012:ratio=3:attack=5:release=180:range=0.08"
+        fades = "afade=t=in:d=0.04,areverse,afade=t=in:d=0.18,areverse"
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", raw, "-af", f"{trim},loudnorm=I=-18:TP=-2,{clean},{fades}", "-ar", "44100", "-ac", "1", "-b:a", "96k", dst], check=True)
         os.remove(raw)
     d = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", dst], capture_output=True, text=True).stdout)
     durs[ln["id"]] = round(d, 2)
