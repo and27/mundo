@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Mi termómetro del miedo · Mundo Interior</title>
+<link rel="stylesheet" href="print.css">
+<style>
+  .thermo { display: flex; flex-direction: column; gap: 2.2mm; margin-top: 7mm; }
+  .lvl {
+    display: grid; grid-template-columns: 16mm 1fr 20mm; align-items: center;
+    height: 19mm; border-radius: 4mm; border: 0.5mm solid var(--ink);
+    overflow: hidden;
+  }
+  .lvl .num {
+    height: 100%; display: grid; place-items: center;
+    font-family: var(--kid); font-weight: 800; font-size: 26pt; color: #fff;
+    border-right: 0.5mm solid var(--ink);
+  }
+  .lvl .txt { padding: 0 5mm; }
+  .lvl .name { font-family: var(--kid); font-weight: 800; font-size: 16pt; line-height: 1; }
+  .lvl .hint { font-size: 9pt; color: var(--ink-soft); margin-top: 1mm; }
+  .lvl .mark {
+    width: 11mm; height: 11mm; border-radius: 50%;
+    border: 0.5mm dashed var(--ink-faint); justify-self: center;
+  }
+  .log { margin-top: 7mm; }
+  .log table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  .log th, .log td { border: 0.4mm solid var(--line); text-align: center; }
+  .log th {
+    font-family: var(--kid); font-weight: 800; font-size: 11pt; padding: 1.5mm 0;
+    background: var(--cream);
+  }
+  .log th.rowh, .log td.rowh {
+    text-align: left; padding: 0 3mm; font-family: var(--adult);
+    font-weight: 700; font-size: 8.5pt; color: var(--ink-soft); width: 30mm;
+  }
+  .log td { height: 13mm; }
+  .log td.tall { height: 20mm; }
+  .log .cap { font-size: 8.5pt; color: var(--ink-faint); margin-top: 2mm; }
+</style>
+</head>
+<body>
+
+<!-- ============ Pagina 1: para el nino y la familia ============ -->
+<section class="page">
+  <div class="head">
+    <img src="img/yachay.png" alt="">
+    <div>
+      <div class="kicker">Mundo Interior · Para colorear y usar cada noche</div>
+      <h1>Mi termómetro<br>del miedo</h1>
+      <div class="sub">¿Cuánto miedo siento ahora? Muéstralo con los dedos.</div>
+    </div>
+  </div>
+
+  <div class="thermo">
+    <div class="lvl"><div class="num" style="background:var(--l5)">4</div><div class="txt"><div class="name">Muchísimo</div><div class="hint">No puedo pensar en otra cosa.</div></div><div class="mark"></div></div>
+    <div class="lvl"><div class="num" style="background:var(--l4)">3</div><div class="txt"><div class="name">Mucho</div><div class="hint">Mi cuerpo tiembla o se aprieta.</div></div><div class="mark"></div></div>
+    <div class="lvl"><div class="num" style="background:var(--l3);color:var(--ink)">2</div><div class="txt"><div class="name">Medio</div><div class="hint">Lo siento en la panza o en el pecho.</div></div><div class="mark"></div></div>
+    <div class="lvl"><div class="num" style="background:var(--l2);color:var(--ink)">1</div><div class="txt"><div class="name">Un poquito</div><div class="hint">Está ahí, pero puedo seguir.</div></div><div class="mark"></div></div>
+    <div class="lvl"><div class="num" style="background:var(--l1);color:var(--ink)">0</div><div class="txt"><div class="name">Nada</div><div class="hint">Pata cerrada: no hay miedo.</div></div><div class="mark"></div></div>
+  </div>
+
+  <div class="log">
+    <h2>Mi semana</h2>
+    <table>
+      <tr><th class="rowh"></th><th>L</th><th>M</th><th>M</th><th>J</th><th>V</th><th>S</th><th>D</th></tr>
+      <tr><td class="rowh">¿Cuánto miedo? (0 a 4)</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td class="rowh">¿Qué me ayudó?</td><td class="tall"></td><td class="tall"></td><td class="tall"></td><td class="tall"></td><td class="tall"></td><td class="tall"></td><td class="tall"></td></tr>
+    </table>
+    <p class="cap">Lleva esta hoja a la próxima sesión con tu psicóloga o psicólogo.</p>
+  </div>
+
+  <div class="foot">
+    <div><b>Mundo Interior</b> · mundo.vercel.app/recursos</div>
+    <div>Material gratuito · Versión 1, septiembre de 2026</div>
+  </div>
+</section>
+
+<!-- ============ Pagina 2: para el adulto ============ -->
+<section class="page">
+  <div class="kicker">Para madres, padres y profesionales</div>
+  <h1 style="font-size:24pt;margin-top:2mm">Cómo usar el termómetro</h1>
+  <p style="margin-top:3mm;max-width:160mm">
+    Ponerle nombre y cantidad al miedo es el primer paso para manejarlo. Quien puede
+    decir «tengo un 3» ya está observando su miedo en vez de estar dentro de él.
+  </p>
+
+  <div class="stack" style="margin-top:7mm">
+    <div class="box">
+      <h2>En tres pasos</h2>
+      <ol class="steps">
+        <li><span><strong>Pregunta en un momento tranquilo.</strong> Al principio no lo uses en pleno miedo: primero úsenlo cuando haya calma. Por ejemplo, después de un cuento, antes de dormir.</span></li>
+        <li><span><strong>Acepta el número sin discutirlo.</strong> Si dice 4, es 4. No hay respuesta correcta; lo que importa es que lo diga. Con 5 años, basta con tres: poquito, medio, mucho.</span></li>
+        <li><span><strong>Anótalo cada noche.</strong> La semana completa muestra más que cualquier noche suelta.</span></li>
+      </ol>
+    </div>
+
+    <div class="box">
+      <h2>Qué hacer según el número</h2>
+      <div class="stack" style="gap:3mm">
+        <p><strong style="color:#2c8f71">0 · Nada.</strong> Celébralo en voz alta: «Hoy tu cuerpo está tranquilo». También se aprende a reconocer la calma.</p>
+        <p><strong style="color:#8a6d00">1 o 2 · Un poquito, medio.</strong> Nómbralo sin agrandarlo: «Un poquito de miedo es normal. Estoy aquí». Pregunta dónde lo siente en el cuerpo.</p>
+        <p><strong style="color:#b8442a">3 o 4 · Mucho, muchísimo.</strong> Primero calma, después palabras. Quédate cerca, respiren despacio juntos, y conversen solo cuando haya bajado.</p>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div class="box">
+        <h3>Para profesionales</h3>
+        <p>Úselo como registro entre sesiones. La tendencia de la semana muestra si la familia está practicando y cómo responde la niña o el niño, y da material concreto para la sesión.</p>
+      </div>
+      <div class="box alarm">
+        <h3>Cuándo pedir ayuda profesional</h3>
+        <p>Si el miedo le impide ir al colegio, comer o dormir muchas noches seguidas, si tiene ataques de pánico, si habla de hacerse daño, o si sientes que te desborda a ti.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div><b>Mundo Interior</b> · Herramientas para acompañar los miedos de niñas y niños de 5 a 10 años.<br>Este material acompaña, pero no sustituye la atención de un profesional de la salud mental.</div>
+    <div>mundo.vercel.app/recursos</div>
+  </div>
+</section>
+
+</body>
+</html>

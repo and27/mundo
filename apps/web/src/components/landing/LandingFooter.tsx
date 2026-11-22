@@ -39,11 +39,6 @@ export default function LandingFooter() {
                 Comenzar
               </Link>
             </li>
-            <li>
-              <Link href="/tutor" className="hover:text-white">
-                Educadores
-              </Link>
-            </li>
           </ul>
         </div>
 

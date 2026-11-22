@@ -23,6 +23,14 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  // Rutas de la Fase 1 renombradas antes de publicarse; los enlaces de vista
+  // previa que ya circulan siguen funcionando.
+  async redirects() {
+    return [
+      { source: "/profesionales", destination: "/recursos", permanent: true },
+      { source: "/muestra/miedos", destination: "/miedos", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {
