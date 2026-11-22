@@ -1,7 +1,9 @@
 // Graba el cuento a MP4 (1080x1920, 30 fps) con voz, ambiente y efectos.
-// Requiere el servidor dev en :3105. Uso: node scripts/cuento/grabar_mp4.js (salida en ./mp4)
-const {chromium}=require('playwright');const fs=require('fs');const {execFileSync}=require('child_process');
-const PUB='/home/user/mundo/apps/web/public';
+// Requiere el servidor dev en :3105. Uso: node scripts/cuento/grabar_mp4.mjs (salida en ./mp4)
+import { chromium } from 'playwright';
+import fs from 'node:fs';
+import { execFileSync } from 'node:child_process';
+const PUB = new URL('../../public', import.meta.url).pathname;
 (async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1080,height:1920}});
 await p.goto('http://localhost:3105/cuento/yachay?render=1',{waitUntil:'networkidle'});await p.waitForFunction(()=>window.__cuento);await p.evaluate(()=>document.fonts.ready);
 const n=await p.evaluate(()=>window.__cuento.scenes);
