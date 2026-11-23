@@ -10,6 +10,17 @@ import json, os, subprocess, sys
 VOICE = os.environ.get("FISH_VOICE", "119fec1a64e0408e97ce3b078a188819")  # "Cuento" (provisional)
 MODEL = os.environ.get("FISH_MODEL", "s2.1-pro")
 
+def process(src, dst):
+    """Recorta silencios dejando margen y suaviza solo ese margen (nunca la voz)."""
+    pad = 0.2
+    trim = (f"silenceremove=start_periods=1:start_threshold=-55dB:start_silence={pad},"
+            f"areverse,silenceremove=start_periods=1:start_threshold=-55dB:start_silence={pad},areverse")
+    clean = "highpass=f=60,afftdn=nr=10:nf=-50"
+    fades = "afade=t=in:d=0.03,areverse,afade=t=in:d=0.08,areverse"
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", src, "-af", f"{trim},{clean},loudnorm=I=-18:TP=-2,{fades}",
+                    "-ar", "44100", "-ac", "1", "-b:a", "96k", dst], check=True)
+
+
 lines = json.load(open(sys.argv[1]))
 out = sys.argv[2]
 os.makedirs(out, exist_ok=True)
@@ -24,13 +35,10 @@ for ln in lines:
                             "-H", f"model: {MODEL}", "--data", body], capture_output=True, text=True)
         if r.stdout != "200":
             sys.exit(f"error {ln['id']}: {r.stdout} {open(raw, 'rb').read()[:200]!r}")
-        trim = "silenceremove=start_periods=1:start_threshold=-45dB,areverse,silenceremove=start_periods=1:start_threshold=-45dB,areverse"
-        # Limpieza: quita el siseo de fondo y suaviza el inicio y el final de cada frase,
-        # para que en las pausas no se note que el audio "se apaga y vuelve".
-        clean = "highpass=f=70,afftdn=nr=18:nf=-42:tn=1,agate=threshold=0.012:ratio=3:attack=5:release=180:range=0.08"
-        fades = "afade=t=in:d=0.04,areverse,afade=t=in:d=0.18,areverse"
-        subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", raw, "-af", f"{trim},loudnorm=I=-18:TP=-2,{clean},{fades}", "-ar", "44100", "-ac", "1", "-b:a", "96k", dst], check=True)
-        os.remove(raw)
+        keep = os.path.join(out, "_raw", f"{ln['id']}.mp3")
+        os.makedirs(os.path.dirname(keep), exist_ok=True)
+        os.replace(raw, keep)  # se guarda el original para reprocesar sin volver a generar
+        process(keep, dst)
     d = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", dst], capture_output=True, text=True).stdout)
     durs[ln["id"]] = round(d, 2)
 print(json.dumps(durs, indent=1))
